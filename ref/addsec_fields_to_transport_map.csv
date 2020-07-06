@@ -1,0 +1,9 @@
+fields_to_pass,location,transport_code
+e6tdfrehea,exp_design,E6TDFREHEA
+e6tdfrelig,exp_design,E6TDFRELIG
+e6tdpaspriv,exp_design,E6TDPASPRIV
+e6tdpasspub,exp_design,E6TDPASSPUB
+energy_consumption_electricity_PJ_agr,output_addsec,E4ELC03AGR
+energy_consumption_electricity_PJ_com,output_addsec,E4ELC03COM
+energy_consumption_electricity_PJ_ind,output_addsec,E4ELC03IND
+energy_consumption_electricity_PJ_res,output_addsec,E4ELC03RES

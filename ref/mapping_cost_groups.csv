@@ -1,0 +1,89 @@
+technology_code,technology,cost_group,transport_opex_techs
+DELE_HF,Electricity for heavy freight transport,freight_transport,0
+DELE_LF,Electricity for light freigth transport,freight_transport,0
+DELE_Pu,Electricity for Public Transport,public_transport,0
+DIST_DSL,Distribution Diesel,transport,0
+DIST_GSL,Distribution Gasoline,transport,0
+DIST_HYD,Distribution Hydrogen,transport,0
+DIST_LPG,Distribution LPG,transport,0
+PPBIO001,Biomass Power Plant (existing),electricity_renewable,0
+PPBIO002,Biomass Power Plant (new),electricity_renewable,0
+PPDSL001,Diesel Power Plant (existing),electricity_fossil_fuel,0
+PPFOB001,Oil Power Plant (existing),electricity_fossil_fuel,0
+PPGEO001,Geothermal Power Plant (existing),electricity_renewable,0
+PPGEO002,Geothermal Power Plant (new),electricity_renewable,0
+PPHDAM001,Hydro Dam Power Plant (existing),electricity_renewable,0
+PPHDAM002,Hydro Dam Power Plant (new),electricity_renewable,0
+PPHROR001,Hydro Run of River Power Plant (existing),electricity_renewable,0
+PPHROR002,Hydro Run of River Power Plant (new),electricity_renewable,0
+PPPVD002,Photovoltaic Power Plant Distribution (new),electricity_renewable,0
+PPPVT001,Photovoltaic Power Plant Transmission (existing),electricity_renewable,0
+PPPVT002,Photovoltaic Power Plant Transmission (new),electricity_renewable,0
+PPWND002,Wind Power Plant Distribution (new),electricity_renewable,0
+PPWNT001,Wind Power Plant Transmission  (existing),electricity_renewable,0
+PPWNT002,Wind Power Plant Transmission (new),electricity_renewable,0
+PROD_HYD_H20,Production hydrogen H2O,transport,0
+TDDIST01,Electricity Distribution (existing),electricity_all,0
+TDDIST02,Electricity Distribution (new),electricity_all,0
+TDTRANS01,Electricity Transmission (existing),electricity_all,0
+TDTRANS02,Electricity Transmission (new),electricity_all,0
+TRBUSDSL01,Bus Diesel (existing),public_transport,1
+TRBUSDSL02,Bus Diesel (new),public_transport,1
+TRBUSELC02,Bus Electric (new),public_transport,1
+TRBUSHYBD02,Bus Hybrid Electric-Diesel (new),public_transport,1
+TRBUSHYD02,Bus Hydrogen (new),public_transport,1
+TRBUSLPG02,Bus LPG (new),public_transport,1
+TRFWDDSL01,Four-Wheel-Drive (existing),private_transport,1
+TRFWDDSL02,Four-Wheel-Drive Diesel (new),private_transport,1
+TRFWDELE02,Four-Wheel-Drive Electric (new),private_transport,1
+TRFWDGAS01,Four-Wheel-Drive Gasoline (existing),private_transport,1
+TRFWDGAS02,Four-Wheel-Drive Gasoline (new),private_transport,1
+TRFWDHYBD02,Four-Wheel-Drive Hybrid Electric-Diesel (new),private_transport,1
+TRFWDLPG01,Four-Wheel-Drive LPG (existing),private_transport,1
+TRFWDLPG02,Four-Wheel-Drive LPG (new),private_transport,1
+TRFWDPHYBD02,Four-Wheel-Drive Plug-in Hybrid Electric-Diesel(new),private_transport,1
+TRLDDSL01,Light Duty Diesel (existing),private_transport,1
+TRLDDSL02,Light Duty Diesel (new),private_transport,1
+TRLDELE02,Light Duty Electric (new),private_transport,1
+TRLDGAS01,Light Duty Gasoline (existing),private_transport,1
+TRLDGAS02,Light Duty Gasoline (new),private_transport,1
+TRLDHYBG02,Light Hybrid Electric-Gasoline (new),private_transport,1
+TRLDPHYBG02,Light Plug-in Hybrid Electric-Gasoline  (new),private_transport,1
+TRMBUSDSL01,Microbus Diesel (existing),public_transport,1
+TRMBUSDSL02,Microbus Diesel (new),public_transport,1
+TRMBUSELE02,Microbus Electric (new),public_transport,1
+TRMBUSHYBD02,Microbus Hybrid Electric-Diesel (new),public_transport,1
+TRMBUSHYD02,Microbus Hydrogen (new),public_transport,1
+TRMBUSLPG02,Microbus LPG (new),public_transport,1
+TRMIVDSL02,Minivan Diesel (new),private_transport,1
+TRMIVELE02,Minivan Electric (new),private_transport,1
+TRMIVGAS02,Minivan Gasoline (new),private_transport,1
+TRMIVHYBD02,Minivan Hybrid Electric-Diesel (new),private_transport,1
+TRMIVHYBG02,Minivan Hybrid Electric-Gasoline (new),private_transport,1
+TRMIVLPG02,Minivan LPG (new),private_transport,1
+TRMOTELC02,Motorcycle electric (new),private_transport,1
+TRMOTGAS01,Motorcycle Gasoline (existing),private_transport,1
+TRMOTGAS02,Motorcycle Gasoline (new),private_transport,1
+TRTAXDSL01,Taxi Diesel (existing),public_transport,1
+TRTAXDSL02,Taxi Diesel (new),public_transport,1
+TRTAXELC02,Taxi Electric (new),public_transport,1
+TRTAXGAS01,Taxi Gasoline (existing),public_transport,1
+TRTAXGAS02,Taxi Gasoline (new),public_transport,1
+TRTAXHYBD02,Taxi Hybrid Electric-Diesel (new),public_transport,1
+TRTAXHYBG02,Taxi Hybrid Electric-Gasoline (new),public_transport,1
+TRTAXLPG02,Taxi LPG (new),public_transport,1
+TRXTRAIELEFRE02,Train Electric for Freight (new),public_transport,1
+TRXTRAINELC02,Train Electric (new),public_transport,1
+TRYLFDSL01,Mini Trucks (existing),freight_transport,1
+TRYLFDSL02,Mini Trucks Diesel (new),freight_transport,1
+TRYLFELE02,Mini Trucks Electric (new),freight_transport,1
+TRYLFGAS02,Mini Trucks Gasoline (new),freight_transport,1
+TRYLFHYBD02,Mini Trucks Hybrid Electric-Diesel (new),freight_transport,1
+TRYLFHYBG02,Mini Trucks Electric-Gasoline (new),private_transport,1
+TRYLFLPG02,Mini Trucks LPG (new),freight_transport,1
+TRYTKDSL01,Trucks Diesel (existing),freight_transport,1
+TRYTKDSL02,Trucks Diesel (new),freight_transport,1
+TRYTKELC02,Trucks Electric (new),freight_transport,1
+TRYTKHYBD02,Trucks Hybrid Electric-Diesel (new),freight_transport,1
+TRYTKHYD02,Trucks Hydrogen (new),freight_transport,1
+TRYTKLPG02,Trucks LPG (new),freight_transport,1
