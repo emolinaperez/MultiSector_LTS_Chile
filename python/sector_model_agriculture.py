@@ -1,5 +1,3 @@
-import os, os.path
-import time
 import pandas as pd
 import numpy as np
 
@@ -28,7 +26,10 @@ def sm_agriculture(df_in, all_ag, area):
 		dict_out.update({field_emit: vec_emit})
 		#update
 		vec_total_emit = vec_total_emit + vec_emit
+	#test emissions
+	vec_test_emit = np.ones(len(vec_total_emit)) * 0.95
 	#add to dictionary
 	dict_out.update({"emissions_agriculture_crops_total_MT_co2e": vec_total_emit})
+	dict_out.update({"alpha_field_out": vec_test_emit})
     #return
 	return dict_out
