@@ -279,7 +279,6 @@ fp_csv_experimental_design_cloud = os.path.join(dir_ed, "experimental_design_clo
 fp_csv_experimental_design_transportation = os.path.join(dir_ed, "experimental_design_transportation.csv")
 fp_csv_failed_runs = os.path.join(dir_out, "failed_runs.csv")
 fp_csv_failed_instances = os.path.join(dir_out, "failed_instances.csv")
-fp_csv_field_map_to_lever_field = os.path.join(dir_ref, "fields_map_to_lever_field.csv")
 fp_csv_fields_keep_experimental_design_multi_sector = os.path.join(dir_ref, "fields_keep-experimental_design_multi_sector.csv")
 fp_csv_output_field_types = os.path.join(dir_ref, "output_field_types.csv")
 fp_csv_lhs_table_multi_sector = os.path.join(dir_ed, "lhs_samples_multi_sector.csv")

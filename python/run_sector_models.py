@@ -6,10 +6,7 @@ import setup_runs as sr
 import sector_models as sm
 import shutil
 
-	
 
-#use "levers"?
-lever_q = False
 
 
 #initialize time
@@ -122,129 +119,6 @@ for norm in all_ng:
 	#tack on
 	exp_design = pd.concat([exp_design[[x for x in exp_design.columns if x not in fields_ng]], array_ng], axis = 1)
 
-
-
-####################################################
-#    UPDATE EXPERIMENTAL DESIGN TO APPLY LEVERS    #
-####################################################
-
-if lever_q:
-	print("Beginning application of levers...")
-
-	df_field_map_lever = pd.read_csv(sr.fp_csv_field_map_to_lever_field)
-	#get all lever fields specified herein
-	set_fields_lever_new = set(df_field_map_lever["field_lever"])
-	#we do not need to deal with the levers here
-	ed_0 = exp_design[exp_design["strategy_id"] == 0].copy().reset_index(drop = True)
-	ed_mod = exp_design[exp_design["strategy_id"] != 0].copy().reset_index(drop = True)
-	#lever_waste_target_fraction_recyclable_waste_recycled
-
-
-	##  APPLY LEVER TO SEWAGE
-
-	fl = "lever_waste_target_fraction_waste_sewage_treated"
-	#notify
-	print("Applying lever " + str(fl) + " to experimental design...")
-	#get fields that need to be modified
-	fields_mod = list(set(df_field_map_lever[df_field_map_lever["field_lever"] == fl]["field_ed"]))
-	#get mixing vector
-	alpha = np.array(ed_mod["mix_sigmoid"])
-	#add up total for normalization
-	tot_norm = 0.
-	#loop
-	for field_mod in fields_mod:
-		#update value in field (for this, it gets divided up evenly among fields)
-		ed_mod[field_mod] = alpha*np.array(ed_mod[fl])/len(fields_mod) + (1 - alpha)*np.array(ed_mod[field_mod])
-		#add
-		tot_norm = tot_norm + np.array(ed_mod[field_mod])
-	#check normalization groups
-	norms = norm_groups[norm_groups["parameter"].isin(fields_mod)]
-	#check
-	if len(norms) > 0:
-		#loop over groups
-		for ng in list(set(norms["normalize_group"])):
-			#get all fields to normalize
-			fields_norm = set(norm_groups[norm_groups["normalize_group"] == ng]["parameter"])
-			#get fields that are modified and in the normalization group
-			fields_mod_norm = fields_norm & set(fields_mod)
-			#get fields to renormalize here
-			fields_renorm = list(fields_norm - fields_mod_norm)
-			##remove from experimental design
-			array_ng = np.array(ed_mod[fields_renorm])
-			#get total
-			tot_ng = sum(array_ng.transpose())
-			#normalize
-			array_ng = ((1 - tot_norm)*array_ng.transpose()/tot_ng).transpose()
-			#update
-			array_ng = pd.DataFrame(array_ng, columns = fields_renorm)
-			#tack on
-			ed_mod = pd.concat([ed_mod[[x for x in ed_mod.columns if x not in fields_renorm]], array_ng], axis = 1)
-
-
-	##  APPLY LEVER TO RECYCLING FRACTIONS
-
-	fl = "lever_waste_target_fraction_recyclable_waste_recycled"
-	#notify
-	print("Applying lever " + str(fl) + " to experimental design...")
-	#get fields that need to be modified
-	fields_mod = list(set(df_field_map_lever[df_field_map_lever["field_lever"] == fl]["field_ed"]))
-	#get mixing vector
-	alpha = np.array(ed_mod["mix_sigmoid"])
-	#loop
-	for field_mod in fields_mod:
-		#update value in field
-		vec_new = alpha*np.array(ed_mod[fl]) + (1 - alpha)*np.array(ed_mod[field_mod])
-		#check for max vals
-		if field_mod in dict_field_caps.keys():
-			sup = float(dict_field_caps[field_mod])
-			vec_new[np.where(vec_new > sup)] = sup
-		#update
-		ed_mod[field_mod] = vec_new
-		
-		
-		
-	##  APPLY SCALING LEVERS TO OTHERS
-
-	dict_scale_levers_to_sign = {
-		"lever_livestock_improvement_manure_management": -1,
-		"lever_livestock_improvement_fermentation_management": -1,
-		"lever_land_use_reduction_in_deforestation": -1,
-		"lever_agriculture_reduction_carbon_intensity_per_crop": -1,
-		"lever_land_use_increase_in_forest_sequestration": 1
-	}
-	#fields to use mix with
-	dict_fields_use_mix = {"lever_land_use_increase_in_forest_sequestration": "linear"}
-
-	for fl in dict_scale_levers_to_sign.keys():
-		print("Applying lever " + str(fl) + " to experimental design...")
-		#get fields that need to be modified
-		fields_mod = list(set(df_field_map_lever[df_field_map_lever["field_lever"] == fl]["field_ed"]))
-		
-		if fl in dict_fields_use_mix.keys():
-			mix_type = "mix_" + str(dict_fields_use_mix[fl])
-			#get mixing vector
-			alpha = np.array(ed_mod[mix_type])
-		else:
-			alpha = float(1)
-		#get sign to add the scalar to
-		sign = int(dict_scale_levers_to_sign[fl])
-		#loop
-		for field_mod in fields_mod:
-			#update value in field
-			vec_new = (1 + sign*alpha*np.array(ed_mod[fl]))*np.array(ed_mod[field_mod])
-			#check for max vals
-			if field_mod in dict_field_caps.keys():
-				sup = float(dict_field_caps[field_mod])
-				vec_new[np.where(vec_new > sup)] = sup
-			#update
-			ed_mod[field_mod] = vec_new
-
-	##  REBUILD EXPERIMENTAL DESIGN
-
-	print("Rebuilding experimental design...")
-
-	exp_design = pd.concat([ed_0, ed_mod[ed_0.columns]], axis = 0).reset_index(drop = True)
-	exp_design = exp_design.sort_values(by = ["master_id", "year"])
 
 
 
@@ -903,20 +777,34 @@ os.makedirs(dir_tmp_export, exist_ok = True)
 
 
 #get reduced experimental design data to export
-fields_keep_ed = pd.read_csv(sr.fp_csv_fields_keep_experimental_design_multi_sector)
-#fill na
-fields_keep_ed = fields_keep_ed.fillna(0)
-#dictionary of keep fields
-dict_fields_keep_export = {}
-#update types
-for field in [x for x in fields_keep_ed.columns if x != "field"]:
-	fields_keep_ed[field] = np.array(fields_keep_ed[field]).astype(int)
-	#string to add to dictionary
-	str_dict = field.lower().replace("include_", "").replace("_file", "")
-	#extraction fields
-	fields_ext = list(fields_keep_ed[fields_keep_ed[field] == 1]["field"])
-	#update
-	dict_fields_keep_export.update({str_dict: fields_ext})
+if os.path.exists(sr.fp_csv_fields_keep_experimental_design_multi_sector):
+	fields_keep_ed = pd.read_csv(sr.fp_csv_fields_keep_experimental_design_multi_sector)
+	#fill na
+	fields_keep_ed = fields_keep_ed.fillna(0)
+	#dictionary of keep fields
+	dict_fields_keep_export = {}
+	#update types
+	for field in [x for x in fields_keep_ed.columns if x != "field"]:
+		fields_keep_ed[field] = np.array(fields_keep_ed[field]).astype(int)
+		#string to add to dictionary
+		str_dict = field.lower().replace("include_", "").replace("_file", "")
+		#extraction fields
+		fields_ext = list(fields_keep_ed[fields_keep_ed[field] == 1]["field"])
+		#check for values in the experimental design that are not specified, and default to include them
+		fields_not_included = list(set(exp_design.columns) - set(fields_keep_ed[field]))
+		#add in
+		fields_ext = fields_ext + fields_not_included
+		#update
+		dict_fields_keep_export.update({str_dict: fields_ext})
+else:
+	#update types
+	for f_type in ["all", "diff"]:
+		#set field
+		field = "include_" + f_type + "_file"
+		#extraction fields
+		fields_ext = list(exp_design.columns)
+		#update
+		dict_fields_keep_export.update({str_dict: fields_ext})
 
 
 #file path out for experimental design

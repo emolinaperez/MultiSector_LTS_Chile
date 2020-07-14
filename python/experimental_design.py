@@ -628,12 +628,6 @@ print("Starting export of proportional change ranges file to " + sr.fp_csv_range
 df_out["households"] = np.round(np.array(df_out["total_population"]).astype(float)/np.array(df_out["occ_rate"]).astype(float)).astype(int)
 #set
 fields_append = set({"households"})
-#fields attribute
-df_attribute_af = pd.read_csv(sr.fp_csv_attribute_param_fields)
-#update field to lower case
-df_attribute_af["field"] = [x.lower() for x in df_attribute_af["field"]]
-#lever fields
-fields_lever = set(df_attribute_af[df_attribute_af["type"] == "lever"]["field"])
 #fields id
 fields_id = [x for x in df_out.columns if "_id" in x or x == "year"]
 fields_data = [x for x in df_out.columns if x not in fields_id]
