@@ -24,7 +24,7 @@ def sm_industrial(df_in, dict_gdp_field):
 		vec_total_emit = vec_total_emit + vec_emit
 		#update dictionary
 		dict_out.update({field_emit: vec_emit})
-		
+	
 	#cement
 	prod = "cemento"
 	field_emit = "emissions_industry_indproc_" + prod + "_MT_co2e"
@@ -38,6 +38,7 @@ def sm_industrial(df_in, dict_gdp_field):
 	vec_emit = vec_prod*np.array(df_in[field_factor])/1000
 	#add to total
 	vec_total_emit = vec_total_emit + vec_emit
+
 	#update emissions
 	dict_out.update({
 		field_prod: vec_prod,

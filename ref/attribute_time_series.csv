@@ -1,4 +1,4 @@
-time_series_id,time_series_name,time_series_description,growth_rate_average
-0,Base Growth,Historical economic and population data up to 2018. Baseline projections from GEM baseline growth scenario afterwards.,0.034
-1,Low Growth,Historical economic and population data up to 2018. Low growth projections from GEM baseline growth scenario afterwards.,0.02
-2,High Growth,Historical economic and population data up to 2018. High growth projections from GEM baseline growth scenario afterwards.,0.04
+time_series_id,time_series_name,time_series_description
+0,Base Growth,Historical economic and population data up to 2018. Baseline projections from GEM baseline growth scenario afterwards.
+1,Low Growth,Historical economic and population data up to 2018. Low growth projections from GEM baseline growth scenario afterwards.
+2,High Growth,Historical economic and population data up to 2018. High growth projections from GEM baseline growth scenario afterwards.

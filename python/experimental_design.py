@@ -44,7 +44,7 @@ print("Check: n_lhs = " + str(n_lhs))
 #read in uncertainty table for additional sectors
 parameter_table_additional_sectors = pd.read_csv(sr.fp_csv_parameter_ranges)
 #reduce
-parameter_table_additional_sectors = parameter_table_additional_sectors[parameter_table_additional_sectors["type"].isin(["activity", "lever", "parameter"])]
+parameter_table_additional_sectors = parameter_table_additional_sectors[parameter_table_additional_sectors["type"].isin(["incertidumbre", "accion"])]
 #clean names
 parameter_table_additional_sectors = parameter_table_additional_sectors.rename(columns = {"time_series_id": "time_series_id", "strategy_id": "strategy_id"})
 #add field
@@ -80,7 +80,7 @@ group_id = group_id.reset_index(drop = True)
 
 #temporary data frame to build lever group id with
 group_id_tmp = group_id[["type", "norm_group_id"]].drop_duplicates()
-group_id_tmp = group_id_tmp[group_id_tmp["type"].isin(["Lever", "lever"])]
+group_id_tmp = group_id_tmp[group_id_tmp["type"].isin(["Accion", "accion"])]
 group_id_tmp["lever_group_id"] = range(1, len(group_id_tmp) + 1)
 if "lever_group_id" not in group_id.columns:
     group_id = pd.merge(group_id, group_id_tmp[["norm_group_id", "lever_group_id"]], how = "left", left_on = ["norm_group_id"], right_on = ["norm_group_id"])
