@@ -6,7 +6,7 @@ import numpy as np
 ################################
 
 def sm_agriculture(df_in, all_ag, area):
-  	
+
 	#initialize dict of output
 	dict_out = {}
 	#initialize total
@@ -23,16 +23,18 @@ def sm_agriculture(df_in, all_ag, area):
 		vec_emit = area*(np.array(df_in[field_area])*np.array(df_in[field_ef])*(10**(-6))).astype(float)
 		#conver to MT
 		vec_emit = vec_emit/1000
-		
+
 		#add to dictionary
 		dict_out.update({
 			field_emit: vec_emit
 		})
 		#update
 		vec_total_emit = vec_total_emit + vec_emit
-	
+
 	#add to dictionary
 	dict_out.update({"emissions_agriculture_crops_total_MT_co2e": vec_total_emit})
 
     #return
 	return dict_out
+
+    #comment 
