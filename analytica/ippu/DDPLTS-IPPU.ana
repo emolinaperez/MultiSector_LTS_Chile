@@ -5224,8 +5224,8 @@ ValueState: 2,68,74,468,261,,MIDM
 Close Indicadores
 
 Index pyparams
-Definition: ['param_1','param_2','param_3']
-Att_PrevIndexValue: ['param_1','param_2','param_3']
+Definition: ['ippu_param_1', 'ippu_param_2', 'ippu_param_3']
+Att_PrevIndexValue: ['ippu_param_1','ippu_param_2','ippu_param_3']
 
 Constant pyparams_interface
 Definition: Table(Time,pyparams)(~
