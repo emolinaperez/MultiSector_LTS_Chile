@@ -149,6 +149,11 @@ def data_to_wide(df_in, field_wide_by, field_value, fields_index, clean_names_q 
 def sigmoid(x, m, b):
     return 1/(1 + np.e**(m - x/b))
 
+#basic function for building dictionary
+def build_dict(df_in):
+	#output dictionary
+	return dict([tuple(df_in.iloc[i]) for i in range(len(df_in))])
+
 def build_mix_vec(m, b, w_sigm = 0.75, type = "sigmoid"):
 
     #number of years for mixing

@@ -1,0 +1,3235 @@
+{ Analytica Model Sector_UTCUTS, encoding="UTF-8" }
+SoftwareVersion 5.4.6ade
+
+
+{ System Variables with non-default values: }
+Time := Sequence(2017, 2050, 1)
+Units Time: año
+NodeLocation Time: 112,64,1
+NodeSize Time: 48,24
+NodeInfo Time: 1,,,,,,,0,,,,,,0
+WindState Time: 2,0,0,720,350
+SampleSize := 1000
+NodeLocation SampleSize: 240,64,1
+NodeSize SampleSize: 48,24
+NodeInfo SampleSize: 1,,,,,,,0,,,,,,0
+TypeChecking := 1
+Checking := 1
+SaveOptions := 2
+SaveValues := 0
+NodeLocation SampleWeighting: 368,64,1
+NodeSize SampleWeighting: 48,24
+NodeInfo SampleWeighting: 1,,,,,,,0,,,,,,0
+{!40200|NodeLocation EnableComplexNumbers: 112,128,1}
+{!40200|NodeSize EnableComplexNumbers: 48,24}
+{!40200|NodeInfo EnableComplexNumbers: 1,,,,,,,0,,,,,,0}
+{!40400|Sys_WindowsMaximized := 1}
+{!40500|NodeLocation TextLocale: 240,128,1}
+{!40500|NodeSize TextLocale: 48,24}
+{!40500|NodeInfo TextLocale: 1,,,,,,,0,,,,,,0}
+{!40600|NodeLocation MaxEvaluationThreads: 368,128,1}
+{!40600|NodeSize MaxEvaluationThreads: 48,24}
+{!40600|NodeInfo MaxEvaluationThreads: 1,,,,,,,0,,,,,,0}
+{!40600|NodeLocation MaxModelThreads: 112,192,1}
+{!40600|NodeSize MaxModelThreads: 48,24}
+{!40600|NodeInfo MaxModelThreads: 1,,,,,,,0,,,,,,0}
+{!50000|NodeLocation DecimalForCopyPaste: 240,192,1}
+{!50000|NodeSize DecimalForCopyPaste: 48,24}
+{!50000|NodeInfo DecimalForCopyPaste: 1,,,,,,,0,,,,,,0}
+NodeLocation Sys_ComparisonTolera: 368,192,1
+NodeSize Sys_ComparisonTolera: 48,24
+NodeInfo Sys_ComparisonTolera: 1,,,,,,,0,,,,,,0
+{!50400|Sys_UseLegacyColors := 1}
+
+{!-50299|DiagramColor Model: 65535,65535,65535}
+{!-50299|DiagramColor Module: 65535,65535,65535}
+{!-50299|DiagramColor LinkModule: 65535,65535,65535}
+{!-50299|DiagramColor Library: 65535,65535,65535}
+{!-50299|DiagramColor LinkLibrary: 65535,65535,65535}
+{!-50299|DiagramColor Form: 65535,65535,65535}
+NodeInfo FormNode: 1,0,0,,0,0,,,,0,,,0
+NodeColor Text: 65535,65535,65535
+
+
+AskAttribute Value,Variable,Yes
+
+Model Sector_UTCUTS
+Title: Sector UTCUTS
+Description: Modelo de proyección de emisiones GEI para el sector Uso de la tierra, cambio de uso de la tierra y silvicultura hasta el año 2050
+Author: lunam
+Date: mar., sept. 15, 2020 10:28 a. m.
+DiagState: 2,0,0,624,304,17
+WindState: 2,130,85,720,350
+DiagramColor: 52428,52428,52428
+FontStyle: Arial,15
+FileInfo: 0,Model Sector_UTCUTS,2,2,0,0,C:\Users\jsyme\Documents\Projects\SWCHE076-1000\ade_beta\analytica\forestry\Sector UTCUTS - Unificado.ana
+
+Module Indices
+Title: Indices
+Author: lunam
+Date: mar., sept. 15, 2020 10:28 a. m.
+NodeLocation: 104,224,1
+NodeSize: 48,24
+DiagState: 2,0,0,624,304,17
+
+Index Year
+Att_PrevIndexValue: [1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030,2031,2032,2033,2034,2035,2036,2037,2038,2039,2040,2041,2042,2043,2044,2045,2046,2047,2048,2049,2050]
+Title: Year
+Definition: Sequence(1990, 2050,1)
+NodeLocation: 120,112,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+
+Index Medidas
+Title: Medidas
+Definition: ['Sin medida','Forestacion','Manejo']
+NodeLocation: 120,176,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+{!40300|Att_SlicerPopupSize: 227,80}
+
+Index CatTF_1
+Title: CatTF_1
+Definition: ['Cosecha','Leña','Perturbaciones','Quema']
+NodeLocation: 120,256,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+
+Index CatTF_2
+Title: CatTF_2
+Definition: ['Aumento Biomasa','Perdida Biomasa','Cambio de vegetacion']
+NodeLocation: 120,320,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+
+Index CatTF_3
+Title: CatTF_3
+Definition: ['4.A.1','4.A.2']
+NodeLocation: 120,384,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+
+Constant Medida_manejo
+Title: Medida_manejo
+Definition: Table(Time,Tipo_Forestal)(~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,10K,0,0,~
+0,20K,0,0,~
+0,35K,0,0,~
+0,50K,0,0,~
+0,65K,0,0,~
+0,80K,0,0,~
+0,110K,0,0,~
+0,140K,0,0,~
+0,170K,0,0,~
+0,200K,0,0,~
+0,200K,0,0,~
+0,200K,0,0,~
+0,200K,0,0,~
+0,200K,0,0,~
+0,200K,0,0,~
+0,200K,0,0,~
+0,200K,0,0,~
+0,200K,0,0,~
+0,200K,0,0,~
+0,200K,0,0,~
+0,200K,0,0,~
+0,200K,0,0,~
+0,200K,0,0,~
+0,200K,0,0,~
+0,200K,0,0,~
+0,200K,0,0,~
+0,200K,0,0,~
+0,200K,0,0,~
+0,200K,0,0,~
+0,200K,0,0)
+NodeLocation: 320,112,1
+NodeSize: 72,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+ReformDef: [Time,Tipo_Forestal]
+
+Constant Medida_forestacion
+Title: Medida_forestacion
+Definition: Table(Time,Conv_tierras)(~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+6000,2000,~
+12K,4000,~
+18K,6000,~
+24K,8000,~
+30K,10K,~
+38K,14K,~
+46K,18K,~
+54K,22K,~
+62K,26K,~
+70K,30K,~
+70K,30K,~
+70K,30K,~
+70K,30K,~
+70K,30K,~
+70K,30K,~
+70K,30K,~
+70K,30K,~
+70K,30K,~
+70K,30K,~
+70K,30K,~
+70K,30K,~
+70K,30K,~
+70K,30K,~
+70K,30K,~
+70K,30K,~
+70K,30K,~
+70K,30K,~
+70K,30K,~
+70K,30K,~
+70K,30K)
+NodeLocation: 320,168,1
+NodeSize: 80,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+ReformDef: [Time,Conv_tierras]
+
+Index Gas_GEI
+Att_PrevIndexValue: ['CO2','CH4','N2O']
+Title: Gas_GEI
+Definition: ['CO2','CH4','N2O']
+NodeLocation: 120,56,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+
+Index Uso_previo
+Att_PrevIndexValue: ['Forestal','Pastizales','Cultivos','Humedales','Asentamientos','Otras tierras']
+Title: Uso previo
+Description: Uso de suelo previo al cambio, utilizado para los puntos 4.B.2, 4.C.2, 4.D.2, 4.E.2 y 4.F.2
+Definition: ['Forestal','Pastizales','Cultivos','Humedales','Asentamientos','Otras tierras']
+NodeLocation: 112,464,1
+NodeSize: 56,32
+WindState: 2,0,0,720,350
+
+Index Uso_Actual1
+Att_PrevIndexValue: ['4.A Forestal','4.B Cultivo','4.C Pastizal','4.D Humedal','4.E Asentamientos','4.F Otras tierras']
+Title: Uso Actual
+Description: Determina el uso actual del suelo, usado en los puntos 4.B.1, 4.B.2, 4.C.1, 4.C.2, 4.D.1, 4.D.2, 4.E.1, 4.E.2, 4.F.1 y 4.F.2
+Definition: ['4.A Forestal','4.B Cultivo','4.C Pastizal','4.D Humedal','4.E Asentamientos','4.F Otras tierras']
+NodeLocation: 112,544,1
+NodeSize: 56,32
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+{!40300|Att_SlicerPopupSize: 237,112}
+
+Index Tipo_de_cobertura1
+Att_PrevIndexValue: ['Cultivos','matorrales incendiados','pastizales sin matorrales']
+Title: Tipo de cobertura
+Description: tipos de coberturas incendiadas con información disponible.
+Definition: ['Cultivos','matorrales incendiados','pastizales sin matorrales']
+IndexVals: ['item 1']
+NodeLocation: 112,624,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+
+Constant GWP_Gases
+Title: GWP Gases
+Units: ton CO2 eq / ton GEI
+Definition: Table(Gas_GEI)(-44/12,25,298)
+NodeLocation: 280,544,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+
+Index pyparams
+Definition: ['pyparam_medida_forestacion', 'pyparam_medida_manejo', 'pyparam_superficie_convertida']
+Att_PrevIndexValue: ['pyparam_medida_forestacion','pyparam_medida_manejo','pyparam_superficie_convertida']
+
+Constant pyparams_interface
+Definition: Table(Time,pyparams)(~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+333.3333333333333,666.6666666666666,0.03333333333333333,~
+666.6666666666666,1333.3333333333333,0.06666666666666667,~
+1000,2000,0.1,~
+1333.3333333333333,2666.6666666666665,0.13333333333333333,~
+1666.6666666666665,3333.333333333333,0.16666666666666666,~
+2000,4000,0.2,~
+2333.3333333333335,4666.666666666667,0.23333333333333334,~
+2666.6666666666665,5333.333333333333,0.26666666666666666,~
+3000,6000,0.3,~
+3333.333333333333,6666.666666666666,0.3333333333333333,~
+3666.6666666666665,7333.333333333333,0.36666666666666664,~
+4000,8000,0.4,~
+4333.333333333333,8666.666666666666,0.43333333333333335,~
+4666.666666666667,9333.333333333334,0.4666666666666667,~
+5000,10K,0.5,~
+5333.333333333333,10.666666666666666K,0.5333333333333333,~
+5666.666666666667,11.333333333333334K,0.5666666666666667,~
+6000,12K,0.6,~
+6333.333333333333,12.666666666666666K,0.6333333333333333,~
+6666.666666666666,13.333333333333332K,0.6666666666666666,~
+7000,14K,0.7,~
+7333.333333333333,14.666666666666666K,0.7333333333333333,~
+7666.666666666667,15.333333333333334K,0.7666666666666667,~
+8000,16K,0.8,~
+8333.333333333334,16.666666666666668K,0.8333333333333334,~
+8666.666666666666,17.333333333333332K,0.8666666666666667,~
+9000,18K,0.9,~
+9333.333333333334,18.666666666666668K,0.9333333333333333,~
+9666.666666666666,19.333333333333332K,0.9666666666666667,~
+10K,20K,1)
+
+Close Indices
+
+Module A4_A__Tierras_Forest
+Title: 4.A. Tierras Forestales 
+Author: lunam
+Date: mar., sept. 15, 2020 10:28 a. m.
+NodeLocation: 384,72,1
+NodeSize: 72,40
+DiagState: 2,0,0,624,304,17
+
+Module A4_A_1__Tierras_fore
+Title: 4.A.1. Tierras forestales que permanecen como tales
+Author: lunam
+Date: mar., sept. 15, 2020 10:28 a. m.
+NodeLocation: 208,136,1
+NodeSize: 64,40
+DiagState: 2,0,0,624,304,17
+
+Index Tipo_Forestal
+Title: Tipo_Forestal
+Description: Subcategorías de emisión para aumento de biomasa en Tierras Forestales que permanecen como tal: 4.A.1.a.i. Bosque Nativo (Renovales, Planes de Manejo, Parques y Reservas) y 4.A.1.a.ii.Plantaciones 
+Definition: ['Renovales','Planes_manejo','Parques_reservas','Plantaciones']
+NodeLocation: 96,144,1
+NodeSize: 64,24
+WindState: 2,0,0,720,350
+{!40300|Att_SlicerPopupSize: 227,96}
+Att_PrevIndexValue: ['Renovales','Planes_manejo','Parques_reservas','Plantaciones']
+
+Index Especie_trozas
+Att_PrevIndexValue: ['Pinus_radiata','Eucalyptus_ssp','Otras_exoticas','Esp_nativas']
+Title: Especie_trozas
+Description: Categoría a la que pertenecen las trozas para 4.A.1.b.i.Cosecha
+Definition: ['Pinus_radiata','Eucalyptus_ssp','Otras_exoticas','Esp_nativas']
+NodeLocation: 96,200,1
+NodeSize: 72,24
+WindState: 2,0,0,720,350
+
+Index Origen_Bosque
+Att_PrevIndexValue: ['Nativo','Exotico_plantacion']
+Title: Origen_Bosque
+Description: Origen de las hectáreas consumidas por incendios forestales y de los volumenes recolectados para leña, en  4.A.1.b.ii. Leña (Bosque nativo/especies exóticas) y  4.A.1.b.iii.1.Incendios (Bosque nativo/Plantaciones).
+Definition: ['Nativo','Exotico_plantacion']
+NodeLocation: 96,256,1
+NodeSize: 72,24
+WindState: 2,0,0,720,350
+
+Index Quema
+Title: Quema
+Description: Categoría de perdida de biomasa asociada a 4.A.1.b.iv.Quema controlada de residuos forestales 
+Definition: ['Quema']
+NodeLocation: 96,320,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+
+Index Cambio_veg
+Att_PrevIndexValue: ['Restitucion','Sustitucion']
+Title: Cambio_veg
+Description: Categorías de cambio en la vegetación asociadas a 4.A.1.c. Tierras forestales con cambio de vegetación. Sustitución corresponde a cambio de bosque nativo por plantación, y Restitución corresponde a cambio de plantación por bosque nativo 
+Definition: ['Restitucion','Sustitucion']
+NodeLocation: 88,376,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+
+Variable Proyeccion_LB
+Title: Proyeccion_LB
+Units: ha
+Description: Proyección de la superficie por tipo forestal para el periodo 2017-2050, considerando un factor de crecimiento de 0.9 en ha(t1) = ha(t-1)+0.9*(ha(t-1)-ha(t-2))
+Definition: dynamic(Sup_historica[Year=2016]+0.9*(Sup_historica[Year=2016]-Sup_historica[Year=2015]), self[time-1]+0.9*(self[time-1]-Sup_historica[Year=2016]), self[time-1]+0.9*(self[time-1]-self[time-2]))
+NodeLocation: 480,56,1
+NodeSize: 96,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+
+Constant Sup_historica
+Title: Sup_historica
+Units: ha
+Description: Superficie por Tipo forestal para el periodo histórico (1990-2016)
+Definition: Table(Year,Tipo_Forestal)(~
+4.487884M,157.798K,1.845445M,1.46053M,~
+4.487319M,238.736K,1.845285M,1.555255M,~
+4.486634M,330.869K,1.845122M,1.572144M,~
+4.485981M,405.308K,1.84496M,1.694104M,~
+4.485215M,485.382K,1.844782M,1.747523M,~
+4.484555M,570.23K,1.844606M,1.818185M,~
+4.483966M,646.97K,1.844462M,1.835985M,~
+4.483286M,715.017K,1.844273M,1.881925M,~
+4.482432M,789.257K,1.84404M,1.914846M,~
+4.48159M,854.615K,1.84376M,1.952288M,~
+4.480842M,910.643K,1.843534M,1.989101M,~
+4.480134M,965.409K,1.843319M,2.037403M,~
+4.479409M,1.008991M,1.84314M,2.073661M,~
+4.478699M,1.036606M,1.842955M,2.04643M,~
+4.477993M,1.059133M,1.842752M,2.078649M,~
+4.47726M,1.077405M,1.842544M,2.082502M,~
+4.47656M,1.093864M,1.84235M,2.194495M,~
+4.475881M,1.106969M,1.84217M,2.255779M,~
+4.475155M,1.121489M,1.841957M,2.256242M,~
+4.474452M,1.132626M,1.841751M,2.320346M,~
+4.473677M,1.143276M,1.841513M,2.341851M,~
+4.47279M,1.158241M,1.841235M,2.394916M,~
+4.471812M,1.174437M,1.840929M,2.414389M,~
+4.470865M,1.196175M,1.840646M,2.44759M,~
+4.469894M,1.216926M,1.840351M,2.426722M,~
+4.468805M,1.242895M,1.839996M,2.396562M,~
+4.46762M,1.271748M,1.839338M,2.414208M,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0)
+NodeLocation: 280,56,1
+NodeSize: 64,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+ReformDef: [Year,Tipo_Forestal]
+
+Variable EM_aumentoB
+Title: EM_aumentoB
+Units: kCO2eq
+Description: Emision total asociada al aumento de biomasa, para el periodo completo 1990-2050. La emisión se encuentra separada por tipo de gas GEI, sin embargo en esta categoría solo se presentan emisiones de CO2
+Definition: if Gas_GEI='CO2' then~
+var futuro:=(FE_biomasa*Proyeccion_sup);~
+var consolidado:= if year=time then futuro[time=year] else 0;~
+if year>2016 then sum(consolidado,time) else EM_aumbio_H~
+else 0
+NodeLocation: 888,120,1
+NodeSize: 88,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformVal: [Year,Tipo_Forestal]
+Att__TotalsIndex: [Tipo_Forestal]
+Att_ResultSliceState: [Medidas,2,Gas_GEI,1,Tipo_Forestal,1,Year,1]
+
+Constant FE_cosecha
+Title: FE_cosecha
+Units: ktonCO2/km3
+Description: Factor de emisión de CO2 asociada a la cosecha de trozas, en kton por miles de m3 
+Definition: Table(Especie_trozas)(1.33,1.95,1.68,1.93)
+NodeLocation: 280,224,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+
+Constant Cosecha_historica
+Title: Cosecha_historica
+Units: m3
+Definition: Table(Year,Especie_trozas)(~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+18.8063M,3.9872M,166.9K,1.4764M,~
+20.3846M,3.9746M,181.1K,1.1416M,~
+20.1879M,4.3887M,160.6K,753.8K,~
+22.0875M,4.5961M,161.6K,645.8K,~
+25.8016M,5.3412M,231.5K,623.7K,~
+25.7291M,5.9467M,332.4K,649.1K,~
+25.5394M,6.7695M,378.7K,535.6K,~
+27.495M,10.0577M,347.3K,515.5K,~
+26.9526M,12.0551M,346.5K,514.9K,~
+24.7589M,10.9104M,327.8K,410.8K,~
+22.8889M,10.8796M,366.5K,424.6K,~
+26.2117M,12.2092M,364.2K,366.2K,~
+26.4208M,11.8264M,493.9K,334.2K,~
+28.8646M,11.4475M,412.8K,315.3K,~
+30.5358M,11.6353M,422.4K,266.2K,~
+30.6885M,12.0963M,470.4K,378.9K,~
+30.847M,13.0189M,389.9K,300.2K,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0)
+NodeLocation: 432,224,1
+NodeSize: 80,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+ReformDef: [Year,Especie_trozas]
+
+Constant Lena_historica
+Title: Leña_historica
+Units: m3
+Description: Volúmenes de leña cosechada por origen de la misma, para el periodo 1990-2050
+Definition: Table(Year,Origen_Bosque)(~
+4.447151442213597M,3.6153307323846417M,~
+4.973132126380598M,4.042928972925585M,~
+5.516113969532046M,4.484348378174162M,~
+5.112952002856112M,4.156596137848696M,~
+5.362810415241284M,4.359719599862239M,~
+5.734315051394458M,4.661735878318321M,~
+6.147384590030291M,4.997542521525131M,~
+6.119889612224416M,4.975190362049685M,~
+6.569247831589111M,5.340498043028993M,~
+6.807967553605165M,5.5345662591996025M,~
+7.111584803192873M,5.781393197202453M,~
+7.097573503202244M,5.770002651115817M,~
+7.211070895594947M,5.8622708403364215M,~
+6.824499715100382M,5.54800615039806M,~
+7.206967167564217M,5.858934697131132M,~
+7.687044722473219M,6.24921579296147M,~
+7.9072976683509955M,6.428271364708276M,~
+8.33150589735595M,6.773133253758016M,~
+8.547948238633767M,6.949090978242765M,~
+8.571925735270446M,6.968583586399389M,~
+7.418778158635928M,6.031127345712768M,~
+9.378777290797696M,7.091162032318206M,~
+6.053081348519536M,7.804241317231714M,~
+6.0808018530007815M,7.784911579302454M,~
+6.115847224457218M,7.909858296270804M,~
+6.147028698940921M,7.900133499506194M,~
+6.182405005830577M,7.991269255696685M,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0)
+NodeLocation: 288,408,1
+NodeSize: 64,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+ReformDef: [Year,Origen_Bosque]
+
+Variable Proyeccion_cosecha
+Title: Proyeccion_cosecha
+Units: m3
+Description: Proyección de volúmenes cosechados para el periodo 2017-2050, según vol(t) = vol (t-1)+FC*(vol(t-1)-vol(t-2))
+Definition: dynamic(Cosecha_historica[Year=2016]+FC_cosecha*(Cosecha_historica[Year=2016]-Cosecha_historica[Year=2015]), self[time-1]+FC_cosecha*(self[time-1]-Cosecha_historica[Year=2016]), self[time-1]+FC_cosecha*(self[time-1]-self[time-2]))~
+
+NodeLocation: 624,288,1
+NodeSize: 88,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+
+Variable Proyeccion_lena
+Title: Proyeccion_leña
+Units: m3
+Description: Proyección de los volúmenes de leña recolectadas por tipo, para el periodo 2017-2050, según vol(t)=vol(t-1)+0.9*(vol(t-1)-vol(t-2))
+Definition: dynamic(Lena_historica[Year=2016]+0.9*(Lena_historica[Year=2016]-Lena_historica[Year=2015]), self[time-1]+0.9*(self[time-1]-Lena_historica[Year=2016]), self[time-1]+0.9*(self[time-1]-self[time-2])) 
+NodeLocation: 456,352,1
+NodeSize: 72,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+
+Variable EM_cosecha
+Title: EM_cosecha
+Units: ktonCO2eq
+Description: Emisiones totales asociadas a cosecha de volúmenes forestales, para el periodo 1990-2050. Las emisiones se encuentran separadas por tipo de gas GEI, sin embargo esta categoría solo registra emisiones para CO2 
+Definition: if Gas_GEI='CO2' then var futuro:=((Proyeccion_cosecha/1000)*FE_cosecha);~
+var consolidado:= if year=time then futuro[time=year] else 0;~
+if year>2016 then sum(consolidado,time) else EM_cos_H~
+else 0
+NodeLocation: 736,224,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+Att__TotalsIndex: [Especie_trozas]
+Att_ResultSliceState: [Gas_GEI,1,Especie_trozas,1,Year,1]
+
+Variable EM_lena
+Title: EM_leña
+Units: ktonCO2eq
+Description: Emisiones totales asociadas a la recolección de leña, para el periodo completo 1990-2050. Las emisiones se encuentran en kton de CO2eq, separadas por gas GEI, sin embargo para esta categoría solo se registran emisiones de CO2
+Definition: if Gas_GEI='CO2' then var futuro:=((((Proyeccion_lena*BEF*D*(1+R))*0.5)*(44/12))/1000);~
+var consolidado:= if year=time then futuro[time=year] else 0;~
+if year>2016 then sum(consolidado,time) else EM_lena_H~
+else 0~
+
+NodeLocation: 704,352,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformVal: [Year,Origen_Bosque]
+Att__TotalsIndex: [Origen_Bosque]
+Att_ResultSliceState: [Gas_GEI,1,Origen_Bosque,1,Year,1]
+
+Constant Proy_incendios
+Title: Proy_incendios
+Definition: Table(Time,Origen_Bosque)(~
+10.737640037037034K,12.956354355555559K,~
+10.737640037037034K,13.347272665020579K,~
+10.737640037037034K,13.623054245206527K,~
+10.737640037037034K,14.058500328362325K,~
+10.737640037037034K,14.192883673857224K,~
+10.737640037037034K,14.365508624740827K,~
+10.737640037037034K,14.703589314546041K,~
+10.737640037037034K,15.007400400269968K,~
+10.737640037037034K,15.022667081761449K,~
+10.737640037037034K,15.469216973678538K,~
+10.737640037037034K,14.690334639370336K,~
+10.737640037037034K,15.120066292680349K,~
+10.737640037037034K,15.621009488705546K,~
+10.737640037037034K,15.375792062361306K,~
+10.737640037037034K,15.722968435041354K,~
+10.737640037037034K,15.90506319189474K,~
+10.737640037037034K,16.21747108789084K,~
+10.737640037037034K,16.75142668373865K,~
+10.737640037037034K,16.444415449803048K,~
+10.737640037037034K,16.738113429425382K,~
+10.737640037037034K,16.555541334218913K,~
+10.737640037037034K,16.590999902152947K,~
+10.737640037037034K,16.807520639269722K,~
+10.737640037037034K,16.227779922205638K,~
+10.737640037037034K,16.71917547487992K,~
+10.737640037037034K,16.082271222097697K,~
+10.737640037037034K,15.081738337730942K,~
+10.737640037037034K,15.385116120609864K,~
+10.737640037037034K,15.47507026005632K,~
+10.737640037037034K,15.553877578390979K,~
+10.737640037037034K,15.625389553694105K,~
+10.737640037037034K,15.683422487965654K,~
+10.737640037037034K,15.738627629228928K,~
+10.737640037037034K,15.789483888654413K)
+NodeLocation: 472,464,1
+NodeSize: 88,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+ValueState: 2,40,50,400,300,0,MIDM
+ReformDef: [Time,Origen_Bosque]
+
+Variable EM_perturbaciones
+Title: EM_perturbaciones
+Definition: if Gas_GEI='CO2' then ~
+var futuro:=(Proy_incendios*FE_CO2);~
+var consolidado:= if year=time then futuro[time=year] else 0;~
+if year>2016 then sum(consolidado,time) else CO2_incendioH~
+else if Gas_GEI='CH4' then~
+var futuro:=(Proy_incendios*FE_CH4)*25;~
+var consolidado:= if year=time then futuro[time=year] else 0;~
+if year>2016 then sum(consolidado,time) else CH4_incendioH~
+else~
+var futuro:=(Proy_incendios*FE_N2O)*298;~
+var consolidado:= if year=time then futuro[time=year] else 0;~
+if year>2016 then sum(consolidado,time) else N2O_incendioH~
+
+NodeLocation: 696,448,1
+NodeSize: 80,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformVal: [Year,Origen_Bosque]
+Att__TotalsIndex: []
+Att_ResultSliceState: [Gas_GEI,1,Origen_Bosque,2,Year,1]
+
+Variable EM_perdidaB
+Title: EM_perdidaB
+Units: ktonCO2eq
+Description: Consolidado de emisiones para la categoría de pérdida de biomasa, para cada tipo de gas GEI, en unidades de CO2eq
+Definition: if CatTF_1='Cosecha' then sum(EM_cosecha,Especie_trozas) else if CatTF_1='Leña' then sum(EM_lena,Origen_bosque) else if CatTF_1='Perturbaciones' then sum(EM_perturbaciones,Origen_bosque) else sum(EM_quema,Quema)
+NodeLocation: 928,352,1
+NodeSize: 64,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+Att__TotalsIndex: [CatTF_1]
+Att_ResultSliceState: [Gas_GEI,1,CatTF_1,1,Year,1]
+
+Constant FE_rest_sust
+Title: FE_rest_sust
+Units: ktonCO2/ha
+Description: Emisiónes asociadas al cambio de vegetación dentro de las tierras forestales, en ktonCO2/ha
+Definition: Table(Cambio_veg)(-3.0382184197757407m,-0.026519156250725606)
+NodeLocation: 304,632,1
+NodeSize: 64,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+
+Constant Proy_rest_sust
+Title: Proy_rest_sust
+Units: ha
+Description: Proyección de la superficie de Restitución y Sustitución, estimada como un promedio de los últimos 5 años
+Definition: Table(Time,Cambio_veg)(~
+40.0554K,115.5K,~
+37.29816K,111.45K,~
+34.81664400000001K,107.805K,~
+32.583279600000013K,104.5245K,~
+30.573251640000017K,101.57205K,~
+28.76422647600002K,98.914845K,~
+27.136103828400024K,96.5233605K,~
+25.670793445560026K,94.37102445K,~
+24.352014101004028K,92.433922005K,~
+23.16511269090363K,90.69052980450001K,~
+22.09690142181327K,89.12147682405001K,~
+21.135511279631944K,87.70932914164502K,~
+20.270260151668754K,86.43839622748054K,~
+19.491534136501883K,85.2945566047325K,~
+18.7906807228517K,84.26510094425926K,~
+18.159912650566534K,83.33859084983334K,~
+17.592221385509885K,82.50473176485002K,~
+17.0812992469589K,81.75425858836502K,~
+16.621469322263016K,81.07883272952851K,~
+16.207622390036719K,80.47094945657566K,~
+15.835160151033051K,79.9238545109181K,~
+15.49994413592975K,79.4314690598263K,~
+15.19824972233678K,78.98832215384368K,~
+14.926724750103109K,78.58948993845932K,~
+14.682352275092804K,78.23054094461339K,~
+14.46241704758353K,77.90748685015205K,~
+14.264475342825184K,77.61673816513686K,~
+14.086327808542672K,77.35506434862319K,~
+13.92599502768841K,77.11955791376087K,~
+13.781695524919574K,76.9076021223848K,~
+13.651825972427621K,76.71684191014632K,~
+13.534943375184863K,76.5451577191317K,~
+13.42974903766638K,76.39064194721855K,~
+13.335074133899747K,76.25157775249671K)
+NodeLocation: 552,632,1
+NodeSize: 88,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+ValueState: 2,40,50,400,300,0,MIDM
+ReformDef: [Time,Cambio_veg]
+
+Constant FC_cosecha
+Title: FC_cosecha
+Units: s/u
+Description: Factor de crecimiento para la proyección de volúmenes cosechados, en vol(t) = vol (t-1)+FC*(vol(t-1)-vol(t-2))
+Definition: Table(Especie_trozas)(0.9,0.9,-0.5,0.7)
+NodeLocation: 280,288,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+
+Constant FE_biomasa
+Title: FE_biomasa
+Units: ktonCO2/ha
+Description: Valores de factores de emisión por hectárea para la categoría de aumento de biomasa, para cada tipo forestal para el periodo 2017-2050
+Definition: Table(Time,Tipo_Forestal)(~
+-0.010925809857893532,-9.820673297188571m,-0.011011504312809187,-0.019689754591352093,~
+-0.010925809857893532,-9.820673297188571m,-0.011011504312809187,-0.019784452575152177,~
+-0.010925809857893532,-9.820673297188571m,-0.011011504312809187,-0.01986968076057225,~
+-0.010925809857893532,-9.820673297188571m,-0.011011504312809187,-0.019946386127450318,~
+-0.010925809857893532,-9.820673297188571m,-0.011011504312809187,-0.020015420957640577,~
+-0.010925809857893532,-9.820673297188571m,-0.011011504312809187,-0.02007755230481181,~
+-0.010925809857893532,-9.820673297188571m,-0.011011504312809187,-0.020133470517265918,~
+-0.010925809857893532,-9.820673297188571m,-0.011011504312809187,-0.020183796908474615,~
+-0.010925809857893532,-9.820673297188571m,-0.011011504312809187,-0.020229090660562443,~
+-0.010925809857893532,-9.820673297188571m,-0.011011504312809187,-0.020269855037441487,~
+-0.010925809857893532,-9.820673297188571m,-0.011011504312809187,-0.020306542976632626,~
+-0.010925809857893532,-9.820673297188571m,-0.011011504312809187,-0.02033956212190465,~
+-0.010925809857893532,-9.820673297188571m,-0.011011504312809187,-0.020369279352649476,~
+-0.010925809857893532,-9.820673297188571m,-0.011011504312809187,-0.020396024860319818,~
+-0.010925809857893532,-9.820673297188571m,-0.011011504312809187,-0.020420095817223125,~
+-0.010925809857893532,-9.820673297188571m,-0.011011504312809187,-0.020441759678436103,~
+-0.010925809857893532,-9.820673297188571m,-0.011011504312809187,-0.020461257153527784,~
+-0.010925809857893532,-9.820673297188571m,-0.011011504312809187,-0.0204788048811103,~
+-0.010925809857893532,-9.820673297188571m,-0.011011504312809187,-0.02049459783593456,~
+-0.010925809857893532,-9.820673297188571m,-0.011011504312809187,-0.020508811495276398,~
+-0.010925809857893532,-9.820673297188571m,-0.011011504312809187,-0.02052160378868405,~
+-0.010925809857893532,-9.820673297188571m,-0.011011504312809187,-0.02053311685275094,~
+-0.010925809857893532,-9.820673297188571m,-0.011011504312809187,-0.02054347861041114,~
+-0.010925809857893532,-9.820673297188571m,-0.011011504312809187,-0.02055280419230532,~
+-0.010925809857893532,-9.820673297188571m,-0.011011504312809187,-0.02056119721601008,~
+-0.010925809857893532,-9.820673297188571m,-0.011011504312809187,-0.02056875093734437,~
+-0.010925809857893532,-9.820673297188571m,-0.011011504312809187,-0.020575549286545227,~
+-0.010925809857893532,-9.820673297188571m,-0.011011504312809187,-0.020581667800826,~
+-0.010925809857893532,-9.820673297188571m,-0.011011504312809187,-0.020587174463678696,~
+-0.010925809857893532,-9.820673297188571m,-0.011011504312809187,-0.020592130460246123,~
+-0.010925809857893532,-9.820673297188571m,-0.011011504312809187,-0.020596590857156805,~
+-0.010925809857893532,-9.820673297188571m,-0.011011504312809187,-0.02060060521437642,~
+-0.010925809857893532,-9.820673297188571m,-0.011011504312809187,-0.020604218135874073,~
+-0.010925809857893532,-9.820673297188571m,-0.011011504312809187,-0.02060746976522196)
+NodeLocation: 488,120,1
+NodeSize: 64,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+ValueState: 2,40,50,400,300,0,MIDM
+ReformDef: [Time,Tipo_Forestal]
+
+Variable EM_cambioveg
+Title: EM_cambioveg
+Units: ktonCO2eq
+Description: Emisiones totales asociadas al cambio de vegetación en tierras forestales, para el periodo 1990-2050, para cada tipo de gas GEI. En este caso, solo se reportan emisiones de CO2
+Definition: if Gas_GEI='CO2' then ~
+var futuro:=(Proy_rest_sust*FE_rest_sust);~
+var consolidado:= if year=time then futuro[time=year] else 0;~
+if year>2016 then sum(consolidado,time) else EM_sust_rest_H~
+else 0
+NodeLocation: 896,632,1
+NodeSize: 64,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformVal: [Year,Cambio_veg]
+Att_ResultSliceState: [Gas_GEI,1,Cambio_veg,1,Year,1]
+
+Objective EM_permanecen
+Title: EM Tierras Forestales que permanecen como tales
+Units: ktonCO2eq
+Description: Emisiones totales asociadas a la categoría Tierras Forestales que permanecen como tales. Las emisiones se encuentran separadas por tipo de gas GEI, en unidades de CO2eq, y consideran situaciones con y sin las medidas propuestas
+Definition: if CatTF_2='Aumento Biomasa' then sum(EM_aumentoB,Tipo_Forestal) else if CatTF_2='Perdida Biomasa' then sum(EM_perdidaB,CatTF_1) else sum(EM_cambioveg,Cambio_veg)
+NodeLocation: 1184,352,1
+NodeSize: 64,40
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,1,MIDM
+ReformVal: [Year,Medidas]
+Att__TotalsIndex: []
+Att_ResultSliceState: [Time,1,Medidas,1,Gas_GEI,1,CatTF_2,1,Year,1]
+{!50000|Att_ColumnWidths: [,Year,\([,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,64])]}
+
+Variable Proyeccion_sup
+Title: Proyeccion_sup
+Units: ha
+Description: Superficie proyectada para el año 2017-2050, considerando situación Sin Medidas, con Medida de Forestación, y Medida de Manejo
+Definition: if Medidas='Sin medida' then Proyeccion_LB else if Medidas='Forestacion' then Proyeccion_LB else Proyeccion_LB+Medida_manejo
+NodeLocation: 688,56,1
+NodeSize: 72,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,1,MIDM
+ReformVal: [Year,Medidas]
+Att_ResultSliceState: [Tipo_Forestal,2,Medidas,1,Time,1]
+{!40600|Att_ClusterIndex: Year}
+
+Text Te1728267133
+Title: Indices Locales
+NodeLocation: 100,248,-1
+NodeSize: 84,160
+
+Text Te1736655741
+Title: Emisiones asociadas a Aumento de Biomasa
+NodeLocation: 612,88,-1
+NodeSize: 404,80
+
+Module FE_Lena
+Title: FE_Leña
+Author: lunam
+Date: mié., sept. 16, 2020 10:18 a. m.
+NodeLocation: 288,352,1
+NodeSize: 48,24
+DiagState: 2,0,0,624,304,17
+
+Constant R
+Title: R
+Units: s/u
+Description: Relación entre raíces y biomasa aérea
+Definition: Table(Origen_Bosque)(0.29,0.24)
+NodeLocation: 184,296,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+
+Constant D
+Title: D
+Units: ton/m3
+Description: Densidad básica de la madera, extraído del Informe INGEI Chile
+Definition: Table(Origen_Bosque)(0.5,0.41)
+NodeLocation: 184,232,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+
+Constant BEF
+Title: BEF
+Units: s/u
+Description: Factores de expansión de biomasa comercial arbórea, extraídos desde el informe INGEI Chile
+Definition: Table(Origen_Bosque)(1.28,1.28)
+NodeLocation: 184,168,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+
+Text Te821306237
+Title: Factores para emisiones asociadas a cosecha de leña
+NodeLocation: 188,248,-1
+NodeSize: 132,168
+
+Close FE_Lena
+
+Module FE_Incendios
+Title: FE_Incendios
+Author: lunam
+Date: mié., sept. 16, 2020 10:18 a. m.
+NodeLocation: 296,464,1
+NodeSize: 64,24
+DiagState: 2,0,0,624,304,17
+
+Constant FE_CO2
+Title: FE_CO2
+Units: ktonCO2/ha
+Description: Emisión de CO2 por hectárea consumida por incendios
+Definition: Table(Origen_Bosque)(0.191002532414061,0.269776749126239)
+NodeLocation: 144,184,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+
+Constant FE_N2O
+Title: FE_N2O
+Units: ktonCO2eq/ha
+Description: Emisión de N2O por hectárea consumida por incendios, en unidades de CO2eq
+Definition: Table(Origen_Bosque)(12.595659474167u,18.0112189562773u)
+NodeLocation: 144,312,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+
+Constant FE_CH4
+Title: FE_CH4
+Units: ktonCO2eq/ha
+Description: Emisión de CH4 por hectárea consumida por incendios, en unidades de CO2eq
+Definition: Table(Origen_Bosque)(227.690767417634u,325.587419594243u)
+NodeLocation: 144,248,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+
+Text Te313271165
+Title: Factores de emisión para cada gas GEI, para el caso de incendios
+NodeLocation: 148,232,-1
+NodeSize: 100,168
+
+Close FE_Incendios
+
+Text Te1395082109
+Title: Emisiones asociadas a Cambio en la vegetación
+NodeLocation: 612,660,-1
+NodeSize: 404,100
+
+Module EM_gas_incendioH
+Title: EM_gas_incendioH
+Author: lunam
+Date: mié., sept. 16, 2020 10:18 a. m.
+NodeLocation: 312,520,1
+NodeSize: 88,24
+DiagState: 2,0,0,624,304,17
+
+Constant CO2_incendioH
+Title: CO2_incendioH
+Units: ktonCO2eq
+Description: Emisones de CO2 debido a incendios, para el periodo 1990-2016
+Definition: Table(Year,Origen_Bosque)(~
+1020.743652342332,506.1593883500872,~
+1569.90313239784,1663.9565816712332,~
+180.4785812333619,368.47385783872835,~
+537.9310735448228,3397.017653119795,~
+1097.3279200189982,7164.143160233494,~
+342.81847118975116,1025.6475469360485,~
+5332.677473465786,1298.2730680377806,~
+1079.5738510627295,4431.478503861227,~
+26.489569248613083K,597.536575353773,~
+2631.73225764332,11.351043795289697K,~
+161.4146486771194,760.2283820448762,~
+86.53547483238576,377.4761582264335,~
+12.57389838036722K,6592.905632664302,~
+405.00568938378143,1239.336625870773,~
+682.1707083597912,2191.651450733875,~
+1416.5016751414314,2005.1540468774806,~
+337.70483590054477,383.06867868888014,~
+209.397915141684,7650.512029950321,~
+2595.5161709432364,1935.7587229001706,~
+1860.3160121651724,6075.623047860945,~
+866.3940865397637,3826.703820326163,~
+600.8878796095601,1782.7211441951315,~
+2463.8830084270303,9363.987260243613,~
+289.40611906479444,691.0714828980384,~
+2944.828455580174,11.08863604037856K,~
+10.49153892132905K,12.784356861317423K,~
+1338.1484551131796,1825.9081861868594,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0)
+NodeLocation: 168,192,1
+NodeSize: 72,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+ReformDef: [Year,Origen_Bosque]
+
+Constant CH4_incendioH
+Title: CH4_incendioH
+Units: ktonCO2eq
+Description: Emisones de CH4 debido a incendios, en unidades de CO2eq, para el periodo 1990-2016
+Definition: Table(Year,Origen_Bosque)(~
+30.420264930659393,17.945928094895464,~
+46.786349435948196,56.13004602390481,~
+5.378633746905853,11.741316439819219,~
+16.031454845804376,96.87814338205747,~
+32.70263397297345,197.74991240908005,~
+10.21669710390553,31.737186606860092,~
+158.92478112436353,41.24888946485511,~
+32.173526121058295,126.37266956506427,~
+789.4437673873541,19.954360036920203,~
+78.43104614989338,319.8497286344017,~
+4.810489259648611,23.052691841373804,~
+2.578935528289459,13.918967405801533,~
+374.7280907054601,192.05451168683678,~
+12.070004394548054,40.09608074429903,~
+20.33009328896693,67.74393483675473,~
+42.21466979847918,63.66811917224329,~
+10.064300231390606,12.625845349321244,~
+6.240489509702524,210.82454673076754,~
+77.35173211287719,61.65517191841347,~
+55.44125189017882,174.492713946463,~
+25.820329704148996,106.03413833704782,~
+17.90769744136955,50.41883663834462,~
+73.4287925303339,262.19168082619626,~
+8.624898910027632,20.45373912587185,~
+87.7619582434099,307.8553267032014,~
+312.66948639335493,364.1666443952172,~
+39.87958232969099,61.145957605445524,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0)
+NodeLocation: 168,256,1
+NodeSize: 72,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+ReformDef: [Year,Origen_Bosque]
+
+Constant N2O_incendioH
+Title: N2O_incendioH
+Units: ktonCO2eq
+Description: Emisones de N2O debido a incendios, en unidades de CO2eq, para el periodo 1990-2016
+Definition: Table(Year,Origen_Bosque)(~
+20.059252143212678,11.833621351425535,~
+30.851117908912897,37.0123911994225,~
+3.546693980512898,7.742274023465473,~
+10.571209544280192,63.881859993547344,~
+21.564256001923265,130.39713373153637,~
+6.736933545622132,20.927635900421453,~
+104.79567694906969,27.19969324031468,~
+21.21536003284763,83.33067606724408,~
+520.5625795504017,13.157989920515552,~
+51.71776558037225,210.91027212419954,~
+3.1720570879793564,15.20104309676291,~
+1.7005610615478068,9.178226337034065,~
+247.0972975988004,126.64156225954139,~
+7.959012259485815,26.439526264410958,~
+13.405750025780069,44.6706389034192,~
+27.83653290200994,41.983028710343916,~
+6.6364423993884625,8.325536150343913,~
+4.115005337972353,139.0186032399989,~
+51.006061311538076,40.65568272543555,~
+36.55819741660473,115.06123809848472,~
+17.026035280659272,69.91936202854866,~
+11.808411895806918,33.24639542756547,~
+48.41925825744911,172.89031004607386,~
+5.687295042969709,13.487282616787668,~
+57.87060872084596,203.00111245075783,~
+206.17558983623098,240.13303495950157,~
+26.296766288548582,40.319904640595055,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0)
+NodeLocation: 168,320,1
+NodeSize: 72,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+ReformDef: [Year,Origen_Bosque]
+
+Text Te694952829
+Title: Emisiones históricas debido a incendios
+NodeLocation: 176,244,-1
+NodeSize: 104,148
+
+Close EM_gas_incendioH
+
+Constant EM_sust_rest_H
+Title: EM_sust_rest_H
+Units: ktonCO2
+Description: Emisiones de CO2 asociadas a cambio de vegetación en tierras forestales, para el periodo 1990-2016
+Definition: Table(Year,Cambio_veg)(~
+-16.14326302303827,-1201.5930539714336,~
+-31.94059095408833,-1682.5658739027976,~
+-47.7379188851384,-1945.7233269692033,~
+-63.53524681618843,-2393.659195993032,~
+-79.33257474723848,-2516.461961094975,~
+-95.12990267828854,-2724.4345956480647,~
+-110.92723060933852,-2249.0773378041713,~
+-126.72455854038859,-2028.9212195898008,~
+-142.52188647143873,-1860.162036244149,~
+-158.3192144024888,-1786.420897710549,~
+-174.11654233353875,-1372.3415602485866,~
+-189.9138702645888,-1332.5662618576016,~
+-194.30463171291996,-4181.090309263151,~
+-198.96084003145654,-3287.4487953889,~
+-203.6170483499933,-3453.211708619291,~
+-208.27325666853005,-3583.6341156863887,~
+-212.92946498706655,-3852.7080206481123,~
+-217.5856733056032,-4333.460843534048,~
+-219.45510314939335,-4087.339836245607,~
+-221.4050212149657,-4185.797818227276,~
+-207.5576113494884,-3911.5316914708897,~
+-193.71020148401115,-3853.548440714217,~
+-179.8627916185337,-3731.790934564845,~
+-166.0153817530562,-3683.9473531812223,~
+-152.16797188757886,-3374.2354966007615,~
+-138.32056202210146,-2973.3759489804597,~
+-124.47315215662407,-2978.1420005193727,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0)
+NodeLocation: 552,712,1
+NodeSize: 72,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+ReformDef: [Year,Cambio_veg]
+
+Constant EM_aumbio_H
+Title: EM_aumbio_H
+Units: ktonCO2
+Description: Emisiones históricas de CO2 para la categoría aumento de biomasa, para el periodo 1990-2016
+Definition: Table(Year,Tipo_Forestal)(~
+-43.96538241850845K,-1225.8891938919453,-18.182967354455715K,-2622.6032383599527,~
+-44.410316008613896K,-1931.0477034855692,-18.416937742954542K,-3336.5278223823375,~
+-44.92044780419346K,-2751.6213606260226,-18.67069541968643K,-4126.717044988875,~
+-45.49164725359579K,-3471.187197169176,-18.91583882246439K,-4898.34921768625,~
+-46.10956162363397K,-4263.384233773918,-19.141736851445625K,-6329.533054507564,~
+-46.77202483059423K,-5133.31984910576,-19.33527437981997K,-8475.874355147114,~
+-47.350853860488016K,-5932.132358948376,-19.499140670563116K,-11.28130513112431K,~
+-47.896654940046516K,-6651.812757288388,-19.63927118457653K,-13.705925739911898K,~
+-48.428196780148726K,-7450.548891003338,-19.75762241406145K,-15.719355967045632K,~
+-48.90572222392787K,-8143.489458636022,-19.84751799076265K,-17.078436333620793K,~
+-49.2481073420349K,-8747.561115487857,-19.923025808257873K,-20.204093512657208K,~
+-49.505787495818266K,-9346.51913172657,-20.00958519841455K,-21.921159985022015K,~
+-49.72136556332353K,-9818.319184614307,-20.106623716247053K,-22.07890527740493K,~
+-49.904479208484976K,-10.12088134843233K,-20.22518697734396K,-26.864573080753034K,~
+-50.001242636780065K,-10.358886819403495K,-20.259369713519212K,-27.88990880109825K,~
+-49.93442176091987K,-10.55051613538966K,-20.29201171094952K,-29.087865206822884K,~
+-49.83919743667117K,-10.72776095400497K,-20.32461162160764K,-30.39780037406331K,~
+-49.71977686449906K,-10.868933223221835K,-20.36733275050573K,-31.550024034869635K,~
+-49.65175297632334K,-11.022511298993964K,-20.437391377924585K,-32.626955102260486K,~
+-49.53019633973067K,-11.14306485577366K,-20.415670157354936K,-34.26657286730195K,~
+-49.40562192844417K,-11.255230589825893K,-20.39181556914398K,-36.38407910684823K,~
+-49.2724359891793K,-11.404162506082817K,-20.36445822312447K,-39.20081431006267K,~
+-49.127296591123406K,-11.5572468781401K,-20.333606280473872K,-40.76727896790277K,~
+-48.98452566106975K,-11.753374109320572K,-20.300761813527344K,-42.47502345876087K,~
+-48.84004844438543K,-11.951669217281564K,-20.265765092358444K,-44.12605118254417K,~
+-48.69319281257534K,-12.194631201847988K,-20.23014750049057K,-46.65536675412217K,~
+-48.5361352206507K,-12.468508170065432K,-20.189499656280434K,-47.28114013017447K,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0)
+NodeLocation: 296,120,1
+NodeSize: 64,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+ReformDef: [Year,Tipo_Forestal]
+
+Constant EM_cos_H
+Title: EM_cos_H
+Units: ktonCO2
+Description: Emsión histórica para la categoría de pérdida de masa por cosecha de trozas, para el periodo 1990-2017
+Definition: Table(Year,Especie_trozas)(~
+14.227400217178145K,2248.2850039241994,170.9848566628824,4408.023942480937,~
+15.09861724718776K,5102.381261405575,254.98410682562707,5602.855698814601,~
+18.593972361797405K,3558.0415056451047,266.58521100019027,5428.451348616105,~
+19.415409354285515K,3390.314479006815,207.15033734721627,6736.337143675161,~
+21.24691649477654K,3772.0987249562068,253.33640403204868,6383.252519480926,~
+24.62148798127936K,4328.647495165076,255.299538614245,7639.183096340645,~
+23.88797580973088K,3517.4625124171607,210.94122950328818,5811.250995421331,~
+24.384326590253255K,3958.2639953620064,274.72966650076313,5870.798120655416,~
+21.7827435087873K,4629.150598450209,211.98762995221722,4644.302190588232,~
+23.548258249136823K,6463.263228483955,301.6589416174232,3761.0355591571097,~
+24.964761827753944K,7794.478233368129,280.49578647054386,2842.8875570151836,~
+27.059882807476162K,7769.854811135774,304.1783648491945,2198.3312798638053,~
+26.798715491155694K,8579.278464617946,269.5782857995346,1451.5610710943736,~
+29.320496526337854K,8984.696973411821,271.42586283616697,1243.5899969657023,~
+34.25074197422355K,10.441310411603296K,388.830985436712,1201.032953093076,~
+34.15457092413502K,11.630901641442437K,558.3041881605316,1249.9446686751896,~
+33.8962789027818K,13.233445412251021K,636.0703852478739,1031.3824750307062,~
+36.49868368673378K,19.66144100335058K,583.2703426918712,992.721037481805,~
+35.77864132960479K,23.566126183489945K,582.0153200024757,991.453954456095,~
+32.85865185347465K,21.327396537446963K,549.8909941819031,791.016054790307,~
+30.38431584018732K,21.26817990468557K,615.5001343682048,817.6151700397454,~
+34.79515637657369K,23.867260706700537K,611.6498230041434,705.237615002699,~
+35.07272986579357K,23.118873661059017K,829.6007206041344,643.5337527035786,~
+38.31683384755703K,22.37829432805611K,693.3889433861601,607.2389489519379,~
+40.177741741942096K,22.745348700512262K,709.5317278398632,512.6140358814863,~
+40.73805389707509K,22.192153029335845K,790.1700674114247,729.7165806908811,~
+40.94840840602894K,23.718823712335958K,654.8736806343275,578.1634373938933,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0)
+NodeLocation: 424,288,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+ReformDef: [Year,Especie_trozas]
+
+Constant EM_lena_H
+Title: EM_lena_H
+Units: ktonCO2
+Description: Emisión histórica de CO2 asociada a la recolección de leña, para el periodo 1990-2017
+Definition: Table(Year,Origen_Bosque)(~
+6731.208422934501,4363.577096313299,~
+7527.332786489674,4879.673140344553,~
+8349.190104283703,5412.45084429211,~
+7738.964151523011,5016.865412414831,~
+8117.1498445092075,5262.028290219246,~
+8679.459261790653,5626.5513208730645,~
+9304.681315469848,6031.85813387398,~
+9263.064917062877,6004.879863181754,~
+9943.21351789328,6445.793391659193,~
+10.30453968913678K,6680.026906070166,~
+10.764094758112731K,6977.938342989235,~
+10.742887254446916K,6964.1903542995915,~
+10.914676907572511K,7075.554814982214,~
+10.32956276877594K,6696.248382264639,~
+10.9084655048252K,7071.528207416211,~
+11.635110891935465K,7542.58376967345,~
+11.968485750816068K,7758.697550037408,~
+12.610567326237968K,8174.933726431763,~
+12.93817445399607K,8387.30851405586,~
+12.974466792905348K,8410.835406834367,~
+11.229062620911342K,7279.358680787247,~
+14.195717307351391K,8558.783281788596,~
+9161.94392911917,9419.444910234322,~
+9203.901684701983,9396.11459609451,~
+9256.946358938447,9546.920890948484,~
+9304.142638716978,9535.183403130775,~
+9357.688216825161,9645.18105695696,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0)
+NodeLocation: 456,408,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+ReformDef: [Year,Origen_Bosque]
+
+Constant Proy_quema
+Title: Proy_quema
+Units: kton
+Description: Emisones proyectadas asociadas a la quema de residuos forestales, para el periodo 2017-2050, para cada tipo de gas GEI. Para la proyección se tomó un periodo histórico
+Definition: Table(Time,Gas_GEI)(~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.51677396469713,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858)
+NodeLocation: 904,512,1
+NodeSize: 80,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+ReformDef: [Time,Gas_GEI]
+
+Variable EM_quema
+Title: EM_quema
+Units: ktonCO2eq
+Description: Emisones asociadas a la quema de residuos forestales para el periodo completo 1990-2050, para cada tipo de gas GEI en CO2eq
+Definition: if Gas_GEI='CH4' then~
+var futuro:=Proy_quema[Gas_GEI='CH4']*25;~
+var consolidado:= if year=time then futuro[time=year] else 0;~
+if year>2016 then sum(consolidado,time) else Quema_H[Gas_GEI='CH4']*25~
+else if Gas_GEI='N2O' then~
+var futuro:=Proy_quema[Gas_GEI='N2O']*298;~
+var consolidado:= if year=time then futuro[time=year] else 0;~
+if year>2016 then sum(consolidado,time) else Quema_H[Gas_GEI='N2O']*298~
+else 0~
+
+NodeLocation: 920,440,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformVal: [Year,Gas_GEI]
+Att_ResultSliceState: [Gas_GEI,2,Quema,1,Year,1]
+
+Constant Quema_H
+Title: Quema_H
+Units: kton
+Description: Emisiones asociadas a quema de residuos forestales, para el periodo 1990-2016, para cada tipo de gas GEI
+Definition: Table(Year,Gas_GEI)(~
+0,3.221071869022186,0.17818695445654645,~
+0,3.792758482324926,0.20981217136265548,~
+0,2.719547190980343,0.15044303609678494,~
+0,3.150909933761291,0.1743056559101991,~
+0,2.3820942008845782,0.13177542387872135,~
+0,2.1629795459061727,0.11965418764587339,~
+0,1.5318962129911755,0.08474319476121396,~
+0,1.1757474885500176,0.0650413504304265,~
+0,1.7210208730980663,0.09520541000116961,~
+0,1.0778138987303307,0.05962374758933744,~
+0,1.158818547549852,0.0641048558219067,~
+0,0.9501845942885541,0.052563403088302985,~
+0,1.0821106309420394,0.0598614391584958,~
+0,0.4870081845564593,0.026940878294612645,~
+0,1.2344798023928538,0.06829037204726425,~
+0,0.9797644578905877,0.05419973596841549,~
+0,1.4061097679606138,0.07778479567441696,~
+0,3.2489676878611093,0.17973012741359332,~
+0,1.1923301327121494,0.06595868819258698,~
+0,1.2061182406019584,0.06672143458649131,~
+0,1.5020558223832456,0.0830924497488604,~
+0,0.6805973219136914,0.03765006461650207,~
+0,0.46148494351260017,0.02552895432197363,~
+0,0.3239351384641324,0.017919816170356262,~
+0,0.44321012228416673,0.024518006764656035,~
+0,0.7527022669273787,0.04163884880874862,~
+0,0.907179688331979,0.050184408290705224,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0)
+NodeLocation: 760,512,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+ReformDef: [Year,Gas_GEI]
+
+Text Te1234748285
+Title: Emisiones asociadas a la Pérdida de Biomasa
+NodeLocation: 612,364,-1
+NodeSize: 404,188
+
+Close A4_A_1__Tierras_fore
+
+Module A4_A_2__Tierras_conv
+Title: 4.A.2. Tierras convertidas en tierras forestales
+Author: lunam
+Date: mar., sept. 15, 2020 10:28 a. m.
+NodeLocation: 208,256,1
+NodeSize: 64,40
+DiagState: 2,0,0,624,304,17
+
+Index Conv_tierras
+Title: Conv_tierras
+Units: s/u
+Description: Agrupación de tierras convertidas a tierras forestales (se incluye en el valor tierras convertidas desde tierras de cultivo, pastizales, humedales, asentamientos y otras tierras). División entre tierras convertidas a Bosque Nativo y tierras convertidas en Plantaciones
+Definition: ['Tierras convertidas en bosque nativo','Tierras convertidas en plantaciones']
+NodeLocation: 96,168,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+Att_PrevIndexValue: ['Tierras convertidas en bosque nativo','Tierras convertidas en plantaciones']
+
+Constant FE_conv_tierras
+Title: FE_conv_tierras
+Units: ktonCO2/ha
+Description: Factores de emisión para CO2 por hectárea para las tierras convertidas en tierras forestales
+Definition: Table(Conv_tierras)(-2.3567967852146m,-0.0415034471737692)
+NodeLocation: 416,136,1
+NodeSize: 72,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+ValueState: 2,40,50,400,300,0,MIDM
+
+Constant Proy_LB_CT
+Title: Proy_LB_CT
+Units: ha
+Description: Proyección de superficies convertidas a tierras forestales para el periodo 1990-2016, correspondiente al promedio histórico de los últimos 5 años de información.
+Definition: Table(Time,Conv_tierras)(~
+540.9808K,654K,~
+540.9808K,654K,~
+540.9808K,654K,~
+540.9808K,654K,~
+540.9808K,654K,~
+540.9808K,654K,~
+540.9808K,654K,~
+540.9808K,654K,~
+540.9808K,654K,~
+540.9808K,654K,~
+540.9808K,654K,~
+540.9808K,654K,~
+540.9808K,654K,~
+540.9808K,654K,~
+540.9808K,654K,~
+540.9808K,654K,~
+540.9808K,654K,~
+540.9808K,654K,~
+540.9808K,654K,~
+540.9808K,654K,~
+540.9808K,654K,~
+540.9808K,654K,~
+540.9808K,654K,~
+540.9808K,654K,~
+540.9808K,654K,~
+540.9808K,654K,~
+540.9808K,654K,~
+540.9808K,654K,~
+540.9808K,654K,~
+540.9808K,654K,~
+540.9808K,654K,~
+540.9808K,654K,~
+540.9808K,654K,~
+540.9808K,654K)
+NodeLocation: 264,216,1
+NodeSize: 96,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+ReformDef: [Time,Conv_tierras]
+
+Objective EM_conv_tierras
+Title: EM_conv_tierras
+Units: ktonCO2eq
+Description: Emisión asociada a las tierras convertidas en tierras forestales para todo el periodo 1990-2050, separada por tipo de gas GEI. En este caso solo se registran emisiones de CO2
+Definition: if Gas_GEI='CO2' then~
+var futuro:=(FE_conv_tierras*Proyeccion_conv_tier);~
+var consolidado:= if year=time then futuro[time=year] else 0;~
+if year>2016 then sum(consolidado,time) else Conv_tierras_H~
+else 0~
+~
+
+NodeLocation: 728,216,1
+NodeSize: 72,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,1,MIDM
+ReformVal: [Year,Medidas]
+Att_ResultSliceState: [Gas_GEI,1,Conv_tierras,2,Medidas,1,Year,1]
+
+Variable Proyeccion_conv_tier
+Title: Proyeccion conv_tierras
+Units: ha
+Description: Superficie de tierras convertidas en tierras forestales considerando las distintas medidas.
+Definition: if Medidas='Sin medida' then Proy_LB_CT else if Medidas='Manejo' then Proy_LB_CT else Proy_LB_CT+Medida_forestacion
+NodeLocation: 464,216,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformVal: [Time,Conv_tierras]
+Att_ResultSliceState: [Medidas,2,Conv_tierras,1,Time,1]
+
+Constant Conv_tierras_H
+Title: Conv_tierras_H
+Units: ktonCO2
+Description: Valores históricos de emisión correspondiente a tierras convertidas en tierras forestales.
+Definition: Table(Year,Conv_tierras)(~
+438.3234301584865,-25.16356540570133K,~
+317.8104044162926,-26.81183323147839K,~
+197.2973786740989,-27.475454313349535K,~
+76.78435293190506,-29.067221513503006K,~
+-43.72867281028875,-29.41011562620819K,~
+-164.24169855248243,-30.378611653260803K,~
+-284.75472429467635,-28.73680118660821K,~
+-405.26775003687,-27.93421027677334K,~
+-525.7807757790638,-27.294106030996136K,~
+-646.2938015212578,-26.98300033411512K,~
+-766.8068272634516,-25.530480012158918K,~
+-887.3198530056452,-25.448048892804312K,~
+-1119.2050855642533,-28.511336653670252K,~
+-1185.6258030973138,-24.580264770176524K,~
+-1252.0465206303738,-25.67178331259739K,~
+-1318.467238163434,-26.390196916158246K,~
+-1384.887955696494,-27.529032412612873K,~
+-1451.3086732295546,-29.52826205094402K,~
+-1536.8147959763846,-29.84803855616458K,~
+-1593.8153510013371,-30.705332336355867K,~
+-1530.3028802840952,-29.642859568855365K,~
+-1466.790409566854,-29.235513679066866K,~
+-1403.277938849612,-29.19092862204324K,~
+-1339.7654681323702,-29.0108965618101K,~
+-1276.2529974151291,-27.578262362526715K,~
+-1212.7405266978872,-24.765922004125925K,~
+-1149.2280559806454,-25.191991907246625K,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0)
+NodeLocation: 272,280,1
+NodeSize: 72,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+ReformDef: [Year,Conv_tierras]
+
+Close A4_A_2__Tierras_conv
+
+Objective EM_Tierras_Forestal
+Units: ktonCO2eq
+Description: Emisiones totales de GEI del sector UTCUTS, para la categoría 4.A. Tierras Forestales
+Definition: if CatTF_3='4.A.1' then sum(EM_permanecen,CatTF_2) else sum(EM_conv_tierras,Conv_tierras)
+NodeLocation: 432,192,1
+NodeSize: 88,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,1,MIDM
+ReformVal: [Year,Medidas]
+Att__TotalsIndex: []
+Att_ResultSliceState: [CatTF_3,2,Gas_GEI,1,Medidas,1,Year,1]
+
+Picture Pi157361021
+NodeLocation: 1068,204,-1
+NodeSize: 220,132
+Pict: (0000000000930102024500041E68000089504E470D0A1A0A0000000D49484452000002D8000001B1080600000058C0C10A000000017352474200AECE1CE90000000467414D410000B18F0BFC6105000000097048597300000EC300000EC301C76FA864000067A349444154785EEDBD89BB1C4775F7EF7FE905120890F0B286ACBC4058440279431292288424982536BADABC2FB28D176CBC89C580C118C4E217035EB9B6EFD52E4B57967DBDCAB62C2FB22CEF36FCCCFC7CE6F6E9A9E97B4E4FCD4CCF74F5EDCFE779CEE399EAAAEA9A6F9F6E7F6FABBAFAB88EC13DF7DC4310044110044110C408516AB00100000000200E0C3600000000408560B001000000002A04830D000000005021186C00000000800AC90DF6C2C242A718186C0000000080E1C80D76F6BD0F0C3600000000C07060B001000000002A04830D000000005021186C00000000800AC16003000000005408061B00000000A04230D800000000001582C10600000000A8100C3600000000408560B001000000002A04830D000000005021186C00000000800AC16003000000005408061B00000000A04230D82DE3E69B6F260882200882687CA40C067B0A2C2E2E7656AD5AD517B3B3B3D9D6E96125274110044110441323658F8AC16E119A90D00F79EE83363E6863832E3E68E383363E686393BA2E3A3E0C760BC060DB90E73E68E3833636E8E283363E68E3833636A9EBA2E3C360B7000CB60D79EE83363E6863832E3E68E383363E686393BA2E3A3E0C760BC060DB90E73E68E3833636E8E283363E68E3833636A9EBA2E3C360B7000CB60D79EE83363E6863832E3E68E383363E686393BA2E3A3E0C760BC060DB90E73E68E3833636E8E283363E68E3833636A9EBA2E3C360B7000CB60D79EE83363E6863832E3E68E383363E686393BA2E3A3E0C760BC060DB90E73E68E3833636E8E283363E68E3833636A9EBA2E3C360B7000CB60D79EE83363E6863832E3E68E383363E686393BA2E3A3E0C760BC060DB90E73E68E3833636E8E283363E68E3833636A9EBA2E3C360B7000CB60D79EE83363E6863832E3E68E383363E686393BA2E3A3E0C760BC060DB90E73E68E3833636E8E283363E68E3833636A9EBA2E33B6E6161A1538CD4070FC381C1B621CF7DD0C6076D6CD0C5076D7CD0C6076D6C52D745C7C71DEC1680C1B621CF7DD0C6076D6CD0C5076D7CD0C6076D6C52D745C787C16E01186C1BF2DC076D7CD0C6065D7CD0C6076D7CD0C626755D747C18EC1680C1B621CF7DD0C6076D6CD0C5076D7CD0C6076D6C52D745C787C16E106BD6ACE9AC5AB5AA333B3B9B95F4585C5CEC6E0B43CA0435D8569D2D5BB674EB84AC5EBDBAAF8EB5BF94D0DF25E3B6D8BC7973DFEF111D8530CFBD3A21A24358C7DB5F0A58C7DA3A8EC5DFBD69D3A66E7999365A2724A64E2A14C7EA1D47EF3C08B511CACE4BA149E793FE160DEB385AB92584BA8CD34FAA14C76A5D3BA52CAC635D6BC2ED12C3F49322C5B14A581473427F77A88DA275ADBCF1FA4911197F3856EF38867524E4DC1044976BAEB966D97609ABAF621DED27458A631DE63C28E64C51E7E235DDEB6752E8F830D80DA068EC8AFF83D6FF51897150F4222488B9BEFAEAAB97D5D1A40B135BBE8717353523A99A82F0C4B28C928E5F2F34AA95B4D33C2FABA3A856A10EB23F6B9F2920E30AC7AAF91096A9768AA54D591D25A64E2AC8EF0F8F998EB5781C8BE30FCF03D5463E4B9946A8AD52D64F6AC8D8C2B16ACE8765FA9BC36B86E696EA326E3F2922630BC72ABFA538FEE2754490EFD256B529F6A36D62FB490D3D7F42E47BB14CCEAF70FCF27BA58EFC57B551E4F74B7D89306784B27E5243C6148E55733E2C53FDE4372B9A5BB24D7451835D76CD18D44F6A8806E1311BF57C1234573CEA389F747C18EC0620C92009A82768F144D3E40C094F3831D8E79E7B6EF77BF16493C4D4935213B18875A14B01BDB88A1E323EEB2493EDC5B1EBEFBCE1861BBA795E5647F5B234F08E478AE858F5586B7E14FFC7A4BF5B74117DCAEA0883FA6902725C65AC7AACBDB16B0EE8F551EAC8772F0F06F5D30464ACE17925FF532AFE8F4973E0F2CB2F77FFBF314C3FC55C4A111D6B781CE5BB1CF310BD46E9B5A688F613B62BEB4773346534EFF57CF0C6AE39A0E793A07A48DBE27932A89F2620E394DFA0C8EF0BCF0B45EA888EA24B8CC11ED44FEAE8711FF67CD25C2BA3AC9F499D4F9AD318EC06E1FD8FDCBBC0E8054A0CF6A5975EDA6D2B89A5687F5AE6F5E39DBC29618D514FDAF0370BFABBE5C2E599C8506BAF1F41CA9B7001D3DFA36395DF22DF8B1798501B314C6575E4BF83FA91FFA68EE44EF81B069D07C5EBA3F75B9B7C3E2932CE70ACF23BAD7C973A1B366C70FFBF314C3FA24FEAE83541C7EAE580D6F3FEF8D0EDAAC5A07EAC6B506AC86F097F8397EF5A2F3C9FE47C514D8BB930A89F2620BF2F1CAB97EF7AED105D620CF6A07E5267D4F3497E9BF5BB9541FD4CEA7CD29CC66037082F5924C9AC0B8F9E5C3A075B2F4452A6C6482FEC82F421DB8A48024BDD949131163528FECF4B094F5235D85E1DD14975B74E46292F3BC153418FBDE68E7E97DF19A2BF55B4F1FED523D463503F93BA805589E44D983B83CE83E2F5517FAB6AAB34F97C12F41CD0FCD6EFC5734590DFFA852F7CC1FCFFC6B0FD589AA5865E3F35BFF57B3107F4B7CAB9646923BF57B62B83FAB1344B0D397EE16F92EFF23B8BE8B543EF46EA6F57A44D786D1DD48F68943A32CE30BFE57BF81B15FDADA28B1AEC6284C8F7B27E5267D4F3497FB7FC370C6D57D7F9246393C060370849122B598AC929685D39C1D4600B5A57A278E2152F688A5EC05246C66D5D48E4F717C7AE2764F857B05747F4F274173CCD5243C62FBF53F18EA95E7842835D44EB883683FA09733245F47C08C739E83C285E1FBDFC68F2F924E83920C752283BA6925B9EC11EB69F304F53458E6D78BDD13CD2DF1822E5A1C1967652A61132A81FC99D94D173211CA7774CF5B7AAC196CF614E14CF9F41FD589AA5849EF7E175A2A89522BF5B7E7FF15AA3483B0965503FA923630CC7197B3EC9E7E2EF0BAF37759D4F7ADC30D80DC2FB1FB9A027AF86249D5C8C24D9D4604B996C53F4BBF6A76D8A68C2A64CD985447FA786FE1EB933A079EED5116D54F7F0E2AF68DD9491632AE30CD17C295E78F4B7B6E10EB68C59C6583C7E83CE83E2F5517FABFC37A4C9E793FE8F293C7EAA97F53F25F9AD96C11EA51F4BB394D0E317E6BCFECE620EE86F0D0D7688B6D31C1CD48FA5594AC8188BC74FBECB712DA2D70E31D832BDA8D84EDA84E7E6A07EC2E3911A7A8D281E3F290B7FA3A2BFB578AD51B43F3DAF06F59332E39C4FF2B9A8A9D6913EEA3A9FF4B861B01B849E54C564F190134B1248CCF509279CD06D5B243C01E5B3441139019A7092C68E5175D43B27165A474EC4F0842D22E5933A49AB408EA7FE8E10BDF014CBF577AFF439D87A4CAD7C1F741E14AF8FDE6F1DD44FAAE831B5F2DA2B97DF539C833D6A3FA24FAAC8D8AC63EDE580E699FE6B9985E488D41106F5635D835241C667E5B597EF72FCA58DE8F299CF7CA6FBD90BD163503FA9A2C7D4CA6B2FDFF5DA51BCD628C57C18D44FAAC898F5F8860C3A0FF47CB2740DB519D4CFA4CE273D6E18EC06E1258B85D695441283FDB9CF7DCE3CD12439F5A2E55DA8BC933725C2DF3108A95B76F112B48E626930CCF1A80319AFE64011EF0213FE4F4FE7A77B758441FDA48A8CCDFB1FCFA0F3A098375E1E34F17CD2DF2263B710CD8ABA690E8426729C7E26F53FBD71D1E3E99DEFD6EF95DF22E5657FCCEB79AA94F5639DCB292039ED5D7FBDB16B0E14CF27A5789E0CEA274534A7BDF35DCA2DDD34073C6D540BCDC541FDA44815E79375ECF5DAA3FD96F533A9F3498F1B06BB411413C743EB695289C13EF9E49397B52D9EFCD6C5403E4BD9A412B12ABC0B4C91F0F778796EFD66EB6220DF53BDB0EB6F28CB1519BBD451C2BC516DCAEA2831755242C656962B83CE8362DEE8EF2D6A3DA89FD4D0DF118EB788FE8F49FEAB889612AACBB8FDA4889EFFE1788B148F6D78FC559B70BB606955D64F8AC83193F19521DBC36B65783D556D8A48BFC5DF5CD64F6AE8710BC75B448FBF773D155D64EA55F8FBAC7E07F5931A559D4FDE7524D4A68EF349C787C16E00920C566882689285119E903A075B933A8CF0841434F9C24815EB776BE8EFD78B8C46F83F70CDF3B23A2145FD2679828E83750CC30829FE76BD5085D700AF4E484C9D14B0CE018DF078969D07AA4D71BB466C3FA9513C866184C7B378DE493B417519B79F1409C7590C39C68A1CFB709B5E5F559BE26F0EEB8478FDA486F57B348AC7B3B85D75536D8A58065BF0FA498DE2310C233C9E6A8E358AFF8FB25611B1F2A1AC9FD408C7598C61CE2741CAC23A56CE4CFB7CD2F161B05B801A6CE8873CF7411B1FB4B141171FB4F1411B1FB4B1495D171D1F06BB0560B06DC8731FB4F1411B1B74F1411B1FB4F1411B9BD475D1F161B05B0006DB863CF7411B1FB4B141171FB4F1411B1FB4B1495D171D1F06BB0560B06DC8731FB4F1411B1B74F1411B1FB4F1411B9BD475D1F1D56EB0F58198F0A1BC1099A81F4E4EF7EA85C4B489EDB7EEFD570106DB669A79DE34D0C6076D6CD0C5076D7CD0C6076D6C52D745C7579BC1164339C8604A79F844A83E2D5A664663DAC4F61B5B2F24A6CD28FD8E0306DB661A79DE54D0C6076D6CD0C5076D7CD0C6076D6C52D745C7579BC1569329A6D232976A3A8BC89DDFD09C86C4B489EDB7EEFD570906DB661A79DE54D0C6076D6CD0C5076D7CD0C6076D6C52D745C757FB1411CF60CBD4116B5D5431A162462D62DAC4F61B5B2F24A6CD28FD8E0B06DB669A79DE34D0C6076D6CD0C5076D7CD0C6076D6C52D745C797ACC116B3E91951EB0EB010D326B6DFBAF75F25186C9B69E679D3401B1FB4B141171FB4F1411B1FB4B1495D171D5FD2065B4C67116F8A8510D326B6DFBAF75F256AB0F5B812044110044134395245C73751832D66524CA38698C822DCC15EA2ACDF71C1601304411004B1922255747CCCC1CE28F61B5B2F24A6CD28FD8E8B1A6CE8679A79DE34D0C6076D6CD0C5076D7CD0C6076D6C52D745C797ACC1F6A64C880915336A11D326B6DFBAF75F25186C9B69E679D3401B1FB4B141171FB4F1411B1FB4B1495D171D5FB2067B7171B15B1E9A4EF92C65B24D1163AA778463DAC4F63B4A5FA3B4118A75AA06836D33CD3C6F1A68E3833636E8E283363E68E3833636A9EBA2E33B6E6161A1538C690C5E0CA515A1F154331A4691D0600B316D62EA0883EAE9F661C71CBBFFAAC060DB4C23CF9B0ADAF8A08D0DBAF8A08D0FDAF8A08D4DEABAE8F86ABF833D0E6A54B76CD99295800506DBA629795E0768E3833636E8E283363E68E3833636A9EBA2E36BB4C1963BC7D60383D00F06DBA629795E0768E3833636E8E283363E68E3833636A9EBA2E36BB4C196BBD772171BCAC160DB3425CFEB006D7CD0C6065D7CD0C6076D7CD0C626755D747C8D36D8100706DB863CF7411B1FB4B141171FB4F1411B1FB4B1495D171D1F06BB0560B06DC8731FB4F1411B1B74F1411B1FB4F1411B9BD475D1F161B05B0006DB863CF7411B1FB4B141171FB4F1411B1FB4B1495D171D1F06BB0560B06DC8731FB4F1411B1B74F1411B1FB4F1411B9BD475D1F161B05B0006DB863CF7411B1FB4B141171FB4F1411B1FB4B1495D171D1F06BB0560B06DC8731FB4F1411B1B74F1411B1FB4F1411B9BD475D1F161B05B0006DB863CF7411B1FB4B141171FB4F1411B1FB4B1495D171D1F06BB0560B06DC8731FB4F1411B1B74F1411B1FB4F1411B9BD475D1F161B05B0006DB863CF7411B1FB4B141171FB4F1411B1FB4B1495D171D1F06BB0560B06DC8731FB4F1411B1B74F1411B1FB4F1411B9BD475D1F161B05B0006DB863CF7411B1FB4B141171FB4F1411B1FB4B1495D171D1F06BB0560B06DC8731FB4F1411B1B74F1411B1FB4F1411B9BD475D1F161B05B0006DB863CF7411B1FB4B141171FB4F1411B1FB4B1495D171D1F06BB0560B06DC8731FB4F1411B1B74F1411B1FB4F1411B9BD475D1F161B05B0006DB863CF7411B1FB4B141171FB4F1411B1FB4B1495D171D1F06BB0560B06DC8731FB4F1411B1B74F1411B1FB4F1411B9BD475D1F161B05B0006DB863CF7411B1FB4B141171FB4F1411B1FB4B1495D171D1F06BB0560B06DC8731FB4F1411B1B74F1411B1FB4F1411B9BD475D1F161B05B0006DB863CF7411B1FB4B141171FB4F1411B1FB4B1495D171D1F06BB0560B06DC8731FB4F1411B1B74F1411B1FB4F1411B9BD475D1F161B05B0006DB863CF7411B1FB4B141171FB4F1411B1FB4B1495D171D1F06BB0560B06DC8731FB4F1411B1B74F1411B1FB4F1411B9BD475D1F161B05B0006DB863CF7411B1FB4B141171FB4F1411B1FB4B1495D171D1F06BB0560B06DC8731FB4F1411B1B74F1411B1FB4F1411B9BD475D1F1D566B0376FDEDC59B56A551EAB57AFCEB6F423E561BDD9D9D96C8B4F4C9BD87EEBDE7F1560B06DA691E74D056D7CD0C6065D7CD0C6076D7CD0C626755D747CC72D2C2C748A31E9C18B991483A92C2E2E764D66582648D9A64D9BB26F3D535E664663DAC4F61B5B2F24A6CD28FD8E0306DB66D279DE64D0C6076D6CD0C5076D7CD0C6076D6C52D745C797CC1411319C6232C56C0B6A3A8B88090FCD69484C9BD87EEBDE7F9560B06DEAC8F3A680363E6863832E3E68E383363E686393BA2E3ABE640DF69A356BBA5144EA8919B5886913DB6F6CBD909836A3F43B2E186C9B3AF2BC29A08D0FDAD8A08B0FDAF8A08D0FDAD8A4AE8B8E2F19832DE6323498F2D933A2D61D6021A64D6CBF75EFBF4A30D83675E47953401B1FB4B141171FB4F1411B1FB4B1495D171D5F12067BCB962D5D7329FF55C4888AE92CE24DB11062DAC4F65BF7FEAB440DB61E578220088220882647AAE8F8266AB0C54C8A69D4101359441F702C9A4E695BE71DE4BAF75F25186C82200882205652A48A8EAFD63BD86AAE2DC329659E1115936A11D326B6DFD87A21316D46E9775CD460433FD3CAF32682363E6863832E3E68E383363E686393BA2E3ABE5A0DB667AE056FCA84985031A316316D62FBAD7BFF5582C1B699569E3711B4F1411B1B74F1411B1FB4F1411B9BD475D1F1D566B0C5648AA9F4B0A68EC86729D3954604E9434D7A4C9BD87E47E96B943642B14ED560B06DA691E74D056D7CD0C6065D7CD0C6076D7CD0C626755D747CB5186CBD8B6B45683CD58C86512434D8424C9B983AC2A07ABA7DD831C7EEBF2A30D83693CEF32683363E6863832E3E68E383363E686393BA2E3ABE5AA7888C8B1AD570F511580E06DBA629795E0768E3833636E8E283363E68E3833636A9EBA2E36BB4C1963BC7DE1C6EE881C1B6694A9ED701DAF8A08D0DBAF8A08D0FDAF8A08D4DEABAE8F81A6DB0E5EEB5DCC5867230D8364DC9F33A401B1FB4B141171FB4F1411B1FB4B1495D171D5FA30D36C481C1B621CF7DD0C6076D6CD0C5076D7CD0C6076D6C52D745C787C16E01186C1BF2DC076D7CD0C6065D7CD0C6076D7CD0C626755D747C18EC1680C1B621CF7DD0C6076D6CD0C5076D7CD0C6076D6C52D745C787C16E01186C1BF2DC076D7CD0C6065D7CD0C6076D7CD0C626755D747C18EC1680C1B621CF7DD0C6076D6CD0C5076D7CD0C6076D6C52D745C787C16E01186C1BF2DC076D7CD0C6065D7CD0C6076D7CD0C626755D747C18EC1680C1B621CF7DD0C6076D6CD0C5076D7CD0C6076D6C52D745C787C16E01186C1BF2DC076D7CD0C6065D7CD0C6076D7CD0C626755D747C18EC1680C1B621CF7DD0C6076D6CD0C5076D7CD0C6076D6C52D745C787C16E01186C1BF2DC076D7CD0C6065D7CD0C6076D7CD0C626755D747C18EC1680C1B621CF7DD0C6076D6CD0C5076D7CD0C6076D6C52D745C787C16E01186C1BF2DC076D7CD0C6065D7CD0C6076D7CD0C626755D747C18EC1680C1B621CF7DD0C6076D6CD0C5076D7CD0C6076D6C52D745C787C16E01186C1BF2DC076D7CD0C6065D7CD0C6076D7CD0C626755D747C18EC1680C1B621CF7DD0C6076D6CD0C5076D7CD0C6076D6C52D745C787C16E01186C1BF2DC076D7CD0C6065D7CD0C6076D7CD0C626755D747CC72D2C2C748A91FAE0613830D836E4B90FDAF8A08D0DBAF8A08D0FDAF8A08D4DEABAE8F8B883DD0230D836E4B90FDAF8A08D0DBAF8A08D0FDAF8A08D4DEABAE8F830D82D00836D439EFBA08D0FDAD8A08B0FDAF8A08D0FDAD8A4AE8B8E0F83DD0230D836E4B90FDAF8A08D0DBAF8A08D0FDAF8A08D4DEABAE8F830D82D00836D439EFBA08D0FDAD8A08B0FDAF8A08D0FDAD8A4AE8B8E0F83DD0230D836E4B90FDAF8A08D0DBAF8A08D0FDAF8A08D4DEABAE8F830D82D00836D439EFBA08D0FDAD8A08B0FDAF8A08D0FDAD8A4AE8B8E0F83DD0230D836E4B90FDAF8A08D0DBAF8A08D0FDAF8A08D4DEABAE8F86A33D89B376FEEAC5AB52A8FD5AB57675BFA91F2B0DEECEC6CB6C527A64D6CBF75EFBF0A30D836D3C8F3A682363E6863832E3E68E383363E686393BA2E3ABE5A0CB698493198216232ADB24D9B3665DF7AA6BCCC8CC6B489ED37B65E484C9B51FA1D070CB6CDA4F3BCC9A08D0FDAD8A08B0FDAF8A08D0FDAD8A4AE8B8E2F9929226238C5642A6A3A8B88090FCD69484C9BD87EEBDE7F9560B06DEAC8F3A680363E6863832E3E68E383363E686393BA2E3ABE640DF69A356BBA5144EA8919B5886913DB6F6CBD909836A3F43B2E186C9B3AF2BC29A08D0FDAD8A08B0FDAF8A08D0FDAD8A4AE8B8E2F0983BD65CB96AEB996BBBB8A984DCF885A7780859836B1FDD6BDFF2AC160DB4C3BCF9B04DAF8A08D0DBAF8A08D0FDAF8A08D4DEABAE8F86A33D86AAA3542732D881115D359C49B6221C4B489EDB7EEFD57891A6C3DAE0441100441104D8E54D1F14DD4608B9914D3A82126D243EB2E2E2EE6DFEBBC835CF7FEAB04834D10044110C44A8A54D1F12533075B56D01083A9265C4CA86744C5A45AC4B489ED37B65E484C9B51FA1D1735D8D04F1D79DE14D0C6076D6CD0C5076D7CD0C6076D6C52D745C7978CC1963BD7A1C1F6A64C880915336A11D326B6DFBAF75F25186C9B3AF2BC29A08D0FDAD8A08B0FDAF8A08D0FDAD8A4AE8B8EAF16832D26B36826E5AEAE184F9D22A2863BAC279FC33A821853BD231CD326B6DF51FA1AA58D50AC5335186C9B49E77993411B1FB4B141171FB4F1411B1FB4B1495D171D5F6D77B0C5188BA90CA3889AD1B23AA1C11662DAC4D41106D5D3EDA159AE72FF5581C1B699469E3715B4F1411B1B74F1411B1FB4F1411B9BD475D1F12533456414D4A8CA8A24E083C1B6694A9ED701DAF8A08D0DBAF8A08D0FDAF8A08D4DEABAE8F81A6DB0E5CEB1F5C020F483C1B6694A9ED701DAF8A08D0DBAF8A08D0FDAF8A08D4DEABAE8F81A6DB0E5EEB5DCC5867230D8364DC9F33A401B1FB4B141171FB4F1411B1FB4B1495D171D5FA30D36C481C1B621CF7DD0C6076D6CD0C5076D7CD0C6076D6C52D745C787C16E01186C1BF2DC076D7CD0C6065D7CD0C6076D7CD0C626755D747C18EC1680C1B621CF7DD0C6076D6CD0C5076D7CD0C6076D6C52D745C787C16E01186C1BF2DC076D7CD0C6065D7CD0C6076D7CD0C626755D747C18EC1680C1B621CF7DD0C6076D6CD0C5076D7CD0C6076D6C52D745C787C16E01186C1BF2DC076D7CD0C6065D7CD0C6076D7CD0C626755D747C18EC1680C1B621CF7DD0C6076D6CD0C5076D7CD0C6076D6C52D745C777DCC2C242A718A90F1E8603836D439EFBA08D0FDAD8A08B0FDAF8A08D0FDAD8A4AE8B8E8F3BD82D00836D439EFBA08D0FDAD8A08B0FDAF8A08D0FDAD8A4AE8B8E0F83DD0230D836E4B90FDAF8A08D0DBAF8A08D0FDAF8A08D4DEABAE8F830D82D00836D439EFBA08D0FDAD8A08B0FDAF8A08D0FDAD8A4AE8B8E0F83DD0230D836E4B90FDAF8A08D0DBAF8A08D0FDAF8A08D4DEABAE8F830D82D00836D439EFBA08D0FDAD8A08B0FDAF8A08D0FDAD8A4AE8B8E0F83DD0230D836E4B90FDAF8A08D0DBAF8A08D0FDAF8A08D4DEABAE8F830D82D00836D439EFBA08D0FDAD8A08B0FDAF8A08D0FDAD8A4AE8B8E0F83DD0230D836E4B90FDAF8A08D0DBAF8A08D0FDAF8A08D4DEABAE8F830D82D00836D439EFBA08D0FDAD8A08B0FDAF8A08D0FDAD8A4AE8B8E0F83DD0230D836E4B90FDAF8A08D0DBAF8A08D0FDAF8A08D4DEABAE8F830D82D00836D439EFBA08D0FDAD8A08B0FDAF8A08D0FDAD8A4AE8B8E0F83DD0230D836E4B90FDAF8A08D0DBAF8A08D0FDAF8A08D4DEABAE8F830D82D00836D439EFBA08D0FDAD8A08B0FDAF8A08D0FDAD8A4AE8B8E0F83DD0230D836E4B90FDAF8A08D0DBAF8A08D0FDAF8A08D4DEABAE8F830D82D00836D439EFBA08D0FDAD8A08B0FDAF8A08D0FDAD8A4AE8B8E0F83DD0230D836E4B90FDAF8A08D0DBAF8A08D0FDAF8A08D4DEABAE8F89230D8AB57AFEEAC5AB5AAB379F3E6ACA4876ED3989D9DCDB6F8C4B489EDB7EEFD570106DB66DA79DE24D0C6076D6CD0C5076D7CD0C6076D6C52D745C757BBC1DEB4695367CD9A355D935934D85226DB15D93EC88CC6B489ED37B65E484C9B51FA1D070CB6CD34F3BC69A08D0FDAD8A08B0FDAF8A08D0FDAD8A4AE8B8EAF56832D86528CE5E2E262F7BF623415359D45E4CE6F684E4362DAC4F65BF7FEAB04836D33AD3C6F2268E3833636E8E283363E68E3833636A9EBA2E3ABD5608BA914C32988E9D4CF82DCD59628222654DA59C4B489ED37B65E484C9B51FA1D170CB6CDB4F2BC89A08D0FDAD8A08B0FDAF8A08D0FDAD8A4AE8B8EAF36832D663A349445832DDB3C236ADD011662DAC4F65BF7FEAB04836D338D3C6F2A68E3833636E8E283363E68E3833636A9EBA2E3ABC560EB9490E2BCE4A2C116D35944EA9419DC416D62FBAD7BFF55A2065B8F2B411004411044932355747C1335D86226C5346A888914E40E6ED16486DB05695BE71DE4BAF75F25186C82200882205652A48A8EAF963BD86224CB42EE708B09F58CA898548B9836B1FDC6D60B8969334ABFE3A2061BFA99749E3719B4F1411B1B74F1411B1FB4F1411B9BD475D1F1D5FA90638818EBF00EB63765424CA898518B9836B1FDD6BDFF2AC160DBD491E74D016D7CD0C6065D7CD0C6076D7CD0C626755D747CC91A6C9DA71D9A4EF92C65B24D1163AA778463DAC4F63B4A5FA3B4118A75AA06836D53479E3705B4F1411B1B74F1411B1FB4F1411B9BD475D1F1256BB00535A36114090DB610D326A68E30A89E6E0FCD7295FBAF0A0CB64D1D79DE14D0C6076D6CD0C5076D7CD0C6076D6C52D745C7978CC11E0535AA5BB66CC94AC002836DD3943CAF03B4F1411B1B74F1411B1FB4F1411B9BD475D1F11DB7B0B0D02946EA8357E4CEB1F5C020F483C1B6694A9ED701DAF8A08D0DBAF8A08D0FDAF8A08D4DEABAE8F81A7D075BEE5ECB5D6C2807836DD3943CAF03B4F1411B1B74F1411B1FB4F1411B9BD475D1F135DA60431C186C1BF2DC076D7CD0C6065D7CD0C6076D7CD0C626755D747C18EC1680C1B621CF7DD0C6076D6CD0C5076D7CD0C6076D6C52D745C787C16E01186C1BF2DC076D7CD0C6065D7CD0C6076D7CD0C626755D747C18EC1680C1B621CF7DD0C6076D6CD0C5076D7CD0C6076D6C52D745C787C16E01186C1BF2DC076D7CD0C6065D7CD0C6076D7CD0C626755D747C18EC1680C1B659C979BEF5DB5FEB6C3FF5D39DFBD7FEEF6EC867298B856B800FDAD8A08B0FDAF8A08D0FDAD8A4AE8B8E0F83DD0230D8362B31CF9F78E8A1CE8E53FFA1F3F4CCFF3263C729FFB75B67105C037CD0C6065D7CD0C6076D7CD0C626755D747C18EC1680C1B65989792E065A8CF49199372E33D71A62C007C135C0076D6CD0C5076D7CD0C6076D6C52D745C787C16E01186C9B9596E73205440C7499B9D618345D846B800FDAD8A08B0FDAF8A08D0FDAD8A4AE8B8E0F83DD0230D8362B2DCF659EB565A6AD90BA65700DF0411B1B74F1411B1FB4F1411B9BD475D1F161B05B0006DB66A5E5B93CCC6899692BA46E195C037CD0C6065D7CD0C6076D7CD0C626755D747C18EC1680C1B65969798EC19E0E6863832E3E68E383363E686393BA2E3A3E0C760BC060DBACB43C678AC874401B1B74F1411B1FB4F1411B9BD475D1F161B05B0006DB66A5E5B93EE418133CE4383A6863832E3E68E383363E686393BA2E3A3E0C760BC060DBACC43C2F5B035B4396F21B04D7001FB4B141171FB4F1411B1FB4B1495D171D1F06BB0560B06D56629E775F3493AD856D8518705E34331E6863832E3E68E383363E686393BA2E3A3E0C760BC060DBACE43CBF73C387BB86FA4810F3BC2ABD12D0C6065D7CD0C6076D7CD0C626755D747C18EC1680C1B659C979BEF3E44F2EBB7BFDF05D0BD9D6C1700DF0411B1B74F1411B1FB4F1411B9BD475D1F161B05B0006DB6625E7F95DEBFE7299C1DE73DD8FB3AD83E11AE0833636E8E283363E68E3833636A9EBA2E3C360B7000CB6CD4ACEF34766DEB6CC60CF5D7E56B675305C037CD0C6065D7CD0C6076D7CD0C626755D747C18EC1680C1B659A979FECA8B2FE6A6FAA99937E69FB79EF9D9ACC660B806F8A4A08D2CB3286B99CB0B8324E4F3A0A517270D39E383363E68E3833636A9EBA2E3C360B7000CB6CD4ACDF3C7EEBD3737D50FCCF4DEEEB8B0FE03598DC1700DF0A9539BEE2A31254B31CA0A3231ABC44C0272C6076D7CD0C6076D6C52D745C787C16E01186C9B959AE777DFF19BDC70EDCD5613917862E60FB21A83E11AE053A736BA04E391E05F268A2106BC0EC8191FB4F1411B1FB4B1495D171D1F06BB0560B06D566A9EEFFAE935B9D9DA76C6BF76EE9F7967FEFDD062DCEFE51AE0539736FAA6CE3273AD51C7741172C6076D7CD0C6076D6C52D745C7578BC15E5C5CECAC5AB56A59AC5EBD3AABD143CAC23AB3B3B3D9169F9836B1FDD6BDFF2AC060DB4C3ACFEB62EBB72ECC8DD6DC056BFA96ECBBF3973FCB6A95B352B5A982BAB49179D67A1C0785D49D36E48C0FDAF8A08D0FDAD8A4AE8B8EAF5683BD65CB96ACC446EA6CDAB429FBD6E96CDEBC79A0198D6913DB6F6CBD909836A3F43B0E186C9B49E7795DCC5DB82E375AF3DFF8EAEB26FB2BBDEF9BCFCD6A95B352B5A982BAB4918719F5380E0AA93B6DC8191FB4F1411B1FB4B1495D171D5FB2065B4D6711B9F31B9AD3909836B1FDD6BDFF2AC160DB4C3ACFEB62EB99FF9E1BAD9D3FFE5E67FBD557E4DFE7CFFECFAC56392B559B2AA84B1B0C7673411B1FB4F1411B9BD475D1F11DB7B0B0D029C6A4071F63B0D7AC59D38D226242C58C5AC4B489ED37B65E484C9B51FA1D170CB6CDA4F3BC2E769FF4F1DC681D98BDB973F7EDB7E6DFF76EF85056AB9C95AA4D15D4A50D53449A0BDAF8A08D0FDAD8A4AE8B8E2FA939D852AE88D9F48CA8D4B5886913DB6FDDFBAF120CB6CDA4F3BC2EEE59FBA7B9D17AF4EE039D679E7822FFFED8CC5BB25AE5AC546DAAA02E6DF421C798E021C7B4401B1FB4F1411B9BD475D1F125B38A88184F31986AB2E5BB98CE22DE140B21A64D6CBF75EFBF4AD460EB712556761C9E79736EB4F6EEDEDD2D7B70E64FF2B2EDBFB975591BA219B1F5A44FE5C7D18BF98D9F34DB120441ACA448151DDF440DB69849318D1A62223DF4AEB6D691B675DE41AE7BFF5582C16E4FDCB963676EB40ECDFC515EBE63C3C7F2F25BBE7F555F1BA239B16376B66BA0F55816430CB8D4B1DA120441ACA448151D5F3277B00531986AB0C5847A46544CAA454C9BD87E63EB85C4B419A5DF7151830DFDD495E793E4E0FE85DC6C1D58F7675969A73377DE977B26EC5B1766A53E2B519BAA48411B9902F2D8CC9B3B475E3F9E12725CB79FF64FD9D67A20677CD0C6076D7CD0C626755D747CC9186C59A24E0CB63EF8E84D9910132A66D422A64D6CBF75EFBF4A30D83675E4F9A4D97FF3AF7323BDEBA4BFCD4A3B9D6DDFB9242F9F3FE7F8ACD467256A53152968F3E2B167F3E3A93177D1FA6C6B3D90333E68E383363E686393BA2E3ABE5A0CB618C9E20A22623AC5642A3A6524349DF259CABC872163DAC4F63B4A5FA3B4118A75AA06836D33E93CAF839DD75E951BAEF9B33E9795763A77DD72435EBE67E347B2529F95A84D55A4A0CDBDDBE6F2E3A911BB04E3A420677CD0C6076D7CD0C626755D747CB5186C359961848653B1EA15090DB610D326A68E30A89E6E0FC75EE5FEAB02836D33E93CAF83F92BCFC90DD7DCD73666A59DCE538F3E9A973F32F3B6ACD467256A53152968B3FD9A6FE6C75363E7299FCAB6D60339E383363E68E3833636A9EBA2E34B6A0EF6B0A8511DF446C8B683C1B6694A9E0FC3DC574FC80DD7D6AB2ECE4A971063ADDBC47097B112B5A98A14B499BB706D7E2C3516D67F20DB5A0FE48C0FDAF8A08D0FDAD8A4AE8B8EAFD1065BEE1C5B0F0C423F186C9BA6E4F9306C3BFD9F73C3B5E7E7D766A54BC8D410DD265346CA5889DA54450ADAC8DD6A3D961A0FCC4CFFED8D21E48C0FDAF8A08D0FDAD8A4AE8B8EAFD1065BEE5ECB5D6C2807836DD3943C1F863B377C38375C8B5B6FCF4A9790871B759B3CF458C64AD4A62A52D0E6FE9977E6C752E3C8CC1BB2ADF540CEF8A08D0FDAF8A08D4DEABAE8F81A6DB0210E0CB6CD4ACCF3FBD7BE2B375C8F3FF86056BA842CCFA7DB64D9BE32B806F8D4ADCDB34F3D991FC7C3337FD87978E6EDF977796B675D90333E68E383363E686393BA2E3A3E0C760BC060DB4C33CF65DDE2EDA77EFA7503FCBFBB219F27F13A6BB98BA966EB77AFBE9A952EB1EFC6EBF36DBB4E2A7FB0966B804FDDDADC7DFB6FF2E3B877C3073B07D6FD79FEFDE0C2BEACD6F421677CD0C6076D7CD0C626755D747C18EC1680C1B6B1F2BC6A23FCC4430F75769CFA0FB9012AC68E53FE6FB74E153CFDD86379BF0FCDFC7156DA43EE68F7B6FF49566AC335C0A76E6DB67DEFF2FC38CE9FFD5FAFFFB1F489FCFB5DB7DE98D59A3EE48C0FDAF8A08D0FDAD8A4AE8B8E0F83DD0230D836619E4FCA084B3B697F64E68DCBFAD490FD56C103BB77E47D2EACFFEBACB49FC766DE92D7299B4EC035C0A76E6DC29562E6BFF1D5CED63357E7DF77FDE4FB59ADE943CEF8A08D0FDAF8A08D4DEABAE8F830D82D00836D13E6F9248CB0DCF99676657D6A54315D64EFAF7E9EF727BFC762EF860FE575EEBEFDD6AC74395C037CEAD626BC63BDEF865F74E6CEFF4AFE7DEBB72FCA6A4D1F72C6076D7CD0C6076D6C52D745C787C16E01186C1BCDF3491961995E62F56185D41D976D575F91F7E7BD0E5DDEF697EFF3F5FA1E5C037CEAD646A6F7E8317CE2C1073BF3576CCABFCF5D7C52566BFA4C539797EFF84EE7B9AB3ED7397AE67BBB219FA52C55AAD4A6ECB7374D1761586D9AF81B47A5CABC5949A4AE8B8E0F83DD0230D8369AE79332C23287DBEAC30AA93B2E73979E9EF7279F2DE6379FD7AB73FE57B2D2E5700DF0A9539B23870EE5C7EFD199B776CB765CF38DBC6C7ED37F77CBEA601ABABCF6CC639DE7BFFD1FF9EF2DC673DFFA6CE7A51B2F4ECE8055A1CDA0DFFECCE9BD15848A21BA48FB32735AD7B6274F7D673706B593E33ACEB1B7FA4C719BA0DB2D6D20FDFF3FE9F830D82D00836DA3793E29233C6D83DDB7CEB573777AEF2F7F96D7D979F227B3D2E5700DF0A9531B7941901E3F797190D03735E8547B6AD03498862E62A2BABF75ADFDAF4D478D320D35997530AC3696013B767E36BDCBF9ED4BD15B45A818C74E7FB7592E5166CE53DAD68D118E7D4ABFA16CDB7357FC73E7B92B3F636E93A8338753621AD79A71D0F161B05B0006DB46F37C524678DA5344741EB984982E8B438BF7E475E465251E5C037CEAD446A73349CC9DFB856ED97D3BB6E665FBD67FB05BE631E8CED93854AD4B71ACC72EF89BA5DF596A30CBE3D8F91F9ED8EF2FC3D2C63A1683EED29619E8A8585BD6BE29DB468DEAC7122E8B5A8C51B749944D573C72E5BF6719D45EAABED6548D8E0F83DD0230D8369AE79332C2A1191A14553CE4282B87687FB2A288C713337F90D77BFEE8D1ACB41FAE013E756A23A65A8F9DE6CC130FF5965F94170D59C44CAD18F7CE5855BA0C1AEBA831E8EEF624A696A8890EFFA97FB0897E3DC6F8238258F9318D3F0A53A6CE6B700C3A3E0C760BC060DB689E4FD208972DFDA7E1ADF8312CB2F675DEEF63BE595A58FF81BCDEE2D63BB2D27EB806F8D4A98D4C0BD16327D34584575F7A292F7B62E64DDDB22283A6564888E91B87AA74F1C67A24F85C75543DB524EA8F84214C74D96F9FA42EA9441B7EE330B178FE67B24C6B27755E8363D0F161B05B0006DB26CCF318237CEFDAF774EB0EC3D66FF65E4F6E85ECB78A17CDC85B1BB54FF9E7C732B69E991998D763FB35DFCC4AFBE11AE053A736F260637E9C0F1DCA4AFBCB9F3B72242B5D42EE7675B74518BA71EE8C55A14BD958EB349965534BE4BFC56D71F3A5E3639CDF3E6A5BB6D931896D1283B6877170BD3FBDAF0DD4790D8E41C787C16E01186C9B30CFC5E4DEBDF6FDE6C54C42EF70954DBDB0B87BDD9FE57DDCBDEEFD9DC766DE9C5F48CB1E321C96F02D8DDE340165FEF2B3F2BA7317AECB4AFBE11AE0539736B2249F1EB7E29B38C3DC7DE4C0FEAC7409317CBA6D5048DD51A9429761C61AC630E664D818F5E1B961E7114FEA3794F5DB946D6591D23847DD2631687B18553C14DF64EABA06C7A2E3C360B7000CB64D98E7BF7FEDB5BEF5851F9E796BF7222673AEEF5AF71779F97073B02FCADB49DFAFBCF86267CF2FB6E465831E481B86C5ADB7E7FDDEB9E1C359A9CD9EEB7E9CD7F5569DE01AE0539736F252193D6EF2B29990DD1B3F966F3B70DB2D59E912725755B70D0AA93B2A55E832CC58636318E3325AC41BE9710C184168DCB2F653D919D34EEABA06C7A2E3C360B7000CB64D98E7DBAEBA24BF78C9DDC090F015E412FB36FC9FAEF95603AEF3B2E5BFF25DCA1F58FB8ECEE3336FCADBE81BF65E7EE1C5BEBEAA981E22ECF9F9B5799FDB4EFFE7ACD4E6E1BB16F2BAF7AEB50D15D7009FBAB491D7A2EB7193D7A5876C3BFD5FF26DBB7FF6C3AC74899564B0CBEE267B316D533BA9FD95FDF65174695AB4E137C6C68FCE39273B63DA495DD7E058747C18EC1680C1B609F33CFC277631DB45E6361D5F7A813F18DCFD2EC663336FE933D23B4EF954BE6DFBF7AFCC4AC763EB5517E77D16CD5791F9D7FF1090FFD16BEC38F5EF973DBCC935C0A72E6DE6CFFEAFFC186FFBDEE559E91272CCF36D85FC6DC3141189AACDF7A831893E63E2C135C143CE8578688D7F7D1AD5B84F7B5B59A434CE51B7490CDA2E71C3897FDBB9F6D6DEF3176DA4AE6B702C3A3E0C760BC060F793DF699E794737F605CBDBC9540E992E5244E64B8717392BCAD63695871915D9BF966F3BBD9AA7C1E7BEB631EF73FE4AFBEE8698FCB28739653513FD43806B804F5DDAECDDF0C1FC58DD7DFB6FB2D225E62F0BE6D55F724A56BA44FEE0604424F39063441CBBE0C3DD3BDE1262CCBBCBECE90A24154499519E94898E3158777EE5CF3ABF3AF1EF3AF7AD794737E4F3395F3EB9F39ECFDFD6FDAFB56DD5F13FED1A33AB3F8932739ED2B61B5FFF3D977EF9C465BFF1D2FF397145FCBED9133FD6F9CD891F35B749C8EF3FED6BB766674B7BA9EB1A1C8B8E0F83DD0230D84B0C32981273172D7FE84F0DF1A097030C0ABD4B2C0FA169D9E1993777CBC665FEACDE9DBF9DD75E9595F6A32FA2297B8981FE21C035C0A72E6D0ECFFC617E9C9E7DEAC9AC74896DDFBF22DF3677CED20B684262D69516733A0E55E932EE58AD553D9E3DFFC3663F653129831D63A2BD1083256659CCF428E119F0266D2B8B51FB1C65DBBB4BB67D7866EB48DB8EFFDABECEE72FDAE76E3FF1B2FD9DC78FBE92657A7BA9EB1A1C8B8EEFB88585854E31521F3C0C07067B891883B9EB94E52B7BC8DD6EABEEB0113E207960DD9FE7E50B37FD322B1D9D5D27F5EEDEECBFF9D759698FDE1F0983970D93BA5C037CEAD0E6D1016FE0BCF3FA9FE4DBB79FF68F59690F5997B9ECEEAE98DA945E3453F558CBFA1CC7F07A31AE89B6EED28AC15223D98410036A950F8AB276624EADF241316A9F65DBC4EC7EE317073B6B2EBFABF3D1F5DBBA219F75FA86FC77946D826EFFD09A3BBA51DCDE76EAB8060F838E8F3BD82D00833DBCC10C918716AD7A12C3DCC9927E94B90B66F272F93C2E0782E5000FEE5FC84A7B0CF34782D4E51AE053873677FEA267A0779EB27C0581C5AD73F9F6BD25ABC8C8DDDDA3A7FC71376F35779F39EB7DD9D6F1A85A97A3272FFD53BA8CF3E8E9EFEADE891E670A8B60DDDDAE7A6A494CB4C1447B06F41BD71FEC9C70E97EB38DC428C675127DC66C9B34755C6B9A40EABAE8F830D82D00833DBCC10C9984C196BBD65A2E77B3C7E5D0CC1FE5FD3DF7F4D359698FB2DF500CA9CB35C0A70E6DE6AE383B3F3E7317AECD4A7B1CBEFFBE7CFBA017221D3DA5FF81B7A327BD2DDB321E55EAF2FB979FEB8D6FC35BB2D2C96299EFA7CFCB5E1863C4B8F3A5538A51EFF00E32AE65A871ADF22E6D9D667812D471AD6902A9EBA2E3C360B7000CF6F006336418735E1645E32EF3AF755BF1E520C3F0E2B3CFE6FD7873BA31D8D55187365BCFFCF7FCF8586FDF7CE9B9E7F3ED3257DBE3F72F1ECBEB85EB37BFF67CFFDB1F47A14A5D7EF7686F29C963177E342B9D2C96393BFED45F8FFCF0DCB8F3A5878D3293AC737BAD6D12E3DCE11D973ACEA7A6803636A9EBA2E3C360B7000CF678065BA7978C1BC5A927B28288B74D917231E6322609F95CACFBE8DD07F27EEE59FBA759693FC3FC912075B906F8D4A1CDFEF57F951F9F7BB7CD65A5FD1C9A794B5EE78563CF64A5FDFCEED1DE03B64737F6EAFFEEE13D598DD1A9529757EFBC2E1FDBF3DF5BFED0E6A8584651A61788C1B48CA7C47B3F7FBBFBD0996C2FDB36EDF8F4E93B4B8DF0248DF2A8D4713E3505B4B1495D171D1F06BB0560B0C79B222294AD3E12F34FC5F28065115903BBB7BD7F5EED304BEA1D98BD392FDF7DD2C7BB654586F92341EA720DF0999636FAC7D503AFFF61154E457AF1D8B3598D7EEE59FBBEBC8E3C1469F1EABE5FE5759E39B357FFD53DD7653546A74A5D645EB48EEDA55F5F90958E8EACBCE09968BDF3FBBEE36F5FB62DB51834E7B9892B4C4CEB7C6A22686393BA2E3ABE5A0DF6E2E26267D5AA557DB165CB966CEB12AB57AFEEDB3E3B3B9B6DF1896913DB6FDDFBAF020CF6F006B348D7F066AB905811BE66BD186294D50C874859584FDEF2A80CB3A4DECE1F7F2F2F93A9041E65865D43FF1098D635A0894C5A9B61FEB80AD9B3F123799DBBEFB0AF272FFF66735EE7D94B7A531F5EBAF9EB598DD1A95297E77FD07B71CE2BBB7E92958E8E3E00E79968B94B6D95D711A33C3858F75DE87198F4F9D464D0C626755D747CB5196C31D2622C8B863A44B66FDAB429FBD6E96CDEBC79A0198D6913DB6F6CBD909836A3F43B0E18EC258631981E7A57D19AB251B6CD63DFFADECB431E9E795BB7DD5DEBFEA2FB3D76C593BE57685FB87C1D6F65D01F09E11F02D3B8063495496B33CC1F5721DB4EFBE77CFB9EEB7E9C95F6F3C24F4ECEEB3CFF832FE79F5FB876F98393C352A52ECF5EFC897C6CBF3BB83B2B8DA3380DE29FCED8D535A729DDA16E9B892E63D2E75393411B9BD475D1F1D566B0C5508AB1F450D35944EEFC86E63424A64D6CBF75EFBF4A30D84B0C6330A781EC6B71ED9F9A63890D31F17317ACC9BF6FFDD68559EF3EFA8780187A9D7A70D7BABFCCB62E31EC3560943F2E9ACA24AF8FA2991C8F5196939C3BEF4BF9B66DDFBD2C2BEDE7B96FFC5B5EE7E55B2ECB3F3F7BF9F26951C352A52E474F7E7B3EB6D75E389A959653360D24C518345FBA2D4CF27C6A3A686393BA2E3ABE5A0CB6DCA915932953443CD6AC59D38D226242C58C5AC4B489ED37B65E484C9B51FA1D170C763FB919CC5E955E9719F4CCFEB04BFF6D3BE35FF3EFBB7E7A4DD6FB601ED8B32B6F2777CD4362AF01DD3F5A4698CED06426797D945CB474B442EA86CC5D7A7ABE4D3E5B1C3BF7AFF33ABFBDF78EFCF33367D90FC70E4355BABCF6EC93F9B88E9ED6FFC0B152BC4B2D9F3F7D7A5A77AA57E27CE94930C9F3A9E9A08D4DEABAE8F86A31D87A17574CA5FC5723349E62363D232A752D62DAC4F65BF7FEAB04836D33E93C2FA3EC4EE5B0067BCFC68FE6DFEFBEE337D91E06F3C2B1DE926D8FCFFC4156BA44AC36A34E679834F91F5113B8A33EC9BC91B15A1A5A217543E4AEB56E93BBD9164FAFED1DA7DFFFF6E5C2F7F10C5F55BAFCF681EDF9989EBDF4EFB3D22506DDA59EF65CEAD8A91EBC91CF6792E753D3411B9BD475D1F1D56AB0C3F9D7FAC0A3184D418CA87E0EF1A65808316D62FBAD7BFF55A2065B8F2B517FCC9FF4F7B9891827A49FC599F7E4DFB70D799CC3873377DC769B59C78B1B2F3EABDB2E663A83D4B5FAA83A76CCCE76B69EF429730C12F31B3FD9AD63B54D21E45F54AC715B2175C3B6375F7545BE6DEEE4DE528B1AF7ED9CCDB73F75EABBBA654F9ED97B03E87D5B6F5CD6A68E38F8F3DE03C9379FBC3A37A7FFFDD5ED9DBFDB38DF35AFD3BC4B5D66A2FFF3BC6D9D73BEB3BB3BB6709C97FC708FF9DB0882A82E5245C73751832D66524CA3869848C13393623CA58D20FFADF30E72DDFBAF120C767A318C912A0B31AE4FCCBC29FFBEB077AFB93F2F76AFFF70DEF6373FBAC6ACE3C5307F24485DAB8FAA430CB4ECAFCCF48B01B7DAA610E3683ABBE5DA7C9B1CD7709BC403B7F6B63F7EFEC7BB6587BFD6DBDF83377E77599B3AE2BE6FF69E29F8DA97679699DA3A56FCF8BB8D73986882482C5245C757EB1DECE21C6C319962400531A19E11D53A4562DAC4F61B5B2F24A6CD28FD8E8B1A6CE867D2795EC6A0A900B16B6B1F7BE289FCFB2333C3BFF27AFEACFFC8DB876F088CD1669CE90C93A06CDA4D31C6992E32C9BCD1DF1013C5DF206B5FEB365913BBC82B3B7E946F7FE1874BD7A0177E7A6A5E26AF0A1F87AA74D976EA3FE6639AF9D205A6E1AD3A263D5F7A9239D374D0C6076D6C52D745C757EB438EC565E942F3E9DDE516132A66D422A64D6CBF75EFBF4A30D83693CEF332867998CD8A7BD7BEB7FBF0E0837BF7E465C5954062E87B30EE9293B3D2386D5233D8E33C20380C93CE9BB2874635E48FAB22F2F646DD2E6F752C222F6CD1EDF22217E1E5DBBE9997BD78DD19DDB2511945176B49BDBD5F797F3EA67FFAC2D5A6E91D25EA5C1A6FD239D364D0C6076D6C52D745C7578BC116C4504A28BA2EB69AEEE29C6C413E4B5978E75BFA50531ED326B6DF51FA1AA58D50AC5335186C9B69E4B9C730772A65850F31A8B2AC5E58FEC0EE1D9D7D375C9F7FDF79F227B3DEE3D9F9A3EFE4EDB79ED93B1F63B49996A18D6518C32F0F754A7D0919DB3077B4279D37DD95599C156624CA96933C3CF38779BD979E7B3E2B5DE2F91FFC4FBEED955D3FED96BDBAFFC6BCECB96F7FAE5B362AC3E852F6B0E253C1BF40FCC5E76F32EB8C13FF74E6AE8998E832269D334D066D7CD0C626755D747CB5196C414C65184583A966348C22A1C11662DAC4D41106D5D3EDA159AE72FF5581C1B699569E7B8C72A73234B562BC17D6FF5577D51189FBD6BE6BE8A90F8B73B7E5FDEDDDF0C1AC344E9B71A6334C8218835D36F546B48E5952705A79239A2DAE7D4F7E7CE5780FD2F1DED7EBEBEF397CFF7D59E912CF7E7D697EBAC4EF1EDCD92DFBFF0EDF9D971D3BFF43DDB251194617EFCD8A9FFC426F1ACB3D6BDED5B7AD8A90FDD6C1B472A689A08D0FDAD8A4AE8B8EAF56833D2E6A54CBDE0609186C8FBAF37C943B9572D75AB655611485A71F7B2C6F17CEE18ED566D4E90C9360983BEA5EC8EF19C434F366FB69BDF9C877FEBFC1D7B9BD1B7A0FAD2E6E9DCB4A9778E6F477E5DB5E3BF678B7ECF7AFBC90971DDDF0E66ED9A878BA58D340C4EC5A2B817CE98B5FCFC773CB891F5FB67D50A4BAF6F43473A669A08D0FDAD8A4AE8B8EAFD1065BEE1C5B0F0C423F186C9B54F25CEE4A8A398C9DB210DEA5F422C6282A325F57DB3DFBD453DDB2586D46F92361528866D618868D417789A799370BEB3F908FEBBE9DDBB2529F3E437EFD4FB25231D2CFE7E54F178CF433A7BF3BDFA6C67B148ABA0C5AB3DA8A73BF7C523E96ABFFE73FCC3A8322C537244E33679A06DAF8A08D4DEABAE8F81A6DB0E5EEB5DCC5867230D8364DC9F390614CE420A3A82CACEFBDDDEFBE1D5BBB65C36A23FB92F9BF3A9D41FADAB7BE37E5645AC4DC511F14F2074E19D3CC9B8333BD57863F7DF8B1ACD467EE9C2FE4F5B77DFF8AACB47C2AC8B397F6D60DFFDD833BB2D2E129EAE24D03290B31D53A1631DB569D54EF529731CD9C691A68E3833636A9EBA2E36BB4C1863830D8364DCCF361A6410C328ACAB6D33F93B7D9F5D3EF77CB86D5E6E517823BA459EC3E69B2CF16587877D4D5F4C784FC2B4219D3CA1B794851C7F444E14D9B1E73979C92B799BFECACACB4D379F5AE9BF2F2E7BEFD1F59E912CF5F7362BEED955DBDBBDEB1E814105D235A3EAFBBF2AEAEE11DF68530322D44C722D345AC3A1229DEA52E635A39D344D0C6076D6C52D745C787C16E01186C9B26E679CC837C1A838CA23277D1FABCCDDC156777CB86D5265C2E50E39EB57F9A6D9D3EFBD72DDD9517632DABAF1C7EDDA016C7E7452A06FB910377E5638AD572DB5597E46DE6BE7A4256FAFA1F40B77F3B2F7FF1E7A767A54BBC74C345F936F91CCB28534006853CD8A86391071EAD3AA9DEA52E635A39D344D0C6076D6C52D745C787C16E01186C9B26E6F9240CF6F6AB7BAFD89EDFF4DFDDB261B5D9735DEF2D811A8767C67B686E1CF687D35E766EAFF4CEFFB4F266FFCDBFCEC7B4EBA44F64A5E5ECFED90FF336DB4EFF97ACB4D335D55A2E663B44EE5AEB36B99B1DCB285340CA4296E4D371C8527D5256C7927A93605A39D344D0C6076D6C52D745C787C16E01186C9B26E6F924A688ECBFE586BCCDEE933EDE2D1B569BF92BCFCDFB90E90CFAF9B9234F6735A64BDF839B478E543A777D5A79236FD6D431CD9FFD9F596939076EBB256FB37BE3C7B2D24E775A8896CB7491109977ADDB643E760C6274C5005765AE25E4A5323A0E79D94C5D4BEA4D8269E54C13411B1FB4B1495D171D1F06BB0560B06D9A98E79378C851D64BD636F7CFBCB35B36AC36F39B3E9FF7F1E0CC3BF2CF07F7EDCD6A4C8FA3870FE7FB0F971EAC6A49C169E5CDDCA567E4E392B9D5313C72607FDEE6EEB5EFCF4A3BDD071BB55C1E780C919543749BAC2862A1F3ACF56EF247D66D334DF230517C58515E8BAEE390D7A5376D1A4819D3CA992682363E686393BA2E3A3E0C760BC060DB3435CFAB328A214766DE90B77DE5C51787D646EE966AFB7DC1D2720B37FD32AB313D16B7DE118CA5B792C9A02505EFDCF8D1A82505A79537F3E7F4FE6809570429E3B92347F2368FCEBC352BED7497E6D37259B2AF88AC81DDDBFE42563A9979D6C5D069209BD7F59E0578F1FA73B211AC0CA695334D046D7CD0C626755D747C18EC1680C1B6696A9E4F62ED69B9DBA9ED0FEEDF37B436E15D6B99FBAB9F659AC3B4D9B5E57BF9FEB79EF16F59690FB9B32FD367648EFA63C1ABC5E7CEFB9FAC4639D3CA1B79F5BD8E6DDF0DBFC84A07F3C4CC9BF276AFBEF452E10EF5BBB25AFD7877B8AB9E675D8C701AC80BD7CEE4637865FBB559E9CA605A39D344D0C6076D6C52D745C787C16E01186C9BA6E779681425E473ECB490223B4EF9FBDCDCDC79FDCF86D2E6F9A347F3B68FBF6E58E72E3939FF1E2E15372D649FBAFFB98B4FCA4A6D0ECCDE9CD795B1BFFCC28BD9169F61F366D4E37460DD9FE7631B66AACDFD6B7B2B713CF1D083DDD7A2EB77795DBAC573DFFE5C5EE7D5FD3776CBAA98673DCC9AD5CF5EDACBC1DF3EB03D2B5D190C9B336D026D7CD0C626755D747C18EC1680C1B621CF7BC8926E6A6EB67EEBA2A1B491553AB4EDFE757FD5D9F6DD4BF3EF73E77E31AB353DE6CFFEAF7CFFDB7F706556EAB36FFDFFC9EBCBD80711AB4DF75F1A4AA6F3C8BF4294FD4BC363C1839AF2474C2C322D46DBC98B835ED9F5D35E3F3FB0EFD2BF785D6FBEF765EB4EAE6C9EB584AC891DB366F5D1D37A2BE4BCF6EC9359E9CA6098F3A96DA08D0FDAD8A4AE8B8EEFB88585854E31521F3C0C0706DB863CEF21A65ACD8D98ED61B4D9F593EFE76DE5A5357BAFEF19BAEDAF1BCC6913CE07BFEBD6A5BBB165847F1088D91E44AC363A8DE7C8CC1BF3FE8B2106DCE2D8534FE675C2B9D431EC38B5377D68EFAF7EDE79E9C68BF3EF2FFDFA82AC560FB98BFCC37336E575467D45B915B12B81BCF642EF5F418E9EFCF6AC74E530CCF9D436D0C6076D6C52D745C7C71DEC1680C1B621CF7BC8B4103538325D64186DE62E3B336F3BF7B58D7D77B417D67F20AB353D642514DDFFE30FDC9F95FAC8B410991EA26D64DA481931DAC81410E9ABCC5C6B58D3451ED8B32BDFBE7FDD5F66A571C85AE6DA76C735DFE8BCF0C335F9F75776FC28ABD5434CF097BFD833E1379DF809D32C5B51D56BCB7F777077BEFF672F8E5BF3BB490C733EB50DB4F1411B9BD475D1F161B05B0006DB863CEF210F36AAC191071E87D166FEACDEFC5D3174470E1DCABF3F34F32759ADE9F0CA4B2FE5FB7E6AE60D59E960E401476D77FFDA7796CE978ED146DA697F8342EA16D9FBCBE00F9E53875B1146E69D6BDBF92B36759EBDAC374DE5B7F76FCD6A2DA1F3AC3FFDC5DE0B6AF67FE57DCBCCF2A090E924E1ABD2AD292065F4BDECE607BD3750AE1486399FDA06DAF8A08D4DEABAE8F830D82D00836D439EF790A5F9D4E0C8927DC36873E786BFC9DBDE7DDBADDDB270D9BFDFBE32BDF58C0FEE5FC8F73BCCABDAF7FDEABACED1AC9D15E17CE9186DC49C5BFD5821758BF4CF63FF52561AC7D66F07D37DCEFF4AE79933DF977FBFEEFA9DE67AD67FFEF9DEC39EF28749D1400F0A31D4C3E44C1199BAA2FB97292D2B8D71B459E9A08D0FDAD8A4AE8B8E0F83DD0230D836E4793FE1D48A6DB7DC12ADCDC3336FCFDB3DF5E8A3DDB2FB82952C0EDF3F789A4655C89C63DDEFCE53E2DE4A28942D7BA8A1F3A563F2665C833D77F1C67CFBDC156767A571F4CD893FF35FF3CFF2478F658E35EE5DD31BF3278EFF8959C70A9D673DCEF9F4FCF7BE90EFFBD53BAFCB4A570EE368B3D2411B1FB4B1495D171D1F06BB0560B06DC8F37EE435E96A726EFDE1F7A2B479E68927F2368766FE282BEDBFAB7DCFDC6C563A7974EEB3C4DC795FCE4ACBE9CD97EEDD75F742EAC6E4CDB85344B69EF5D97CFBCE1F7D272B8D431EECD4B6FB367E38FF2C533FCA96DCBBFDC4DE31FBEF2F5E9197C7CEB31EE77C3A76E147F37DFFEED185AC74E5308E362B1DB4F1411B9BD475D1F161B05B0006DB863CEF277C38EEC6CBCE8DD2A6FFAD89BD1538C297CDECFED93559E9E4912911BADFADDF3C3F2B2D6758331C9337A1D11F14C539DE42B812CAA0872E8B1C5CE8CDA77F60EDBBF3CFB79CB8CA34C91A3F3AA177B7FBB42F9DB16CBB4C27295B6A6F9CF3E9E886DE9284BF7FF9B9AC74E5308E362B1DB4F1411B9BD475D1F161B05B0006DB863CEF47A622A8C9B979D3D2527D83D8F1A3EFE46DB69EB93A2B7DBDAF0B02A3FBAD0BB3D2C9139AE53B7FB1252B2D67D8E91CB17933CE2BEDEF5DFB9EBCCEA17B17B3D238C27F55383CD37B05FAF74FF8EC32D31CC6C55FEE1DB32BFFE74BCBB60F7A707194F3E9E53BBED37976F3673A475EDFA784BCD25DCA561AA368D316D0C6076D6C52D745C787C16E01186C1BF2BC9F5D3FEDCDDDBDE3E4A53BB58398FBFAA9791BF9ACCC7FE3ABBDF20BD766A593E7AEE0ED870FDEB93B2B2D675206FBA1BD77761F18B4FA91287BA5FD53C1F27EAFBEFC72561A8F35DDE5822FAF5B669AC3D8F0A573F3BAD79DF0E9BE6D31EB590F733EBDF6CC639DE7BFFD1F7DE30BE3B96F7DB65B67A5308C366D036D7CD0C626755D747C18EC1680C1B621CFFB91B7FEA9C1D9B7F6AFA2B491BBD6DA46EE662BBBB65C9D978777B627CDE3337F90EFF7C563CF66A5E54C628A88307779EF95ED8FCCBCB57797F6F598BFF2DCACD6729E7CF8E1BCDD8333EFC84A87E38199E57F34CC7CE9823ED31C86CCB35EFD856FE775B77FE5AFF36DB1EB590F733E8981EEEE6BADBF4EB818F095C230DAB40DB4F1411B9BD475D1F161B05B0006DB863CEFE7D9A79ECACDCDA199B7446913BE665CE6632B07666FC9CBF76CFC58563A5942633ACCFADBC3CE978EC99BDFBFF65A770CDA4E1E54DCBBE143F9F7BB6EB921ABB99CC5AD73793D69330AF2821FED43E35FBEF0DD3E535D8CBF39FEFFE5751F9979DBD0EB59C79E4F3205A4BB9F1273ADB152A68BC46AD346D0C6076D6C52D745C787C16E01186C1BF27C3962ACD4DCEC9A9BCB4A7D64E510AD2F737F95438BF7E4E58B6BDF9B954E96BB6FFF4DBE4F59C5641886992F1D9337DBAEBA246F272FEE11E6CEFB525E36BFF9BC6E99C5EE9FF55EFA22AF9E1F0559A250FBD0F8E0F1BF348D75184FAE7F6B5EFFF72F1ECB7A8BC3D3454CF273577DAE73F4CCF72EC519BD072F0785B45B09C4E44C5B411B1FB4B1495D171D1F06BB0560B06DC8F3E5ECDDF0C1DCDCCCFE64F96BB54364CD6BAD2B6B6187C8EBC775DB13336FCA4A27CB8E6B7B531C6499BB6190B9D0656B6187F3A563F2464CB5B615B32D6CFFC1377A6567FC6BB7CC62FE9BBD97AECC5DB0262B1D8EF9B3FF33EF43E2B1756F370D751832CFFAD845A32F9757D4C59B67ADD36462420CF94A202667DA0ADAF8A08D4DEABAE8F830D82D00836D439E2F279C537DD3E6E5CBC785C85B1BB5AE75C7F8E1E06E7878777B52CC7DFDB47C7FF27914640AC88E533E95CF9796D8FAAD8BB2AD4B0CCA1B990EA2E3906922325D447860CFAEBCBCECAEBE986AAD27667B58BAD358D6BE2F1FBFF4F3F0C6F70C5CCFFAC91BBED9397AC67BF276C72E5E35D4148DA22EDE3C6B1D534C60B0573E68E3833636A9EBA2E3C360B7000CB60D79BE9CB94B4ECECDCD4D5F5D9795DAECB8A6774776FEACE5FF94BF7FDD5FE6DB1FD813B7A2C738842F6791BBD9E310DE81BE7FD78EAC74092B6FC4D4CA0390B2CA88DCB1D7B6F2A06348F810E6D1C387B3D27E645A88D691E922B174EFC2974C75B9E1C4BFEDAC3AFEA79D0FAE99EF5BCFFABA5FEEAE64458F509761E65997055344563E68E3833636A9EBA2E3ABC5606FDAB4A9B36AD52A33D6ACE9FF27D1D5AB57F76D9F9D1DFC56B89836B1FDD6BDFF2AC060DB4C3ACF9BC8F66BBE999B9BDB4EFDB7ACD466EE6BC1EBBC2F3B332BEDB1E394BFCFB7EFFDF5E45F7F1DBE3D52E6638FC3D633FE2DEF4BFE900809F36690A9DD79F227FB96E2DBB3B1370563DF0DBFC84AFB091F8694071E63D1292E478225FE8A71E3897FD7597CE4F9ACC512E3AEE8A173AC9F3CF59DDD90CFC72EE8BD41729CE021C7950FDAF8A08D4DEABAE8F892BA832D4673F3E6CDD9B7A5EF62C615D936C88CC6B489ED37B65E484C9B51FA1D070CB64D5D799E32076EEBADFEB17BFD87B3529BF04EEBAE9F7C3F2BED317FCEF1F9F6EDDFBF322B9D1CE1AA1DB2A2C838C8327ADAD7DC574FC84A9708F326C6D48A0157C217F0CC5FD67F775B91A5F9B44EECEFD09550CAC6A121759561EE348B69D60715C544BF74E3C5EE9DEF41D3408E1A65C510E3BF52E05AE383363E686393BA2E3ABE640CB69ACCC5C5A5B796E9F72272E73734A721316D62FBAD7BFF5582C1B6A923CF53E789870FE60667D05277FBD7FD555EF7BE9DDBB3D21E55CC898E45D6BCD67DC9348C7159B8E9FABCBF3D1B3F92952EA179338AA90DE7676F3FED1FBB6521F25219DD2E2F9B8965D8B5BC1531CA569D30069A61C39C0F33CFDA0A31EEBC68A61DA08D0FDAD8A4AE8B8E2F19832DA63334983255A4385D44903A62462D62DAC4F61B5B2F24A6CD28FD8E0B06DBA68E3C6F02E13CE1178EF94BB53D3EF3873D4374F46856DA43EE5AEB76B99B3D2CE1BC6609F91CDE7D0D91B736EABEE46D8EE322F3A3B53F79DD7888E6CD28A6F6E1FD0B79D9FD33EFEC9685C86BD175BBBC2E3D9661DF46A9C8DD68ABCE344396ED0BEF8CAF946921215C6B7CD0C6076D6C52D745C79784C1DEB2654BD760875324C46C7A46D4BA032CC4B489EDB7EEFD570906DB66DA79DE14EE5AF717B9F991952F2C9E78F0C1BC8EF7B6419977AD75643E762C83E635CBB48C705EB370E72FB6E4DBC33BB4E370DFDADE7ACD0717F665A5BDBC19D5D43E1AAC1DFEC4C18359E91207666FCEB7ED1EE2053D4D36D82BD15017E15AE383363E686393BA2E3ABE240CB6653AA54C4C67116F8A8510D326B6DFBAF75F256AB0F5B8128417375E7CD6EB86F94FBAFFC42F71E7BA0F74CB8AF56EFDE1F77283B473FD47966D97B8FD17BD37032EACFD0BB38E15F31B3FD96D5336F562EB499FEA6B73E345BDE928B79CF585BE6DA3C6DC49BD75B16FDA7CF1B2EDF70773A50785D4D5763B367C3C2FBFF93B9BFBFA94A51175DB6DA7FE4BDFB6B2983FA9F740E9A090BADAEEF0D7FFD1AC332862A680C4CCB33E7CF13FF4FD0E822088D848151DDF440DB69849318D1A62228BC85D6BD92677B143A46D9D7790EBDE7F9560B08941B1E3F5F3504CAB658224C4F44A1DAD7FE3A5E7E4DB7E73FA67FBFAD2D8BD756B5E47D6C4B6EA887917C327065462FFEB465CEAC7CC6B0E8DFFAD67FEB7593E4EC83285DAE7CD9BBEB46CFBA8A6F6E64D27E4E5379D37D3D7E74D17F45666B9E99C13FBB69585FC666D3728427D1EFEC979661D8932133DEE1C6B89C72FF974E7BE5DB7F7FD0E822088D848151D5FED77B0C56C8AE92C22E59E11B5EA0B316D62FB8DAD1712D366947EC7450D36F433CD3C4F9DA157C3B8706D5E2E2B6E78846B42CBDB1D9541D34062229C0A12BE1A7CEFAF7E9E958EC79DD7FF2CEF73D7499FC84A7B79A30F39C64438777CF7CFAEC9CB8B5367E6CEEDBD4E7DDB772FCD4AE388D1538E7391515702898D6317FC4D776EF54A9F675D06D71A1FB4F1411B9BD475D1F1D56AB0F5EEB57567DB9B32212654CCA8454C9BD87EEBDE7F9560B06DA695E7A9A3467198D530C207FCF65C776DB7CC42DE58A8F50E2DF6B4F60CFD30A62E9C4B7CCFDA3FCDCB0FEE1FEE15DF1EF24780F6F9C8CCDBB2D2FEBC19C5D41EBAF7DE7CDBC1993FCE4A97D8716A6F5ACADE5FFE2C2B8DA3FB474BA6AB1532D6E2DC754156EBC8D7C29E40B4CD4C5B70ADF1411B1FB4B1495D171D5FAD065B0CA565360559AE4FB685A653EBEB527E821853BD231CD326B6DF51FA1AA58D50AC5335186C9B69E579EA8CB21AC681757F96973DB8774FB7CC62CFC68FE5F50ECCDED22D2B33F4A31AECA766DE9097BFF2D24B59E9F8846B523F9AFD8110E68D18D6036B7B5A14C333B562ACB58E186EA5FFED97F603A683107DE538893E12F239BC83EE214638BCD32C779E752C56B46D2DEB71E05AE383363E686393BA2E3ABEDA0CB665348B689D308A84065B88691353471854CFFA0D55EEBF2A30D836D3C8F3262026CC324756A8A995359AB5ECE517FADF0C18B2F5CCD579BD5D5BAEEE960D63E8CB42CDFEE30FDC9F97594BDF8D43F8364A7D6D79316FE46D8D5AE79199B74699DAFE7EAFC94A658591B7E6E5C79E7A322BAD8FB257A80F8A95B696F53870ADF1411B1FB4B1495D171D5FED73B0C7418D6AF10149E807836DD3943C9F34C3186C59235B571991EFE1D4098BBEB9DADFF86AB76C98FD95851AD8BB6EBD312F1B6669BB18E62E3E39EF5B3E0B61DEC8DD72DD2E11FBE6C5B94B4EE9F57BD1FA6E99AC25AE658FCDBCA55B563783A68F888996373ACA9DEFF055E94C0BE9876B8D0FDAF8A08D4DEABAE8F81A6DB0E5CEB1F5C020F483C1B6694A9E4F9A983BCA65D30164DEAF350D42D8FAAD0BF37AF29A706190C18E997A10CE6BDEFE83E0853667FF57565A0D72D7BAB7CFA50712C3BCD9FBCB9FE7DBF7ADFF40B72C863DC1BADDFA00E5C17D7BF3B20315BC2CA74A8AD3472C13CDF9E483363E68E3833636A9EBA2E36BB4C196BBD772171BCAC160DB3425CF278DCE891E2764AEB145B862C6B6D3FFA55B36EE149123336FE83CB4F7CE6E5FC2DCC527E5DBE62F3B2B2BAD069977AD7DEB0B75C2BC993BFFC47CFBDCD73676CB629017CC683B79F18CB0EF865FE46532EDA469703EF9A08D0FDAF8A08D4DEABAE8F88E5B5858E81423F5C1C37060B06DC8F31E31AB610C0A6BCEF13D73B3F9F63B37FC4DB76C18432F6F95943BDE1232BF59CBE72EEF19E9AD67FC5B5EBE6BCBF7B2D2EA906930DABFDCA90FF3267CD8F3AE5B6EE896C522F3C5B5ADBC427DDBF7AFC8BFCF9FF3F9AC5673E07CF2411B1FB4F1411B9BD475D1F135FA0E36C481C1B621CF7B88712C5BE22D26F4A1C390C3F7F71E40BC6FEDBBB2D2D196B7DBF9A3EFE4DB1E9AF993CEEF5F7BAD5BBE6FFD07F3F2C5AD7774CBAA44A67068FFB236B6E6CDA1C5BBF3F2C3336FCE6AC7B3FDB4DE5B14E5B7F5CDCBBEF48CAC5673E07CF2411B1FB4F1411B9BD475D1F161B05B0006DB863C5F8EDC5D16A3AC6F563C3CF307B9E91B147297B9C86F5F7925DF2E533B944186DE5BDEEEEEB5EFCFEB6CBBEA926E597887F9E8E1C3DDB22A091FD414E3AB79232F82D1F2EDA7FD53563B1E99CE92F77BC1573AF367FF67AFBF6BBE99D56A0E9C4F3E68E383363E686393BA2E3A3E0C760BC060DB90E73EAACD302B7E58065B90BBCD5AE7C8A14359E9127B367E74A9FCF53834F3E681CBDB89A9D6BEC46C3F7BE448FEFDD08456DED8F9E3EFE6FB1023ADDAC8672D1FF6AD8B4238E75A7408EF94EFBFF9D759ADE6A0BAC072D0C6076D7CD0C626755D747C18EC1680C1B621CF7D549B611E48B4A688080BEB3F90D7B96FE7F6AC74897BD7BE27DFA62FA22943A6858486FDC0BAF777CDB9843C2C5866CE47E5E0C2BE7C7FF7AD7D77AE8D4C0BD172992E322C72B75DDBCBF287E1DB281F39705756AB39A82EB01CB4F1411B1FB4B1495D171D1F06BB0560B06DC8731FD5669807123D73BB3D986FBDF7FA9F66A59DCE7D3BB6E6E5C55786973177D1BA91970D1C95D04CEF9A9BEFDC7AEDD5F97779D07154C257C93F31F3A6FCF34BCFF92FEF4915CE271FB4F1411B1FB4B1495D171D1F06BB0560B06DC8739F509B511E480C993BF78B79BD702AC5DCA5A7E7E5C3AC5F1DBE39D10B6FD9C051D9B3F12379DFB7FEE03B9D9BCF0996E73BFFC4ACD6F06C3BE35FF37E340ECEBC3DDBDA2C389F7CD0C6076D7CD0C626755D747C18EC1680C1B621CF7D426D467D2051E97B98EF92A5B7210A7B377C282FD7D7900F42EFA8CB0393DAD68B2AA78BCC7DF584BCDF1B2F3CB9B377DD5FE7DFE56533A332BFF9BCBC1F0D9952D344389F7CD0C6076D7CD0C626755D747C18EC1680C1B621CF7D2C6DC4B0765718C9D6A51EF440A2222B62A879D43BD58F3FD85BBE4FE2A5E7E3A6445431277C14765CF38DBCDFF9933ED5B71F795DFAA8C8DAD9615F12B27C5F13E17CF2411B1FB4F1411B9BD475D1F161B05B0006DB863CF7A9529B859B7E999BC79D27FF5DB72C5CE26EC7A9FEF4922255AC6A320AF7EFDA91F7FBD4CC1BBA0F55CAE7BBC7987F2DCC5F796EB71F7D50533EEFD9F8B16C6BB3E07CF2411B1FB4F1411B9BD475D1F161B05B0006DB863CF7A9529B83FBF6E6E6F4C0BA3FEF9689A9D6B26196B8ABC36077A7C804E32DC6280F552EF5E9CF6D9FC4839A9386F3C9076D7CD0C6076D6C52D745C787C16E01186C1BF2DCA74A6D9E3BF2746E1C0FCDFC51773A48682665BA482C754C11E9CD3FF7E77D0FFB50A5F67964E68DCBFAD2A8FA41CD49C3F9E483363E68E3833636A9EBA2E3C360B7000CB60D79EE53B536E132773BAFBD2AFF2C0F3A0E833EE41813553CE4A8FB2B33C21AB1FB9B449F29C0F9E483363E68E3833636A9EBA2E3C360B7000CB60D79EE53B536E14B54B6056F4094A5FA86A56C6A8586DC21AE8249DC31AFE32EFC34E07CF2411B1FB4F1411B9BD475D1F161B05B0006DB863CF7A95A9BDD27ADCA4DE3A3336FCD3FCBCB6686A53B7F399FB6B13C062D1B380C9398F35DC73CF269C0F9E483363E68E3833636A9EBA2E3C360B7000CB60D79EE53A53632CDE1FEB5EFEC5B2943425E933E0ED2AFDCE115132A219FAB9E523109333C893E5380F3C9076D7CD0C6076D6C52D745C787C16E01186C1BF2DCA70A6D06AD9471EFCCBB935F296312D33926D1670A703EF9A08D0FDAF8A08D4DEABAE8F830D82D00836D439EFB54A1CD4A5829431F488C89D8BBE793E83305389F7CD0C6076D7CD0C626755D747C18EC1680C1B621CF7DC6D5464DE44A582963120F554EF341CD69C1F9E483363E68E3833636A9EBA2E3C360B7000CB60D79EE33AE362B691AC4241EAA9C449F75C3F9E483363E68E3833636A9EBA2E3C360B7000CB60D79EE33AE362BF1413EB9D32E7F0CDC3FF38E6EC8E771EFBEE77DBEAE8144157DD605E7930FDAF8A08D0FDAD8A4AE8B8E0F83DD0230D836E4B9CFB8DAAC4483AD903736E8E283363E68E3833636A9EBA2E3C360B7000CB60D79EE33AE367227D632D35648DD2641DED8A08B0FDAF8A08D0FDAD8A4AE8B8E0F83DD0230D836E4B9CFB8DAC83407CB4C5BD1B42911E48D0DBAF8A08D0FDAF8A08D4DEABAE8F86A33D88B8B8B9D55AB56F5C5962D5BB2AD3D56AF5EDD5767767636DBE213D326B6DFBAF75F05186C9B69E47953A9429B95B8528640DED8A08B0FDAF8A08D0FDAD8A4AE8B8EAF1683ADE67AF3E6CD5949A76BAEA52C34D9F27DD3A64DD9B74EB7FE20331AD326B6DFD87A21316D46E9771C30D83693CEF3265385362B71A50C81BCB141171FB4F1411B1FB4B1495D171D5F2D065BCDB418ED10B9AB2B665350D35944EA84E63424A64D6CBF75EFBF4A30D83693CEF32653A5362B69A50C81BCB141171FB4F1411B1FB4B1495D171D5F2D065BEED48AC90CEF5617CBD6AC59D38D226242C58C5AC4B489ED37B65E484C9B51FA1D170CB6CDA4F3BCC9A08D0FDAD8A08B0FDAF8A08D0FDAD8A4AE8B8EAFB639D87A2757CCA6DED1963245CCA66744AD3BC0424C9BD87EEBDE7F9560B06DA691E74D056D7CD0C6065D7CD0C6076D7CD0C626755D747CC72D2C2C748A31ADC1ABB19610E31922DFC57416F1A65808316D62FBAD7BFF55A2065B8F2B411004411044932355747C13BD832D66524CA386984845B729FA5D1FF493EF75DE41AE7BFF5582C12608822008622545AAE8F86A9922E29949319E6240F5B36744B54E919836B1FDC6D60B8969334ABFE3A2061BFA99749E3719B4F1411B1B74F1411B1FB4F1411B9BD475D1F1D562B0634CA6376542B64B3D8B9836B1FDD6BDFF2AC160DB4C3ACF9B0CDAF8A08D0DBAF8A08D0FDAF8A08D4DEABAE8F86A31D86A32C3759F756D6C3599C5EF827C96B270793F31A66AD663DAC4F63B4A5FA3B4118A75AA06836D33E93C6F3268E3833636E8E283363E68E3833636A9EBA2E3AB7D159130A42C44CD68184542832DC4B489A9230CAAA7DB43B35CE5FEAB02836D338D3C6F2A68E3833636E8E283363E68E3833636A9EBA2E3ABCD6057811AD5703D6D580E06DBA629795E0768E3833636E8E283363E68E3833636A9EBA2E36BB4C1963BC7D65C6EE807836DD3943CAF03B4F1411B1B74F1411B1FB4F1411B9BD475D1F135DA60CBDD6BB98B0DE560B06D9A92E77580363E6863832E3E68E383363E686393BA2E3ABE461B6C8803836D439EFBA08D0FDAD8A08B0FDAF8A08D0FDAD8A4AE8B8E0F83DD0230D836E4B90FDAF8A08D0DBAF8A08D0FDAF8A08D4DEABAE8F830D82D00836D439EFBA08D0FDAD8A08B0FDAF8A08D0FDAD8A4AE8B8E0F83DD0230D836E4B90FDAF8A08D0DBAF8A08D0FDAF8A08D4DEABAE8F830D82D00836D439EFBA08D0FDAD8A08B0FDAF8A08D0FDAD8A4AE8B8E0F83DD0230D836E4B90FDAF8A08D0DBAF8A08D0FDAF8A08D4DEABAE8F830D82D00836D439EFBA08D0FDAD8A08B0FDAF8A08D0FDAD8A4AE8B8E0F83DD0230D836E4B90FDAF8A08D0DBAF8A08D0FDAF8A08D4DEABAE8F830D82D00836D439EFBA08D0FDAD8A08B0FDAF8A08D0FDAD8A4AE8B8E0F83DD0230D836E4B90FDAF8A08D0DBAF8A08D0FDAF8A08D4DEABAE8F830D82D00836D439EFBA08D0FDAD8A08B0FDAF8A08D0FDAD8A4AE8B8E0F83DD0230D836E4B90FDAF8A08D0DBAF8A08D0FDAF8A08D4DEABAE8F830D82D00836D439EFBA08D0FDAD8A08B0FDAF8A08D0FDAD8A4AE8B8E0F83DD0230D836E4B90FDAF8A08D0DBAF8A08D0FDAF8A08D4DEABAE8F830D82D00836D439EFBA08D0FDAD8A08B0FDAF8A08D0FDAD8A4AE8B8E0F83DD0230D836E4B90FDAF8A08D0DBAF8A08D0FDAF8A08D4DEABAE8F830D82D00836D439EFBA08D0FDAD8A08B0FDAF8A08D0FDAD8A4AE8B8E0F83DD0230D836E4B90FDAF8A08D0DBAF8A08D0FDAF8A08D4DEABAE8F830D82D00836D439EFBA08D0FDAD8A08B0FDAF8A08D0FDAD8A4AE8B8E0F83DD0230D836E4B90FDAF8A08D0DBAF8A08D0FDAF8A08D4DEABAE8F88E5B5858E81423F5C1C37060B06DC8731FB4F1411B1B74F1411B1FB4F1411B9BD475D1F17107BB0560B06DC8731FB4F1411B1B74F1411B1FB4F1411B9BD475D1F161B05B0006DB863CF7411B1FB4B141171FB4F1411B1FB4B1495D171D1F06BB0560B06DC8731FB4F1411B1B74F1411B1FB4F1411B9BD475D1F1D566B01717173BAB56ADEA0B292BB27AF5EABE3AB3B3B3D9169F9836B1FDD6BDFF2AC060DB4C23CF9B0ADAF8A08D0DBAF8A08D0FDAF8A08D4DEABAE8F86A31D86AAE376FDE9C95743A6BD6ACE99685C8F74D9B3665DF3ADDFA83CC684C9BD87E63EB85C4B419A5DF71C060DB4C3ACF9B0CDAF8A08D0DBAF8A08D0FDAF8A08D4DEABAE8F86A31D8622EC55086144DB79ACE2272E73734A721316D62FBAD7BFF5582C1B699749E3719B4F1411B1B74F1411B1FB4F1411B9BD475D1F1D562B0E56EB54491D0647A7564BBD4B3886913DB6F6CBD909836A3F43B2E186C9B49E77993411B1FB4B141171FB4F1411B1FB4B1495D171D5F6D06DB3293A1F994ED9E11B5EE000B316D62FBAD7BFF5582C1B699749E3719B4F1411B1B74F1411B1FB4F1411B9BD475D1F1D562B0B76CD9D23593F25F45E61F4B999A4F31A2623A8B78532C849836B1FDD6BDFF2A5183ADC7952008822008A2C9912A3ABE891A6C3193621A35C4442A6A2835A4AE986B359FFABD886C97FA16316D62FBAD7BFF55A3C7942008822008A2C991323AC65AEE607B88F954132E26D433A252CF22A64D6CBFB1F54262DA8CD22F00000000A44F72065BA788E85AD8DE940931A162462D62DAC4F65BF7FE01000000A0592465B0D55C8BF95474D9BED074CA67290B5F4823C654EF08C7B489ED7794BE46692314EB0000000040F3A8D560EB438E61582F5951331A4691D0600B316D62EA0883EAE9F6D02C57B97F00000000680EB51AECAA50A31AAE46020000000050072BC260CB9D63EB8141000000008069B3220CB6DCBD96BBD8000000000075B3220C3600000000402A60B001000000002A04830D000000005021186C00000000800AC16003000000005408061B00000000A04230D800000000001582C10600000000A8100C3600000000408560B001000000002A04830D000000005021B9C15E5858E81403830D00000000301CB9C1CEBEF781C10600000000180E0C3600000000408560B001000000002A04830D000000005021186C00000000800AC16003000000005408061B00000000A04230D800000000001582C10600000000A8100C3600000000408560B001000000002A04830D000000005021186C00A8846B6F3DD45973F95D9D8FADDFD60DF92C654D627171B1B36AD5AACEE6CD9BB392FA88194B2A631D8797EFB8AAF3DC559FEB3C73E67BBB219FA50C00A0C960B001602C1E3FFA4AE7C4CBF677DEF3F9DBCC906D52A76A56AF5EDD3598C5D8B2654B5663789A64B0376DDAD4D5A0A9BCF6CC639DE7BEF5D9CED333FFCB0CD92675AA66CD9A355D5D0769A7F9243A2BE3B40DD1632B219F0160E581C10680B15073FDDEE36D832D2175AA464C8E67606210B324D144D4A035D99CE5E67AED1B97996B0DA9533572CCF58F33EF8F312997EDC51C1BA76D88FCD1A466BDE9FF02010036186C00181999022206BACC5C6B543D5DA4CD06BBE9C81490AE892E31D71A554F17D1E35E76FC35B72C833D6ADB10D926465CEB01C0CA03830D002323F3AC2D336D85D4AD923203A3C8DD41B94BA82184FF3C1F86DE0D96CFE15D45F92E66480C95D6D5FDCA7FB5AC68B8ACFD58C8EFF0EAC8F7E21DCE701C12450DA4AC385ECF0CD685CCB3B6CCB41552B74A440B09BDD33C3B3B9B6D5942BE4BB91CBF628E8DD356D13AE1E7623F00D07C30D800D039FBEA7B4D539C4AC8F88A0C32D86A82D4388B89B1CC5211695334D812D29FA0A64842FB5333ADEDF47B88B53FF90D6199EC231C63D8A720F52542A44ED8877C97D0F116C756252FFC78BD698A5309195F91F038583954B67D9CB68A94691D418E8D550F009A0D061B004C539B5A141103A3665223342E45835D24344321D2A668B08BE67490B9B2903EA49D32687C42B86FAF7EB1DC1AEFA0B18D8A656A538B22A116A293E8A5E81F237A47B9789CC769AB481DFDE347903A613F00B032C06003C08ABC832D481D312FA1B15542B31422F543835AFC2E58FB2EF617DEE90E43291A340BD9AEFBF6EAEB7ED4D8856D1419ABA5C1B834FD0EB69AE250E350A7E2711EA7AD60FD91A4C72F34DD00D07C30D8003032FA90634CD4F990A3181809CF2C8584A649287E17AC7D87FDA9910A4D93F421654AF1BB45B86FAF7E9D067B54F2871C2362520F392AF259B5296A573CCEE3B415A4BED4B322EC17009A0F061B00C6A26C0D6C8D1496E92B1A54696B991AA9131AA5E277C1334FDA9FD457E3A514F76FDDCD2C12EEDBAB5F2C0FDB2832D6E278EAA66C0D6C8D492DD3171E77FD03453492FF86148FF3386DF58E77F84797A2B951960B00D02C30D800301675BE6826343045645B6866C4188526D3324582948506B5F85DB0F61D9A2F35BD7A57598D58717FF23D346CD22EECB7B8EF627D356D656D04D91EFEF614A8F34533A186826853D451281EE771DAAA89B6D0FCB0CC370034130C360054824C0199E6ABD2D5D814A36848C328626D93CFC53E8A86B5689E84A2F992ED61FF6ABA8B84758ADBE5BBB5EFB07E71BB552663917629225340A6F9AA74CB248B5EA29BFE41A4148FF3386DAD9C0991EDC5BE01A0B960B001000000002A04830D000000005021186C00000000800AC160030000000054486EB01716163AC5C06003000000000C476EB0B3EF7D60B001000000008603830D000000005021186C00000000800AC16003000000005408061B00000000A04230D800000000001582C10600000000A8100C3600000000408560B001000000002A04830D000000005021186C00000000800AC16003000000005408061B00000000A04230D800000000001582C10600000000A8100C3600000000408560B001000000002A24CA601304411004411004315C9806FBB1C71E332B1304411004411004E187F868D360A7C4C2C242F60956321CE7950DC77765C3F15DD9707C57361CDF49D0E9FCFF0BEB4E7EB02564B60000000049454E44AE426082)
+
+Objective Total_Tierras_Forest
+Title: Total_Tierras_Forestales
+Definition: if Uso_Actual1='4.A Forestal' then EM_Tierras_Forestal[CatTF_3='4.A.1']+EM_Tierras_Forestal[CatTF_3='4.A.2'] else 0
+NodeLocation: 664,192,1
+NodeSize: 104,24
+WindState: 2,530,72,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformVal: [Year,Gas_GEI]
+Att_ResultSliceState: [Medidas,2,Uso_Actual1,1,Gas_GEI,1,Year,1]
+
+Close A4_A__Tierras_Forest
+
+Module A4_X_1_Tierras_conve
+Title: 4.X.1 Tierras convertidas en X
+Author: diego
+Date: vie., ago. 14, 2020 6:16 p. m.
+NodeLocation: 376,224,1
+NodeSize: 56,40
+DiagState: 2,0,19,1520,604,17
+WindState: 2,0,0,720,350
+
+Variable BAntes1
+Title: BAntes
+Units: Ton d.m./ha
+Description: suma de la biomasa aerea y biomasa subterranea que estaba antes del cambio de uso de suelo
+Definition: Biomasa_Aerea1+biomasa_Subterranea1
+NodeLocation: 536,136,1
+NodeSize: 48,32
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+Att__TotalsIndex: []
+Att_ResultSliceState: [R1,1,Biomasa_Aerea1,1,Uso_previo,1]
+
+Constant BDespues1
+Att_PrevIndexValue: ['Biomasa']
+Title: BDespues
+Units: ton d.m./ha
+Description: bajo un método de nivel 1 se supone que se pierde toda la biomasa del ecosistema anterior, justo después de la conversión, incluso si no hay un cambio abrupto, y se supone que la biomasa residual (BDESPUÉS) es, por lo tanto, cero (es decir, se elimina toda la vegetación de la tierra antes de que se establezca la vegetación). para los pastizales se asume un porcentaje de vegetación solo para hacer calzar la información del INGEI, esto debido a la falta de información que permita seleccionar los valores correctos para esta sección.
+Definition: Table(Uso_previo,Year,Uso_Actual1)(~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0)
+NodeLocation: 696,48,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformDef: [Uso_previo,Year]
+Att_ResultSliceState: [Uso_Actual,5,Uso_previo,1,Ano,1]
+Att_EditSliceState: [Uso_Actual,3,Ano,5,Uso_previo,1]
+
+Variable Superficie_converti1
+Title: Superficie convertida a otro uso
+Units: ha
+Description: Superficies obtenidas invirtiendo las ecuaciones de calculo de emisiones y los valores por defecto que se entregan en el NIR.
+Definition: Table(Uso_previo,Year,Uso_Actual1)(~
+0,1492.178099685553,39.4020290642641K,498.55837717654885,300.6314457213084,1930.8464655953767,~
+0,1560.1967563451967,39.402029064264076K,498.55837717654885,306.3633194852559,1973.1267597369852,~
+0,1628.21541300484,39.402029064264076K,498.55837717654885,312.0951932492034,2015.407053878594,~
+0,1696.2340696644833,39.402029064264076K,498.55837717654885,317.8270670131509,2057.6873480202025,~
+0,1764.2527263241268,39.402029064264076K,498.55837717654885,323.5589407770985,2099.9676421618115,~
+0,1832.27138298377,39.402029064264076K,498.55837717654885,329.2908145410459,2142.2479363034204,~
+0,1900.2900396434138,39.402029064264076K,498.55837717654885,335.02268830499344,2184.5282304450293,~
+0,1968.308696303057,39.402029064264076K,498.55837717654885,340.7545620689409,2226.8085245866378,~
+0,2036.3273529627004,39.402029064264076K,498.55837717654885,346.48643583288845,2269.0888187282467,~
+0,2104.3460096223444,39.402029064264076K,498.55837717654885,352.2183095968359,2311.369112869855,~
+0,2172.364666281988,39.402029064264076K,498.55837717654885,357.95018336078346,2353.649407011464,~
+0,2240.383322941631,39.402029064264076K,498.55837717654885,363.68205712473093,2395.929701153073,~
+0,2466.963704089079,17.8503627266932K,164.69487390431834,479.0674621953922,2656.292681617998,~
+0,2522.8132931740975,17.8503627266932K,164.69487390431834,485.84940088594914,2702.244699540741,~
+0,2578.662882259116,17.8503627266932K,164.69487390431834,492.63133957650615,2748.1967174634838,~
+0,2522.8132931740975,17.8503627266932K,164.69487390431834,499.4132782670632,2794.1487353862267,~
+0,2690.3620604291527,17.8503627266932K,164.69487390431834,506.19521695762023,2840.1007533089696,~
+0,2746.211649514171,17.8503627266932K,164.69487390431834,512.9771556481774,2886.052771231712,~
+0,3000.4766574586347,11.703886540905612K,68.49652276131859,565.8887836131007,2941.236869343175,~
+0,3058.481757752698,11.703886540905612K,68.49652276131859,573.1152548010477,2987.1796685204445,~
+0,3048.468201387118,11.703886540905612K,68.49652276131859,574.6098522250471,2990.8421735561055,~
+0,3038.454645021539,11.703886540905612K,68.49652276131859,576.1044496490465,2994.504678591766,~
+0,3028.441088655958,11.703886540905612K,68.49652276131859,577.599047073046,2998.1671836274268,~
+0,3018.4275322903777,11.703886540905612K,68.49652276131859,579.0936444970455,3001.829688663087,~
+0,3008.413975924798,11.703886540905612K,68.49652276131859,580.5882419210449,3005.4921936987485,~
+0,2998.4004195592183,11.703886540905612K,68.49652276131859,582.0828393450442,3009.154698734409,~
+0,2988.386863193638,11.703886540905612K,68.49652276131859,583.5774367690437,3012.81720377007,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,12.544605415462873K,0,679.1397265810026,1329.6921534581606,388.5487015441327,~
+0,14.193742235497844K,0,679.1397265810026,1439.0719562790405,535.9813330769274,~
+0,15.842879055532818K,0,679.1397265810026,1548.4517590999203,683.4139646097224,~
+0,17.492015875567788K,0,679.1397265810026,1657.8315619208001,830.846596142517,~
+0,19.14115269560276K,0,679.1397265810026,1767.2113647416802,978.2792276753117,~
+0,20.790289515637734K,0,679.1397265810026,1876.5911675625598,1125.7118592081065,~
+0,22.439426335672706K,0,679.1397265810026,1985.9709703834396,1273.1444907409011,~
+0,24.088563155707678K,0,679.1397265810026,2095.35077320432,1420.5771222736962,~
+0,25.737699975742646K,0,679.1397265810026,2204.7305760251998,1568.0097538064906,~
+0,27.38683679577762K,0,679.1397265810026,2314.110378846079,1715.4423853392857,~
+0,29.03597361581259K,0,679.1397265810026,2423.490181666959,1862.8750168720803,~
+0,30.68511043584756K,0,679.1397265810026,2532.8699844878397,2010.3076484048754,~
+0,28.558760899335703K,0,196.51302814654477,2727.638378076514,1887.9365073928784,~
+0,29.74265859967643K,0,196.51302814654477,2845.3687968799713,1934.9816866126785,~
+0,30.926556300017142K,0,196.51302814654477,2963.09921568343,1982.0268658324776,~
+0,29.74265859967643K,0,196.51302814654477,3080.8296344868877,2029.0720450522772,~
+0,33.29435170069859K,0,196.51302814654477,3198.5600532903445,2076.1172242720772,~
+0,34.47824940103931K,0,196.51302814654477,3316.2904720938022,2123.1624034918764,~
+0,35.762057203659286K,0,79.0754805667789,3411.1163338445135,2087.9885528452055,~
+0,36.9674336747883K,0,79.0754805667789,3527.128610246248,2104.4420214225206,~
+0,36.52367332588234K,0,79.0754805667789,3533.7610838271025,1973.46285846704,~
+0,36.07991297697636K,0,79.0754805667789,3540.393557407957,1842.48369551156,~
+0,35.63615262807041K,0,79.0754805667789,3547.0260309888113,1711.50453255608,~
+0,35.19239227916444K,0,79.0754805667789,3553.6585045696643,1580.5253696006002,~
+0,34.74863193025849K,0,79.0754805667789,3560.2909781505195,1449.5462066451205,~
+0,34.30487158135252K,0,79.0754805667789,3566.923451731375,1318.5670436896403,~
+0,33.86111123244655K,0,79.0754805667789,3573.5559253122283,1187.5878807341603,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,38.37999933041738K,634.7511344954647,8937.001907911044,0,~
+0,0,35.64150123813009K,634.7511344954647,9154.772265053525,0,~
+0,0,32.903003145842806K,634.7511344954647,9372.542622196004,0,~
+0,0,30.164505053555516K,634.7511344954647,9590.312979338485,0,~
+0,0,27.42600696126822K,634.7511344954647,9808.083336480962,0,~
+0,0,24.687508868980934K,634.7511344954647,10.025853693623443K,0,~
+0,0,21.949010776693664K,634.7511344954647,10.243624050765922K,0,~
+0,0,19.210512684406367K,634.7511344954647,10.461394407908405K,0,~
+0,0,16.472014592119085K,634.7511344954647,10.679164765050882K,0,~
+0,0,13.733516499831781K,634.7511344954647,10.896935122193361K,0,~
+0,0,10.995018407544523K,634.7511344954647,11.114705479335844K,0,~
+0,0,8256.520315257238,634.7511344954647,11.33247583647832K,0,~
+0,0,9821.616267557394,328.4213344556679,8090.431736096363,0,~
+0,0,11.104794011025238K,328.4213344556679,8223.389569173047,0,~
+0,0,12.387971754493099K,328.4213344556679,8356.347402249734,0,~
+0,0,13.671149497960932K,328.4213344556679,8489.305235326416,0,~
+0,0,14.954327241428771K,328.4213344556679,8622.2630684031,0,~
+0,0,14.954327241428771K,328.4213344556679,8755.220901479783,0,~
+0,0,19.811386456648775K,309.31729058441556,8656.82134405212,0,~
+0,0,20.90754222834494K,309.31729058441556,8784.026599413424,0,~
+0,0,19.578115290400397K,309.31729058441556,8693.461497632241,0,~
+0,0,18.24868835245584K,309.31729058441556,8602.896395851063,0,~
+0,0,16.91926141451129K,309.31729058441556,8512.331294069883,0,~
+0,0,15.589834476566723K,309.31729058441556,8421.766192288707,0,~
+0,0,14.260407538622196K,309.31729058441556,8331.201090507526,0,~
+0,0,12.930980600677613K,309.31729058441556,8240.635988726353,0,~
+0,0,11.60155366273307K,309.31729058441556,8150.070886945175,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,884.2389895212909,0,0,43.28273211496636,0,~
+0,1768.4779790425819,0,0,86.56546422993272,0,~
+0,2652.716968563872,0,0,129.84819634489912,0,~
+0,3536.9559580851637,0,0,173.13092845986543,0,~
+0,4421.194947606456,0,0,216.41366057483162,0,~
+0,5305.433937127747,0,0,259.69639268979824,0,~
+0,6189.672926649039,0,0,302.9791248047643,0,~
+0,7073.9119161703275,0,0,346.26185691973086,0,~
+0,7958.150905691619,0,0,389.54458903469697,0,~
+0,8842.389895212913,0,0,432.82732114966325,0,~
+0,9726.628884734204,0,0,476.1100532646301,0,~
+0,10.610867874255495K,0,0,519.3927853795965,0,~
+0,10.904281154059097K,0,0,537.5324716587993,0,~
+0,11.197694433862698K,0,0,555.6721579380027,0,~
+0,11.491107713666306K,0,0,573.8118442172055,0,~
+0,11.197694433862698K,0,0,591.9515304964089,0,~
+0,12.077934273273508K,0,0,610.0912167756118,0,~
+0,12.37134755307711K,0,0,628.2309030548146,0,~
+0,12.51060933978594K,0,0,642.8448419398659,0,~
+0,12.649871126494776K,0,0,657.4587808249172,0,~
+0,11.904893923682312K,0,0,628.7899875950013,0,~
+0,11.159916720869853K,0,0,600.1211943650858,0,~
+0,10.414939518057396K,0,0,571.4524011351702,0,~
+0,9669.962315244937,0,0,542.7836079052553,0,~
+0,8924.985112432478,0,0,514.1148146753402,0,~
+0,8180.007909620021,0,0,485.4460214454242,0,~
+0,7435.030706807563,0,0,456.7772282155087,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,6.862067035147391,0,0,~
+0,0,0,6.862067035147392,0,0,~
+0,0,0,6.862067035147392,0,0,~
+0,0,0,6.862067035147392,0,0,~
+0,0,0,6.862067035147392,0,0,~
+0,0,0,6.862067035147392,0,0,~
+0,0,0,6.862067035147392,0,0,~
+0,0,0,6.862067035147392,0,0,~
+0,0,0,6.862067035147392,0,0,~
+0,0,0,6.862067035147392,0,0,~
+0,0,0,6.862067035147392,0,0,~
+0,0,0,6.862067035147392,0,0,~
+0,0,0,0.6018686868686868,0,0,~
+0,0,0,0.6018686868686868,0,0,~
+0,0,0,0.6018686868686868,0,0,~
+0,0,0,0.6018686868686868,0,0,~
+0,0,0,0.6018686868686868,0,0,~
+0,0,0,0.6018686868686868,0,0,~
+0,0,0,4.805386363636363,0,0,~
+0,0,0,4.805386363636363,0,0,~
+0,0,0,4.805386363636363,0,0,~
+0,0,0,4.805386363636363,0,0,~
+0,0,0,4.805386363636363,0,0,~
+0,0,0,4.805386363636363,0,0,~
+0,0,0,4.805386363636363,0,0,~
+0,0,0,4.805386363636363,0,0,~
+0,0,0,4.805386363636363,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0)
+NodeLocation: 552,520,1
+NodeSize: 56,32
+WindState: 2,0,0,720,350
+DefnState: 2,44,26,402,301,0,DFNM
+ValueState: 2,40,50,400,300,0,MIDM
+ReformDef: [Year,Uso_previo]
+Att_ResultSliceState: [Uso_Actual1,2,Uso_previo,1,Year,1]
+Att_EditSliceState: [Uso_Actual1,3,Uso_previo,1,Year,1]
+{!50000|Att_ColumnWidths: [,Year,\([,,,63,,66,,,,,,,,65,,,,,83,,,84,,,,,61])]}
+
+Constant Fraccion_de_carbono1
+Att_PrevIndexValue: ['FC']
+Title: Fraccion de carbono de materia seca
+Units: ton C/ton d.m.
+Description: datos extraidos del NIR, como tambien de las tablas del IPCC, las utilizadas son templado, boreal y Todas, Tabla 4.3
+Definition: Table(Uso_previo)(0.47,0.5,0.5,0.5,0.5,0)
+IndexVals: ['FC']
+NodeLocation: 688,192,1
+NodeSize: 56,32
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformDef: [Uso_previo,Self]
+{!40300|Att_SlicerPopupSize: 232,32}
+{!50000|Att_ColumnWidths: [,Uso_Actual1,\([,,,,,64])]}
+
+Objective Cambio_del_carbono_1
+Title: Cambio del carbono en la biomasa~
+
+Units: Ton C/año
+Description: Ecuación 2.16
+Definition: (BDespues1-BAntes1)*Hectareas_Proyectada*Fraccion_de_carbono1
+NodeLocation: 960,112,1
+NodeSize: 64,56
+WindState: 2,608,210,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformVal: [Year,Uso_previo]
+Att__TotalsIndex: [Biomasa_Aerea1]
+Att_ResultSliceState: [Uso_Actual,4,Uso_previo,2,Ano,1]
+{!50000|Att_ColumnWidths: [,Year,\([,,,,,,,,,,,66])]}
+
+Constant biomasa_Subterranea1
+Title: biomasa Subterranea
+Units: ton d.m./ha
+Definition: Biomasa_Aerea1*R1
+NodeLocation: 528,48,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformVal: [Biomasa_Aerea1,Undefined]
+
+Constant Biomasa_Aerea1
+Att_PrevIndexValue: []
+Title: Biomasa Aerea
+Units: ton d.m./ Ha
+Description: Cantidad de biomasa en la superficie
+Definition: Table(Uso_previo,Year)(~
+79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,~
+2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,~
+10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,~
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,~
+2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,~
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)
+NodeLocation: 368,136,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformDef: [Year,Uso_previo]
+{!40300|Att_SlicerPopupSize: 227,32}
+{!50000|Att_ColumnWidths: [,Uso_Actual1,[,,,,100],Year,\([66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66])]}
+
+Constant Materia_Organica_mu2
+Att_PrevIndexValue: ['MOM Antigua']
+Title: Materia Organica muerta bajo la antigua categoria
+Units: Ton C/Ha
+Description: Se consideró el método nivel 1 de las Directrices del IPCC de 2006, que supone que la materia~
+muerta y los depósitos de hojarasca están en equilibrio, de modo que no es necesario estimar los~
+cambios en las existencias de carbono para estos depósitos.
+Definition: Table(Uso_Actual1)(~
+0,0,0,0,0,0)
+IndexVals: ['MOM Antigua']
+NodeLocation: 728,280,1
+NodeSize: 80,32
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+
+Constant MOM_bajo_la_nueva_c1
+Att_PrevIndexValue: ['MOM nueva']
+Title: MOM bajo la nueva categoria
+Units: ton C/ha
+Description: Se consideró el método nivel 1 de las Directrices del IPCC de 2006, que supone que la materia~
+muerta y los depósitos de hojarasca están en equilibrio, de modo que no es necesario estimar los~
+cambios en las existencias de carbono para estos depósitos.
+Definition: Table(Uso_Actual1)(~
+0,0,0,0,0,0)
+IndexVals: ['MOM nueva']
+NodeLocation: 720,368,1
+NodeSize: 48,32
+WindState: 2,0,0,720,350
+
+Constant lapso_en_el_que_se_1
+Att_PrevIndexValue: ['Tiempo Trans']
+Title: lapso en el que se produce la transición
+Units: Sin unidad
+Description: lapso en el que se produce la transición de la vieja a la nueva categoría de uso de la tierra, año. El valor por defecto en el Nivel 1 es de 20 años para los incrementos de existencias de carbono y de 1 año para las pérdidas de carbono.
+Definition: Table(Uso_Actual1)(~
+1,1,1,1,1,1)
+IndexVals: ['Tiempo Trans']
+NodeLocation: 728,456,1
+NodeSize: 48,40
+WindState: 2,0,0,720,350
+
+Objective Cambio_del_carbono_2
+Title: Cambio del carbono por materia organica muerta
+Units: ton C/año
+Description: Ecuacion 2.23
+Definition: (MOM_bajo_la_nueva_c1-Materia_Organica_mu2)*lapso_en_el_que_se_1*Hectareas_Proyectada
+NodeLocation: 960,368,1
+NodeSize: 56,56
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+Att_ResultSliceState: [Materia_Organica_mu1,1,MOM_bajo_la_nueva_ca,1,lapso_en_el_que_se_p,1,Uso_Actual,2,Uso_previo,1,Ano,1]
+
+Variable SOC1
+Title: SOC0
+Units: ton C
+Description: Ecuación 2.25
+Definition: SOCref1*Hectareas_Proyectada*F_I1*F_LU1*F_MG1
+NodeLocation: 1128,712,1
+NodeSize: 56,40
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+Att_ResultSliceState: [Uso_Actual,3,Uso_previo,1,Ano,1]
+
+Variable SOC0_T1
+Title: SOC0-T
+Units: ton C
+Description: Ecuación 2.25
+Definition: SOCref1*F_IT_1*F_LUT_1*F_MGT_1*Hectareas_Proyectada
+NodeLocation: 928,696,1
+NodeSize: 64,56
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+Att_ResultSliceState: [Uso_Actual,3,F_IT_1,1,F_LUT_1,1,F_MGT_1,1,Uso_previo,1,Ano,1]
+{!50000|Att_ColumnWidths: [,Year,\([63,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,])]}
+
+Objective Cambio_del_carbono_3
+Title: Cambio del carbono en el suelo
+Units: ton C año-
+Description: Ecuacion 2.25 IPCC
+Definition: (SOC1-SOC0_T1)/D1
+NodeLocation: 1352,552,1
+NodeSize: 56,32
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformVal: [Uso_previo,Year]
+Att_ResultSliceState: [Uso_Actual,4,Ano,1,Uso_previo,1]
+
+Constant D1
+Title: D
+Units: año
+Description: dependencia temporal de los factores de cambio de existencias, que es el lapso por defecto para la transición entre los valores de equilibrio del SOC, año. Habitualmente 20 años, pero depende de las hipótesis que se apliquen en el cálculo de los factores FLU, FMG y FI. Si T es mayor que D, úsese el valor de T para obtener la tasa anual de cambio durante el tiempo de inventario (0 – T años). Default, 20 años
+Definition: 20
+NodeLocation: 1336,648,1
+NodeSize: 16,16
+WindState: 2,0,0,720,350
+
+Constant F_LU1
+Att_PrevIndexValue: ['FLU']
+Title: F_LU
+Units: Sin dimension
+Description: Factor de cambio de existencias para sistemas de uso de la tierra o subsistemas de un uso de la tierra en particular en el ultimo año del inventario, sin dimensión. Datos obtenidos del  del NIR
+Definition: Table(Uso_previo,Uso_Actual1)(~
+1,0.69,1,1,0.8,1,~
+1,0.69,1,1,0.8,1,~
+1,0.69,1,1,0.8,1,~
+1,0.69,1,1,0.8,1,~
+1,0.69,1,1,0.8,1,~
+1,0.69,1,1,0.8,1)
+IndexVals: ['FLU']
+NodeLocation: 1240,736,1
+NodeSize: 32,16
+WindState: 2,0,0,714,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformDef: [Uso_previo,Uso_Actual1]
+Att_EditSliceState: [Uso_previo,1,Uso_Actual,1,Self,1]
+{!50000|Att_ColumnWidths: [,Uso_Actual1,\([65,64,64,63,63,64])]}
+
+Constant F_MG1
+Att_PrevIndexValue: ['FMG']
+Title: F_MG
+Units: Sin dimension
+Description: factor de cambio de existencias para el régimen de gestión en el ultimo año del inventario, datos sacados del NIR
+Definition: Table(Uso_Actual1)(~
+1,1,1,1,1,1)
+IndexVals: ['FMG']
+NodeLocation: 1232,800,1
+NodeSize: 32,24
+WindState: 2,0,0,720,350
+ReformDef: [Uso_previo,Undefined]
+{!50000|Att_ColumnWidths: [62]}
+
+Constant F_I1
+Att_PrevIndexValue: ['FI']
+Title: F_I
+Description: factor de cambio de existencias para el aporte de materia orgánica en el ultimo año del inventario,datos sacados del NIR
+Definition: Table(Uso_Actual1)(~
+1,1,1,1,1,1)
+IndexVals: ['FI']
+NodeLocation: 1168,816,1
+NodeSize: 24,16
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+{!50000|Att_ColumnWidths: [62]}
+
+Objective Tierras_convertidas3
+Title: Tierras convertidas a X
+Units: Ton CO2 eq/Año
+Description: Suma de Biomasa, materia organica muerta y carbono en el suelo
+Definition: If Uso_Actual1='4.D Humedal'Then (Cambio_del_carbono_1*GWP_Gases[Gas_GEI='CO2']) Else(Cambio_del_carbono_3*GWP_Gases[Gas_GEI='CO2'])+(Cambio_del_carbono_1*GWP_Gases[Gas_GEI='CO2'])+(Cambio_del_carbono_2*GWP_Gases[Gas_GEI='CO2'])
+NodeLocation: 1424,352,1
+NodeSize: 80,56
+WindState: 2,191,129,720,250
+ValueState: 2,40,50,400,300,0,MIDM
+GraphSetup: Att_ForceCategorical Graph_Primary_Valdim:1
+ReformVal: [Year,Uso_previo]
+Att_ResultSliceState: [Uso_Actual1,4,Uso_previo,2,Year,4]
+{!40600|Att_ClusterIndex: Uso_Actual1}
+{!50000|Att_ColumnWidths: [,Uso_previo,[,,,76,103],Year,\([,,,,,,,,,64])]}
+
+Constant R1
+Att_PrevIndexValue: ['']
+Title: R
+Description: Relacion Biomasa aerea y biomasa subterranea
+Definition: Table(Uso_previo)(0.258,4,0.2,0,0,0)
+IndexVals: ['']
+NodeLocation: 368,48,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformDef: [Uso_previo,Undefined]
+{!40300|Att_SlicerPopupSize: 227,32}
+
+Constant SOCref1
+Title: SOCref
+Units: ton C
+Description: Definido para el biobio de manera momentanea
+Definition: 78.20
+NodeLocation: 1032,800,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+
+Constant F_IT_1
+Att_PrevIndexValue: ['FI']
+Title: F_IT-0
+Units: Sin dimension
+Description: factor de cambio de existencias para el aporte de materia orgánica al inicio del inventario,datos sacados del NIR
+Definition: Table(Uso_previo)(~
+1,1,1,1,1,1)
+IndexVals: ['FI']
+NodeLocation: 792,720,1
+NodeSize: 48,16
+WindState: 2,0,0,720,350
+{!50000|Att_ColumnWidths: [62]}
+
+Constant F_LUT_1
+Att_PrevIndexValue: ['FLU']
+Title: F_LUT-0
+Units: Sin dimension
+Description: Factor de cambio de existencias para sistemas de uso de la tierra o subsistemas de un uso de la tierra en particular al inicio del inventario, sin dimensión. Datos obtenidos del  del NIR
+Definition: Table(Uso_previo,Uso_Actual1)(~
+1,1,1,1,1,1,~
+1,1,1,1,1,1,~
+0.69,0.69,0.69,0.69,0.69,0.69,~
+1,1,1,1,1,1,~
+0.8,0.8,0.8,0.8,0.8,0.8,~
+1,1,1,1,1,1)
+IndexVals: ['FLU']
+NodeLocation: 888,608,1
+NodeSize: 48,16
+WindState: 2,-5,3,714,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformDef: [Uso_Actual1,Uso_previo]
+ReformVal: [Uso_previo,Uso_Actual1]
+Att_EditSliceState: [Uso_Actual,4,Self,1,Uso_previo,4]
+
+Constant F_MGT_1
+Att_PrevIndexValue: ['FMG']
+Title: F_MGT-0
+Units: Sin dimension
+Description: factor de cambio de existencias para el régimen de gestión al inicio del inventario, datos sacados del NIR
+Definition: Table(Uso_previo)(~
+1,1,1,1,1,1)
+IndexVals: ['FMG']
+NodeLocation: 792,656,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+ReformDef: [Uso_previo,Undefined]
+{!50000|Att_ColumnWidths: [62]}
+
+Objective Tierras_a_X_por_gas
+Title: Tierras a X por gas
+Units: ton CO2eq/año
+Definition: if Gas_GEI='CO2' then Sum(Tierras_convertidas3, Uso_previo) Else 0
+NodeLocation: 1656,352,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformVal: [Year,Gas_GEI]
+Att_ResultSliceState: [Uso_Actual1,2,Medidas,1,Gases1,1,Year,1]
+
+Variable Proyeccion_Superfici
+Title: Proyección Superficies convertidas
+Units: ha
+Description: Proyecciones de las superficies convertidas
+Definition: dynamic(Superficie_converti1[Year=2016]+0.85*(Superficie_converti1[ Year=2016]-Superficie_converti1[Year=2015]), self[time-1]+0.85*(self[time-1]-Superficie_converti1[Year=2016]), self[time-1]+0.85*(self[time-1]-self[time-2]))
+NodeLocation: 544,632,1
+NodeSize: 64,40
+WindState: 2,0,0,720,350
+ValueState: 2,478,46,400,300,0,MIDM
+Att_ResultSliceState: [Uso_Actual1,3,Uso_previo,1,Time,1]
+{!50000|Att_ColumnWidths: [,Time,\([64,,,,,72])]}
+
+Variable Hectareas_Proyectada
+Title: Hectareas Proyectadas+Historico
+Units: ha
+Description: Suma de las hectareas del inventario mas las hectareas proyectadas.
+Definition: var Futuro:= (if Medidas='Sin medida' then Proyeccion_Superfici Else If Medidas='Forestacion' Then Proyeccion_Superfici Else Proyeccion_Superfici);~
+var consolidado := if year=time then futuro[time=year] else 0;~
+if year>2016 then sum(consolidado, time) else Superficie_converti1
+NodeLocation: 1128,512,1
+NodeSize: 88,24
+WindState: 2,0,0,720,350
+ValueState: 2,36,42,416,303,1,MIDM
+Att_ResultSliceState: [Uso_Actual1,6,Medidas,2,Uso_previo,1,Year,1]
+
+Close A4_X_1_Tierras_conve
+
+Module A4_X_2_X_que_permane
+Title: 4.X.2 X que permanecen como tales
+Author: diego
+Date: lun., ago. 31, 2020 12:45 p. m.
+NodeLocation: 376,400,1
+NodeSize: 64,32
+DiagState: 2,-71,61,752,360,17
+WindState: 2,0,0,720,350
+
+Variable Emisiones_de_gases_n
+Title: Emisiones de gases no CO2
+Units: ton gas no CO2/año
+Definition: Factor_de_Combustion*Factor_de_Emision*Masa_de_combustible*10^-3*Hectareas_Q_Proy
+NodeLocation: 480,344,1
+NodeSize: 48,32
+WindState: 2,566,158,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+
+Variable Hectareas_quemadas
+Title: Hectareas quemadas
+Units: ha
+Description: Para los pastizales, las hectareas fueron extraidas del inventario de conaf, para los cultivos, fueron extraidas invirtiendo las ecuaciones usando como dato las emisiones del ingei, no se posee la información de cultivos entre 1990 y 2000, entre 2000 y 2010 y entre 2010 y 2013 por lo que se interpolaron.
+Definition: Table(Year,Tipo_de_cobertura1)(~
+673.651081075255,8024.08,6342.97,~
+673.651081075255,14.4055K,12.68622K,~
+673.651081075255,8444.84,9396.12,~
+673.651081075255,14.5024K,15.14144K,~
+673.651081075255,20.94041K,20.66545K,~
+673.651081075255,6803.6,8159.03,~
+673.651081075255,10.08553K,5811.82,~
+673.651081075255,11.00058K,7486.94,~
+673.651081075255,10.76964K,12.77976K,~
+673.651081075255,27.67028K,14.11204K,~
+505.238310806441,5292,5166.35,~
+505.238310806441,2300.19,3341.55,~
+505.238310806441,13.15632K,13.04029K,~
+505.238310806441,11.89204K,14.42413K,~
+505.238310806441,14.4861K,12.69045K,~
+505.238310806441,17.79134K,23.21293K,~
+505.238310806441,5932.59,7439.94,~
+505.238310806441,6743.77,5118.6,~
+505.238310806441,12.0429K,5039.81,~
+505.238310806441,15.06067K,9498.04,~
+505.238310806441,15.88292K,15.63617K,~
+505.238310806441,13.03686K,13.59386K,~
+505.238310806441,19.63409K,19.63113K,~
+168.412770268814,5578.56,5670.37,~
+3873.49371618272,27.2263763K,19.328177K,~
+1852.54047295695,23.5857046999999K,19.4389388K,~
+1852.54047295695,12.0876942000002K,9226.47420000008,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0)
+NodeLocation: 136,320,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+ValueState: 2,40,50,400,300,1,MIDM
+ReformDef: [Year,Tipo_de_cobertura1]
+{!50000|Att_ColumnWidths: [,Year,\([,,,,,,,,,,,,,,,,,,,,,62])]}
+
+Variable Masa_de_combustible
+Title: Masa de combustible
+Units: Ton/ha
+Description: Datos paramétricos para ladeterminación de emisiones no-CO2 de incendios Tabla 316 NIR~
+Para los pastizales, fue calculado invirtiendo las ecuaciones~
+~
+Datos del 2017 en adelante son repetidos, no hay información de los parametros utilizados~
+
+Definition: Table(Year,Tipo_de_cobertura1)(~
+8.4,1.77939425947193,1.77939425947193,~
+8.4,1.77939425947193,1.77939425947193,~
+8.4,1.77939425947193,1.77939425947193,~
+8.4,1.77939425947193,1.77939425947193,~
+8.4,1.77939425947193,1.77939425947193,~
+8.4,1.77939425947193,1.77939425947193,~
+8.4,1.77939425947193,1.77939425947193,~
+8.4,1.77939425947193,1.77939425947193,~
+8.4,1.77939425947193,1.77939425947193,~
+8.4,1.77939425947193,1.77939425947193,~
+8.4,1.71534135424405,1.71534135424405,~
+8.4,1.71534135424405,1.71534135424405,~
+8.4,1.71534135424405,1.71534135424405,~
+8.4,1.71534135424405,1.71534135424405,~
+8.4,1.71534135424405,1.71534135424405,~
+8.4,1.71534135424405,1.71534135424405,~
+8.4,1.71534135424405,1.71534135424405,~
+8.4,1.71534135424405,1.71534135424405,~
+8.4,1.71534135424405,1.71534135424405,~
+8.4,1.71534135424405,1.71534135424405,~
+8.4,1.74033664716099,1.74033664716099,~
+8.4,1.74033664716099,1.74033664716099,~
+8.4,1.74033664716099,1.74033664716099,~
+8.4,1.96651085482355,1.96651085482355,~
+8.4,1.88509006097328,1.88509006097328,~
+8.4,2.22408974050271,2.22408974050271,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925)
+NodeLocation: 256,408,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformDef: [Year,Tipo_de_cobertura1]
+{!50000|Att_ColumnWidths: [,Year,\([,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,62])]}
+
+Constant Factor_de_Combustion
+Title: Factor de Combustion
+Units: Sin dimension
+Definition: Table(Gas_GEI,Tipo_de_cobertura1)(~
+0,0,0,~
+2.7,2.3,2.3,~
+0.07,0.21,0.21)
+NodeLocation: 392,496,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformDef: [Gas_GEI,Tipo_de_cobertura1]
+
+Constant Factor_de_Emision
+Title: Factor de Emision
+Units: g/kg
+Definition: Table(Tipo_de_cobertura1)(0.8,0.72,0.86)
+NodeLocation: 576,496,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformDef: [Tipo_de_cobertura1,Null]
+
+Objective Tipos_de_cobertura_q
+Title: Tipos de cobertura que permanecen como tales
+Units: Ton CO2 eq/año
+Definition: (Emisiones_de_gases_n*GWP_Gases)
+NodeLocation: 728,296,1
+NodeSize: 64,56
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformVal: [0,0]
+Att_ResultSliceState: [Tipo_de_cobertura1,3,Gases1,1,Year,1]
+
+Objective X_que_permanencen_co
+Title: X que permanencen como  tales
+Units: ton CO2 eq/año
+Definition: If Uso_Actual1='4.B Cultivo' Then Tipos_de_cobertura_q[Tipo_de_cobertura1='Cultivos'] Else If Uso_Actual1='4.C Pastizal' Then Tipos_de_cobertura_q[Tipo_de_cobertura1='matorrales incendiados']+Tipos_de_cobertura_q[Tipo_de_cobertura1='pastizales sin matorrales'] Else 0
+NodeLocation: 936,296,1
+NodeSize: 64,32
+WindState: 2,476,40,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformVal: [Year,Gas_GEI]
+Att_ResultSliceState: [Medidas,1,Uso_Actual1,5,Gas_GEI,1,Year,1]
+
+Variable Proyeccion_Q
+Title: Proyección Superficies Quemadas
+Description: Proyeccion de las hectareas quemadas
+Definition: dynamic((((Hectareas_quemadas[year=2012]+Hectareas_quemadas[Year=2013]+Hectareas_quemadas[Year=2014]+Hectareas_quemadas[Year=2015]+Hectareas_quemadas[Year=2016])/5)*5.025), (((Hectareas_quemadas[year=2013]+Hectareas_quemadas[Year=2014]+Hectareas_quemadas[Year=2015]+Hectareas_quemadas[Year=2016]+Self[time-1])/5)*0.42),(((Hectareas_quemadas[year=2014]+Hectareas_quemadas[Year=2015]+Hectareas_quemadas[Year=2016]+Self[time-1]+self[time-2])/5)*0.62), (((Hectareas_quemadas[year=2015]+Hectareas_quemadas[Year=2016]+Self[time-1]+self[time-2]+self[time-3])/5)*0.62), Self[time-1]+0.2*(Self[time-1]-Self[time-2]))~
+~
+
+NodeLocation: 136,216,1
+NodeSize: 56,32
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,1,MIDM
+{!50000|Att_ColumnWidths: [,Time,\([62])]}
+
+Variable Hectareas_Q_Proy
+Title: Hectareas Proyectadas + Historico
+Definition: var Futuro:= (if Medidas='Sin medida' then Proyeccion_Q Else If Medidas='Forestacion' Then Proyeccion_Q Else Proyeccion_Q);~
+var consolidado := if year=time then futuro[time=year] else 0;~
+if year>2016 then sum(consolidado, time) else Hectareas_quemadas
+NodeLocation: 280,272,1
+NodeSize: 56,32
+WindState: 2,780,69,720,350
+ValueState: 2,40,50,400,300,1,MIDM
+
+Close A4_X_2_X_que_permane
+
+Objective Resultados_UTCUTS
+Title: Resultados UTCUTS
+Units: kton CO2 eq/Año
+Definition: Tierras_a_X_por_gas/1000+X_que_permanencen_co/1000+Total_Tierras_Forest
+NodeLocation: 648,224,1
+NodeSize: 72,32
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,1,MIDM
+GraphSetup: Att_ForceCategorical Graph_Primary_Valdim:1
+ReformVal: [Year,Gas_GEI]
+Att_ResultSliceState: [Medidas,1,Uso_Actual1,1,Gas_GEI,1,Year,1]
+
+Text Te85795709
+Title: Donde X es B,C,D,E y F
+NodeLocation: 376,464,-1
+NodeSize: 56,24
+
+Text Te320676733
+Title: Donde X es B,C,D,E y F
+NodeLocation: 376,296,-1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+
+Close Sector_UTCUTS
+

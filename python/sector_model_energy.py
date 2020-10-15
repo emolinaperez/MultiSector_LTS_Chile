@@ -13,3 +13,4 @@ def sm_energy(df_in, dict_co2e):
 	return dict_output
 
 
+ 

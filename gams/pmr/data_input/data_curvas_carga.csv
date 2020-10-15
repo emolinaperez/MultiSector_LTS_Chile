@@ -1,0 +1,12 @@
+Modulacion,ID
+curva_cobre,1
+curva_celulosa,2
+curva_cemento,3
+curva_siderurgia,4
+curva_petroquimica,5
+curva_residencial,6
+curva_comercial,7
+curva_veh,8
+curva_bus,9
+curva_tren,10
+curva_industrial,11
