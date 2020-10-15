@@ -1,5 +1,5 @@
 { Analytica Model Modelo_Sector_Agricu, encoding="UTF-8" }
-SoftwareVersion 5.4.6
+SoftwareVersion 5.4.6ade
 
 
 { System Variables with non-default values: }
@@ -75,7 +75,7 @@ Date: mié., ago. 26, 2020 12:20 a. m.
 DiagState: 2,0,0,752,376,17
 WindState: 2,0,0,720,350
 FontStyle: Arial,15
-FileInfo: 0,Model Modelo_Sector_Agricu,2,2,0,0,C:\Users\Catalina Marinkovic\Dropbox (CCG-UC)\Carpeta del equipo CCG-UC\A Proyectos Actuales\2020-DDPLTSChile\Desarrollo\Modelo Agricultura\Modelo Sector Agricultura-16_09_2020-año base2018.ana
+FileInfo: 0,Model Modelo_Sector_Agricu,2,2,0,0,C:\Users\jsyme\Documents\Projects\SWCHE076-1000\ade_beta\analytica\agriculture\Modelo Sector Agricultura-16_09_2020-año base2018.ana
 
 Module SNP_Sector_Agricultu
 Title: SNP Sector Agricultura
@@ -737,6 +737,7 @@ DiagState: 2,0,0,752,294,17
 WindState: 2,0,0,720,350
 
 Index I_Tipos_Fertilizant
+Att_PrevIndexValue: ['Fert. Inorganico','Fert. Organico CPP','Fert. Oganico SO','N Arroz','N Estiercol Pastoreo CPP','N Estiercol Pastoreo  SO','N Residuos Cosechas','Fert. Suelos Lixiviados']
 Title: Tipos de Fertilizantes
 Definition: ['Fert. Inorganico','Fert. Organico CPP','Fert. Oganico SO','N Arroz','N Estiercol Pastoreo CPP','N Estiercol Pastoreo  SO','N Residuos Cosechas','Fert. Suelos Lixiviados']
 IndexVals: ['item 1']
@@ -744,43 +745,43 @@ NodeLocation: 280,120,1
 NodeSize: 56,24
 WindState: 2,0,0,720,350
 ValueState: 2,40,50,400,300,0,MIDM
-Att_PrevIndexValue: ['Fert. Inorganico','Fert. Organico CPP','Fert. Oganico SO','N Arroz','N Estiercol Pastoreo CPP','N Estiercol Pastoreo  SO','N Residuos Cosechas','Fert. Suelos Lixiviados']
 
 Index GEI
+Att_PrevIndexValue: ['CO2','N2O','CH4']
 Title: GEI
 Definition: ['CO2','N2O','CH4']
 NodeLocation: 104,48,1
 NodeSize: 48,24
 WindState: 2,0,0,720,350
-Att_PrevIndexValue: ['CO2','N2O','CH4']
 
 Index Regiones
+Att_PrevIndexValue: ['Región de Arica y Parinacota','Región de Tarapacá','Región de Antofagasta','Región de Atacama','Región de Coquimbo','Región de Valparaíso','Región Metropolitana de Santiago','Región del Libertador General Bernardo O''Higgins','Región del Maule','Región del Biobío','Región de La Araucanía','Región de Los Ríos','Región de Los Lagos','Región Ayén del General Carlos Ibáñez del Campo','Región de Magallanes y la Antártica Chilena']
 Title: Regiones
 Definition: ['Región de Arica y Parinacota','Región de Tarapacá','Región de Antofagasta','Región de Atacama','Región de Coquimbo','Región de Valparaíso','Región Metropolitana de Santiago','Región del Libertador General Bernardo O''Higgins','Región del Maule','Región del Biobío','Región de La Araucanía','Región de Los Ríos','Región de Los Lagos','Región Ayén del General Carlos Ibáñez del Campo','Región de Magallanes y la Antártica Chilena']
 NodeLocation: 104,112,1
 NodeSize: 48,24
 WindState: 2,0,0,720,350
 {!40300|Att_SlicerPopupSize: 237,224}
-Att_PrevIndexValue: ['Región de Arica y Parinacota','Región de Tarapacá','Región de Antofagasta','Región de Atacama','Región de Coquimbo','Región de Valparaíso','Región Metropolitana de Santiago','Región del Libertador General Bernardo O''Higgins','Región del Maule','Región del Biobío','Región de La Araucanía','Región de Los Ríos','Región de Los Lagos','Región Ayén del General Carlos Ibáñez del Campo','Región de Magallanes y la Antártica Chilena']
 
 Index Tier
+Att_PrevIndexValue: ['Tier 1','Tier 2']
 Title: Tier
 Definition: ['Tier 1','Tier 2']
 NodeLocation: 104,176,1
 NodeSize: 48,24
 WindState: 2,0,0,720,350
 {!40300|Att_SlicerPopupSize: 227,48}
-Att_PrevIndexValue: ['Tier 1','Tier 2']
 
 Index I_Act_FE
+Att_PrevIndexValue: ['Emisiones Directas','Emisiones Volatización','Emisiones Lixiviación']
 Title: Act_FE
 Definition: ['Emisiones Directas','Emisiones Volatización','Emisiones Lixiviación']
 NodeLocation: 280,56,1
 NodeSize: 48,24
 WindState: 2,0,0,720,350
-Att_PrevIndexValue: ['Emisiones Directas','Emisiones Volatización','Emisiones Lixiviación']
 
 Index I_Categoria_Ganad
+Att_PrevIndexValue: ['Aves de Corral','Avestruces y Emúes','Ciervos','Camélidos','Mulas y Asnos','Equinos','Caprinos','Ovinos','Jabalíes','Marranas(Poricino)','Verracos (Porcinos)','Juveniles (Porcinos)','Vacas lecheras en producción','Vacas lecheras secas','Vacas carne','Vaquillas','Adultos carne (novillos >2 años, toros y torunos, bueyes)','Jóvenes carne (novillos 1-2 años)','Terneros']
 Title: Categoría Ganadería
 Units: N° de cabezas
 Description: Categorías de Ganado para Fermentación Entérica y Manejo del Estiercol para GEI CH4. Para el caso de Aves de Corral, no aplica fermentación entérica, por lo que se consideró valor 0 para el Factor de Emisión de Fermentación Entérica
@@ -789,9 +790,9 @@ NodeLocation: 456,136,1
 NodeSize: 88,40
 WindState: 2,0,0,720,350
 ValueState: 2,40,50,400,300,0,MIDM
-Att_PrevIndexValue: ['Aves de Corral','Avestruces y Emúes','Ciervos','Camélidos','Mulas y Asnos','Equinos','Caprinos','Ovinos','Jabalíes','Marranas(Poricino)','Verracos (Porcinos)','Juveniles (Porcinos)','Vacas lecheras en producción','Vacas lecheras secas','Vacas carne','Vaquillas','Adultos carne (novillos >2 años, toros y torunos, bueyes)','Jóvenes carne (novillos 1-2 años)','Terneros']
 
 Index Tipos_FE_CH4_Ganader
+Att_PrevIndexValue: ['Fermentación Entérica','Manejo Estiercol']
 Title: Tipos FE CH4 Ganadería
 Definition: ['Fermentación Entérica','Manejo Estiercol']
 IndexVals: ['item 1']
@@ -799,9 +800,9 @@ NodeLocation: 464,48,1
 NodeSize: 48,32
 WindState: 2,0,0,720,350
 ValueState: 2,40,50,400,300,0,MIDM
-Att_PrevIndexValue: ['Fermentación Entérica','Manejo Estiercol']
 
 Index I_Cat_Ganad_N2O
+Att_PrevIndexValue: ['Aves de Corral','Marranas(Poricino)','Verracos (Porcinos)','Juveniles (Porcinos)','Vacas lecheras en producción','Adultos carne (novillos >2 años, toros y torunos, bueyes)']
 Title: Categorías Ganaderías  de Manejo del Estiercol N2O
 Units: N° Cabezas
 Definition: ['Aves de Corral','Marranas(Poricino)','Verracos (Porcinos)','Juveniles (Porcinos)','Vacas lecheras en producción','Adultos carne (novillos >2 años, toros y torunos, bueyes)']
@@ -809,9 +810,9 @@ NodeLocation: 456,232,1
 NodeSize: 88,40
 WindState: 2,0,0,720,350
 {!40300|Att_SlicerPopupSize: 227,112}
-Att_PrevIndexValue: ['Aves de Corral','Marranas(Poricino)','Verracos (Porcinos)','Juveniles (Porcinos)','Vacas lecheras en producción','Adultos carne (novillos >2 años, toros y torunos, bueyes)']
 
 Index Tipos_FE_NO2_Ganader
+Att_PrevIndexValue: ['Emisiones Directas de N2O','Emisiones Indirectas de N2O']
 Title: Tipos FE NO2 Ganadería~
 
 Units: [kg N2O-N/kg N excretado
@@ -820,7 +821,6 @@ Definition: ['Emisiones Directas de N2O','Emisiones Indirectas de N2O']
 NodeLocation: 456,312,1
 NodeSize: 48,32
 WindState: 2,0,0,720,350
-Att_PrevIndexValue: ['Emisiones Directas de N2O','Emisiones Indirectas de N2O']
 
 Constant Convierte_Indice_Gan
 Title: Convierte Indice Ganaderia a subindice N20
@@ -848,6 +848,7 @@ ReformDef: [I_Categoria_Ganad,GEI]
 Att_EditSliceState: [I_Categoria_Ganad,2,GEI,1,I_Tipos_Fertilizant,1]
 
 Index anos
+Att_PrevIndexValue: [1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030,2031,2032,2033,2034,2035,2036,2037,2038,2039,2040,2041,2042,2043,2044,2045,2046,2047,2048,2049,2050]
 Title: años
 Units: años
 Definition: Sequence( 1990, 2050, 1 )
@@ -855,15 +856,14 @@ NodeLocation: 96,256,1
 NodeSize: 48,24
 WindState: 2,0,0,720,350
 ValueState: 2,40,50,400,300,0,MIDM
-Att_PrevIndexValue: [1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030,2031,2032,2033,2034,2035,2036,2037,2038,2039,2040,2041,2042,2043,2044,2045,2046,2047,2048,2049,2050]
 
 Index Escenarios
+Att_PrevIndexValue: ['BAU','Descarbonización']
 Title: Escenarios
 Definition: ['BAU','Descarbonización']
 NodeLocation: 104,336,1
 NodeSize: 56,24
 WindState: 2,0,0,720,350
-Att_PrevIndexValue: ['BAU','Descarbonización']
 
 Constant Medidas
 Title: Medidas

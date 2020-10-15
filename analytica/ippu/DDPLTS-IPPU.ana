@@ -1,5 +1,5 @@
 { Analytica Model DDPLTS_IPPU, encoding="UTF-8" }
-SoftwareVersion 5.4.6
+SoftwareVersion 5.4.6ade
 
 
 { System Variables with non-default values: }
@@ -32,7 +32,7 @@ Author: JMV
 Date: Fri, Jul 17, 2020 11:00 AM
 DiagState: 2,79,92,1211,597,17
 FontStyle: Arial,15
-FileInfo: 0,Model DDPLTS_IPPU,2,2,0,0,C:\Users\adm\Documents\GitHub\MultiSector_LTS_Chile\IPPU_Analytica\DDPLTS-IPPU.ana
+FileInfo: 0,Model DDPLTS_IPPU,2,2,0,0,C:\Users\jsyme\Documents\Projects\SWCHE076-1000\ade_beta\analytica\ippu\DDPLTS-IPPU.ana
 
 Library Funciones
 Title: Funciones
@@ -3705,11 +3705,11 @@ NodeSize: 64,32
 DiagState: 2,14,230,939,484,17
 
 Index SubC_Equi_Elec
+Att_PrevIndexValue: ['G.1.A Manufactura de equipos eléctricos','G.1.B Uso de equipos eléctricos','G.1.C Eliminación de equipos eléctricos']
 Title: SubCategoria Equipos Electricos
 Definition: ['G.1.A Manufactura de equipos eléctricos','G.1.B Uso de equipos eléctricos','G.1.C Eliminación de equipos eléctricos']
 NodeLocation: 320,72,1
 NodeSize: 64,32
-Att_PrevIndexValue: ['G.1.A Manufactura de equipos eléctricos','G.1.B Uso de equipos eléctricos','G.1.C Eliminación de equipos eléctricos']
 
 Variable Em_Equipos_Electrico
 Title: Em Equipos Electricos
@@ -3828,13 +3828,13 @@ NodeSize: 48,24
 Original: GL_Releer_BasesDatos
 
 Index TipoBanco
+Att_PrevIndexValue: ['AA. Est. Equipos ','AA. Est. Instalaciones ','AA. Movil','Agente Espumante','Extinción Fuego','Ref. Comercial - Equipos','Ref. Comercial - in situ','Ref. Domestica','Ref. Industrial','Ref. Transporte']
 Title: TipoBanco
 Definition: ['AA. Est. Equipos ','AA. Est. Instalaciones ','AA. Movil','Agente Espumante','Extinción Fuego','Ref. Comercial - Equipos','Ref. Comercial - in situ','Ref. Domestica','Ref. Industrial','Ref. Transporte']
 NodeLocation: 320,136,1
 NodeSize: 48,24
 WindState: 2,98,191,720,241
 {!40300|Att_SlicerPopupSize: 237,168}
-Att_PrevIndexValue: ['AA. Est. Equipos ','AA. Est. Instalaciones ','AA. Movil','Agente Espumante','Extinción Fuego','Ref. Comercial - Equipos','Ref. Comercial - in situ','Ref. Domestica','Ref. Industrial','Ref. Transporte']
 
 Module Estimacion_Banco_His
 Title: Estimacion Banco Historico
@@ -5046,11 +5046,11 @@ NodeSize: 48,24
 DiagState: 2,314,73,944,484,17
 
 Index GEI
+Att_PrevIndexValue: ['CO2','CH4','N2O']
 Title: GEI
 Definition: ['CO2','CH4','N2O']
 NodeLocation: 104,48,1
 NodeSize: 48,24
-Att_PrevIndexValue: ['CO2','CH4','N2O']
 
 Constant PCG_AR4
 Title: PCG AR4
@@ -5059,13 +5059,13 @@ NodeLocation: 96,136,1
 NodeSize: 48,24
 
 Index SustanciaHFC
+Att_PrevIndexValue: ['HFC125','HFC134a','HFC227ea','HFC23','HFC236fa','HFC32','HFC365mfc','R404A','R407C','R410A','R507A']
 Title: SustanciaHFC
 Definition: ['HFC125','HFC134a','HFC227ea','HFC23','HFC236fa','HFC32','HFC365mfc','R404A','R407C','R410A','R507A']
 NodeLocation: 136,216,1
 NodeSize: 64,24
 WindState: 2,121,307,720,350
 {!40300|Att_SlicerPopupSize: 232,182}
-Att_PrevIndexValue: ['HFC125','HFC134a','HFC227ea','HFC23','HFC236fa','HFC32','HFC365mfc','R404A','R407C','R410A','R507A']
 
 Constant PCG_HFC_AR4
 Title: PCG HFC AR4
@@ -5222,6 +5222,74 @@ NodeSize: 48,24
 ValueState: 2,68,74,468,261,,MIDM
 
 Close Indicadores
+
+Index pyparams
+Definition: ['param_1','param_2','param_3']
+Att_PrevIndexValue: ['param_1','param_2','param_3']
+
+Constant pyparams_interface
+Definition: Table(Time,pyparams)(~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0.03333333333333333,0.03333333333333333,0.03333333333333333,~
+0.06666666666666667,0.06666666666666667,0.06666666666666667,~
+0.1,0.1,0.1,~
+0.13333333333333333,0.13333333333333333,0.13333333333333333,~
+0.16666666666666666,0.16666666666666666,0.16666666666666666,~
+0.2,0.2,0.2,~
+0.23333333333333334,0.23333333333333334,0.23333333333333334,~
+0.26666666666666666,0.26666666666666666,0.26666666666666666,~
+0.3,0.3,0.3,~
+0.3333333333333333,0.3333333333333333,0.3333333333333333,~
+0.36666666666666664,0.36666666666666664,0.36666666666666664,~
+0.4,0.4,0.4,~
+0.43333333333333335,0.43333333333333335,0.43333333333333335,~
+0.4666666666666667,0.4666666666666667,0.4666666666666667,~
+0.5,0.5,0.5,~
+0.5333333333333333,0.5333333333333333,0.5333333333333333,~
+0.5666666666666667,0.5666666666666667,0.5666666666666667,~
+0.6,0.6,0.6,~
+0.6333333333333333,0.6333333333333333,0.6333333333333333,~
+0.6666666666666666,0.6666666666666666,0.6666666666666666,~
+0.7,0.7,0.7,~
+0.7333333333333333,0.7333333333333333,0.7333333333333333,~
+0.7666666666666667,0.7666666666666667,0.7666666666666667,~
+0.8,0.8,0.8,~
+0.8333333333333334,0.8333333333333334,0.8333333333333334,~
+0.8666666666666667,0.8666666666666667,0.8666666666666667,~
+0.9,0.9,0.9,~
+0.9333333333333333,0.9333333333333333,0.9333333333333333,~
+0.9666666666666667,0.9666666666666667,0.9666666666666667,~
+1,1,1)
 
 Close DDPLTS_IPPU
 
