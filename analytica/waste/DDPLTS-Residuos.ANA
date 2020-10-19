@@ -1,5 +1,5 @@
 { Analytica Model Emision_residuos_1, encoding="UTF-8" }
-SoftwareVersion 5.4.6ade
+SoftwareVersion 5.4.6
 
 
 { System Variables with non-default values: }
@@ -8,7 +8,7 @@ WindState Time: 2,0,-23,1367,652
 ValueState Time: 2,0,-23,1681,926,0,MIDM
 DisplayOutputs Time: Variable Plantas_instaladas, Variable Plantas_instaladas2, Variable Plantas_instaladas1, Variable Plantas_instaladas3
 Att_GraphIndexRange Time: 1,,,,,,10
-{!40300|Att_SlicerPopupSize Time: 292,1001}
+{!40300|Att_SlicerPopupSize Time: 302,1001}
 SampleSize := 100
 TypeChecking := 1
 Checking := 1
@@ -97,7 +97,7 @@ DefaultSize: 48,24
 DiagState: 2,20,17,1713,852,17
 DiagramColor: 65535,65535,65535
 FontStyle: Calibri, 15
-FileInfo: 0,Model Emision_residuos_1,2,2,0,0,C:\Users\jsyme\Documents\Projects\SWCHE076-1000\ade_beta\analytica\waste\DDPLTS-Residuos.ANA
+FileInfo: 0,Model Emision_residuos_1,2,2,0,0,C:\Users\adm\Dropbox\30-Analisis\Analytica\discoL\Modelos\2020-DDPLTS\DDPLTS-Residuos.ANA
 OutlinerState: 2,40,50,448,280
 {!40400|Att_clearTypeFonts: 0}
 
@@ -349,7 +349,7 @@ Definition: Dynamic (GDP_PPP_2011, if GDP_PPP_2011=0 then Pib[Time-1]*(1+Crecimi
 NodeLocation: 224,256,1
 NodeSize: 48,24
 WindState: 2,63,117,1681,926
-ValueState: 2,40,50,1148,707,1,MIDM
+ValueState: 2,40,50,1265,702,1,MIDM
 ReformVal: [Time,Escenarios_crecimien]
 NumberFormat: 2,F,4,0,0,0,4,0,$,0,"ABBREV",0
 
@@ -503,13 +503,14 @@ ValueState: 2,472,482,1083,303,1,MIDM
 Aliases: Alias Gpibpc1
 ReformVal: [Time,Escenarios_crecimien]
 
-Constant Growth_PIB_RAND
+Variable Growth_PIB_RAND
 Title: Growth PIB RAND
-Definition: F_tabla_arreglo(~
+Description: F_tabla_arreglo(~
 F_lectura_tabla(DSN_General,'PIB_Growth_RAND'))
+Definition: PIB_2020/PIB_2020[time=time-1]-1
 NodeLocation: 224,80,1
 NodeSize: 48,24
-WindState: 2,98,82,720,350
+WindState: 2,918,244,720,350
 
 Variable Crecimiento_PIB
 Title: Crecimiento PIB
@@ -530,6 +531,13 @@ Units: International$2011/2017
 Description: Calculado a partir de la serie de GDP per capita para chile con ambos factores
 Definition: 0.945
 NodeLocation: 240,512,1
+NodeSize: 48,24
+
+Constant PIB_2020
+Title: PIB 2020
+Units: kMUSD2020
+Definition: pyparams_interface[pyparams='pyparams PIB']
+NodeLocation: 344,80,1
 NodeSize: 48,24
 
 Close Pib1
@@ -853,7 +861,7 @@ DefaultSize: 48,24
 NodeLocation: 120,104,1
 NodeSize: 48,24
 NodeInfo: 1,1,0,1,1,1,0,,0,
-DiagState: 2,293,125,1262,526,17
+DiagState: 2,35,125,1262,526,17
 
 Variable Poblacionor
 Title: PoblacionOR
@@ -880,42 +888,11 @@ Title: Poblacion Historica
 Units: habs
 Description: Muetsra la población hsitórica de Chile hasta el año 2011. Valores entregados por el INE
 Definition: Table(Time)(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12.126956M,12.331704M,12.541298M,12.757095M,12.981032M,13.21393M,13.456476M,13.706485M,13.958378M,14.204726M,14.440103M,14.662323M,14.872458M,15.072409M,15.265536M,15.454402M,15.639289M,15.819522M,15.995658M,16.168241M,16.337749M,16.50453M,16.668892M,16.831184M,16.991729M,17.15076M,17.308449M,17.40263M,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)
-NodeLocation: 96,168,1
+NodeLocation: 96,224,1
 NodeSize: 48,24
 WindState: 2,102,89,1320,365
 ValueState: 2,40,50,416,303,0,MIDM
 NumberFormat: 2,I,4,2,1,0,4,0,$,0,"ABBREV",0
-
-Constant Poblacion_regiona_in
-Title: Poblacion Regiona INE
-Units: habs
-Description: Muestra la poblacion de cada región en cada año, hasta el año 2020. ~
-Datos entregados por el INE~
-~
-F_tabla_arreglo( ~
-F_lectura_bd1 ('BD-General', '[PobRegionPL$]' )~
-)
-Definition: var tab:=F_lectura_tabla(DSN_General,'PobRegionPL','Excel');~
-~
-F_tabla_arreglo(tab)
-NodeLocation: 488,56,1
-NodeSize: 52,24
-WindState: 2,255,211,591,344
-ValueState: 2,40,50,971,502,0,MIDM
-ReformVal: [Sys_LocalIndex('i2'),Sys_LocalIndex('i1')]
-NumberFormat: 2,I,4,2,1,0,4,0,$,0,"ABBREV",0
-Att__TotalsIndex: [Region]
-
-Variable Porcentaje_pob_reg1
-Title: Porcentaje  Pob Regional
-Units: %
-Description: Muestra el porcentaje de la población de cada región de poblaicón total de Chile para el año 2020.
-Definition: Poblacion_regiona_in[Time=2020]/Poblacion[Time=2020]
-NodeLocation: 376,136,1
-NodeSize: 56,32
-WindState: 2,102,90,476,224
-ValueState: 2,40,50,416,303,0,MIDM
-Att__TotalsIndex: [Region]
 
 Variable Poblacion_regional1
 Title: Poblacion Regional
@@ -927,7 +904,7 @@ else Proyeccion_Regional_
 NodeLocation: 776,336,1
 NodeSize: 48,24
 WindState: 2,0,0,1366,651
-ValueState: 2,0,-23,1367,652,1,MIDM
+ValueState: 2,0,0,1367,652,0,MIDM
 NodeColor: 65531,39321,65535
 ReformVal: [Time,Region]
 Att__TotalsIndex: [Region]
@@ -942,7 +919,7 @@ Definition: If Proyeccion_Nacional_=0 then Poblacion_historica1 else Proyeccion_
 NodeLocation: 280,224,1
 NodeSize: 48,24
 WindState: 2,977,322,837,512
-ValueState: 2,40,50,416,303,1,MIDM
+ValueState: 2,40,50,416,303,0,MIDM
 NodeColor: 65531,39321,65535
 NumberFormat: 2,F,4,0,1,0,4,0,$,0,"ABBREV",0
 
@@ -952,7 +929,7 @@ Units: %
 Description: Muestra el crecimiento de la población para cada año. ~
 Valores entregados por el equipo de MAPS
 Definition: Table(Time)(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.89,0.88,0.87,0.77,0.76,0.75,0.75,0.74,0.63,0.62,0.62,0.61,0.61,0.48,0.48,0.47,0.47,0.47,0.33,0.33,0.33,0.33,0.33,0.2,0.2,0.2,0.2,0.2,0.08,0.08,0.08,0.08,0.08,0.01,0.01,0.01,0.01,0.01)
-NodeLocation: 96,272,1
+NodeLocation: 96,312,1
 NodeSize: 48,24
 WindState: 2,102,90,476,224
 ValueState: 2,0,-23,1358,643,0,MIDM
@@ -977,30 +954,42 @@ ValueState: 2,74,116,1395,739,,MIDM
 ReformVal: [Region,Time]
 Att__TotalsIndex: [Time]
 
-Constant Proyeccion_Nacional_
+Variable Proyeccion_Nacional_
 Title: Proyeccion Nacional INE2050
+Units: habs
 Description: Poblacion nacional según INE 2019~
 ~
 Serie 1992-2050
-Definition: var tab:=F_lectura_tabla(DSN_General,'PobNacionalINE2050','Excel');~
+Definition: if Modo_Rand=0 then~
+var tab:=F_lectura_tabla(DSN_General,'PobNacionalINE2050','Excel');~
 ~
-F_tabla_arreglo(tab)
+F_tabla_arreglo(tab)~
+~
+else ~
+pyparams_interface[pyparams='pyparams Poblacion']
 NodeLocation: 616,224,1
 NodeSize: 48,32
+WindState: 2,104,86,720,350
 
 Constant Ruralidad_2035
 Title: Ruralidad 2035
 Units: habs
 Description: Proyeccion INE a nivel regional 2002-2035~
 
-Definition: var tab:=F_lectura_tabla(DSN_General,'Ruralidad','Excel');~
-F_tabla_arreglo(tab)
-NodeLocation: 600,128,1
+Definition: if Modo_Rand=0 then~
+var tab:=F_lectura_tabla(DSN_General,'Ruralidad','Excel');~
+F_tabla_arreglo(tab)~
+else~
+table(TipoArea)(pyparams_interface[pyparams='pyparams PobUrbana'],pyparams_interface[pyparams='pyparams PobRural'])~
+~
+
+NodeLocation: 928,160,1
 NodeSize: 48,24
 WindState: 2,98,82,720,350
 ValueState: 2,1370,252,415,303,,MIDM
 Aliases: Alias Al587167869
-ReformVal: [Sys_LocalIndex('i2'),Sys_LocalIndex('i1')]
+ReformVal: [TipoArea,Time]
+Att__TotalsIndex: [TipoArea]
 
 Index TipoArea
 Title: Tipo Area
@@ -1096,17 +1085,18 @@ NodeSize: 48,24
 NodeInfo: 1,0,0,1,1,1,0,,0,
 DiagState: 1,-998,85,1665,908,17
 NodeColor: 65535,65531,1
+FontStyle: Calibri, 15
 
 Index Region
-Att_PrevIndexValue: ['XV_Region_de_Arica_y_Parinacota','I__Region_de_Tarapaca','II__Region_de_Antofagasta','III__region_de_Atacama','IV_Region_de_Coquimbo','V__Region_de_Valparaiso','Region_Metropolitana','VI__Region_de_Ohiggins','VII__Region_del_Maule','VIII__del_Bio-Bio','IX__Region_de_la_Araucania','XIV__Region_de_Los_Rios','X__Region_de_Los_Lagos','XI__Region_de_Aysen','XII__Region_de_Magallanes']
 Title: Region
 Description: Regiones de Chile
 Definition: ['XV_Region_de_Arica_y_Parinacota','I__Region_de_Tarapaca','II__Region_de_Antofagasta','III__region_de_Atacama','IV_Region_de_Coquimbo','V__Region_de_Valparaiso','Region_Metropolitana','VI__Region_de_Ohiggins','VII__Region_del_Maule','VIII__del_Bio-Bio','IX__Region_de_la_Araucania','XIV__Region_de_Los_Rios','X__Region_de_Los_Lagos','XI__Region_de_Aysen','XII__Region_de_Magallanes']
 NodeLocation: 152,56,1
 NodeSize: 52,28
-WindState: 2,0,-23,1024,651
+WindState: 2,-244,68,1024,651
 ValueState: 2,0,-23,1253,651,0,MIDM
-{!40300|Att_SlicerPopupSize: 302,238}
+{!40300|Att_SlicerPopupSize: 322,238}
+Att_PrevIndexValue: ['XV_Region_de_Arica_y_Parinacota','I__Region_de_Tarapaca','II__Region_de_Antofagasta','III__region_de_Atacama','IV_Region_de_Coquimbo','V__Region_de_Valparaiso','Region_Metropolitana','VI__Region_de_Ohiggins','VII__Region_del_Maule','VIII__del_Bio-Bio','IX__Region_de_la_Araucania','XIV__Region_de_Los_Rios','X__Region_de_Los_Lagos','XI__Region_de_Aysen','XII__Region_de_Magallanes']
 
 Index Escenarios_crecimien
 Att_PrevIndexValue: ['Crecimiento Bajo','Crecimiento Medio','Crecimiento Alto']
@@ -1119,7 +1109,6 @@ WindState: 2,0,-23,1680,943
 ValueState: 2,40,50,416,303,0,MIDM
 
 Index Contaminantes
-Att_PrevIndexValue: ['DC','Met','DN']
 Title: Contaminantes
 Description: Contaminantes con potencial de calentamiento global. ~
 ~
@@ -1130,25 +1119,25 @@ Definition: ['DC','Met','DN']
 NodeLocation: 144,144,1
 NodeSize: 56,24
 WindState: 2,102,90,476,224
+Att_PrevIndexValue: ['DC','Met','DN']
 
 Index Fuente
-Att_PrevIndexValue: ['A-RSU','B-Compostaje','C.1-Incineracion','D.1-AguasDomesticas','D.2-AguasIndustriales']
 Definition: ['A-RSU','B-Compostaje','C.1-Incineracion','D.1-AguasDomesticas','D.2-AguasIndustriales']
 NodeLocation: 128,304,1
 NodeSize: 48,24
 WindState: 2,0,-23,476,224
 {!40300|Att_SlicerPopupSize: 227,112}
+Att_PrevIndexValue: ['A-RSU','B-Compostaje','C.1-Incineracion','D.1-AguasDomesticas','D.2-AguasIndustriales']
 
 Index Escenario
-Att_PrevIndexValue: ['Base','Medida']
 Title: Escenario
 Definition: ['Base','Medida']
 NodeLocation: 296,368,1
 NodeSize: 48,24
 WindState: 2,102,90,498,425
+Att_PrevIndexValue: ['Base','Medida']
 
 Index Medidas
-Att_PrevIndexValue: ['Compostaje Domiciliario','Reciclaje','Compostaje en Planta','Compostaje Ferias','Biodigestión','Captura y quema','Inyección a GN','Gen EE en RRSS','Aprovechamiento Termico de Biogas','Incineracion','TMB']
 Title: Medidas
 Description: Medidas que han sio evaluadas y que pueden ser aplicables
 Definition: ['Compostaje Domiciliario','Reciclaje','Compostaje en Planta','Compostaje Ferias','Biodigestión','Captura y quema','Inyección a GN','Gen EE en RRSS','Aprovechamiento Termico de Biogas','Incineracion','TMB']
@@ -1156,6 +1145,7 @@ NodeLocation: 320,56,1
 NodeSize: 48,24
 WindState: 2,427,264,775,925
 ValueState: 2,40,50,416,303,0,MIDM
+Att_PrevIndexValue: ['Compostaje Domiciliario','Reciclaje','Compostaje en Planta','Compostaje Ferias','Biodigestión','Captura y quema','Inyección a GN','Gen EE en RRSS','Aprovechamiento Termico de Biogas','Incineracion','TMB']
 
 Variable Medidas_activas
 Title: Medidas Activas
@@ -1206,12 +1196,12 @@ ReformDef: [Medidas]
 ReformVal: [Medidas]
 
 Index Np
-Att_PrevIndexValue: ['No Aplicar','Nivel 1','Nivel 2','Nivel 3']
 Title: Nivel Penetracion
 Definition: ['No Aplicar','Nivel 1','Nivel 2','Nivel 3']
 NodeLocation: 296,448,1
 NodeSize: 48,24
 WindState: 2,102,90,476,224
+Att_PrevIndexValue: ['No Aplicar','Nivel 1','Nivel 2','Nivel 3']
 
 Index Tipo_indicador_total
 Title: Tipo Indicador Total
@@ -1228,6 +1218,123 @@ NodeSize: 48,32
 WindState: 2,734,59,476,224
 BalloonHelp: a=
 
+Index pyparams
+Title: pyparams
+Definition: ['pyparams PIB','pyparams Poblacion','pyparams PobUrbana','pyparams PobRural','pyparams CumplimientoMetas']
+NodeLocation: 688,336,1
+NodeSize: 48,24
+Att_PrevIndexValue: ['pyparams PIB','pyparams Poblacion','pyparams PobUrbana','pyparams PobRural','pyparams CumplimientoMetas']
+
+Constant pyparams_interface
+Title: pyparams interface
+Definition: Table(Time,pyparams)(~
+0,0,0,0,0,~
+0,0,0,0,0,~
+0,0,0,0,0,~
+0,0,0,0,0,~
+0,0,0,0,0,~
+0,0,0,0,0,~
+0,0,0,0,0,~
+0,0,0,0,0,~
+0,0,0,0,0,~
+0,0,0,0,0,~
+0,0,0,0,0,~
+0,0,0,0,0,~
+0,0,0,0,0,~
+0,0,0,0,0,~
+0,0,0,0,0,~
+0,0,0,0,0,~
+0,0,0,0,0,~
+0,0,0,0,0,~
+0,0,0,0,0,~
+0,0,0,0,0,~
+0,0,0,0,0,~
+0,0,0,0,0,~
+0,0,0,0,0,~
+0,0,0,0,0,~
+0,0,0,0,0,~
+0,0,0,0,0,~
+0,0,0,0,0,~
+0,0,0,0,0,~
+0,0,0,0,0,~
+0,0,0,0,0,~
+0,0,0,0,0,~
+0,0,0,0,0,~
+0,0,0,0,0,~
+0,0,0,0,0,~
+0,0,0,0,0,~
+0,0,0,0,0,~
+0,0,0,0,0,~
+0,0,0,0,0,~
+0,0,0,0,0,~
+0,0,0,0,0,~
+72.111384122009,0,0,0,0,~
+77.7392393500577,0,0,0,0,~
+86.4201530026911,13.737062M,0,0,0,~
+92.1141900666512,13.956766M,0,0,0,~
+96.7477161923722,14.171821M,0,0,0,~
+105.390475926765,14.381249M,0,0,0,~
+112.560102103863,14.584947M,0,0,0,~
+120.920942455838,14.782706M,0,0,0,~
+126.150264740731,14.974898M,0,0,0,~
+125.630404334924,15.162353M,0,0,0,~
+132.322658609635,15.343326M,0,0,0,~
+136.693338628693,15.520049M,0,0,0,~
+140.940360379445,15.691701M,13.541501M,2.1502M,0,~
+146.706297729504,15.856977M,13.714538M,2.142439M,0,~
+157.283146520562,16.022133M,13.88631M,2.135823M,0,~
+166.315651013752,16.183489M,14.053189M,2.1303M,0,~
+176.82210397458,16.34789M,14.221328M,2.126562M,0,~
+185.495801968582,16.517933M,14.392736M,2.125197M,0,~
+192.042932974035,16.697754M,14.570809M,2.126945M,0,~
+189.038921668926,16.881078M,14.749493M,2.131585M,0,~
+200.086691409311,17.063927M,14.92579M,2.138137M,0,~
+212.313826709238,17.254159M,15.107423M,2.146736M,0,~
+223.606009345393,17.443491M,15.287861M,2.15563M,0,~
+232.650882034316,17.611902M,15.44936M,2.162542M,0,~
+236.761217724202,17.787617M,15.618271M,2.169346M,0,~
+242.215644612458,17.971423M,15.795077M,2.176346M,0,~
+246.360170562915,18.167147M,15.983549M,2.183598M,0,~
+249.288340003929,18.419192M,16.22546M,2.193732M,0,~
+259.133536494411,18.751405M,16.543423M,2.207982M,0,~
+262.030649432419,19.107216M,16.883696M,2.22352M,0,~
+246.308810466474,19.45831M,17.219249M,2.239061M,0,~
+257.380391496942,19.678363M,17.430714M,2.247649M,0,~
+265.657744887483,19.828563M,17.575834M,2.252729M,0,~
+273.48136547442,19.960889M,17.703812M,2.257077M,1,~
+280.838014205682,20.086377M,17.824977M,2.2614M,1,~
+287.858964560824,20.206953M,17.941129M,2.265824M,1,~
+295.055438674844,20.322807M,18.05256M,2.270247M,1,~
+302.431824641715,20.433791M,18.159116M,2.274675M,1,~
+309.992620257758,20.539666M,18.260599M,2.279067M,1,~
+317.742435764202,20.64023M,18.356902M,2.283328M,1,~
+325.685996658307,20.735289M,18.447844M,2.287445M,1,~
+333.828146574765,20.826397M,18.534789M,2.291608M,1,~
+342.173850239134,20.912278M,18.616683M,2.295595M,1,~
+350.728196495112,20.992831M,18.693499M,2.299332M,1,~
+359.49640140749,21.067996M,18.765129M,2.302867M,1,~
+368.483811442677,21.137769M,18.831623M,2.306146M,1,~
+377.695906728744,21.202223M,0,0,1,~
+387.138304396963,21.261462M,0,0,1,~
+396.584553067644,21.31563M,0,0,1,~
+406.02873447933,21.364889M,0,0,1,~
+415.465044320405,21.409418M,0,0,1,~
+424.887799841225,21.449428M,0,0,1,~
+434.291446822696,21.485105M,0,0,1,~
+443.670565910333,21.516611M,0,0,1,~
+453.019878325144,21.544064M,0,0,1,~
+462.334250964641,21.567513M,0,0,1,~
+471.608700909164,21.587015M,0,0,1,~
+481.040874927347,21.602589M,0,0,1,~
+490.661692425894,21.614271M,0,0,1,~
+500.474926274412,21.622101M,0,0,1,~
+510.4844247999,21.626079M,0,0,1)
+NodeLocation: 800,336,1
+NodeSize: 48,24
+WindState: 2,98,82,720,350
+DefnState: 2,68,74,1393,644,0,DFNM
+ReformDef: [pyparams,Time]
+
 Close Indices
 
 Module Rsm
@@ -1237,7 +1344,7 @@ Date: Mon, Jul 22, 2013 1:42 PM
 DefaultSize: 48,24
 NodeLocation: 80,272,1
 NodeSize: 48,24
-DiagState: 2,-9,52,1535,564,17
+DiagState: 2,0,52,1535,564,17
 DiagramColor: 62258,62258,62258
 OutlinerState: 2,180,176,448,280
 
@@ -1248,7 +1355,7 @@ Date: Thu, Jan 3, 2013 12:23 PM
 DefaultSize: 48,24
 NodeLocation: 72,280,1
 NodeSize: 64,24
-DiagState: 2,56,149,1450,651,17
+DiagState: 2,0,245,1450,651,17
 OutlinerState: 2,40,50,448,280
 
 Variable Datos_de_generacion
@@ -1307,15 +1414,18 @@ Definition: Res_componente
 NodeLocation: 1192,448,1
 NodeSize: 48,31
 WindState: 2,66,224,1366,651
-ValueState: 2,0,230,1359,644,0,MIDM
-Aliases: Alias Al356399229
-GraphSetup: {!40000|Att_graphindexrange Time:1,,0,,,,10,2010,2050}
+ValueState: 2,481,198,1359,644,1,MIDM
+Aliases: Alias Al356399229, Alias Al1314052349, Alias Al1775425789
+GraphSetup: Att_StackedBar Graph_Primary_Valdim:1~
+Att_ForceCategorical Graph_Primary_Valdim:1~
+Att_GraphIndexRange Time:1,,0,,,,10,2010,2050
 ReformVal: [Time,Componentes]
 NumberFormat: 2,I,4,2,1,0,4,0,$,0,"ABBREV",0
-Att__TotalsIndex: [Componentes]
+Att__TotalsIndex: [Region]
 Att_GraphTemplate: Enter_a_name_for_yo1
-Att_ResultSliceState: [Region,15,Componentes,1,Time,67]
-{!40600|Att_ClusterIndex: Metodos_Proyeccion}
+Att_ResultSliceState: [Region,0,Componentes,2,Componentes,1,Time,67]
+Att_ColorRole: Null
+{!40600|Att_ClusterIndex: Null}
 
 Variable Res_componente
 Title: Residuos generados por tipo
@@ -1446,12 +1556,12 @@ NodeSize: 48,24
 WindState: 2,102,90,964,208
 
 Index Metodos_Proyeccion
-Att_PrevIndexValue: ['What a Waste 2.0','MAPS','Tendencial - Log','Tendencial  - Exp','Tendencial - Lineal']
 Title: Metodos Proyeccion
 Definition: ['What a Waste 2.0','MAPS','Tendencial - Log','Tendencial  - Exp','Tendencial - Lineal']
 NodeLocation: 368,64,1
 NodeSize: 48,24
 ValueState: 2,212,218,416,303,,MIDM
+Att_PrevIndexValue: ['What a Waste 2.0','MAPS','Tendencial - Log','Tendencial  - Exp','Tendencial - Lineal']
 
 Variable Proyeccion_WaW2
 Title: Proyeccion WaW2
@@ -1549,7 +1659,7 @@ Author: adm
 Date: Wed, Jul 8, 2020 12:33 PM
 NodeLocation: 792,576,1
 NodeSize: 56,24
-DiagState: 2,180,119,1025,568,17
+DiagState: 2,-262,226,1025,568,17
 
 Constant Comp2012
 Title: Composición 2012
@@ -1822,7 +1932,7 @@ var rec:=if Tipo_SEDS='Gestionado-anaeróbico' then Metano_recuperado else 0;~
 NodeLocation: 760,280,1
 NodeSize: 48,24
 WindState: 2,0,82,1680,943
-ValueState: 2,-31,188,1676,580,0,MIDM
+ValueState: 2,-1,236,1676,593,0,MIDM
 GraphSetup: Att_CatLineStyle Graph_Primary_Valdim:1~
 Grid:1~
 Att_GraphIndexRange Time:1,0,1,,,,20,2012,2050~
@@ -1847,13 +1957,13 @@ DiagState: 2,0,-23,1343,608,17
 NodeColor: 65535,65531,1
 
 Index Componentes
-Att_PrevIndexValue: ['Restos de alimentos','Papel y carton','Madera','Textiles','Otros - Plasticos','Otros - Vidrio','Otros - Metales','Otros - Residuos','Lodos']
 Title: Componentes
 Definition: ['Restos de alimentos','Papel y carton','Madera','Textiles','Otros - Plasticos','Otros - Vidrio','Otros - Metales','Otros - Residuos','Lodos']
 NodeLocation: 112,48,1
 NodeSize: 64,24
 WindState: 2,-702,257,1364,568
 {!40300|Att_SlicerPopupSize: 232,160}
+Att_PrevIndexValue: ['Restos de alimentos','Papel y carton','Madera','Textiles','Otros - Plasticos','Otros - Vidrio','Otros - Metales','Otros - Residuos','Lodos']
 
 Index Tiempodeposito1
 Title: tiempodeposito
@@ -1881,12 +1991,12 @@ NodeLocation: 96,120,1
 NodeSize: 48,24
 
 Index Rellenosnuevos
-Att_PrevIndexValue: ['Arica','Iquique-AH','Antofagasta','P Huasco','Caldera','P Choapa','Arauco','Malleco','Araucania','Llanquihue','Osorno','Los Rios','Chile Chico','Villa O`higgins','Natales','Stgo Poniente']
 Title: Rellenos Nuevos
 Description: Nuevos Rellenos Sanitarios o a los que es aplicable la generacion de electricidad o la generacion de calor
 Definition: ['Arica','Iquique-AH','Antofagasta','P Huasco','Caldera','P Choapa','Arauco','Malleco','Araucania','Llanquihue','Osorno','Los Rios','Chile Chico','Villa O`higgins','Natales','Stgo Poniente']
 NodeLocation: 224,176,1
 NodeSize: 48,24
+Att_PrevIndexValue: ['Arica','Iquique-AH','Antofagasta','P Huasco','Caldera','P Choapa','Arauco','Malleco','Araucania','Llanquihue','Osorno','Los Rios','Chile Chico','Villa O`higgins','Natales','Stgo Poniente']
 
 Close Indices_rsu
 
@@ -1975,20 +2085,22 @@ Description: Señala las ton de residuos depositadas en cada región~
 ~
 
 Definition: (Rsugen-Residuos_valorizados)*Seds_por_region
-NodeLocation: 280,280,1
+NodeLocation: 344,280,1
 NodeSize: 60,32
 WindState: 2,102,90,751,276
-ValueState: 2,0,82,1119,455,0,MIDM
+ValueState: 2,104,292,1119,447,1,MIDM
 Aliases: Alias Al704139389
+GraphSetup: Att_StackedBar Graph_Primary_Valdim:1~
+Att_ForceCategorical Graph_Primary_Valdim:1
 ReformVal: [Time,Componentes]
-Att__TotalsIndex: [Seds,Tipo_SEDS,Componentes]
-Att_ResultSliceState: [Escenarios_crecimien,2,Seleccion_Composicio,1,Tipo_SEDS,0,Escenario,1,Region,7,Time,67,Componentes,1,Metodos_Proyeccion,4]
+Att__TotalsIndex: [Seds,Tipo_SEDS,Componentes,Region]
+Att_ResultSliceState: [Tipo_SEDS,0,Region,0,Componentes,1,Time,67]
 
 Variable Seds_por_region
 Title: SEDS por Region
 Description: Muestra la fracción de cada tipo de SEDS a lo largo del tiempo para las distintas regiones
 Definition: SEDS1
-NodeLocation: 280,408,1
+NodeLocation: 344,408,1
 NodeSize: 48,24
 WindState: 2,102,90,476,224
 DefnState: 2,40,50,1201,303,0,DFNM
@@ -2006,7 +2118,7 @@ Date: Wed, Oct 02, 2013 11:00 AM
 DefaultSize: 48,24
 NodeLocation: 520,280,1
 NodeSize: 56,28
-DiagState: 2,108,240,1080,385,17
+DiagState: 2,0,166,1826,716,17
 
 Constant K1
 Title: k
@@ -2037,11 +2149,11 @@ Definition: Table(Region,Componentes)(~
 NodeLocation: 552,64,1
 NodeSize: 60,28
 WindState: 2,0,0,1358,643
-DefnState: 2,-128,64,1364,590,0,DFNM
+DefnState: 2,-252,70,1364,590,0,DFNM
 ValueState: 2,0,0,1358,643,0,MIDM
 ReformDef: [Componentes,Region]
 ReformVal: [Null,Componentes]
-Att_ResultSliceState: [Region,6,Componentes,1]
+Att_ResultSliceState: [Region,9,Componentes,1]
 
 Constant Docf
 Title: DOCf
@@ -2057,7 +2169,7 @@ Description: Factor de corrección del metano por descomposición aeróbica.
 Definition: Table(Tipo_SEDS)(0.6,0.4,1)
 NodeLocation: 328,264,1
 NodeSize: 48,24
-WindState: 2,46,187,1364,458
+WindState: 2,-401,416,1364,458
 DefnState: 2,40,50,416,303,0,MIDM
 ValueState: 2,396,565,416,303,,MIDM
 
@@ -2077,7 +2189,7 @@ Description: Carbono Organico Degradable Descomponible Descomuesto en el año T
 Definition: Dynamic(0,Coddm_acomulado[Time-1]*(1-EXP(-K1)))
 NodeLocation: 728,160,1
 NodeSize: 60,36
-WindState: 2,133,132,1150,386
+WindState: 2,-608,234,1150,386
 ValueState: 2,40,50,1234,872,0,MIDM
 ReformVal: [Metodos_Proyeccion,Componentes]
 Att__TotalsIndex: [Seds,Componentes,Tipo_SEDS]
@@ -2095,14 +2207,14 @@ Doc*Docf*Mcf*dep
 NodeLocation: 392,160,1
 NodeSize: 60,40
 WindState: 2,261,514,1150,365
-ValueState: 2,78,97,1439,590,0,MIDM
+ValueState: 2,3,302,1439,600,0,MIDM
 ReformVal: [Time,Componentes]
-Att__TotalsIndex: [Seds]
-Att_ResultSliceState: [Tipo_SEDS,3,Region,2,Componentes,1,Time,67]
+Att__TotalsIndex: [Seds,Tipo_SEDS,Componentes]
+Att_ResultSliceState: [Tipo_SEDS,0,Region,9,Componentes,1,Time,67]
 {!50000|Att_ColumnWidths: [,Time,\([,,,,,61])]}
 
 Variable Coddm_acomulado
-Title: CODDm Acomulado
+Title: CODDm Acumulado
 Units: ton de C
 Description: Muestra el Carbono Orgánico Degradable Descomponible  acomulado en cada relleno en el año T
 Definition: Dynamic(Coddm[Time=1950], Coddm[Time]+Coddm_acomulado[Time-1]*EXP(-K1))
@@ -2110,11 +2222,11 @@ Check: ~
 
 NodeLocation: 552,160,1
 NodeSize: 48,24
-WindState: 2,6,104,1150,386
-ValueState: 2,59,169,958,668,0,MIDM
+WindState: 2,-549,222,1150,386
+ValueState: 2,0,195,958,668,0,MIDM
 ReformVal: [Time,Componentes]
 Att__TotalsIndex: [Tipo_SEDS]
-Att_ResultSliceState: [Region,7,Escenarios_crecimien,2,Escenario,1,Tipo_SEDS,0,Componentes,1,Time,1]
+Att_ResultSliceState: [Tipo_SEDS,0,Region,9,Componentes,1,Time,64]
 
 Variable Metano_generado
 Title: Metano Generado
@@ -2124,14 +2236,14 @@ Definition: Coddm_descompuesto*F2*16/12
 NodeLocation: 880,160,1
 NodeSize: 48,24
 WindState: 2,0,502,1150,386
-ValueState: 2,6,68,1060,794,0,MIDM
+ValueState: 2,55,113,1060,794,0,MIDM
 Aliases: Alias Al1994815613, Alias Al208500861
 NodeColor: 1,52427,26212
 GraphSetup: Att_CatLineStyle Graph_Primary_Valdim:4
 ReformVal: [Time,Componentes]
 NumberFormat: 2,I,4,2,1,0,4,0,$,0,"ABBREV",0
 Att__TotalsIndex: [Seds,Medidas_activas,Tipo_SEDS,Componentes]
-Att_ResultSliceState: [Escenarios_crecimien,2,Tipo_SEDS,0,Escenario,1,Componentes,0,Region,7,Time,67]
+Att_ResultSliceState: [Tipo_SEDS,0,Region,9,Componentes,0,Time,67]
 {!40600|Att_ClusterIndex: Seleccion_Composicio}
 
 Constant Doc
@@ -2146,13 +2258,15 @@ DefnState: 2,40,50,416,303,0,MIDM
 ValueState: 2,45,45,416,303,0,MIDM
 
 Text Te2031636605
-Description: Por ahora no incluye incertidumbre.~
+Description: Hay diferencias en Maule Magallanes y otra más pq estan usando el k que no corresponde para antes de 1990!!!~
+~
+Por ahora no incluye incertidumbre.~
 Se trabaja por tipo de SEDS para evitar efectos al cambiar la proporcion. ~
 El supuesto es que al cambiar, el establecimiento viejo sigue emitiendo.~
 ~
 El MMA considera humedas desde otra region revisar, pq tiene impacto en largo plazo
-NodeLocation: 640,384,-1
-NodeSize: 296,72
+NodeLocation: 640,392,-1
+NodeSize: 296,80
 NodeInfo: 1,,,,,1
 NodeColor: 65535,19661,38773
 
@@ -2223,7 +2337,7 @@ Title: Captura de Biogas
 Author: Greenie
 Date: Wed, Oct 02, 2013 11:00 AM
 DefaultSize: 48,24
-NodeLocation: 520,408,1
+NodeLocation: 512,424,1
 NodeSize: 48,24
 DiagState: 2,24,110,1623,745,17
 DiagramColor: 58982,58982,58982
@@ -2245,9 +2359,9 @@ F_tabla_arreglo(tab)~
 NodeLocation: 80,80,1
 NodeSize: 48,24
 WindState: 2,102,90,824,365
-ValueState: 2,4,2,1359,644,1,MIDM
+ValueState: 2,205,207,1359,641,0,MIDM
 NodeColor: 65535,19661,19661
-ReformVal: [Time,Null]
+ReformVal: [Time,Region]
 NumberFormat: 2,I,4,2,1,0,4,0,$,0,"ABBREV",0
 Att__TotalsIndex: []
 Att_ResultSliceState: [Region,7,Time,1]
@@ -4075,9 +4189,9 @@ Title: Tratamientos Valorización
 Author: Greenie
 Date: Wed, Oct 02, 2013 11:00 AM
 DefaultSize: 48,24
-NodeLocation: 280,152,1
+NodeLocation: 344,144,1
 NodeSize: 68,24
-DiagState: 2,-123,135,1740,798,17
+DiagState: 2,-35,361,1740,798,17
 Att__CloakDefn: 0
 OutlinerState: 2,40,50,448,280
 
@@ -6023,8 +6137,8 @@ NodeSize: 64,24
 
 Module MAPS1
 Title: MAPS
-Author: jsyme
-Date: Thu, Oct 15, 2020 3:42 AM
+Author: adm
+Date: Mon, Sep 28, 2020 6:33 PM
 NodeLocation: 848,432,1
 NodeSize: 48,24
 
@@ -6146,7 +6260,7 @@ NodeLocation: 328,128,1
 NodeSize: 48,24
 WindState: 2,102,90,834,348
 DefnState: 2,0,-23,416,303,0,MIDM
-ValueState: 2,397,113,454,509,0,MIDM
+ValueState: 2,397,113,1330,724,0,MIDM
 Aliases: Alias Reciclaje2
 NodeColor: 52427,65535,58981
 ReformDef: [Time,Componentes]
@@ -6420,7 +6534,7 @@ ValueState: 2,253,576,1009,303,,MIDM
 
 Constant MAP_Reciclables
 Title: MAP Reciclables
-Definition: Table(Componentes)(,'PyC',,,'Plastico','Vidrio','Metales','Multicompuesto',)
+Definition: Table(Componentes)(Null,'PyC',Null,Null,'Plastico','Vidrio','Metales','Multicompuesto',Null)
 NodeLocation: 440,144,1
 NodeSize: 48,24
 WindState: 2,98,82,720,350
@@ -6428,8 +6542,8 @@ DefnState: 2,388,394,416,303,0,DFNM
 
 Module MAPS
 Title: MAPS
-Author: jsyme
-Date: Thu, Oct 15, 2020 3:42 AM
+Author: adm
+Date: Mon, Sep 28, 2020 6:33 PM
 NodeLocation: 296,320,1
 NodeSize: 48,24
 
@@ -7624,11 +7738,15 @@ Definition: Reciclaje+Compostaje
 NodeLocation: 440,280,1
 NodeSize: 48,24
 WindState: 2,102,90,865,547
-ValueState: 2,44,344,1479,614,0,MIDM
-Aliases: Alias Residuos_valorizado1
+ValueState: 2,120,126,1479,614,1,MIDM
+Aliases: Alias Residuos_valorizado1, Alias Al441637117
+GraphSetup: Att_StackedBar Graph_Primary_Valdim:1~
+Att_ForceCategorical Graph_Primary_Valdim:1
 ReformVal: [Time,Componentes]
 Att__TotalsIndex: [Region]
-Att_ResultSliceState: [Escenarios_crecimien,1,Componentes,1,Region,0,Metodos_Proyeccion,4,Seleccion_Composicio,4,Escenario,1,Time,1]
+Att_ResultSliceState: [Componentes,2,Region,0,Componentes,1,Time,1]
+Att_ColorRole: Null
+{!40600|Att_ClusterIndex: Null}
 
 Module M5_1_biodigestion_r1
 Title: M5 Biodigestión RSU
@@ -8044,7 +8162,7 @@ Title: Residuos Post Tratamiento 1
 Units: ton/ano
 Description: Residuos disponibles luego de aplicar compostaje domiciliario si es que se aplica
 Definition: Rsugen-compostaje_domicili4-Reciclaje_e1
-NodeLocation: 608,40,1
+NodeLocation: 704,272,1
 NodeSize: 80,24
 NodeInfo: 1,0,0,1,1,1,0,,0,
 WindState: 2,102,90,476,224
@@ -8056,7 +8174,7 @@ Variable R2
 Title: Residuos Post Tratamiento 2
 Description: Residuos disponibles luego de aplicar compostaje en feria y compostaje domiciliario si es que se aplican
 Definition: R1-Compostaje_feria_e1
-NodeLocation: 608,118,1
+NodeLocation: 704,350,1
 NodeSize: 80,24
 NodeInfo: 1,0,0,1,1,1,0,,0,
 WindState: 2,-570,25,1366,651
@@ -8068,7 +8186,7 @@ Variable R3
 Title: Residuos Post Tratamiento 3
 Description: Residuos disponibles luego de aplicar compostaje domiciliario, compostaje en planta y compostaje en ferias si es que se aplican
 Definition: R2-Compostaje_planta_e1
-NodeLocation: 608,196,1
+NodeLocation: 704,428,1
 NodeSize: 80,24
 NodeInfo: 1,0,0,1,1,1,0,,0,
 WindState: 2,-521,227,1366,651
@@ -8081,7 +8199,7 @@ Variable R4
 Title: Residuos Post Tratamiento 4
 Description: Residuos disponibles luego de aplican compostaje domiciliario, en feria y en planta y tmb si es que se aplican
 Definition: R3-TMB_efectivo
-NodeLocation: 608,274,1
+NodeLocation: 704,506,1
 NodeSize: 80,24
 NodeInfo: 1,0,0,1,1,1,0,,0,
 WindState: 2,-540,301,1366,651
@@ -8095,7 +8213,7 @@ Title: Residuos Post Tratamiento 5
 Units: ton/ano
 Description: Residuos disponibles luego de aplican compostaje domiciliario, en feria y en planta, tmb y biodigestion si es que se aplican
 Definition: R4-Biodigestion_e4
-NodeLocation: 608,352,1
+NodeLocation: 704,584,1
 NodeSize: 80,24
 NodeInfo: 1,0,0,1,1,1,0,,0,
 WindState: 2,-578,210,1367,643
@@ -8211,7 +8329,9 @@ NodeLocation: 160,40,1
 NodeSize: 48,24
 WindState: 2,0,0,720,350
 DefnState: 2,40,50,400,300,0,DFNM
+ValueState: 2,0,485,1688,437,,MIDM
 ReformDef: [Time,Componentes]
+ReformVal: [Componentes,Time]
 {!50000|Att_ColumnWidths: [,Time,\([,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,64,64])]}
 
 Variable Linea_Base_Reciclaje
@@ -8225,6 +8345,29 @@ NodeSize: 48,24
 WindState: 2,155,227,720,355
 ValueState: 2,805,210,1152,486,0,MIDM
 Aliases: Alias Al2144922493
+DisplayInputs: Constant Cumplimiento
+
+Constant Cumplimiento
+Title: Nivel Cumplimiento Metas
+Definition: F_tabla_arreglo(~
+F_lectura_tabla(DSN_Residuos,'CumplimientoMetasReciclaje'))
+NodeLocation: 536,40,1
+NodeSize: 64,32
+DisplayOutputs: Variable Linea_Base_Reciclaje
+
+Alias Al1775425789
+Title: RSU Generado por Tipo
+Definition: 1
+NodeLocation: 584,128,1
+NodeSize: 48,31
+Original: Rsugen
+
+Variable Tasa_Reciclaje_obser
+Title: Tasa Valorizacion observada
+Definition: sum(Residuos_valorizados,Region)/sum(Rsugen,region)
+NodeLocation: 792,152,1
+NodeSize: 48,32
+ValueState: 2,468,474,1178,409,1,MIDM
 
 Close Tratamientos_valoriz
 
@@ -8252,7 +8395,7 @@ Module Distribucion_SEDS
 Title: Distribucion SEDS
 Author: adm
 Date: Wed, Jul 8, 2020 12:33 PM
-NodeLocation: 280,520,1
+NodeLocation: 344,520,1
 NodeSize: 48,24
 DiagState: 2,0,0,944,480,17
 
@@ -8273,13 +8416,13 @@ NodeSize: 48,24
 WindState: 2,469,88,720,350
 
 Index Tipo_SEDS
-Att_PrevIndexValue: ['SEDS no categorizado','No gestionado-poco profundo','Gestionado-anaeróbico']
 Title: Tipo SEDS
 Definition: ['SEDS no categorizado','No gestionado-poco profundo','Gestionado-anaeróbico']
 NodeLocation: 584,64,1
 NodeSize: 48,24
 WindState: 2,492,187,720,350
-{!40300|Att_SlicerPopupSize: 262,80}
+{!40300|Att_SlicerPopupSize: 277,80}
+Att_PrevIndexValue: ['SEDS no categorizado','No gestionado-poco profundo','Gestionado-anaeróbico']
 
 Variable Arreglo_SEDS2016
 Title: Arreglo SEDS2016
@@ -8287,7 +8430,9 @@ Definition: F_tabla_arreglo(Distribucion_SEDS_20)
 NodeLocation: 192,288,1
 NodeSize: 48,24
 WindState: 2,466,310,720,350
-ValueState: 2,132,138,767,499,,MIDM
+ValueState: 2,132,138,1438,563,,MIDM
+ReformVal: [Region,Time]
+Att_ResultSliceState: [Tipo_SEDS,3,Time,1,Region,1]
 
 Variable SEDS1
 Title: SEDS Regional
@@ -8313,10 +8458,24 @@ Original: Metano_generado
 Alias Al577599613
 Title: Metano Recuperado
 Definition: 1
-NodeLocation: 648,408,1
+NodeLocation: 640,424,1
 NodeSize: 52,24
 NodeColor: 1,52427,26212
 Original: Metano_recuperado
+
+Alias Al441637117
+Title: Residuos Valorizados
+Definition: 1
+NodeLocation: 344,208,1
+NodeSize: 48,24
+Original: Residuos_valorizados
+
+Alias Al1314052349
+Title: RSU Generado por Tipo
+Definition: 1
+NodeLocation: 216,280,1
+NodeSize: 48,31
+Original: Rsugen
 
 Close Rsm
 
@@ -9190,11 +9349,11 @@ Close Tratamiento_de_lodos
 Close A_MAPS2012
 
 Index Tratamiento
-Att_PrevIndexValue: ['Eliminación en río lago y mar','Planta de tratamiento centralizada aeróbico mal operada','Planta de tratamiento centralizada aeróbico bien operada','Laguna anaeróbica poco profunda','Digestor anaeróbico para lodos','Reactor anaeróbico','Cloaca en movimiento','Sistema séptico','Letrina Clima seco, familia reducida','Cloaca estancada']
 Title: Tratamiento
 Definition: ['Eliminación en río lago y mar','Planta de tratamiento centralizada aeróbico mal operada','Planta de tratamiento centralizada aeróbico bien operada','Laguna anaeróbica poco profunda','Digestor anaeróbico para lodos','Reactor anaeróbico','Cloaca en movimiento','Sistema séptico','Letrina Clima seco, familia reducida','Cloaca estancada']
 NodeLocation: 232,80,1
 NodeSize: 48,24
+Att_PrevIndexValue: ['Eliminación en río lago y mar','Planta de tratamiento centralizada aeróbico mal operada','Planta de tratamiento centralizada aeróbico bien operada','Laguna anaeróbica poco profunda','Digestor anaeróbico para lodos','Reactor anaeróbico','Cloaca en movimiento','Sistema séptico','Letrina Clima seco, familia reducida','Cloaca estancada']
 
 Text Te1792094333
 Description: NO se tiene detalle regional~
@@ -9389,6 +9548,7 @@ if Time<2002 then turb[Time=2002] else~
 if time > 2035 then turb[Time=2035] else turb
 NodeLocation: 648,104,1
 NodeSize: 48,24
+WindState: 2,904,317,720,350
 
 Constant Met_Rec_Hist
 Title: Metano Recuperado Hist
@@ -9732,13 +9892,13 @@ Att_GraphIndexRange Time:1,,0,,,,10,1989.7822856903076,2019.3930208683014,0~
 Att_Stacked_Lines Graph_Primary_Valdim:1
 
 Index Tipo_Tratamiento1
-Att_PrevIndexValue: ['Eliminación en río, lago y mar','Planta de tratamiento centralizada aeróbico mal operada','Planta de tratamiento centralizada aeróbico bien operada','Laguna anaeróbica poco profunda','Digestor anaeróbico para lodos','Reactor anaeróbico']
 Title: Tipo Tratamiento
 Definition: ['Eliminación en río, lago y mar','Planta de tratamiento centralizada aeróbico mal operada','Planta de tratamiento centralizada aeróbico bien operada','Laguna anaeróbica poco profunda','Digestor anaeróbico para lodos','Reactor anaeróbico']
 NodeLocation: 72,568,1
 NodeSize: 48,24
 WindState: 2,0,0,720,350
 {!40300|Att_SlicerPopupSize: 227,112}
+Att_PrevIndexValue: ['Eliminación en río, lago y mar','Planta de tratamiento centralizada aeróbico mal operada','Planta de tratamiento centralizada aeróbico bien operada','Laguna anaeróbica poco profunda','Digestor anaeróbico para lodos','Reactor anaeróbico']
 
 Constant MCF_Res_Liq_Industri
 Title: MCF Res Liq Industriales
@@ -10080,10 +10240,12 @@ NodeLocation: 320,272,1
 NodeSize: 48,32
 WindState: 2,1082,96,813,690
 DefnState: 2,0,0,905,296,0,DFNM
-ValueState: 2,0,211,1270,567,0,MIDM
+ValueState: 2,0,211,1270,567,1,MIDM
 Aliases: Alias Va4, Alias Va6, Alias Va3, Alias Al64725629
 GraphSetup: Att_GraphIndexRange Time:1,,0,,,,10,2009.810185432434,2050,0~
-Att_GraphValueRange Emisiones_totales:1,,0,,,,,32487.662974745035,10000000,0
+Att_GraphValueRange Emisiones_totales:1,,1,,,,,32487.662974745035,10000000,0~
+Att_ForceCategorical Graph_Primary_Valdim:1~
+Att_StackedBar Graph_Primary_Valdim:1
 ReformVal: [Time,Fuente]
 NumberFormat: 2,I,4,2,1,0,4,0,$,0,"ABBREV",0
 Att__TotalsIndex: [Region,Fuente]
