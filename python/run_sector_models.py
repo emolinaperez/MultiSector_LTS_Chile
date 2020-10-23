@@ -8,7 +8,6 @@ import shutil
 
 
 
-
 #initialize time
 t0 = time.time()
 #get initialization information
@@ -17,13 +16,7 @@ dict_init = sr.dict_init
 
 ###   READ IN SOME CSVs
 
-#read in baseline waste data
-df_waste_baseline = pd.read_csv(sr.fp_csv_waste_baseline_data)
-#adjust
-df_waste_baseline["total_population"] = np.array(df_waste_baseline["poblacion_milliones"]*(10**6)).astype(int)
-df_waste_baseline["va_industry"] = df_waste_baseline["gdp_ind"]
-#remove
-df_waste_baseline = df_waste_baseline[[x for x in df_waste_baseline.columns if x not in ["poblacion_miliones", "gdp_ind"]]]
+
 
 # attribute file
 df_attribute_master_id = pd.read_csv(sr.fp_csv_attribute_master)
@@ -40,8 +33,6 @@ exp_design_cols = list(set(exp_design.columns) | set(exp_design_single_val.colum
 exp_design_cols.sort()
 #read in parameters and create a dictionary that maps field to sectors
 params = pd.read_csv(sr.fp_csv_parameter_ranges)
-#fields used to join baseline waste data (pre-2015) with future scenarios for SDRD projections
-fields_waste_sdrd = [x for x in df_waste_baseline.columns if (x in exp_design_cols)]
 #pull in master ids to run
 df_masters_to_run = pd.read_csv(sr.fp_csv_experimental_design_msec_masters_to_run)
 #reduce
@@ -65,14 +56,15 @@ def edsv_expand(n_row):
 		df_expand = pd.DataFrame([], columns = None)
 		
 	return(df_expand)
-    
-    
+	
+	
 
 print("Generating wide experimental design (Time elapsed: " + str(np.round((time.time() - t0)/60, 2)) + " minutes)...")
 #update experimental design
 exp_design = pd.concat([exp_design, edsv_expand(len(exp_design))], axis = 1)
 #sort
 exp_design = exp_design.sort_values(by = ["master_id", "year"])
+
 
 
 ##  CHECK MAX
@@ -94,7 +86,7 @@ for field in dict_field_caps.keys():
 		vec_field[np.where(vec_field > sup)] = sup
 		#update
 		exp_design[field] = vec_field
-    
+	
 
 ##  CHECK NORMALIZATION GROUPS
 
@@ -106,7 +98,7 @@ all_ng.sort()
 #loop
 for norm in all_ng:
 	print("Checking normalization group " + str(int(norm)) + "...")
-    #get fields
+	#get fields
 	fields_ng = list(norm_groups[norm_groups["normalize_group"] == norm]["parameter"])
 	#remove from experimental design
 	array_ng = np.array(exp_design[fields_ng])
@@ -125,7 +117,7 @@ for norm in all_ng:
 ###################################
 #    GET SOME OTHER PARAMETERS    #
 ###################################
-    
+	
 #set all fields in the design
 all_fields = exp_design_cols
 #all years
@@ -156,449 +148,61 @@ model_years = sr.output_model_years
 dict_sector_field = {}
 #update the dictionaruy with fields
 for sec in all_sectors:
-    tmp_df = params_svn[(params_svn["sector"] == sec)]
-    #get fields associated with it
-    fields = [x.replace(" ", "_").lower() for x in tmp_df["parameter"]]
-    #update
-    dict_sector_field.update({sec: fields})
+	tmp_df = params_svn[(params_svn["sector"] == sec)]
+	#get fields associated with it
+	fields = [x.replace(" ", "_").lower() for x in tmp_df["parameter"]]
+	#update
+	dict_sector_field.update({sec: fields})
 
-#reduce baseline waste data file
-df_waste_baseline = df_waste_baseline[df_waste_baseline["year"] < min(model_years)]
 #fields to use for merging in sector data frames
 fields_id_for_df_merges = ["master_id", "year"]
 
 
 
 
-################################
-###                          ###
-###    ENERGY & BUILDINGS    ###
-###                          ###
-################################
+###############################
+###                         ###
+###    LOOP OVER SECTORS    ###
+###                         ###
+###############################
 
-print("Building buildings results...")
-# RUN MODEL
-df_buildings = sm.sm_buildings(exp_design)
-df_buildings = pd.DataFrame(df_buildings)
-#fields to add to extraction (also for ordering)
-fields_df_bui = list(df_buildings.columns)
-#loop
-for field in fields_id_for_df_merges:
-	df_buildings[field] = np.array(exp_design[field])
-df_buildings = df_buildings[fields_id_for_df_merges + fields_df_bui]
-
-
-
-
-################################
-###                          ###
-###    INDUSTRIAL PROCESS    ###
-###                          ###
-################################
-
-print("Building industrial results...")
-#map product to field to use
-dict_gdp_field = {
-    "cal": "va_ccv_ind",
-    "cemento": "va_ccv_ind",
-    "vidrio": "va_manufacturing",
-    "carburo": "va_manufacturing",
-    "industry_at_large": "va_industry"
+dict_sector_functions = {
+	"commercial": sm.sm_commercial,
+	"industry_and_mining": sm.sm_industry_and_mining,
+	"public": sm.sm_public,
+	"residential": sm.sm_residential,
+	"transport": sm.sm_transport
 }
-# RUN MODEL
-df_industrial = sm.sm_industrial(exp_design, dict_gdp_field)
-df_industrial = pd.DataFrame(df_industrial)
-#fields to add to extraction (also for ordering)
-fields_df_ind = list(df_industrial.columns)
-#loop
-for field in fields_id_for_df_merges:
-	df_industrial[field] = np.array(exp_design[field])
-#reorder
-df_industrial = df_industrial[fields_id_for_df_merges + fields_df_ind]
+#sectors to run over (in order)
+sectors_run = list(dict_sector_functions)
+sectors_run.sort()
 
-
-
-
-#########################
-###                   ###
-###    AGRICULTURE    ###
-###                   ###
-#########################
-
-print("Building agriculture results...")
-##  ADD IN CROPLAND
-str_id_ag = "_yield_tonnes_ha"
-all_ag = [x.replace(str_id_ag, "") for x in exp_design.columns if str_id_ag in x]
-#get fractional columns
-fields_frac_ag = ["frac_lu_" + x for x in all_ag]
-#add to experimental design for use in
-exp_design["frac_lu_cropland"] = exp_design[fields_frac_ag].sum(axis = 1)
-
-##  RUN MODEL
-df_agriculture = sm.sm_agriculture(exp_design, all_ag, sr.area_cr)
-#convert to dataframe
-df_agriculture = pd.DataFrame(df_agriculture)
-#fields to add to extraction (also for ordering)
-fields_df_ag = list(df_agriculture.columns)
-#loop
-for field in fields_id_for_df_merges:
-	df_agriculture[field] = np.array(exp_design[field])
-#reorder
-df_agriculture = df_agriculture[fields_id_for_df_merges + fields_df_ag]
-
-
-
-
-#######################
-###                 ###
-###    LIVESTOCK    ###
-###                 ###
-#######################
-
-print("Building livestock results...")
-#get all available livestock classes
-str_ls_id = "_manure_ef_c1_gg_co2e_head"
-all_ls = [x.replace(str_ls_id, "") for x in exp_design.columns if str_ls_id in x]
-# RUN MODEL
-df_livestock = sm.sm_livestock(exp_design, all_ls)
-#convert to dataframe
-df_livestock = pd.DataFrame(df_livestock)
-#fields to add to extraction (also for ordering)
-fields_df_ls = list(df_livestock.columns)
-#loop
-for field in fields_id_for_df_merges:
-	df_livestock[field] = np.array(exp_design[field])
-#reorder
-df_livestock = df_livestock[fields_id_for_df_merges + fields_df_ls]
-
-
-
-
-######################
-###                ###
-###    LAND USE    ###
-###                ###
-######################
-
-
-##  INITIALIZE SOME DATA
-
-print("Building land use results...")
-#get all fractions
-str_id_lu = "frac_lu_"
-all_lu = ["cropland"] + [x.replace(str_id_lu, "") for x in params[params["sector"] == "land_use"]["parameter"].unique() if str_id_lu in x]
-#id for forests
-str_id_forest = "frac_lu_"
-#add in forest information
-all_forest = [x.replace(str_id_lu, "") for x in params[params["sector"] == "forest"]["parameter"].unique() if str_id_lu in x]
-#all conversion classes
-str_id_lu_conv = "_conv_to_"
-all_lu_conv = [x.split(str_id_lu_conv)[1].replace("_area_ha", "") for x in exp_design.columns if str_id_lu_conv in x]
-# RUN MODEL
-df_land_use = sm.sm_land_use(exp_design, all_lu, all_forest, all_lu_conv, (len(all_master), len(all_year)), sr.area_cr, sr.use_lu_diff_for_conv_q)
-#convert to dataframe
-df_land_use = pd.DataFrame(df_land_use)
-#fields to add to extraction (also for ordering)
-fields_df_lu = list(df_land_use.columns)
-#loop
-for field in fields_id_for_df_merges:
-	df_land_use[field] = np.array(exp_design[field])
-#reorder
-df_land_use = df_land_use[fields_id_for_df_merges + fields_df_lu]
-
-
-
-
-
-
-###################
-###             ###
-###    WASTE    ###
-###             ###
-###################
-
-
-print("Building waste results...")
-
-t1 = time.time()
-##  SOME BASIC INITIALIZATION
-
-str_master = "master_id"
-
-######################################################
-#    NORMALIZE PROPORTIONAL GROUPINGS TO SUM TO 1    #
-######################################################
-
-#dictionary of grouping types substrings to signify normalization
-dict_prop_groups = {"typo_de_ar": "frac_ar_", "typo_de_sdrd": "frac_typo_de_sdrd_", "typo_de_residuo_en_sdrd": "sdrd_frac_"}
-#renormalize for groups
-for grouping in list(dict_prop_groups.keys()):
-    #get substring
-    substr_identifier = str(dict_prop_groups[grouping])
-    #get all columns associated with proportion of waste sent to different landfill types given it's sent to a landfil
-    fields_group = [x for x in list(exp_design.columns) if (substr_identifier in x)]
-    #get totals
-    fields_group_totals = list(exp_design[fields_group].sum(axis = 1))
-    #renormalize to ensure summation to 1
-    for field in fields_group:
-        exp_design[field] = exp_design[field]/fields_group_totals
-    
-
-#######################################################################################
-#    GET AVERAGE METHANE CORRECTION FACTOR (based on theory, we only need average)    #
-#######################################################################################
-
-#get substring
-substr_identifier = str(dict_prop_groups["typo_de_sdrd"])
-#get all columns associated with proportion of waste sent to different landfill types given it's sent to a landfil
-fields_group = [x for x in list(exp_design.columns) if (substr_identifier in x)]
-#initialize vector of average mfc
-vec_mcf = [0 for x in range(len(exp_design))]
-vec_mcf_dwb = [0 for x in range(len(df_waste_baseline))]
-#renormalize to ensure summation to 1
-for field in fields_group:
-    #split to get mfc for projections
-    mcf = (field.split("_")[-1])
-    mcf = float(mcf.replace("mcf", ""))
-    #update
-    vec_mcf = vec_mcf + mcf*exp_design[field]
-    #add for baseline
-    vec_mcf_dwb = vec_mcf_dwb + mcf*df_waste_baseline[field]
-    
-#new field for mean mcf
-field_mean_mcf = "mean_mcf_sdrd"
-#add it to waste file
-exp_design[field_mean_mcf] = vec_mcf
-df_waste_baseline[field_mean_mcf] = vec_mcf_dwb
-#get reduced data
-exp_design_waste = exp_design[[str_master, "year"] + dict_sector_field["all"] + dict_sector_field["waste"] + [field_mean_mcf]]
-
-
-################################################
-#    INITIALIZE SOME PARAMETERS BEFORE LOOP    #
-################################################
-
-
-
-#initialize baseline year data fram
-df_base_years = pd.DataFrame({"year": list(range(min(model_years), max(model_years) + 1))})
-
-###   DENOTE SOME SETS
-
-#get set of all waste types for RSO
-substr_identifier = str("rso_doc_")
-#get all columns associated with proportion of waste sent to different landfill types given it's sent to a landfil
-all_waste_sdrd = [x.replace(substr_identifier, "") for x in list(exp_design.columns) if (substr_identifier in x)]
-
-#get set of aguas residuales
-substr_identifier = dict_prop_groups["typo_de_ar"]
-#get all columns associated with proportion of waste sent to different landfill types given it's sent to a landfil
-all_ares = [x.replace(substr_identifier, "") for x in list(exp_design.columns) if (substr_identifier in x)]
-
-###   ASSUMPTIONS FROM IPCC MODEL
-#fraction of DOC dissimilated
-doc_f = 0.5
-#average delay time + 7; month of reaction start. Assume that all waste deposited in year T does not begin emitting until Jan 1 in year T + 1
-doc_m = 13
-#fraction of gas released that is methane (CHECK THIS IN DP PLAN 2012—GIVEN AS 0.465)
-frac_gas_f = 0.5
-
-
-####################
-#    BEGIN LOOP    #
-####################
-
-
-#get all gasses that could be looped over for burned waste
-all_gasses = list(sr.dict_gas_to_co2e.keys())
-all_gasses.sort()
-#fields for intersection
-fields_int = list(set(df_waste_baseline.columns) & set(exp_design.columns))
-fields_int.sort()
-fields_int = ["year"] + [x for x in fields_int if x != "year"]
-#initialize data frame?
-initializeDFQ = True
-
-#notify of timinmg
-print("Starting waste loop  (Time elapsed: " + str(np.round((time.time() - t0)/60, 2)) + " minutes)...")
-
-#TEMPORARY reduced
-master_run_base = list(exp_design[exp_design["future_id"] == 0]["master_id"].unique())
-master_run_base.sort()
-
-#loop over each design
-for master_id in all_master:
-    #build temporary data frame
-    dat_waste = exp_design_waste[exp_design_waste[str_master] == master_id]
-    #fields to extract
-    ext_fields_dw = [x for x in dat_waste.columns if not (x in [str_master])]
-    #join in to expand years out
-    dat_waste = pd.merge(df_base_years, dat_waste[fields_int], on = "year", how = "left")
-    dat_waste = dat_waste.sort_values(by = ["year"])
-    #fill in missing values using linear interpolation
-    dat_waste = dat_waste.interpolate()
-
-    #dictionay to map proportions of sewage waste to ar treatment type
-    dict_ar_proportions = {}
-    #loop to build
-    for art in all_ares:
-        #update waste proportions of rso by type
-        field = str(dict_prop_groups["typo_de_ar"]) + art
-        #update dat waste to use 0s
-        dat_waste = dat_waste.fillna({field: 0})
-        dict_ar_proportions.update({art: dat_waste[field]})
-
-    #set dictionary of waste proportions of sdrd
-    dict_sdrd_waste_props = {}
-    dict_sdrd_mcf = {}
-    #loop over waste types to update dictionary
-    for wt in all_waste_sdrd:
-        #update waste proportions dictionary and mcf
-        if not wt == "industrial":
-            dict_sdrd_mcf.update({wt: dat_waste[field_mean_mcf]})
-            #update waste proportions of rso by type
-            field = str(dict_prop_groups["typo_de_residuo_en_sdrd"]) + wt
-            dict_sdrd_waste_props.update({wt: dat_waste[field]})
-        else:
-            #all industrial waste heads to rellenos sanitarios, hence mcf of 1
-            dict_sdrd_mcf.update({wt: [1 for x in range(0, len(dat_waste))]})
-
-    #get data frame
-    df_wt = sm.sm_waste(
-        dat_waste[fields_int],
-        df_waste_baseline[fields_int],
-        all_gasses,
-        all_waste_sdrd,
-        all_ares,
-        dict_prop_groups,
-        doc_m,
-        doc_f,
-        frac_gas_f,
-        sr.dict_gas_to_co2e,
-        #map populations to fields
-        {"population": "total_population", "gdp_ind": "va_industry"},
-        #set of compost
-        set({"alimiento", "jardin"})
-    )
-
-    #get header
-    fields_ord = list(df_wt.columns)
-    #add run and design id
-    df_wt[str_master] = master_id
-    #reorder
-    fields_ord = [str_master] + fields_ord
-    df_wt = df_wt[fields_ord]
-
-    #notify
-    if (master_id%1000) == 0:
-        print("Waste model for master_id: " + str(master_id) + " complete  (Time elapsed: " + str(np.round((time.time() - t0)/60, 2)) + " minutes)")
-
-    #update
-    if initializeDFQ:
-        df_wt_master = df_wt
-        initializeDFQ = False
-    else:
-        fields_wt = list(df_wt_master.columns)
-        df_wt_master = pd.concat([df_wt_master, df_wt[fields_wt]])
-
-
-
-print("Starting generation of output data frame...")
-
-
-##  SET INFORMATION FOR MERGES
-
-fields_merge = ["master_id", "year"]
+dict_sector_returns = {}
+#id fields to include in results
+fields_results_id = ["master_id", "year"]
 #initialize results
-results = exp_design[fields_merge].copy()
-#fields to extract
-fields_extract = []
+results = [exp_design[fields_results_id].copy()]
+#loop over each sector to build
+for sector in sectors_run:
 
+	print("\nBuilding " + str(sector) + " results...")
+	# RUN MODEL
+	df_sector_out = pd.DataFrame(dict_sector_functions[sector](exp_design))
+	#add to the output
+	results.append(df_sector_out)
+	
+	dict_sector_returns.update({
+		sector: {
+			"data_frame": df_sector_out,
+			"fields_dat": list(df_sector_out.columns)
+		}
+	})
+	
 
-##  MERGE AGRICULTURE
-
-print("Joining agriculture to results...")
-#merge with indsutrial output
-results = pd.merge(results, df_agriculture, on = fields_merge, how = "inner")
-#get fields to add to extraxction fields
-ext_fields_agriculture = [x for x in df_agriculture.columns if not (x in fields_merge)]
-#add in to extraction fields
-fields_extract = fields_extract + ext_fields_agriculture
-
-
-##  MERGE LAND USE
-
-print("Joining land use to results...")
-#merge with indsutrial output
-results = pd.merge(results, df_land_use, on = fields_merge, how = "inner")
-#get fields to add to extraxction fields
-ext_fields_land_use = [x for x in df_land_use.columns if not (x in fields_merge)]
-#add in to extraction fields
-fields_extract = fields_extract + ext_fields_land_use
-
-
-##  MERGE LIVESTOCK
-
-print("Joining livestock to results...")
-#merge with indsutrial output
-results = pd.merge(results, df_livestock, on = fields_merge, how = "inner")
-#get fields to add to extraxction fields
-ext_fields_livestock = [x for x in df_livestock.columns if not (x in fields_merge)]
-#add in to extraction fields
-fields_extract = fields_extract + ext_fields_livestock
-
-
-##  MERGE BUILDINGS
-
-print("Joining buildings to results...")
-#merge with indsutrial output
-results = pd.merge(results, df_buildings, on = fields_merge, how = "inner")
-#get fields to add to extraxction fields
-ext_fields_buildings = [x for x in df_buildings.columns if not (x in fields_merge)]
-#add in to extraction fields
-fields_extract = fields_extract + ext_fields_buildings
-
-
-
-##  MERGE INDUSTRIAL
-
-print("Joining industrial to results...")
-#merge with indsutrial output
-results = pd.merge(results, df_industrial, on = fields_merge, how = "inner")
-#get fields to add to extraxction fields
-ext_fields_industrial = [x for x in df_industrial.columns if not (x in fields_merge)]
-#add in to extraction fields
-fields_extract = fields_extract + ext_fields_industrial
-
-
-##  MERGE WASTE
-
-print("joining waste to results...")
-#merge with df_wt_master
-results = pd.merge(results, df_wt_master, on = fields_merge, how = "inner")
-#get fields to add to extraxction fields
-ext_fields_dfwt = [x for x in df_wt_master.columns if not (x in fields_merge)]
-#add in to extraction fields
-fields_extract = fields_extract + ext_fields_dfwt
-
-
-##  ADD SOME SUMMARY FIELDS
-
-fm = ["master_id", "year"]
-#fields to aggregate over for summaries
-dict_total_fields = {
-    "industry": ["emissions_industry_energy_input_MT_co2e", "emissions_industry_indproc_total_MT_co2e"],
-    "agriculture": ["emissions_agriculture_crops_total_MT_co2e", "emissions_agriculture_energy_input_MT_co2e"]
-}
-#loop to add on
-for sec in dict_total_fields.keys():
-    #new total field
-    field_new = "emissions_" + str(sec) + "_total_MT_co2e"
-    #add in some summaries
-    results[field_new] = results[dict_total_fields[sec]].sum(axis = 1)
-    #add to extraction fields
-    fields_extract = fields_extract + [field_new]
-#sort
+#merge
+results = pd.concat(results, axis = 1)
+#data fields
+fields_extract = list(set(results.columns) - set(fields_results_id))
 fields_extract.sort()
 #reduce
 results = results[results["year"].isin(sr.output_model_years)]
@@ -629,24 +233,25 @@ df_design_tr_tuples = []
 
 #loop to determine which T/R combos have to be copied from the baseline design to
 for did in [x for x in all_designs if x > 0]:
-    #temporary subset
-    tmp_cloud = exp_design[exp_design["design_id"] == did]
-    #check for strategy
-    tmp_tuples = set([tuple(x) for x in np.array(tmp_cloud[tmp_cloud["strategy_id"] == 0][["time_series_id", "run_id"]])])
-    #vals that have to be copied over from
-    copy_tuples = tr_tuples_in_baseline_design - tmp_tuples
-    #convert to data frame
-    copy_tuples = pd.DataFrame(np.array([x for x in list(copy_tuples)]).astype(int), columns = ["time_series_id", "run_id"])
-    #sort
-    copy_tuples = copy_tuples.sort_values(by = ["time_series_id", "run_id"]).reset_index(drop = True)
-    #add design id
-    copy_tuples["design_id"] = [did for x in range(len(copy_tuples))]
-    
-    df_design_tr_tuples.append(copy_tuples)
+	#temporary subset
+	tmp_cloud = exp_design[exp_design["design_id"] == did]
+	#check for strategy
+	tmp_tuples = set([tuple(x) for x in np.array(tmp_cloud[tmp_cloud["strategy_id"] == 0][["time_series_id", "run_id"]])])
+	#vals that have to be copied over from
+	copy_tuples = tr_tuples_in_baseline_design - tmp_tuples
+	#convert to data frame
+	copy_tuples = pd.DataFrame(np.array([x for x in list(copy_tuples)]).astype(int), columns = ["time_series_id", "run_id"])
+	#sort
+	copy_tuples = copy_tuples.sort_values(by = ["time_series_id", "run_id"]).reset_index(drop = True)
+	#add design id
+	copy_tuples["design_id"] = [did for x in range(len(copy_tuples))]
+	
+	df_design_tr_tuples.append(copy_tuples)
 
-df_design_tr_tuples = pd.concat(df_design_tr_tuples, axis = 0)
-    
-    
+if len(df_design_tr_tuples) > 0:
+	df_design_tr_tuples = pd.concat(df_design_tr_tuples, axis = 0)
+	
+	
 
 
 #########################

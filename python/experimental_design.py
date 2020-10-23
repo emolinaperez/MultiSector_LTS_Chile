@@ -57,8 +57,13 @@ groups_norm = set([int(x) for x in parameter_table_additional_sectors["normalize
 group_id = parameter_table_additional_sectors[["type", "parameter", "normalize_group"]].drop_duplicates()
 #build normalize group and lever group ids (for deltas)
 norm_vec = []
-#starting point for new group
-ind_group = max(groups_norm) + 1
+
+if len(groups_norm) > 0:
+	#starting point for new group
+	ind_group = max(groups_norm) + 1
+else:
+	ind_group = 1
+	
 #loop over rows
 for i in range(0, len(group_id)):
     #get current group
@@ -125,8 +130,11 @@ all_vals_add_sec = {
     "param_years": param_years_add_sec,
     "future_id": list(range(1, n_lhs + 1)),
     "design_id": list(df_attribute_design_id["design_id"]),
-    "time_series_id": list(df_attribute_time_series_id["time_series_id"])
+    "time_series_id": list(set(df_attribute_time_series_id["time_series_id"]) & set(parameter_table_additional_sectors["time_series_id"]))
 }
+#sort some
+all_vals_add_sec["time_series_id"].sort()
+
 #loop
 for field in fields_add_sec_all_vals:
     #set the field name
@@ -407,10 +415,12 @@ for ts_id in all_vals_add_sec["time_series_id"]:
 				df_ld_shaped = df_ld_shaped + [df_tmp]
 			#notify of completed reshape
 			print("Reshaping of LHS table complete for design_id: " + str(did) + ", time_series_id: " + str(ts_id) + ", strategy_id: " + str(strat))
-#convert to wide frame
-df_ld_shaped = pd.concat(df_ld_shaped)
-#rename
-df_ld_shaped = df_ld_shaped.rename(columns = dict([[x, "ld_" + x] for x in fields_new]))
+
+if len(df_ld_shaped) > 0:
+	#convert to wide frame
+	df_ld_shaped = pd.concat(df_ld_shaped)
+	#rename
+	df_ld_shaped = df_ld_shaped.rename(columns = dict([[x, "ld_" + x] for x in fields_new]))
     
     
 ##  CREATE RAMP VECTORS FOR UNCERTAINTY
@@ -418,7 +428,8 @@ df_ld_shaped = df_ld_shaped.rename(columns = dict([[x, "ld_" + x] for x in field
 y_0 = int(sr.dict_init["add_sec_variation_start_year"]) - 1
 y_1 = max(param_years_add_sec)
 y_base = min(param_years_add_sec)
-vec_ramp_unc = sr.build_mix_vec(0, 0, 0, "linear")#np.array([max(min((y - y_0)/(y_1 - y_0), 1), 0) for y in param_years_add_sec])
+vec_ramp_unc = sr.build_linear_mix_vec((y_0, y_1), (y_base, y_1))
+#sr.build_mix_vec(0, 0, 0, "linear")#np.array([max(min((y - y_0)/(y_1 - y_0), 1), 0) for y in param_years_add_sec])
 vec_ramp_base = 1 - vec_ramp_unc
 
 
@@ -465,8 +476,16 @@ df_perc_change_unc = df_perc_change_unc.sort_values(by = ["future_id", "year"])
 print("Building data frame basis for experimental design file...")
 print("")
 
-#fields that are in the LD matrix
-fields_ld_data = [x for x in df_ld_shaped.columns if (x.replace("ld_", "") in fields_ordered_parameters)]
+if len(df_ld_shaped) > 0:
+	#fields that are in the LD matrix
+	fields_ld_data = [x for x in df_ld_shaped.columns if (x.replace("ld_", "") in fields_ordered_parameters)]
+	
+	#print("\n"*8 + "#"*30)
+	#print("\nSUCCESS\n\n")
+	#print(df_ld_shaped)
+	#print("\n\n" + "#"*30 + "\n"*8)
+else:
+	fields_ld_data = []
 fields_ldparams_data = [x.replace("ld_", "") for x in fields_ld_data]
 fields_nonldparams_data = [x for x in fields_ordered_parameters if (x not in fields_ldparams_data)]
 #initialize output data frame
@@ -533,10 +552,15 @@ for ts_id in all_vals_add_sec["time_series_id"]:
 		
 		# ADD IN LEVER DELTAS
 		
-		#fields to merge on
-		fields_merge_ld = list(set(df_ed_merge.columns) & set(df_ld_shaped.columns))
-		#merge in lever deltas
-		df_ed_merge = pd.merge(df_ed_merge, df_ld_shaped, how = "left", left_on = fields_merge_ld, right_on = fields_merge_ld)
+		if len(df_ld_shaped) > 0:
+			#fields to merge on
+			fields_merge_ld = list(set(df_ed_merge.columns) & set(df_ld_shaped.columns))
+		else:
+			fields_merge_ld = []
+			
+		if len(fields_merge_ld) > 0:
+			#merge in lever deltas
+			df_ed_merge = pd.merge(df_ed_merge, df_ld_shaped, how = "left", left_on = fields_merge_ld, right_on = fields_merge_ld)
 		#split out
 		df_ed_merge_ids = df_ed_merge[fields_id + fields_nonldparams_data]
 		#add in lever deltas
@@ -552,21 +576,29 @@ for ts_id in all_vals_add_sec["time_series_id"]:
 		df_ed_merge = df_ed_merge.reset_index(drop = True)
 		#order
 		df_ed_merge = df_ed_merge[fields_id + fields_ordered_parameters]
-			
-		#add to output list
-		df_out = df_out + [df_ed_merge]
+
+		if len(df_out) == 0:
+			#add to output list
+			df_out = df_out + [df_ed_merge]
+		else:
+			df_out = df_out + [df_ed_merge[df_out[0].columns]]
 		
 		print("Data frame for time_series_id: " + str(ts_id) + ", design_id: " + str(did) + " complete.")
 		print("")
 #build output dataframe
 df_out = pd.concat(df_out, axis = 0)
+#set ordering
+fields_id = [x for x in df_out.columns if "_id" in x]
+fields_dat = [x for x in df_out.columns if (x not in (fields_id + ["year"]))]
+df_out = df_out[fields_id + ["year"] + fields_dat]
 
 #
 cols_to_export = []
 #loop over columns to check values (this is inefficient)
 for col in df_out.columns:
-    if len(set(df_out[col].unique())) == 1:
-        cols_to_export.append(col)
+	if "_id" not in col:
+		if len(set(df_out[col].unique())) == 1:
+			cols_to_export.append(col)
 #convert to single values
 df_out_singles = df_out[cols_to_export].drop_duplicates()
 #reduce
@@ -602,10 +634,13 @@ if export_ed_files_q:
 	
 	df_master_exp = pd.concat([
 		#design 0
-		df_attribute_master_id[(df_attribute_master_id["design_id"] == 0) & (df_attribute_master_id["strategy_id"].isin([0, 3]))],
+		df_attribute_master_id[(df_attribute_master_id["design_id"] == 0)],
 		#design 1
-		df_attribute_master_id[(df_attribute_master_id["design_id"] == 1) & (df_attribute_master_id["strategy_id"].isin([3]))]
+		df_attribute_master_id[(df_attribute_master_id["design_id"] == 1) & (df_attribute_master_id["strategy_id"] > 0)]
 	])
+	
+	#temp overwrite
+	df_master_exp = df_attribute_master_id[(df_attribute_master_id["design_id"] == 0)]
 
 	#export
 	df_master_exp[["master_id"]].to_csv(sr.fp_csv_experimental_design_msec_masters_to_run, index = None)
@@ -624,10 +659,13 @@ if export_ed_files_q:
 #############################
 
 print("Starting export of proportional change ranges file to " + sr.fp_csv_ranges_for_decarb_drivers)
-#add in special fields
-df_out["households"] = np.round(np.array(df_out["total_population"]).astype(float)/np.array(df_out["occ_rate"]).astype(float)).astype(int)
-#set
-fields_append = set({"households"})
+if False:
+	#add in special fields
+	df_out["households"] = np.round(np.array(df_out["total_population"]).astype(float)/np.array(df_out["occ_rate"]).astype(float)).astype(int)
+	#set
+	fields_append = set({"households"})
+else:
+	fields_append = set({})
 #fields id
 fields_id = [x for x in df_out.columns if "_id" in x or x == "year"]
 fields_data = [x for x in df_out.columns if x not in fields_id]
@@ -825,10 +863,12 @@ for nm in dict_str_ids.keys():
     df_sub = df_ed_xl_ranges_vals[df_ed_xl_ranges_vals["field"].isin(all_vals)]
     #fields to extract
     fields_ext = [x for x in df_sub.columns if x != "field"]
-    #array
-    array_sub = (sum(np.array(df_sub[fields_ext]))*sr.area_cr).astype(int)
-    #update
-    df_sub = pd.concat([pd.DataFrame({"field": [nm]}), pd.DataFrame([array_sub], columns = fields_ext)], axis = 1)
+    
+    if len(df_sub) > 0:
+    	#array
+    	array_sub = (sum(np.array(df_sub[fields_ext]))*sr.area_cr).astype(int)
+    	#update
+    	df_sub = pd.concat([pd.DataFrame({"field": [nm]}), pd.DataFrame([array_sub], columns = fields_ext)], axis = 1)
     #append
     df_append.append(df_sub[fields_ord_out])
 df_ed_xl_ranges_vals_full = pd.concat(df_append, axis = 0)

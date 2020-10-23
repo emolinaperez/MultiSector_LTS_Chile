@@ -25,6 +25,7 @@ dir_exec = os.path.join(dir_model, "baseline_runs")
 dir_ed = os.path.join(dir_model, "experimental_design")
 
 
+
 ####################################
 #    CHECK REQUIRED DIRECTORIES    #
 ####################################
@@ -146,14 +147,20 @@ def data_to_wide(df_in, field_wide_by, field_value, fields_index, clean_names_q 
 	#return
 	return df_in_wide
 	
+	
+	
 def sigmoid(x, m, b):
     return 1/(1 + np.e**(m - x/b))
+
+
 
 #basic function for building dictionary
 def build_dict(df_in):
 	#output dictionary
 	return dict([tuple(df_in.iloc[i]) for i in range(len(df_in))])
 
+
+#
 def build_mix_vec(m, b, w_sigm = 0.75, type = "sigmoid"):
 
     #number of years for mixing
@@ -172,6 +179,24 @@ def build_mix_vec(m, b, w_sigm = 0.75, type = "sigmoid"):
 
 	return np.array(vec_mix)
 
+
+
+#vector for mixing
+def build_linear_mix_vec(tuple_year, tuple_year_range):
+
+	#set years to start (at 0) and finish (at 1)
+	y_0 = min(tuple_year)
+	y_1 = max(tuple_year)
+	
+	#get length of all years in index
+	n_years_mix = y_1 - y_0
+	n_years_ind = max(tuple_year_range) - min(tuple_year_range) + 1
+	#set new vector
+	vec = (np.array(range(tuple_year_range[0], tuple_year_range[1] + 1)) - y_0)/n_years_mix
+	vec = np.array([max(min(x, 1), 0) for x in vec])
+
+	return vec
+	
 
 def do_df_diff(df_in, df_master, additional_fm = [], field_year = "year"):
 	#fields to include as scenario
@@ -266,12 +291,12 @@ fp_csv_attribute_future = os.path.join(dir_ed, "attribute_future.csv")
 fp_csv_attribute_ghg = os.path.join(dir_ref, "attribute_ghg.csv")
 fp_csv_attribute_master = os.path.join(dir_ed, "attribute_master.csv")
 fp_csv_attribute_param_fields = os.path.join(dir_ref, "attribute_msec_fields.csv")
+fp_csv_attribute_pyparams = os.path.join(dir_ref, "attribute_pyparams.csv")
 fp_csv_attribute_runs = os.path.join(dir_ed, "attribute_runs.csv")
 fp_csv_attribute_strategy = os.path.join(dir_ref, "attribute_strategy.csv")
 fp_csv_attribute_time_series = os.path.join(dir_ref, "attribute_time_series.csv")
 # OTHER CSVS
-fp_csv_msec_fields_to_transport_map = os.path.join(dir_ref, "msec_fields_to_transport_map.csv")
-fp_csv_msec_pass_to_transport = os.path.join(dir_ed, "msec_pass_to_transport.csv")
+fp_csv_analytica_metrics_to_save = os.path.join(dir_ref, "analytica_metrics_to_save.csv")
 fp_csv_attribute_fuel = os.path.join(dir_ref, "attribute_fuel.csv")
 fp_csv_attribute_technology = os.path.join(dir_ref, "attribute_technology.csv")
 fp_csv_distance_results_transport = os.path.join(dir_ref, "Distance_Results_Transport.csv")
@@ -289,16 +314,19 @@ fp_csv_output_field_types = os.path.join(dir_ref, "output_field_types.csv")
 fp_csv_lhs_table_multi_sector = os.path.join(dir_ed, "lhs_samples_multi_sector.csv")
 fp_csv_lhs_table_levers = os.path.join(dir_ed, "lhs_samples_levers.csv")
 fp_csv_mapping_cost_groups = os.path.join(dir_ref, "mapping_cost_groups.csv")
+fp_csv_msec_fields_to_transport_map = os.path.join(dir_ref, "msec_fields_to_transport_map.csv")
+fp_csv_msec_pass_to_transport = os.path.join(dir_ed, "msec_pass_to_transport.csv")
 fp_csv_output_multi_sector = os.path.join(dir_out, "output_multi_sector.csv")
 fp_csv_output_multi_sector_base_year = os.path.join(dir_out, "output_multi_sector-base_year.csv")
 fp_csv_output_multi_sector_diff = os.path.join(dir_out, "output_multi_sector-diff_from_base_strategy.csv")
+fp_csv_output_multi_sector_analytica = os.path.join(dir_out, "output_multi_sector_analytica.csv")
 fp_csv_parameter_ranges = os.path.join(dir_ref, "parameter_ranges.csv")
+fp_csv_parameter_ranges_for_analytica_base = os.path.join(dir_ref, "parameter_ranges_for_analytica_base.csv")
 fp_csv_prim_field_attribute = os.path.join(dir_out, "prim_field_attribute_base.csv")
 fp_csv_prim_input_data = os.path.join(dir_out, "prim_input_data_base.csv")
 fp_csv_ranges_for_decarb_drivers = os.path.join(dir_out, "ranges_for_decarb_drivers.csv")
 fp_csv_ranges_vals_for_decarb_drivers = os.path.join(dir_out, "ranges_values_for_decarb_drivers.csv")
 fp_csv_waste_baseline_data = os.path.join(dir_ref, "waste_baseline_data.csv")
-
 
 
 

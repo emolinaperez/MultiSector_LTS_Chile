@@ -1,0 +1,22 @@
+sector,pyparams_by_sector,parameter,ppi_overwrite_scale_factor
+agriculture,Incertidumbre_PIB,pib,1000000000
+agriculture,Incertidumbre_Poblacion,poblacion,
+agriculture,Incertidumbre_PrecioLeche,precio_leche,
+agriculture,Incertidumbre_PrecioMaiz,precio_maiz,
+agriculture,Incertidumbre_PrecioCerdo,precio_cerdo,
+agriculture,Incertidumbre_PrecioBovino,precio_bovino,
+agriculture,Incertidumbre_PrecioPollo,precio_pollo,
+agriculture,Medida_CambioDietaBovina,,
+forestry,IncertidumbrePIB,pib,1000000000
+forestry,IncertidumbrePoblacion,poblacion,
+forestry,Recuperacion_BN,,
+forestry,Especies nativas,especies_nativas,
+forestry,Especies exóticas,especies_exoticas,
+ippu,pyparam PIB,pib,
+ippu,pyparam PqeVehicular,pqe_vehicular,
+ippu,pyparam Poblacion,poblacion,
+waste,pyparams PIB,pib,
+waste,pyparams Poblacion,poblacion,
+waste,pyparams PobUrbana,poblacion_urbana,
+waste,pyparams PobRural,poblacion_rural,
+waste,pyparams CumplimientoMetas,,
