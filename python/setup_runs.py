@@ -327,7 +327,8 @@ fp_csv_prim_input_data = os.path.join(dir_out, "prim_input_data_base.csv")
 fp_csv_ranges_for_decarb_drivers = os.path.join(dir_out, "ranges_for_decarb_drivers.csv")
 fp_csv_ranges_vals_for_decarb_drivers = os.path.join(dir_out, "ranges_values_for_decarb_drivers.csv")
 fp_csv_waste_baseline_data = os.path.join(dir_ref, "waste_baseline_data.csv")
-
+# TEMPORARY CSVS
+fp_csv_tmp_correction_for_pib_peso_traj = os.path.join(dir_ref, "tmp_correction_for_pib_peso_traj.csv")
 
 
 ##############################

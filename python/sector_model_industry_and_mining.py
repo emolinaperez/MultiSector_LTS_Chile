@@ -81,7 +81,7 @@ def sm_industry_and_mining(df_in):
 	# SUB SECTOR: Other industries - Industrias
 
 	# Read input parameters defined in parameter_ranges.csv
-	gdp = np.array(df_in["pib"])
+	gdp = np.array(df_in["pib"])*np.array(df_in["pib_scalar_transpiort"])
 	other_industries_intensity = np.array(df_in["other_industries_intensity"])
 	other_industries_frac_diesel = np.array(df_in["other_industries_frac_diesel"])
 	other_industries_frac_natural_gas = np.array(df_in["other_industries_frac_natural_gas"])

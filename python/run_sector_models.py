@@ -156,7 +156,8 @@ for sec in all_sectors:
 
 #fields to use for merging in sector data frames
 fields_id_for_df_merges = ["master_id", "year"]
-
+#sort the experimental design appropriately
+exp_design = exp_design.sort_values(by = fields_id_for_df_merges)
 
 
 
@@ -173,6 +174,27 @@ dict_sector_functions = {
 	"residential": sm.sm_residential,
 	"transport": sm.sm_transport
 }
+
+
+##  ADD DICTIONARY OF DATA TO MERGE FOR EACH SECTOR (IF APPLICABLE)
+
+# Transportation correction for econometric model
+df_tmp_correction_for_pib_peso_traj = pd.read_csv(sr.fp_csv_tmp_correction_for_pib_peso_traj)
+#get baseline data from experimental design
+df_tmp_correction_for_pib_peso_traj = pd.merge(df_tmp_correction_for_pib_peso_traj, exp_design[exp_design["master_id"] == 0][["year", "pib"]].copy(), how = "left", on = ["year"]).reset_index(drop = True)
+#add scalar and string name
+str_pib_scalar = "pib_scalar_transpiort"
+df_tmp_correction_for_pib_peso_traj[str_pib_scalar] = np.array(df_tmp_correction_for_pib_peso_traj["pib_peso"])/np.array(df_tmp_correction_for_pib_peso_traj["pib"])
+df_tmp_correction_for_pib_peso_traj = df_tmp_correction_for_pib_peso_traj[["year", str_pib_scalar]]
+#data to merge in
+dict_sector_merge = {
+	"industry_and_mining": df_tmp_correction_for_pib_peso_traj,
+	"transport": df_tmp_correction_for_pib_peso_traj
+}
+
+
+##  EXECUTE LOOP OVER SECTORS
+
 #sectors to run over (in order)
 sectors_run = list(dict_sector_functions)
 sectors_run.sort()
@@ -184,10 +206,19 @@ fields_results_id = ["master_id", "year"]
 results = [exp_design[fields_results_id].copy()]
 #loop over each sector to build
 for sector in sectors_run:
-
+	
+	if sector in dict_sector_merge.keys():
+		#get fields
+		fm = list(set(exp_design.columns) & set(dict_sector_merge[sector].columns))
+		#merge in data and sort (same ordering as exp_design)
+		df_ed = pd.merge(exp_design, dict_sector_merge[sector], how = "left", on = fm).sort_values(by = fields_id_for_df_merges).reset_index(drop = True)
+		df_ed = df_ed.sort_values(by = fields_id_for_df_merges)
+	else:
+		df_ed = exp_design
+		
 	print("\nBuilding " + str(sector) + " results...")
 	# RUN MODEL
-	df_sector_out = pd.DataFrame(dict_sector_functions[sector](exp_design))
+	df_sector_out = pd.DataFrame(dict_sector_functions[sector](df_ed))
 	#add to the output
 	results.append(df_sector_out)
 	
