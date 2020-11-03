@@ -14527,8 +14527,8 @@ Domain: ['RAND mode','Normal mode']
 FormNode Fo1912957821
 Title: Modo Rand
 Definition: 0
-NodeLocation: 672,96,1
-NodeSize: 72,16
+NodeLocation: 644,96,1
+NodeSize: 100,16
 Original: Modo_Rand
 
 Alias Al749661053
