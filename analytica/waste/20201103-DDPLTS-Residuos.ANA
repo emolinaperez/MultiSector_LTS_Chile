@@ -97,7 +97,7 @@ DefaultSize: 48,24
 DiagState: 2,211,18,1713,852,17
 DiagramColor: 65535,65535,65535
 FontStyle: Calibri, 15
-FileInfo: 0,Model Emision_residuos_1,2,2,0,0,C:\Users\adm\Dropbox\30-Analisis\Analytica\discoL\Modelos\2020-DDPLTS\DDPLTS-Residuos.ANA
+FileInfo: 0,Model Emision_residuos_1,2,2,0,0,C:\Users\adm\Documents\GitHub\MultiSector_LTS_Chile\analytica\waste\20201103-DDPLTS-Residuos.ANA
 OutlinerState: 2,40,50,448,280
 {!40400|Att_clearTypeFonts: 0}
 
@@ -1089,6 +1089,7 @@ NodeColor: 65535,65531,1
 FontStyle: Calibri, 15
 
 Index Region
+Att_PrevIndexValue: ['XV_Region_de_Arica_y_Parinacota','I__Region_de_Tarapaca','II__Region_de_Antofagasta','III__region_de_Atacama','IV_Region_de_Coquimbo','V__Region_de_Valparaiso','Region_Metropolitana','VI__Region_de_Ohiggins','VII__Region_del_Maule','VIII__del_Bio-Bio','IX__Region_de_la_Araucania','XIV__Region_de_Los_Rios','X__Region_de_Los_Lagos','XI__Region_de_Aysen','XII__Region_de_Magallanes']
 Title: Region
 Description: Regiones de Chile
 Definition: ['XV_Region_de_Arica_y_Parinacota','I__Region_de_Tarapaca','II__Region_de_Antofagasta','III__region_de_Atacama','IV_Region_de_Coquimbo','V__Region_de_Valparaiso','Region_Metropolitana','VI__Region_de_Ohiggins','VII__Region_del_Maule','VIII__del_Bio-Bio','IX__Region_de_la_Araucania','XIV__Region_de_Los_Rios','X__Region_de_Los_Lagos','XI__Region_de_Aysen','XII__Region_de_Magallanes']
@@ -1097,9 +1098,9 @@ NodeSize: 52,28
 WindState: 2,-244,68,1024,651
 ValueState: 2,0,-23,1253,651,0,MIDM
 {!40300|Att_SlicerPopupSize: 337,238}
-Att_PrevIndexValue: ['XV_Region_de_Arica_y_Parinacota','I__Region_de_Tarapaca','II__Region_de_Antofagasta','III__region_de_Atacama','IV_Region_de_Coquimbo','V__Region_de_Valparaiso','Region_Metropolitana','VI__Region_de_Ohiggins','VII__Region_del_Maule','VIII__del_Bio-Bio','IX__Region_de_la_Araucania','XIV__Region_de_Los_Rios','X__Region_de_Los_Lagos','XI__Region_de_Aysen','XII__Region_de_Magallanes']
 
 Index Escenarios_crecimien
+Att_PrevIndexValue: ['Crecimiento Bajo','Crecimiento Medio','Crecimiento Alto']
 Title: Escenarios Crecimiento
 Description: Escenarios egún distintos crecimientos del PIB entregados por el equipo de MAPS
 Definition: ['Crecimiento Bajo','Crecimiento Medio','Crecimiento Alto']
@@ -1107,9 +1108,9 @@ NodeLocation: 136,224,1
 NodeSize: 56,24
 WindState: 2,0,-23,1680,943
 ValueState: 2,40,50,416,303,0,MIDM
-Att_PrevIndexValue: ['Crecimiento Bajo','Crecimiento Medio','Crecimiento Alto']
 
 Index Contaminantes
+Att_PrevIndexValue: ['DC','Met','DN']
 Title: Contaminantes
 Description: Contaminantes con potencial de calentamiento global. ~
 ~
@@ -1121,25 +1122,25 @@ NodeLocation: 144,144,1
 NodeSize: 56,24
 WindState: 2,102,90,476,224
 {!40300|Att_SlicerPopupSize: 227,80}
-Att_PrevIndexValue: ['DC','Met','DN']
 
 Index Fuente
+Att_PrevIndexValue: ['A-RSU','B-Compostaje','C.1-Incineracion','D.1-AguasDomesticas','D.2-AguasIndustriales']
 Definition: ['A-RSU','B-Compostaje','C.1-Incineracion','D.1-AguasDomesticas','D.2-AguasIndustriales']
 NodeLocation: 128,304,1
 NodeSize: 48,24
 WindState: 2,0,-23,476,224
 {!40300|Att_SlicerPopupSize: 227,112}
-Att_PrevIndexValue: ['A-RSU','B-Compostaje','C.1-Incineracion','D.1-AguasDomesticas','D.2-AguasIndustriales']
 
 Index Escenario
+Att_PrevIndexValue: ['Base','Medida']
 Title: Escenario
 Definition: ['Base','Medida']
 NodeLocation: 296,368,1
 NodeSize: 48,24
 WindState: 2,102,90,498,425
-Att_PrevIndexValue: ['Base','Medida']
 
 Index Medidas
+Att_PrevIndexValue: ['Compostaje Domiciliario','Reciclaje','Compostaje en Planta','Compostaje Ferias','Biodigestión','Captura y quema','Inyección a GN','Gen EE en RRSS','Aprovechamiento Termico de Biogas','Incineracion','TMB']
 Title: Medidas
 Description: Medidas que han sio evaluadas y que pueden ser aplicables
 Definition: ['Compostaje Domiciliario','Reciclaje','Compostaje en Planta','Compostaje Ferias','Biodigestión','Captura y quema','Inyección a GN','Gen EE en RRSS','Aprovechamiento Termico de Biogas','Incineracion','TMB']
@@ -1147,7 +1148,6 @@ NodeLocation: 320,56,1
 NodeSize: 48,24
 WindState: 2,427,264,775,925
 ValueState: 2,40,50,416,303,0,MIDM
-Att_PrevIndexValue: ['Compostaje Domiciliario','Reciclaje','Compostaje en Planta','Compostaje Ferias','Biodigestión','Captura y quema','Inyección a GN','Gen EE en RRSS','Aprovechamiento Termico de Biogas','Incineracion','TMB']
 
 Variable Medidas_activas
 Title: Medidas Activas
@@ -1198,12 +1198,12 @@ ReformDef: [Medidas]
 ReformVal: [Medidas]
 
 Index Np
+Att_PrevIndexValue: ['No Aplicar','Nivel 1','Nivel 2','Nivel 3']
 Title: Nivel Penetracion
 Definition: ['No Aplicar','Nivel 1','Nivel 2','Nivel 3']
 NodeLocation: 296,448,1
 NodeSize: 48,24
 WindState: 2,102,90,476,224
-Att_PrevIndexValue: ['No Aplicar','Nivel 1','Nivel 2','Nivel 3']
 
 Index Tipo_indicador_total
 Title: Tipo Indicador Total
@@ -1221,12 +1221,12 @@ WindState: 2,734,59,476,224
 BalloonHelp: a=
 
 Index pyparams
+Att_PrevIndexValue: ['pyparams PIB','pyparams Poblacion','pyparams PobUrbana','pyparams PobRural','pyparams CumplimientoMetas','pyparams PTASBiobio','pyparams PTASValpo','pyparams PTASLSCoq','pyparams PTASAntofa','pyparams RSTarapaca','pyparams RSCoq','pyparams RSValpo','pyparams RSArauc','pyparams RSAysen','pyparams RSMagallanes']
 Title: pyparams
 Definition: ['pyparams PIB','pyparams Poblacion','pyparams PobUrbana','pyparams PobRural','pyparams CumplimientoMetas','pyparams PTASBiobio','pyparams PTASValpo','pyparams PTASLSCoq','pyparams PTASAntofa','pyparams RSTarapaca','pyparams RSCoq','pyparams RSValpo','pyparams RSArauc','pyparams RSAysen','pyparams RSMagallanes']
 NodeLocation: 688,336,1
 NodeSize: 48,24
 WindState: 2,98,82,720,350
-Att_PrevIndexValue: ['pyparams PIB','pyparams Poblacion','pyparams PobUrbana','pyparams PobRural','pyparams CumplimientoMetas','pyparams PTASBiobio','pyparams PTASValpo','pyparams PTASLSCoq','pyparams PTASAntofa','pyparams RSTarapaca','pyparams RSCoq','pyparams RSValpo','pyparams RSArauc','pyparams RSAysen','pyparams RSMagallanes']
 
 Constant pyparams_interface
 Title: pyparams interface
@@ -1560,12 +1560,12 @@ NodeSize: 48,24
 WindState: 2,102,90,964,208
 
 Index Metodos_Proyeccion
+Att_PrevIndexValue: ['What a Waste 2.0','MAPS','Tendencial - Log','Tendencial  - Exp','Tendencial - Lineal']
 Title: Metodos Proyeccion
 Definition: ['What a Waste 2.0','MAPS','Tendencial - Log','Tendencial  - Exp','Tendencial - Lineal']
 NodeLocation: 368,64,1
 NodeSize: 48,24
 ValueState: 2,212,218,416,303,,MIDM
-Att_PrevIndexValue: ['What a Waste 2.0','MAPS','Tendencial - Log','Tendencial  - Exp','Tendencial - Lineal']
 
 Variable Proyeccion_WaW2
 Title: Proyeccion WaW2
@@ -1965,13 +1965,13 @@ DiagState: 2,0,-23,1343,608,17
 NodeColor: 65535,65531,1
 
 Index Componentes
+Att_PrevIndexValue: ['Restos de alimentos','Papel y carton','Madera','Textiles','Otros - Plasticos','Otros - Vidrio','Otros - Metales','Otros - Residuos','Lodos']
 Title: Componentes
 Definition: ['Restos de alimentos','Papel y carton','Madera','Textiles','Otros - Plasticos','Otros - Vidrio','Otros - Metales','Otros - Residuos','Lodos']
 NodeLocation: 112,48,1
 NodeSize: 64,24
 WindState: 2,-702,257,1364,568
 {!40300|Att_SlicerPopupSize: 237,160}
-Att_PrevIndexValue: ['Restos de alimentos','Papel y carton','Madera','Textiles','Otros - Plasticos','Otros - Vidrio','Otros - Metales','Otros - Residuos','Lodos']
 
 Index Tiempodeposito1
 Title: tiempodeposito
@@ -6486,13 +6486,13 @@ ReformVal: [Reciclables,Region]
 Close Costosm2
 
 Index Reciclables
+Att_PrevIndexValue: ['PyC','Vidrio','Plastico','Metales','Multicompuesto']
 Title: reciclables
 Definition: ['PyC','Vidrio','Plastico','Metales','Multicompuesto']
 NodeLocation: 104,32,1
 NodeSize: 48,24
 WindState: 2,0,-23,1350,635
 ValueState: 2,1491,53,416,303,,MIDM
-Att_PrevIndexValue: ['PyC','Vidrio','Plastico','Metales','Multicompuesto']
 
 Variable Reciclaje_e1
 Title: Reciclaje E1
@@ -8441,13 +8441,13 @@ NodeSize: 48,24
 WindState: 2,469,88,720,350
 
 Index Tipo_SEDS
+Att_PrevIndexValue: ['SEDS no categorizado','No gestionado-poco profundo','Gestionado-anaeróbico']
 Title: Tipo SEDS
 Definition: ['SEDS no categorizado','No gestionado-poco profundo','Gestionado-anaeróbico']
 NodeLocation: 584,64,1
 NodeSize: 48,24
 WindState: 2,492,187,720,350
 {!40300|Att_SlicerPopupSize: 277,80}
-Att_PrevIndexValue: ['SEDS no categorizado','No gestionado-poco profundo','Gestionado-anaeróbico']
 
 Variable Arreglo_SEDS2016
 Title: Arreglo SEDS2016
@@ -9449,12 +9449,12 @@ Close Tratamiento_de_lodos
 Close A_MAPS2012
 
 Index Tratamiento
+Att_PrevIndexValue: ['Eliminación en río lago y mar','Planta de tratamiento centralizada aeróbico mal operada','Planta de tratamiento centralizada aeróbico bien operada','Laguna anaeróbica poco profunda','Digestor anaeróbico para lodos','Reactor anaeróbico','Cloaca en movimiento','Sistema séptico','Letrina Clima seco, familia reducida','Cloaca estancada']
 Title: Tratamiento
 Definition: ['Eliminación en río lago y mar','Planta de tratamiento centralizada aeróbico mal operada','Planta de tratamiento centralizada aeróbico bien operada','Laguna anaeróbica poco profunda','Digestor anaeróbico para lodos','Reactor anaeróbico','Cloaca en movimiento','Sistema séptico','Letrina Clima seco, familia reducida','Cloaca estancada']
 NodeLocation: 232,80,1
 NodeSize: 48,24
 {!40300|Att_SlicerPopupSize: 227,176}
-Att_PrevIndexValue: ['Eliminación en río lago y mar','Planta de tratamiento centralizada aeróbico mal operada','Planta de tratamiento centralizada aeróbico bien operada','Laguna anaeróbica poco profunda','Digestor anaeróbico para lodos','Reactor anaeróbico','Cloaca en movimiento','Sistema séptico','Letrina Clima seco, familia reducida','Cloaca estancada']
 
 Text Te1792094333
 Description: NO se tiene detalle regional~
@@ -10073,13 +10073,13 @@ Att_GraphIndexRange Time:1,,0,,,,10,1989.7822856903076,2019.3930208683014,0~
 Att_Stacked_Lines Graph_Primary_Valdim:1
 
 Index Tipo_Tratamiento1
+Att_PrevIndexValue: ['Eliminación en río, lago y mar','Planta de tratamiento centralizada aeróbico mal operada','Planta de tratamiento centralizada aeróbico bien operada','Laguna anaeróbica poco profunda','Digestor anaeróbico para lodos','Reactor anaeróbico']
 Title: Tipo Tratamiento
 Definition: ['Eliminación en río, lago y mar','Planta de tratamiento centralizada aeróbico mal operada','Planta de tratamiento centralizada aeróbico bien operada','Laguna anaeróbica poco profunda','Digestor anaeróbico para lodos','Reactor anaeróbico']
 NodeLocation: 72,568,1
 NodeSize: 48,24
 WindState: 2,0,0,720,350
 {!40300|Att_SlicerPopupSize: 227,112}
-Att_PrevIndexValue: ['Eliminación en río, lago y mar','Planta de tratamiento centralizada aeróbico mal operada','Planta de tratamiento centralizada aeróbico bien operada','Laguna anaeróbica poco profunda','Digestor anaeróbico para lodos','Reactor anaeróbico']
 
 Constant MCF_Res_Liq_Industri
 Title: MCF Res Liq Industriales
@@ -14516,7 +14516,7 @@ Original: Emisiones_totales
 Decision Modo_Rand
 Title: Modo Rand
 Description: Variable for running the model under the RAND Mode needed for the Project
-Definition: Choice(Self,0)
+Definition: Choice(Self,1)
 NodeLocation: 688,48,1
 NodeSize: 48,24
 Aliases: FormNode Fo1912957821
