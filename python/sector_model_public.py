@@ -12,7 +12,7 @@ import numpy as np
 ################################
 
 #pending
-def sm_public(df_in):
+def sm_public(df_in, dict_sector_abv):
 
 	# conversion factor Tcal to TJ
 	fact = 4.184
@@ -56,14 +56,14 @@ def sm_public(df_in):
 	#add emissions to master output
 	for k in dict_emission.keys():
 		#new key conveys emissions
-		k_new = str(k) + "-emissions_mt_co2e"
+		k_new = str(k).replace("public", dict_sector_abv["public"]) + "-emissions_total-mtco2e"
 		#add to output
 		dict_out.update({k_new: dict_emission[k].copy()})
 	
 	#add electric demand to master output
 	for k in dict_electric_demand.keys():
 		#new key conveys emissions
-		k_new = str(k) + "-demand_electricity_gwh"
+		k_new = str(k).replace("public", dict_sector_abv["public"]) + "-electricity_total_demand-gwh"
 		#add to output
 		dict_out.update({k_new: dict_electric_demand[k].copy()})
 		

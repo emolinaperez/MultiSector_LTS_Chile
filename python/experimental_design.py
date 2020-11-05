@@ -45,10 +45,11 @@ print("Check: n_lhs = " + str(n_lhs))
 parameter_table_additional_sectors = pd.read_csv(sr.fp_csv_parameter_ranges)
 #reduce
 parameter_table_additional_sectors = parameter_table_additional_sectors[parameter_table_additional_sectors["type"].isin(["incertidumbre", "accion"])]
-#clean names
-parameter_table_additional_sectors = parameter_table_additional_sectors.rename(columns = {"time_series_id": "time_series_id", "strategy_id": "strategy_id"})
 #add field
 parameter_table_additional_sectors["variable_name_lower"] = [x.lower().replace(" ", "_") for x in list(parameter_table_additional_sectors["parameter"])]
+#fill nas and set to integer
+parameter_table_additional_sectors["parameter_constant_q"] = parameter_table_additional_sectors["parameter_constant_q"].fillna(0)
+parameter_table_additional_sectors["parameter_constant_q"] = np.array(parameter_table_additional_sectors["parameter_constant_q"]).astype(int)
 #initialize available groups
 groups_norm = set([int(x) for x in parameter_table_additional_sectors["normalize_group"] if not np.isnan(x)])
 
@@ -262,7 +263,12 @@ for i in range(0, len(vec_submat_lhs) - 1):
 ##  SET SOME NAMES
 fields_ed_add_sec = dict_submat_lhs["add_sec"].columns
 fields_ordered_parameters = [x for x in fields_ed_add_sec if x != "future_id"]
-
+#get parameters that are not ramped—they are constant across all years
+all_constant_params = set(parameter_table_additional_sectors[parameter_table_additional_sectors["parameter_constant_q"] == 1]["parameter"])
+all_constant_params = list(all_constant_params)
+all_constant_params.sort()
+#get indices
+indices_fop_all_constant_params = [fields_ordered_parameters.index(x) for x in all_constant_params]
 
 
 #################################################################
@@ -435,6 +441,7 @@ vec_ramp_base = 1 - vec_ramp_unc
 
 ##  BUILD BASIC PERCENTAGE CHANGE MATRIX
 
+
 #for ts_id in all_vals_add_sec["time_series_id"]:
 df_ed_baseline = parameter_table_additional_sectors[(parameter_table_additional_sectors["strategy_id"] == strat_baseline) & (parameter_table_additional_sectors["time_series_id"] == 0)].copy()
 df_ed_base = df_ed_baseline[extraction_fields_ld].copy()
@@ -456,6 +463,8 @@ for i in range(len(param_years_add_sec)):
 	frac_unc = vec_ramp_unc[i]
 	#build weighted array
 	array_tmp = np.ones(array_ed_add_sec_trans.shape)*(frac_base) + array_ed_add_sec_trans*(frac_unc)
+	#NOTE: FOR CONSTANT PARAMS, GET RID OF "RAMP"
+	array_tmp[:, indices_fop_all_constant_params] = array_ed_add_sec_trans[:, indices_fop_all_constant_params].copy()
 	#convert to data frame
 	df_tmp = pd.DataFrame(array_tmp, columns = fields_ordered_parameters)
 	#add year

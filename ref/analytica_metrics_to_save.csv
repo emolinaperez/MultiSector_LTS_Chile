@@ -1,6 +1,6 @@
 sector,output,scale_factor_mt,scale_factor_co2e,subset_keep,agg_by,notes
-ippu,Emisiones,0.001,1,'Escenario':['Base'],year,KT_CO2e
-forestry,E_Sector_Forestal,1,1,'Escenarios':['BAU'],year,MT_CO2e
-agriculture,E_Sector_Agricultura,1,1,'Escenarios':['BAU'],year,MT_CO2e
+ippu,Emisiones,0.001,1,,year,KT_CO2e
+forestry,Emisiones_Python,1,1,,year,MT_CO2e
+agriculture,Emisiones_Python,1,1,,year,MT_CO2e
 waste,GHG_Emission,0.000001,1,,year,T_CO2e
 waste,CO2_Emission,0.000001,1,,year,T_CO2e

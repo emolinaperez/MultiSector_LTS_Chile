@@ -293,6 +293,7 @@ fp_csv_attribute_master = os.path.join(dir_ed, "attribute_master.csv")
 fp_csv_attribute_param_fields = os.path.join(dir_ref, "attribute_msec_fields.csv")
 fp_csv_attribute_pyparams = os.path.join(dir_ref, "attribute_pyparams.csv")
 fp_csv_attribute_runs = os.path.join(dir_ed, "attribute_runs.csv")
+fp_csv_attribute_sector = os.path.join(dir_ref, "attribute_sector.csv")
 fp_csv_attribute_strategy = os.path.join(dir_ref, "attribute_strategy.csv")
 fp_csv_attribute_time_series = os.path.join(dir_ref, "attribute_time_series.csv")
 # OTHER CSVS
@@ -316,7 +317,7 @@ fp_csv_lhs_table_levers = os.path.join(dir_ed, "lhs_samples_levers.csv")
 fp_csv_mapping_cost_groups = os.path.join(dir_ref, "mapping_cost_groups.csv")
 fp_csv_msec_fields_to_transport_map = os.path.join(dir_ref, "msec_fields_to_transport_map.csv")
 fp_csv_msec_pass_to_transport = os.path.join(dir_ed, "msec_pass_to_transport.csv")
-fp_csv_output_multi_sector = os.path.join(dir_out, "output_multi_sector.csv")
+fp_csv_output_multi_sector = os.path.join(dir_out, "output_multi_sector_python.csv")
 fp_csv_output_multi_sector_base_year = os.path.join(dir_out, "output_multi_sector-base_year.csv")
 fp_csv_output_multi_sector_diff = os.path.join(dir_out, "output_multi_sector-diff_from_base_strategy.csv")
 fp_csv_output_multi_sector_analytica = os.path.join(dir_out, "output_multi_sector_analytica.csv")
@@ -347,12 +348,9 @@ use_lu_diff_for_conv_q = (str(dict_init["use_lu_diff_for_conv_q"]).lower() == "t
 #    SOME ADDITIONAL SECTOR DATA    #
 #####################################
 
-#dictionary of gas to co2e
-df_gas_to_co2e = pd.read_csv(fp_csv_attribute_ghg)
-#convert to dictionary
-dict_gas_to_co2e = dict(np.array(df_gas_to_co2e[["ghg", "co2e_factor"]]))
-#hectares used as area of costa rica
-area_cr = 5113939.5
+#build dictionary of sector abbreviations
+df_attribute_sector = pd.read_csv(fp_csv_attribute_sector)
+dict_sector_to_abv = build_dict(df_attribute_sector[["sector", "sector_abbreviation"]])
 
 
 
