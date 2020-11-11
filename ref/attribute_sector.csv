@@ -1,0 +1,11 @@
+﻿sector_id,sector,sector_abbreviation,sector_ord
+1,agriculture,ag,
+2,commercial,co,
+3,electricity,el,
+4,forestry,fo,
+5,industry_and_mining,im,
+6,ippu,ip,
+7,public,pu,
+8,residential,re,
+9,transport,tx,
+10,waste,wa,

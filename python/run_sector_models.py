@@ -189,7 +189,8 @@ df_tmp_correction_for_pib_peso_traj = df_tmp_correction_for_pib_peso_traj[["year
 #data to merge in
 dict_sector_merge = {
 	"industry_and_mining": df_tmp_correction_for_pib_peso_traj,
-	"transport": df_tmp_correction_for_pib_peso_traj
+	"transport": df_tmp_correction_for_pib_peso_traj,
+	"commercial": df_tmp_correction_for_pib_peso_traj
 }
 
 
@@ -207,6 +208,9 @@ results = [exp_design[fields_results_id].copy()]
 #loop over each sector to build
 for sector in sectors_run:
 	
+	#get sector abbreviation
+	sector_abv = sr.dict_sector_to_abv[sector]
+	
 	if sector in dict_sector_merge.keys():
 		#get fields
 		fm = list(set(exp_design.columns) & set(dict_sector_merge[sector].columns))
@@ -218,7 +222,7 @@ for sector in sectors_run:
 		
 	print("\nBuilding " + str(sector) + " results...")
 	# RUN MODEL
-	df_sector_out = pd.DataFrame(dict_sector_functions[sector](df_ed))
+	df_sector_out = pd.DataFrame(dict_sector_functions[sector](df_ed, sr.dict_sector_to_abv))
 	#add to the output
 	results.append(df_sector_out)
 	

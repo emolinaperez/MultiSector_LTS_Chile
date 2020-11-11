@@ -11,7 +11,7 @@ from econometric_models import model_other_industries as dem_other_industries
 #    INDUSTRY AND MINING    #
 ############################
 
-def sm_industry_and_mining(df_in):
+def sm_industry_and_mining(df_in, dict_sector_abv):
 
 	# conversion factor Tcal to TJ
 	fact = 4.184
@@ -373,7 +373,7 @@ def sm_industry_and_mining(df_in):
 	#add emissions to master output
 	for k in dict_emission.keys():
 		#new key conveys emissions
-		k_new = "industry_and_mining-" + str(k) + "_emissions_mt_co2e"
+		k_new = (dict_sector_abv["industry_and_mining"]) + "-emissions_" + str(k) + "-mtco2e"
 		#add to output
 		dict_out.update({k_new: dict_emission[k].copy()})
 		#update total
@@ -383,7 +383,7 @@ def sm_industry_and_mining(df_in):
 	#add electric demand to master output
 	for k in dict_electric_demand.keys():
 		#new key conveys emissions
-		k_new = "industry_and_mining-" + str(k) + "_demand_electricity_gwh"
+		k_new = (dict_sector_abv["industry_and_mining"]) + "-electricity_" + str(k) + "_demand-gwh"
 		#add to output
 		dict_out.update({k_new: dict_electric_demand[k].copy()})
 		#update total
@@ -391,8 +391,8 @@ def sm_industry_and_mining(df_in):
 		
 	#add totals
 	dict_out.update({
-		"industry_and_mining-total_emissions_mt_co2e": vec_total_emissions,
-		"industry_and_mining-total_demand_electricity_gwh": vec_total_demand_electricity,
+		(dict_sector_abv["industry_and_mining"] + "-emissions_total-mtco2e"): vec_total_emissions,
+		(dict_sector_abv["industry_and_mining"] + "-electricity_total_demand-gwh"): vec_total_demand_electricity,
 	})
 		
 	# return
