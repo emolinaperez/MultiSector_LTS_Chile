@@ -341,6 +341,63 @@ results = pd.concat(append_out, axis = 0)
 
 
 
+
+##################################
+###                            ###
+###    BUILD GAMS DATA FILE    ###
+###                            ###
+##################################
+
+
+#get total demand
+results["all-electricity_total_demand-gwh"] = results[[x for x in results.columns if ("electricity_total_demand" in x)]].sum(axis = 1)
+#reduce to total demand
+df_demand = results[["master_id", "year", "all-electricity_total_demand-gwh"]].copy().rename(columns = {"all-electricity_total_demand-gwh": "Total", "year": "Year"})
+
+# Se leen los archivos CSV y se guardan como dataframes
+df_duration = pd.read_csv(sr.fp_csv_gams_data_duration)
+df_distr_bloq = pd.read_csv(sr.fp_csv_gams_distribution_by_bloq)
+df_distr_bus = pd.read_csv(sr.fp_csv_gams_shared_by_bus)
+#clean
+df_distr_bus = df_distr_bus.rename(columns = {"Agno": "Year"})
+#get
+all_master = list(df_demand["master_id"].unique())
+all_master.sort()
+# Se define como parametro la cantidad de annos
+years = len(df_demand["Year"].unique())
+# Se extraen los nombres de las barras
+bus_1 = df_distr_bus.iloc[0][0]
+bus_2 = df_distr_bus.iloc[1][0]
+# Se filtra el dataframe que contiene los porcentajes de distribucion de la demanda entre las barras en un dataframe por barra
+df_distr_bus_1 = df_distr_bus[df_distr_bus["Bus"] == bus_1].reset_index(drop = True)
+df_distr_bus_2 = df_distr_bus[df_distr_bus["Bus"] == bus_2].reset_index(drop = True)
+
+#build master id
+df_master_id = df_demand[["master_id", "Year"]].copy()
+##  BUILD DEMAND BY BUS
+fields_index = ["master_id", "Year"]
+df_demand_by_bus = df_distr_bus.copy()
+#merge in total demand
+df_demand_by_bus = pd.merge(df_demand, df_demand_by_bus, how = "outer", on = ["Year"])
+# Se multiplican las columnas de la demanda total con la columna del dataframe con los porcentajes por barras y se colocan en la columna del dataframme
+df_demand_by_bus["valor"] = np.array(df_demand_by_bus["Shared_by_bus"])*np.array(df_demand_by_bus["Total"])
+df_demand_by_bus = df_demand_by_bus[fields_index + ["Bus", "valor"]].sort_values(by = fields_index)
+
+#get duration by block
+df_duration = df_duration.rename(columns = {"Agno": "Year"})
+df_distr_bloq = df_distr_bloq.merge(df_duration, on = ["Year", "Etapa", "Bloque"], how = "left")
+#get all demand data merged
+df_data_demanda = pd.merge(df_demand_by_bus, df_distr_bloq, how = "outer", on = ["Year", "Bus"]).rename(columns = {"valor": "Demanda_Barra_Agno"})
+
+# Se obtienen las columnas que son la multiplicacion de otras columnas
+df_data_demanda["Potencia_Bloque"] = 1000*np.array(df_data_demanda["Distribucion_Bloque"]) * np.array(df_data_demanda["Distribucion_Etapa"]) * np.array(df_data_demanda["Demanda_Barra_Agno"])/np.array(df_data_demanda["Duracion"])
+df_gams_demands = df_data_demanda[["master_id", "Bus", "Year", "Etapa", "Bloque", "Potencia_Bloque"]]
+df_gams_demands = df_gams_demands.rename(columns = {"master_id":"Escenario", "Bus":"Barra", "Year":"Agno", "Potencia_Bloque":"Demanda"})
+
+
+
+
+
 ###################################
 ###                             ###
 ###    BUILD DIFFERENCE FILE    ###
@@ -398,9 +455,64 @@ print("Writing results_by to " + sr.fp_csv_output_multi_sector_base_year + " (Ti
 #export
 results_by.to_csv(sr.fp_csv_output_multi_sector_base_year, index = False, encoding = "utf-8")
 
+# gams demand file
+print("Writing df_gams_demands to " + sr.fp_csv_gams_data_demanda_electrica_escenarios + " (Time elapsed: " + str(np.round((time.time() - t0)/60, 2)) + " minutes)...")
+#export
+df_gams_demands.to_csv(sr.fp_csv_gams_data_demanda_electrica_escenarios, index = False, encoding = "UTF-8")
 
 
-##  CREATE PACKAGE TO PASS
+print("Done with python models. Total time elapsed: " + str(np.round((time.time() - t0)/60, 2)) + " minutes)")
+
+
+
+###################################
+###                             ###
+###    RUN ANALYTICA MODELS?    ###
+###                             ###
+###################################
+
+if sr.integrate_analytica_q:
+	#to run using parallels
+	if sr.analytical_platform == "unix":
+		print("\n\nRunning integrated model...")
+		
+		cmd = "prlctl exec \"syme-j-PVM\" cmd /c \"C:\\Users\\jsyme\\AppData\\Local\\Programs\\Python\\Python37\\python.exe C:\\Users\\jsyme\\Documents\\Projects\\SWCHE076-1000\\ade_beta\\python\\run_analytica.py\""
+		os.system(cmd)
+		
+		#collect output
+		dict_files_copy_in = {
+			sr.dir_out_ade: [sr.fp_csv_output_multi_sector_analytica]
+		}
+		
+		#copy over
+		for dc in dict_files_copy_in.keys():
+			#get files to copy
+			files_copy = dict_files_copy_in[dc]
+			
+			print("Copying files from Parallels at " + dc + " :")
+			
+			for fc in files_copy:
+				fp_old = os.path.join(dc, os.path.basename(fc))
+				#copy over
+				cmd_cp = "cp \"" + fp_old + "\" \"" + fc + "\""
+				#execute
+				os.system(cmd_cp)
+				#noftify
+				print("\t\nCopied " + fp_old + " to " + fc)
+			print("")
+	else:
+		print("ADD IN WINDOWS SIDE COMMANDS")
+		
+	print("Analytica done.")
+
+
+
+
+####################################
+###                              ###
+###    CREATE PACKAGE TO PASS    ###
+###                              ###
+####################################
 
 #get date
 str_date = time.strftime("%Y_%m_%d", time.gmtime())
@@ -483,6 +595,12 @@ list_files_copy = [
 	sr.fp_csv_attribute_master,
 	sr.fp_csv_attribute_runs
 ]
+#add in analytica output?
+if sr.integrate_analytica_q:
+	if os.path.exists(sr.fp_csv_output_multi_sector_analytica):
+		print("Found " + sr.fp_csv_output_multi_sector_analytica + "... adding to copy files.\n")
+		list_files_copy = list_files_copy + [sr.fp_csv_output_multi_sector_analytica]
+	
 #loop
 for fp in list_files_copy:
 	#new file path out
@@ -511,8 +629,3 @@ os.system(comm_tar)
 shutil.rmtree(dir_tmp_export)
 #change back
 os.chdir(dir_current)
-
-
-print("Done. Total time elapsed: " + str(np.round((time.time() - t0)/60, 2)) + " minutes)")
-
-

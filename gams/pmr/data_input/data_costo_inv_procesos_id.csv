@@ -1,0 +1,15 @@
+Tipo_proceso,ID
+almacenamiento,1
+generacion_biomasa,2
+generacion_carbon,3
+generacion_diesel,4
+generacion_eolica,5
+generacion_fuel_oil,6
+generacion_gas_natural_cc,7
+generacion_gas_natural_ca,8
+generacion_geotermia,9
+generacion_hidraulica_embalse,10
+generacion_hidraulica_pasada,11
+generacion_minihidro,12
+generacion_solar_fv,13
+generacion_solar_csp,14

@@ -1,0 +1,10 @@
+﻿parameter,parameter_gams
+investment_cost_pv_solar,generacion_solar_fv
+investment_cost_csp_solar,generacion_solar_csp
+investment_cost_wind,generacion_eolica
+investment_cost_geothermal,generacion_geotermia
+investment_cost_natural_gas_cc,generacion_gas_natural_cc
+fuel_price_coal,carbon_generacion
+fuel_price_natural_gas,gas_natural_generacion
+fuel_price_diesel,diesel_generacion
+fuel_price_fuel_oil,fuel_oil

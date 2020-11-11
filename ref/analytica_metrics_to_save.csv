@@ -1,6 +1,5 @@
-sector,output,scale_factor_mt,scale_factor_co2e,subset_keep,agg_by,notes
-ippu,Emisiones,0.001,1,,year,KT_CO2e
-forestry,Emisiones_Python,1,1,,year,MT_CO2e
-agriculture,Emisiones_Python,1,1,,year,MT_CO2e
-waste,GHG_Emission,0.000001,1,,year,T_CO2e
-waste,CO2_Emission,0.000001,1,,year,T_CO2e
+sector,output,scale_factor_mt,scale_factor_co2e,subset_keep,agg_by,units,summing_group
+ippu,Emisiones,0.001,1,,year;;Subcategorias_IPPU,KT CO2e,emissions
+forestry,Emisiones_Python,1,1,,year;;Categorias_con_Incen,MT CO2e,emissions
+agriculture,Emisiones_Python,1,1,,year;;Subsectores,MT CO2e,emissions
+waste,Emissions_by_Subsect,0.000001,1,,year;;Fuente,T CO2e,emissions
