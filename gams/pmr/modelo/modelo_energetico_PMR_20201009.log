@@ -1,0 +1,336 @@
+--- Job modelo_energetico_PMR_20201009.gms Start 11/04/20 15:14:04 32.1.0 r75a5b5d WEX-WEI x86 64bit/MS Windows
+--- Applying:
+    C:\GAMS\32\gmsprmNT.txt
+--- GAMS Parameters defined
+    Input "C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\modelo_energetico_PMR_20201009.gms"
+    PageSize 0
+    ScrDir "C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\225a\"
+    SysDir C:\GAMS\32\
+    LogOption 3
+    ErrMsg 1
+    ErrorLog 99
+    IDE 1
+    LstTitleLeftAligned 1
+GAMS 32.1.0   Copyright (C) 1987-2020 GAMS Development. All rights reserved
+Licensee: GAMS Demo license for Carlos Benavides         G200819|0002CO-GEN
+          Universidad de Chile, Chile                              DL015108
+          C:\Users\Usuario\Documents\GAMS\gamslice.txt
+          cabenavi@centroenergia.cl, Carlos Benavides                      
+          Demo license for demonstration and instructional purposes only
+--- Starting compilation
+--- modelo_energetico_PMR_20201009.gms(70) 2 Mb
+--- call csv2gdx ../data_input/data_set_procesos.csv ID=test output=../data_input/data_set_procesos.gdx  Index=1 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 15ms
+--- modelo_energetico_PMR_20201009.gms(71) 2 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_set_procesos.gdx
+--- modelo_energetico_PMR_20201009.gms(77) 3 Mb
+--- call csv2gdx ../data_input/data_set_sectores.csv ID=test output=../data_input/data_set_sectores.gdx  Index=1 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 15ms
+--- modelo_energetico_PMR_20201009.gms(78) 3 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_set_sectores.gdx
+--- modelo_energetico_PMR_20201009.gms(84) 3 Mb
+--- call csv2gdx ../data_input/data_set_productos.csv ID=test output=../data_input/data_set_productos.gdx  Index=1 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 16ms
+--- modelo_energetico_PMR_20201009.gms(85) 3 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_set_productos.gdx
+--- modelo_energetico_PMR_20201009.gms(91) 3 Mb
+--- call csv2gdx ../data_input/data_set_flujos.csv ID=test output=../data_input/data_set_flujos.gdx  Index=1 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 0ms
+--- modelo_energetico_PMR_20201009.gms(92) 3 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_set_flujos.gdx
+--- modelo_energetico_PMR_20201009.gms(98) 3 Mb
+--- call csv2gdx ../data_input/data_set_agnos.csv ID=test output=../data_input/data_set_agnos.gdx  Index=1 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 0ms
+--- modelo_energetico_PMR_20201009.gms(99) 3 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_set_agnos.gdx
+--- modelo_energetico_PMR_20201009.gms(105) 3 Mb
+--- call csv2gdx ../data_input/data_set_demandas.csv ID=test output=../data_input/data_set_demandas.gdx  Index=1 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 0ms
+--- modelo_energetico_PMR_20201009.gms(106) 3 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_set_demandas.gdx
+--- modelo_energetico_PMR_20201009.gms(112) 3 Mb
+--- call csv2gdx ../data_input/data_set_energeticos.csv ID=test output=../data_input/data_set_energeticos.gdx  Index=1 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 0ms
+--- modelo_energetico_PMR_20201009.gms(113) 3 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_set_energeticos.gdx
+--- modelo_energetico_PMR_20201009.gms(119) 3 Mb
+--- call csv2gdx ../data_input/data_set_gei.csv ID=test output=../data_input/data_set_gei.gdx  Index=1 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 15ms
+--- modelo_energetico_PMR_20201009.gms(120) 3 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_set_gei.gdx
+--- modelo_energetico_PMR_20201009.gms(126) 3 Mb
+--- call csv2gdx ../data_input/data_set_offset.csv ID=test output=../data_input/data_set_offset.gdx  Index=1 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 0ms
+--- modelo_energetico_PMR_20201009.gms(127) 3 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_set_offset.gdx
+--- modelo_energetico_PMR_20201009.gms(133) 3 Mb
+--- call csv2gdx ../data_input/data_set_segmentos.csv ID=test output=../data_input/data_set_segmentos.gdx  Index=1 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 0ms
+--- modelo_energetico_PMR_20201009.gms(134) 3 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_set_segmentos.gdx
+--- modelo_energetico_PMR_20201009.gms(140) 3 Mb
+--- call csv2gdx ../data_input/data_set_precios.csv ID=test output=../data_input/data_set_precios.gdx  Index=1 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 0ms
+--- modelo_energetico_PMR_20201009.gms(141) 3 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_set_precios.gdx
+--- modelo_energetico_PMR_20201009.gms(147) 3 Mb
+--- call csv2gdx ../data_input/data_set_sec_cap.csv ID=test output=../data_input/data_set_sec_cap.gdx  Index=1 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 0ms
+--- modelo_energetico_PMR_20201009.gms(148) 3 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_set_sec_cap.gdx
+--- modelo_energetico_PMR_20201009.gms(154) 3 Mb
+--- call csv2gdx ../data_input/data_set_costo_inv_procesos.csv ID=test output=../data_input/data_set_costo_inv_procesos.gdx  Index=1 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 0ms
+--- modelo_energetico_PMR_20201009.gms(155) 3 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_set_costo_inv_procesos.gdx
+--- modelo_energetico_PMR_20201009.gms(161) 3 Mb
+--- call csv2gdx ../data_input/data_set_escenarios.csv ID=test output=../data_input/data_set_escenarios.gdx  Index=1 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 0ms
+--- modelo_energetico_PMR_20201009.gms(162) 3 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_set_escenarios.gdx
+--- modelo_energetico_PMR_20201009.gms(168) 3 Mb
+--- call csv2gdx ../data_input/data_set_escenario_sel.csv ID=test output=../data_input/data_set_escenario_sel.gdx  Index=1 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 0ms
+--- modelo_energetico_PMR_20201009.gms(169) 3 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_set_escenario_sel.gdx
+--- modelo_energetico_PMR_20201009.gms(178) 3 Mb
+--- call csv2gdx ../data_input/data_set_etapas.csv ID=test output=../data_input/data_set_etapas.gdx  Index=1 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 15ms
+--- modelo_energetico_PMR_20201009.gms(179) 3 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_set_etapas.gdx
+--- modelo_energetico_PMR_20201009.gms(185) 3 Mb
+--- call csv2gdx ../data_input/data_set_bloques.csv ID=test output=../data_input/data_set_bloques.gdx  Index=1 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 15ms
+--- modelo_energetico_PMR_20201009.gms(186) 3 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_set_bloques.gdx
+--- modelo_energetico_PMR_20201009.gms(192) 3 Mb
+--- call csv2gdx ../data_input/data_set_barras.csv ID=test output=../data_input/data_set_barras.gdx  Index=1 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 15ms
+--- modelo_energetico_PMR_20201009.gms(193) 3 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_set_barras.gdx
+--- modelo_energetico_PMR_20201009.gms(199) 3 Mb
+--- call csv2gdx ../data_input/data_set_lineas.csv ID=test output=../data_input/data_set_lineas.gdx  Index=1 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 16ms
+--- modelo_energetico_PMR_20201009.gms(200) 3 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_set_lineas.gdx
+--- modelo_energetico_PMR_20201009.gms(206) 3 Mb
+--- call csv2gdx ../data_input/data_set_zonas_ernc.csv ID=test output=../data_input/data_set_zonas_ernc.gdx  Index=1 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 0ms
+--- modelo_energetico_PMR_20201009.gms(207) 3 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_set_zonas_ernc.gdx
+--- modelo_energetico_PMR_20201009.gms(213) 3 Mb
+--- call csv2gdx ../data_input/data_set_curvas_carga.csv ID=test output=../data_input/data_set_curvas_carga.gdx  Index=1 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 16ms
+--- modelo_energetico_PMR_20201009.gms(214) 3 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_set_curvas_carga.gdx
+--- modelo_energetico_PMR_20201009.gms(264) 3 Mb
+--- . ../data_input/data_sectores.csv(2) 3 Mb
+--- modelo_energetico_PMR_20201009.gms(272) 3 Mb
+--- . ../data_input/data_productos.csv(342) 3 Mb
+--- modelo_energetico_PMR_20201009.gms(281) 3 Mb
+--- . ../data_input/data_procesos.csv(530) 4 Mb
+--- modelo_energetico_PMR_20201009.gms(289) 4 Mb
+--- . ../data_input/data_energeticos.csv(40) 4 Mb
+--- modelo_energetico_PMR_20201009.gms(298) 4 Mb
+--- . ../data_input/data_flujos.csv(1) 4 Mb
+--- modelo_energetico_PMR_20201009.gms(305) 4 Mb
+--- call csv2gdx ../data_input/data_demanda_sectorial.csv ID=test output=../data_input/data_demanda_sectorial.gdx  Index=1,2 values=3 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 15ms
+--- modelo_energetico_PMR_20201009.gms(306) 4 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_demanda_sectorial.gdx
+--- modelo_energetico_PMR_20201009.gms(313) 4 Mb
+--- call csv2gdx ../data_input/data_precio_energeticos.csv ID=test output=../data_input/data_precio_energeticos.gdx  Index=1,2 Values=3 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 16ms
+--- modelo_energetico_PMR_20201009.gms(314) 4 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_precio_energeticos.gdx
+--- modelo_energetico_PMR_20201009.gms(321) 4 Mb
+--- call csv2gdx ../data_input/data_precio_energeticos_escenarios.csv ID=test output=../data_input/data_precio_energeticos_esc.gdx  Index=1,2,3 Values=4 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 15ms
+--- modelo_energetico_PMR_20201009.gms(322) 4 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_precio_energeticos_esc.gdx
+--- modelo_energetico_PMR_20201009.gms(330) 4 Mb
+--- call csv2gdx ../data_input/data_relacion_flujos.csv ID=test output=../data_input/data_relacion_flujos.gdx  Index=1,2 Values=3 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 0ms
+--- modelo_energetico_PMR_20201009.gms(331) 4 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_relacion_flujos.gdx
+--- modelo_energetico_PMR_20201009.gms(340) 4 Mb
+--- call csv2gdx ../data_input/data_participacion_flujos.csv ID=test output=../data_input/data_participacion_flujos.gdx  Index=1,2 Values=3 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 16ms
+--- modelo_energetico_PMR_20201009.gms(341) 4 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_participacion_flujos.gdx
+--- modelo_energetico_PMR_20201009.gms(350) 4 Mb
+--- call csv2gdx ../data_input/data_fe.csv ID=test output=../data_input/data_fe.gdx  Index=1,2,3 Values=4 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 16ms
+--- modelo_energetico_PMR_20201009.gms(351) 4 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_fe.gdx
+--- modelo_energetico_PMR_20201009.gms(359) 4 Mb
+--- call csv2gdx ../data_input/data_cap.csv ID=test output=../data_input/data_cap.gdx  Index=1,2,3 Values=4 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 0ms
+--- modelo_energetico_PMR_20201009.gms(360) 4 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_cap.gdx
+--- modelo_energetico_PMR_20201009.gms(368) 4 Mb
+--- call csv2gdx ../data_input/data_impuesto.csv ID=test output=../data_input/data_impuesto.gdx  Index=1,2 Values=3 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 0ms
+--- modelo_energetico_PMR_20201009.gms(369) 4 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_impuesto.gdx
+--- modelo_energetico_PMR_20201009.gms(376) 4 Mb
+--- call csv2gdx ../data_input/data_costo_inversion.csv ID=test output=../data_input/data_costo_inversion.gdx  Index=1,2 Values=3 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 32ms
+--- modelo_energetico_PMR_20201009.gms(377) 4 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_costo_inversion.gdx
+--- modelo_energetico_PMR_20201009.gms(384) 4 Mb
+--- call csv2gdx ../data_input/data_costo_inversion_procesos_escenarios.csv ID=test output=../data_input/data_costo_inversion_procesos_escenarios.gdx  Index=1,2,3 Values=4 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 47ms
+--- modelo_energetico_PMR_20201009.gms(385) 4 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_costo_inversion_procesos_escenarios.gdx
+--- modelo_energetico_PMR_20201009.gms(393) 4 Mb
+--- call csv2gdx ../data_input/data_coma.csv ID=test output=../data_input/data_coma.gdx  Index=1,2 Values=3 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 0ms
+--- modelo_energetico_PMR_20201009.gms(394) 4 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_coma.gdx
+--- modelo_energetico_PMR_20201009.gms(405) 4 Mb
+--- call csv2gdx ../data_input/data_pmax.csv ID=test output=../data_input/data_pmax.gdx  Index=1,2 Values=3 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 15ms
+--- modelo_energetico_PMR_20201009.gms(406) 4 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_pmax.gdx
+--- modelo_energetico_PMR_20201009.gms(420) 4 Mb
+--- call csv2gdx ../data_input/data_pmin.csv ID=test output=../data_input/data_pmin.gdx  Index=1,2 Values=3 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 0ms
+--- modelo_energetico_PMR_20201009.gms(421) 4 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_pmin.gdx
+--- modelo_energetico_PMR_20201009.gms(434) 4 Mb
+--- . ../data_input/data_gei.csv(7) 4 Mb
+--- modelo_energetico_PMR_20201009.gms(443) 4 Mb
+--- . ../data_input/data_offset.csv(1) 4 Mb
+--- modelo_energetico_PMR_20201009.gms(451) 4 Mb
+--- call csv2gdx ../data_input/data_limite_offset.csv ID=test output=../data_input/data_limite_offset.gdx  Index=1,2 Values=3 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 0ms
+--- modelo_energetico_PMR_20201009.gms(452) 4 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_limite_offset.gdx
+--- modelo_energetico_PMR_20201009.gms(458) 4 Mb
+--- call csv2gdx ../data_input/data_meta_ee.csv ID=test output=../data_input/data_meta_ee.gdx  Index=1,2 Values=3 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 0ms
+--- modelo_energetico_PMR_20201009.gms(459) 4 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_meta_ee.gdx
+--- modelo_energetico_PMR_20201009.gms(470) 4 Mb
+--- . ../data_input/data_segmentos.csv(1) 4 Mb
+--- modelo_energetico_PMR_20201009.gms(479) 4 Mb
+--- . ../data_input/data_precios.csv(28) 4 Mb
+--- modelo_energetico_PMR_20201009.gms(487) 4 Mb
+--- . ../data_input/data_sec_cap.csv(2) 4 Mb
+--- modelo_energetico_PMR_20201009.gms(496) 4 Mb
+--- . ../data_input/data_demanda.csv(1) 4 Mb
+--- modelo_energetico_PMR_20201009.gms(503) 4 Mb
+--- call csv2gdx ../data_input/data_dem_sec_etapa.csv ID=test output=../data_input/data_dem_sec_etapa.gdx  Index=1,2 Values=3 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 15ms
+--- modelo_energetico_PMR_20201009.gms(504) 4 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_dem_sec_etapa.gdx
+--- modelo_energetico_PMR_20201009.gms(511) 4 Mb
+--- call csv2gdx ../data_input/data_retiro_veh.csv ID=test output=../data_input/data_retiro_veh.gdx  Index=1,2 Values=3 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 15ms
+--- modelo_energetico_PMR_20201009.gms(512) 4 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_retiro_veh.gdx
+--- modelo_energetico_PMR_20201009.gms(521) 4 Mb
+--- . ../data_input/data_costo_inv_procesos_id.csv(15) 4 Mb
+--- modelo_energetico_PMR_20201009.gms(527) 4 Mb
+--- call csv2gdx ../data_input/data_costo_inversion_procesos.csv ID=test output=../data_input/data_costo_inversion_procesos.gdx  Index=1,2 Values=3 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 16ms
+--- modelo_energetico_PMR_20201009.gms(528) 4 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_costo_inversion_procesos.gdx
+--- modelo_energetico_PMR_20201009.gms(539) 4 Mb
+--- call csv2gdx ../data_input/data_duracion.csv ID=test output=../data_input/data_duracion.gdx  Index=1,2,3 Values=4 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 0ms
+--- modelo_energetico_PMR_20201009.gms(540) 4 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_duracion.gdx
+--- modelo_energetico_PMR_20201009.gms(547) 4 Mb
+--- call csv2gdx ../data_input/data_demanda_electrica.csv ID=test output=../data_input/data_demanda_electrica.gdx  Index=1,2,3,4 Values=5 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 16ms
+--- modelo_energetico_PMR_20201009.gms(548) 4 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_demanda_electrica.gdx
+--- modelo_energetico_PMR_20201009.gms(556) 4 Mb
+--- call csv2gdx ../data_input/data_demanda_electrica_escenarios.csv ID=test output=../data_input/data_demanda_electrica_escenarios.gdx  Index=1,2,3,4,5 Values=6 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 1063ms
+--- modelo_energetico_PMR_20201009.gms(557) 4 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_demanda_electrica_escenarios.gdx
+--- modelo_energetico_PMR_20201009.gms(566) 20 Mb
+--- call csv2gdx ../data_input/data_perfil_ernc.csv ID=test output=../data_input/data_perfil_ernc.gdx  Index=1,2,3,4 Values=5 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 407ms
+--- modelo_energetico_PMR_20201009.gms(567) 20 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_perfil_ernc.gdx
+--- modelo_energetico_PMR_20201009.gms(576) 23 Mb
+--- . ../data_input/data_barras.csv(3) 23 Mb
+--- modelo_energetico_PMR_20201009.gms(585) 23 Mb
+--- . ../data_input/data_lineas.csv(2) 23 Mb
+--- modelo_energetico_PMR_20201009.gms(594) 23 Mb
+--- . ../data_input/data_zonas_ernc.csv(45) 23 Mb
+--- modelo_energetico_PMR_20201009.gms(605) 23 Mb
+--- call csv2gdx ../data_input/data_factor_planta.csv ID=test output=../data_input/data_factor_planta.gdx  Index=1,2,3 Values=4 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 282ms
+--- modelo_energetico_PMR_20201009.gms(606) 23 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_factor_planta.gdx
+--- modelo_energetico_PMR_20201009.gms(618) 25 Mb
+--- call csv2gdx ../data_input/data_dem_distr_barra.csv ID=test output=../data_input/data_dem_distr_barra.gdx  Index=1,2 Values=3,4 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 0ms
+--- modelo_energetico_PMR_20201009.gms(619) 25 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_dem_distr_barra.gdx
+--- modelo_energetico_PMR_20201009.gms(628) 25 Mb
+--- call csv2gdx ../data_input/data_dem_distr_etapa.csv ID=test output=../data_input/data_dem_distr_etapa.gdx  Index=1,2 Values=3 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 16ms
+--- modelo_energetico_PMR_20201009.gms(629) 25 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_dem_distr_etapa.gdx
+--- modelo_energetico_PMR_20201009.gms(636) 25 Mb
+--- call csv2gdx ../data_input/data_dem_distr_bloque.csv ID=test output=../data_input/data_dem_distr_bloque.gdx  Index=1,2,3 Values=4 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 0ms
+--- modelo_energetico_PMR_20201009.gms(637) 25 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_dem_distr_bloque.gdx
+--- modelo_energetico_PMR_20201009.gms(646) 25 Mb
+--- . ../data_input/data_curvas_carga.csv(12) 25 Mb
+--- modelo_energetico_PMR_20201009.gms(651) 25 Mb
+--- call csv2gdx ../data_input/data_set_almacenamientos.csv ID=test output=../data_input/data_set_almacenamientos.gdx  Index=1 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 15ms
+--- modelo_energetico_PMR_20201009.gms(652) 25 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_set_almacenamientos.gdx
+--- modelo_energetico_PMR_20201009.gms(658) 25 Mb
+--- call csv2gdx ../data_input/data_almacenamientos.csv ID=test output=../data_input/data_almacenamientos.gdx  Index=1 Values=2 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 16ms
+--- modelo_energetico_PMR_20201009.gms(659) 25 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_almacenamientos.gdx
+--- modelo_energetico_PMR_20201009.gms(665) 25 Mb
+--- call csv2gdx ../data_input/data_perfil_almacenamiento.csv ID=test output=../data_input/data_perfil_almacenamiento.gdx  Index=1,2,3,4 Values=5 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 31ms
+--- modelo_energetico_PMR_20201009.gms(666) 25 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_perfil_almacenamiento.gdx
+--- modelo_energetico_PMR_20201009.gms(771) 26 Mb
+--- call csv2gdx ../data_input/factor_emision_aux.csv ID=test output=../data_input/factor_emision_aux.gdx  Index=1,2 Values=3 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 0ms
+--- modelo_energetico_PMR_20201009.gms(772) 26 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/factor_emision_aux.gdx
+--- modelo_energetico_PMR_20201009.gms(783) 26 Mb
+--- call csv2gdx ../data_input/factor_emision_ge_aux.csv ID=test output=../data_input/factor_emision_ge_aux.gdx  Index=1,2 Values=3 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 16ms
+--- modelo_energetico_PMR_20201009.gms(784) 26 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/factor_emision_ge_aux.gdx
+--- modelo_energetico_PMR_20201009.gms(823) 26 Mb
+--- call csv2gdx ../data_input/data_costo_inv_almacenamientos.csv ID=test output=../data_input/data_costo_inv_almacenamientos.gdx  Index=1,2 Values=3 UseHeader=Y StoreZero=Y
+No errors, CSV2GDX time = 16ms
+--- modelo_energetico_PMR_20201009.gms(824) 26 Mb
+--- GDXin=C:\ce-fcfm\Proyectos\BID\DDP-LAC2\Analisis preliminar\MultiSector_LTS_Chile\MultiSector_LTS_Chile-master_20201030\MultiSector_LTS_Chile-master\gams\pmr\modelo\../data_input/data_costo_inv_almacenamientos.gdx
+--- modelo_energetico_PMR_20201009.gms(836) 26 Mb
+--- . ../data_input/data_inercia_reservas.csv(2041) 26 Mb
+--- modelo_energetico_PMR_20201009.gms(1667) 26 Mb
+--- Starting execution: elapsed 0:00:06.679
+--- modelo_energetico_PMR_20201009.gms(4410) 273 Mb
+--- Generating MIP model Modelo_Energetico_PMR
+--- modelo_energetico_PMR_20201009.gms(4189) 335 Mb  7 secs
+--- modelo_energetico_PMR_20201009.gms(4133) 551 Mb  8 secs
+--- modelo_energetico_PMR_20201009.gms(4170) 1308 Mb  10 secs
+--- modelo_energetico_PMR_20201009.gms(4212) 1323 Mb  6 secs
+--- modelo_energetico_PMR_20201009.gms(4210) 1340 Mb  12 secs
+--- modelo_energetico_PMR_20201009.gms(4416) 1358 Mb  3 secs
+---   2,172,549 rows  3,345,309 columns  10,685,975 non-zeroes
+---   75,514 discrete-columns
+*** The model exceeds the demo license limits for linear models of more than 2000 rows or columns
+*** Status: Terminated due to a licensing error
+***         License file: C:\Users\Usuario\Documents\GAMS\gamslice.txt
+***         Inspect listing file for more information
+--- Job modelo_energetico_PMR_20201009.gms Stop 11/04/20 15:15:16 elapsed 0:01:12.223

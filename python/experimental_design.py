@@ -183,8 +183,12 @@ df_attribute_master_id = df_attribute_master_id[fields_ord_dfm].sort_values(by =
 if export_ed_files_q:
 	#note/export
 	print("Exporting master_id attribute to " + sr.fp_csv_attribute_master)
-	df_attribute_master_id.to_csv(sr.fp_csv_attribute_master, index = None)
-
+	#export
+	df_attribute_master_id.to_csv(sr.fp_csv_attribute_master, index = None, encoding = "UTF-8")
+	#export for gams
+	df_attribute_master_id_gams = df_attribute_master_id[["master_id"]].copy().rename(columns = {"master_id": "Escenarios"})
+	df_attribute_master_id_gams.to_csv(sr.fp_csv_gams_data_set_escenarios, index = None, encoding = "UTF-8")
+	del df_attribute_master_id_gams
 
 
 
@@ -614,7 +618,105 @@ df_out_singles = df_out[cols_to_export].drop_duplicates()
 df_out = df_out[[x for x in df_out.columns if x not in cols_to_export]]
 
 
-##  BUILD DIFFERENCE FILE
+
+#################################################################################################
+###                                                                                           ###
+###    DO MIXING TRACJETORIES FOR THOSE SPECIFIED WITH "trajmax", "trajmin", and "trajmix"    ###
+###                                                                                           ###
+#################################################################################################
+
+#get string identifier
+substr_max = "trajmax"
+substr_min = "trajmin"
+substr_mix = "trajmix"
+#get parameters that should be mixed
+params_mix_loop = [x.replace(substr_mix + "_", "") for x in df_out.columns if (x[0:min(len(x), len(substr_mix))] == substr_mix)]
+print("params_mix_loop:\n")
+print(("\t%s"*len(params_mix_loop))%tuple(params_mix_loop))
+#parameters to eliminate
+fields_drop = []
+
+#loop over parameters to ensure all required fields are available; if present, calculate new field
+for x in params_mix_loop:
+	x_max = (substr_max + "_" + x)
+	x_min = (substr_min + "_" + x)
+	x_mix = (substr_mix + "_" + x)
+	#add to fields to eliminate
+	fields_drop = fields_drop + [x_max, x_min, x_mix]
+	#get veector of mixing fractions
+	vec_mix = np.array(df_out[x_mix])
+	#default to both existing
+	max_q = True
+	min_q = True
+	#parameters not found
+	missing_params = []
+	
+	#get upper bound trajectory
+	if (x_max in df_out.columns):
+		traj_max = np.array(df_out[x_max])
+	elif (x_max in df_out_singles.columns):
+		traj_max = float(df_out_singles[x_max].iloc[0])
+	else:
+		max_q = False
+		missing_params = missing_params + [x_max]
+		
+	#get lower bound trajectory
+	if (x_min in df_out.columns):
+		traj_min = np.array(df_out[x_min])
+	elif (x_min in df_out_singles.columns):
+		traj_min = float(df_out_singles[x_min].iloc[0])
+	else:
+		min_q = False
+		missing_params = missing_params + [x_min]
+	
+	#build data frame
+	if min_q & max_q:
+		#get min/max trajectories, build new parameter
+		df_out[x] = traj_max*vec_mix + traj_min*(1 - vec_mix)
+	else:
+		#params not found
+		print("\nDropping " + x + " from df_out:\n" + ("\tParameter '%s' not found.\n"*len(missing_params))%tuple(missing_params) + "\n")
+
+#reduce df_out
+df_out = df_out[[x for x in df_out.columns if (x not in fields_drop)]]
+
+
+
+
+
+###############################
+###                         ###
+###    EXPORT GAMS FILES    ###
+###                         ###
+###############################
+
+#set ids for different data frames
+dict_dfs_exp = {
+    "inversion": {"substr": "investment", "exp_path": sr.fp_csv_gams_data_costo_inversion_procesos_escenarios},
+    "precio": {"substr": "fuel_price", "exp_path": sr.fp_csv_gams_data_precio_energeticos_escenarios}
+}
+#loop
+for k in list(dict_dfs_exp.keys()):
+    #get substring id
+    substr_id = str(dict_dfs_exp[k]["substr"])
+    #get sub data frame
+    df_sub = df_out[["master_id", "year"] + [x for x in df_out.columns if (x in sr.dict_map_params_to_params_gams.keys()) and (x[0:min(len(x), len(substr_id))] == substr_id)]].copy()
+    #rename
+    df_sub = df_sub.rename(columns = sr.dict_map_params_to_params_gams)
+    #conver to long and rename
+    df_sub = pd.melt(df_sub, ["master_id", "year"]).rename(columns = {"master_id": "Escenario", "year": "Agno", "variable": "Energeticos", "value": "Precio"})
+    #export
+    df_sub.to_csv(dict_dfs_exp[k]["exp_path"], encoding = "UTF-8", index = None)
+
+
+
+
+
+###################################
+###                             ###
+###    BUILD DIFFERENCE FILE    ###
+###                             ###
+###################################
 
 print("Building experimental design difference file...")
 #build difference file
@@ -652,8 +754,7 @@ if export_ed_files_q:
 	df_master_exp = df_attribute_master_id[(df_attribute_master_id["design_id"] == 0)]
 
 	#export
-	df_master_exp[["master_id"]].to_csv(sr.fp_csv_experimental_design_msec_masters_to_run, index = None)
-
+	df_master_exp[["master_id"]].to_csv(sr.fp_csv_experimental_design_msec_masters_to_run, index = None, encoding = "UTF-8")
 
 
 
@@ -890,6 +991,48 @@ df_ed_xl_ranges_vals.to_csv(sr.fp_csv_ranges_vals_for_decarb_drivers, index = No
 #notify
 print("Export of ranges files complete.")
 
+
+###
+#
+###
+
+#copy to windows directory
+if sr.integrate_analytica_q:
+	#check system
+	if sr.analytical_platform == "unix":
+		#set files to copy
+		dict_files_copy = {
+			sr.dir_ed_ade: [
+				sr.fp_csv_experimental_design_msec,
+				sr.fp_csv_experimental_design_msec_single_vals,
+				sr.fp_csv_experimental_design_msec_masters_to_run
+			]
+		}
+		
+		
+		#copy over
+		for dc in dict_files_copy.keys():
+			#get files to copy
+			files_copy = dict_files_copy[dc]
+			
+			print("Copying files to Parallels at " + dc + " :")
+			
+			for fc in files_copy:
+				fn = os.path.basename(fc)
+				fp_new = os.path.join(dc, fn)
+				#copy over
+				cmd_cp = "cp \"" + fc + "\" \"" + fp_new + "\""
+				#execute
+				os.system(cmd_cp)
+				#noftify
+				print("\t\nCopied " + fc + " to " + fp_new)
+			
+			print("")
+			
+		print("Copying complete.")
+			
+
+print("Analytica done.")
 
 
 

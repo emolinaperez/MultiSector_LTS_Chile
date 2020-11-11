@@ -1,28 +1,58 @@
 import os, os.path
 import pandas as pd
 import numpy as np
-
+import sys
 
 ###################################
 #    START WITH INITIALIZATION    #
 ###################################
 
+##  UNIX SIDE
+
 #set the working directory
 dir_cur = os.path.dirname(os.path.realpath(__file__))
 #master directory
 dir_model = os.path.dirname(dir_cur)
-#cloud manager directory
-dir_cloud = os.path.dirname(dir_model)
 #reference files
 dir_ref = os.path.join(dir_model, "ref")
-#output
-dir_out = os.path.join(dir_model, "out")
+
+
 #basline modeling directory (previously baseline modeling)
 dir_bm = os.path.join(dir_ref, "baseline_future_transportation_parameters")
-#executables (previous Executables)
-dir_exec = os.path.join(dir_model, "baseline_runs")
 #experimental design and attribute tables
 dir_ed = os.path.join(dir_model, "experimental_design")
+#gams files
+dir_gams = os.path.join(dir_model, "gams", "pmr")
+#gams subdirectories
+dir_gams_input = os.path.join(dir_gams, "data_input")
+dir_gams_modelo = os.path.join(dir_gams, "modelo")
+dir_gams_output = os.path.join(dir_gams, "data_output")
+#output
+dir_out = os.path.join(dir_model, "out")
+
+
+
+
+##  PARALLELS
+
+plt = sys.platform
+#determine if parallels needs to be used
+if plt[0:min(len(plt), 3)] != "win":
+	#set parallels VM directory
+	dir_ade = "/Volumes/[C] syme-j-PVM.hidden/Users/jsyme/Documents/Projects/SWCHE076-1000/ade_beta"
+	#set platform
+	analytical_platform = "unix"
+else:
+	#use current directory
+	dir_ade = dir_model
+	#set platform
+	analytical_platform = "windows"
+#reference files
+dir_ref_ade = os.path.join(dir_ade, "ref")
+#output
+dir_out_ade = os.path.join(dir_ade, "out")
+#experimental design
+dir_ed_ade = os.path.join(dir_ade, "experimental_design")
 
 
 
@@ -295,7 +325,19 @@ fp_csv_attribute_pyparams = os.path.join(dir_ref, "attribute_pyparams.csv")
 fp_csv_attribute_runs = os.path.join(dir_ed, "attribute_runs.csv")
 fp_csv_attribute_sector = os.path.join(dir_ref, "attribute_sector.csv")
 fp_csv_attribute_strategy = os.path.join(dir_ref, "attribute_strategy.csv")
+fp_csv_attribute_summing_group = os.path.join(dir_ref, "attribute_summing_group.csv")
 fp_csv_attribute_time_series = os.path.join(dir_ref, "attribute_time_series.csv")
+# SOME GAMS CSVS
+fp_csv_gams_data_duration = os.path.join(dir_gams_input, "data_duracion.csv")
+fp_csv_gams_distribution_by_bloq = os.path.join(dir_gams_input, "data_dem_distr_total_bloque.csv")
+fp_csv_gams_shared_by_bus = os.path.join(dir_gams_input, "data_dem_distr_total_barra.csv")
+fp_csv_gams_data_costo_inversion_procesos_escenarios = os.path.join(dir_gams_input, "data_costo_inversion_procesos_escenarios.csv")
+fp_csv_gams_data_demanda_electrica_escenarios = os.path.join(dir_gams_input, "data_demanda_electrica_escenarios.csv")
+fp_csv_gams_data_demanda_electrica_escenarios_base = os.path.join(dir_gams_input, "data_demanda_electrica_escenarios_base.csv")
+fp_csv_gams_data_precio_energeticos_escenarios = os.path.join(dir_gams_input, "data_precio_energeticos_escenarios.csv")
+fp_csv_gams_data_set_escenarios = os.path.join(dir_gams_input, "data_set_escenarios.csv")
+fp_csv_gams_data_set_scen = os.path.join(dir_gams_input, "data_set_escenario_sel.csv")
+fp_csv_gams_solution_generation_sector = os.path.join(dir_gams_output, "solution_generation_sector.csv")
 # OTHER CSVS
 fp_csv_analytica_metrics_to_save = os.path.join(dir_ref, "analytica_metrics_to_save.csv")
 fp_csv_attribute_fuel = os.path.join(dir_ref, "attribute_fuel.csv")
@@ -314,22 +356,25 @@ fp_csv_fields_keep_experimental_design_multi_sector = os.path.join(dir_ref, "fie
 fp_csv_output_field_types = os.path.join(dir_ref, "output_field_types.csv")
 fp_csv_lhs_table_multi_sector = os.path.join(dir_ed, "lhs_samples_multi_sector.csv")
 fp_csv_lhs_table_levers = os.path.join(dir_ed, "lhs_samples_levers.csv")
-fp_csv_mapping_cost_groups = os.path.join(dir_ref, "mapping_cost_groups.csv")
-fp_csv_msec_fields_to_transport_map = os.path.join(dir_ref, "msec_fields_to_transport_map.csv")
-fp_csv_msec_pass_to_transport = os.path.join(dir_ed, "msec_pass_to_transport.csv")
+fp_csv_map_parameter_to_gams = os.path.join(dir_ref, "map_parameter_to_gams.csv")
 fp_csv_output_multi_sector = os.path.join(dir_out, "output_multi_sector_python.csv")
 fp_csv_output_multi_sector_base_year = os.path.join(dir_out, "output_multi_sector-base_year.csv")
 fp_csv_output_multi_sector_diff = os.path.join(dir_out, "output_multi_sector-diff_from_base_strategy.csv")
 fp_csv_output_multi_sector_analytica = os.path.join(dir_out, "output_multi_sector_analytica.csv")
+fp_csv_output_multi_sector_pmr = os.path.join(dir_out, "output_multi_sector_pmr.csv")
 fp_csv_parameter_ranges = os.path.join(dir_ref, "parameter_ranges.csv")
 fp_csv_parameter_ranges_for_analytica_base = os.path.join(dir_ref, "parameter_ranges_for_analytica_base.csv")
-fp_csv_prim_field_attribute = os.path.join(dir_out, "prim_field_attribute_base.csv")
-fp_csv_prim_input_data = os.path.join(dir_out, "prim_input_data_base.csv")
+fp_csv_prim_field_attribute = os.path.join(dir_out, "prim-attribute_field.csv")
+fp_csv_prim_input_data = os.path.join(dir_out, "prim-input_data.csv")
 fp_csv_ranges_for_decarb_drivers = os.path.join(dir_out, "ranges_for_decarb_drivers.csv")
 fp_csv_ranges_vals_for_decarb_drivers = os.path.join(dir_out, "ranges_values_for_decarb_drivers.csv")
 fp_csv_waste_baseline_data = os.path.join(dir_ref, "waste_baseline_data.csv")
 # TEMPORARY CSVS
 fp_csv_tmp_correction_for_pib_peso_traj = os.path.join(dir_ref, "tmp_correction_for_pib_peso_traj.csv")
+
+##  GAMS FILE
+fp_gams_modelo = os.path.join(dir_gams_modelo, "modelo_energetico_PMR_20201009.gms")
+
 
 
 ##############################
@@ -338,22 +383,36 @@ fp_csv_tmp_correction_for_pib_peso_traj = os.path.join(dir_ref, "tmp_correction_
 
 # GENERAL BOOLEANS
 
+integrate_analytica_q = False
+#check system
+if plt[0:min(len(plt), 3)] != "win":
+	#check existence
+	if os.path.exists(dir_ade):
+		#integrate the analytica models a parallels structure?
+		integrate_analytica_q = (str(dict_init["integrate_analytica_q"]).lower() == "true")
+else:
+	integrate_analytica_q = True
 #use landuse difference for conversion?
 use_lu_diff_for_conv_q = (str(dict_init["use_lu_diff_for_conv_q"]).lower() == "true")
 
 
 
 
-#####################################
-#    SOME ADDITIONAL SECTOR DATA    #
-#####################################
+##############################
+#    SOME ADDITIONAL DATA    #
+##############################
 
 #build dictionary of sector abbreviations
 df_attribute_sector = pd.read_csv(fp_csv_attribute_sector)
 dict_sector_to_abv = build_dict(df_attribute_sector[["sector", "sector_abbreviation"]])
+	
+#build dictionary of summing group units
+df_attribute_summing_group = pd.read_csv(fp_csv_attribute_summing_group)
+dict_summing_group_to_unit = build_dict(df_attribute_summing_group[["summing_group", "unit"]])
 
-
-
+#build dictionary mapping sampled parameters to gams parameters
+df_map_param_to_pg = pd.read_csv(fp_csv_map_parameter_to_gams)
+dict_map_params_to_params_gams = build_dict(df_map_param_to_pg[["parameter", "parameter_gams"]])
 	
 
 
