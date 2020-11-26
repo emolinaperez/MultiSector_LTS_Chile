@@ -631,8 +631,11 @@ substr_min = "trajmin"
 substr_mix = "trajmix"
 #get parameters that should be mixed
 params_mix_loop = [x.replace(substr_mix + "_", "") for x in df_out.columns if (x[0:min(len(x), len(substr_mix))] == substr_mix)]
-print("params_mix_loop:\n")
-print(("\t%s"*len(params_mix_loop))%tuple(params_mix_loop))
+#some notifcation
+print("\nparams_mix_loop:\n")
+print(("\t%s\n"*len(params_mix_loop))%tuple(params_mix_loop))
+print("\n")
+
 #parameters to eliminate
 fields_drop = []
 
@@ -745,16 +748,18 @@ if export_ed_files_q:
 	
 	df_master_exp = pd.concat([
 		#design 0
-		df_attribute_master_id[(df_attribute_master_id["design_id"] == 0)],
+		df_attribute_master_id[(df_attribute_master_id["design_id"] == 0) & (df_attribute_master_id["strategy_id"] > 0)],
 		#design 1
 		df_attribute_master_id[(df_attribute_master_id["design_id"] == 1) & (df_attribute_master_id["strategy_id"] > 0)]
 	])
 	
 	#temp overwrite
 	df_master_exp = df_attribute_master_id[(df_attribute_master_id["design_id"] == 0)]
-
+	#set gams vals
+	df_master_exp_gams = df_master_exp[df_master_exp["strategy_id"] > 0]
 	#export
 	df_master_exp[["master_id"]].to_csv(sr.fp_csv_experimental_design_msec_masters_to_run, index = None, encoding = "UTF-8")
+	df_master_exp_gams[["master_id"]].to_csv(sr.fp_csv_experimental_design_msec_masters_to_run_gams, index = None, encoding = "UTF-8")
 
 
 

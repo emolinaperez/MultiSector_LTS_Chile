@@ -9,7 +9,7 @@ time_ini_1 = time.time()
 
 #read master id attribute and masters to run
 df_attribute_master = pd.read_csv(sr.fp_csv_attribute_master)
-df_masters_to_run = pd.read_csv(sr.fp_csv_experimental_design_msec_masters_to_run)
+df_masters_to_run = pd.read_csv(sr.fp_csv_experimental_design_msec_masters_to_run_gams)
 
 #list of all masters
 all_masters = list(df_attribute_master["master_id"])

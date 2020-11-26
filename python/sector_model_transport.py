@@ -5,7 +5,7 @@ import os, os.path
 import time
 import pandas as pd
 import numpy as np
-from econometric_models import model_transport_gasoline_demand, model_transport_pkm_aviation
+from econometric_models import model_transport_gasoline_demand, model_transport_pkm_aviation, model_transport_pkm_saturacion
 
 ###################
 #    TRANSPORT    #
@@ -272,9 +272,12 @@ def sm_transport(df_in, dict_sector_abv, odel_transport_pkm_aviation = None):
 
 	intensity_aviation_kerosene = np.array(df_in["transport_intensity_aviation_kerosene"])
 	emission_fact_kerosene_aviation = np.array(df_in["transport_emission_fact_kerosene_aviation"])
+	transport_saturation_aviation = np.array(df_in["transport_saturation_aviation"])
 
 	# calculate demand in Tcal
 	transport_demand_aviation_kerosene = transport_pkm_aviation*intensity_aviation_kerosene/(10**3)
+
+	transport_demand_aviation_kerosene = model_transport_pkm_saturacion(year, transport_demand_aviation_kerosene, transport_saturation_aviation)
 
 	# calculate emission
 	transport_emission_aviation = transport_demand_aviation_kerosene*fact*emission_fact_kerosene_aviation/(10**9)

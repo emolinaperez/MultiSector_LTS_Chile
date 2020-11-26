@@ -21,27 +21,98 @@ def sm_industry_and_mining(df_in, dict_sector_abv):
 	#SUB SECTOR: COPPER MINING MODEL - Mineria del cobre
 
 	# Read input parameters defined in parameter_ranges.csv
+
 	copper_production = np.array(df_in["copper_production"])
-	copper_intensity = np.array(df_in["copper_intensity"])
-	copper_frac_diesel = np.array(df_in["copper_frac_diesel"])
-	copper_frac_natural_gas = np.array(df_in["copper_frac_natural_gas"])
-	copper_frac_electric = np.array(df_in["copper_frac_electric"])
-	copper_frac_hydrogen  = np.array(df_in["copper_frac_hydrogen"])
-	copper_frac_thermal_solar = np.array(df_in["copper_frac_thermal_solar"])
-	copper_frac_solar = np.array(df_in["copper_frac_solar"])
+	copper_intensity_useful_energy = np.array(df_in["copper_intensity_useful_energy"])
+	copper_share_open_pit_mine = np.array(df_in["copper_share_open_pit_mine"])
+	copper_share_subt_mine = np.array(df_in["copper_share_subt_mine"])
+	copper_share_motor = np.array(df_in["copper_share_motor"])
+	copper_share_other = np.array(df_in["copper_share_other"])
+	copper_share_heat = np.array(df_in["copper_share_heat"])
+	copper_open_pit_mine_diesel = np.array(df_in["copper_open_pit_mine_diesel"])
+	copper_open_pit_mine_electricitiy = np.array(df_in["copper_open_pit_mine_electricitiy"])
+	copper_open_pit_mine_hydrogen = np.array(df_in["copper_open_pit_mine_hydrogen"])
+	copper_subt_mine_diesel = np.array(df_in["copper_subt_mine_diesel"])
+	copper_subt_mine_electricitiy = np.array(df_in["copper_subt_mine_electricitiy"])
+	copper_subt_mine_hydrogen = np.array(df_in["copper_subt_mine_hydrogen"])
+	copper_motor_diesel = np.array(df_in["copper_motor_diesel"])
+	copper_motor_electricitiy = np.array(df_in["copper_motor_electricitiy"])
+	copper_motor_hydrogen = np.array(df_in["copper_motor_hydrogen"])
+	copper_other_electricity = np.array(df_in["copper_other_electricity"])
+	copper_other_natural_gas = np.array(df_in["copper_other_natural_gas"])
+	copper_other_diesel = np.array(df_in["copper_other_diesel"])
+	copper_heat_diesel = np.array(df_in["copper_heat_diesel"])
+	copper_heat_electricitiy = np.array(df_in["copper_heat_electricitiy"])
+	copper_heat_hydrogen = np.array(df_in["copper_heat_hydrogen"])
+	copper_heat_natural_gas = np.array(df_in["copper_heat_natural_gas"])
+	copper_heat_plqgas = np.array(df_in["copper_heat_plqgas"])
+	copper_heat_solar = np.array(df_in["copper_heat_solar"])
+	copper_efficiency_open_pit_mine_diesel = np.array(df_in["copper_efficiency_open_pit_mine_diesel"])
+	copper_efficiency_open_pit_mine_electricitiy = np.array(df_in["copper_efficiency_open_pit_mine_electricitiy"])
+	copper_efficiency_open_pit_mine_hydrogen = np.array(df_in["copper_efficiency_open_pit_mine_hydrogen"])
+	copper_efficiency_subt_mine_diesel = np.array(df_in["copper_efficiency_subt_mine_diesel"])
+	copper_efficiency_subt_mine_electricitiy = np.array(df_in["copper_efficiency_subt_mine_electricitiy"])
+	copper_efficiency_subt_mine_hydrogen = np.array(df_in["copper_efficiency_subt_mine_hydrogen"])
+	copper_efficiency_motor_diesel = np.array(df_in["copper_efficiency_motor_diesel"])
+	copper_efficiency_motor_electricitiy = np.array(df_in["copper_efficiency_motor_electricitiy"])
+	copper_efficiency_motor_hydrogen = np.array(df_in["copper_efficiency_motor_hydrogen"])
+	copper_efficiency_other_electricity = np.array(df_in["copper_efficiency_other_electricity"])
+	copper_efficiency_other_natural_gas = np.array(df_in["copper_efficiency_other_natural_gas"])
+	copper_efficiency_other_diesel = np.array(df_in["copper_efficiency_other_diesel"])
+	copper_efficiency_heat_diesel = np.array(df_in["copper_efficiency_heat_diesel"])
+	copper_efficiency_heat_electricitiy = np.array(df_in["copper_efficiency_heat_electricitiy"])
+	copper_efficiency_heat_hydrogen = np.array(df_in["copper_efficiency_heat_hydrogen"])
+	copper_efficiency_heat_natural_gas = np.array(df_in["copper_efficiency_heat_natural_gas"])
+	copper_efficiency_heat_plqgas = np.array(df_in["copper_efficiency_heat_plqgas"])
+	copper_efficiency_heat_solar = np.array(df_in["copper_efficiency_heat_solar"])
 	copper_emission_fact_diesel = np.array(df_in["copper_emission_fact_diesel"])
+	copper_emission_fact_kerosene = np.array(df_in["copper_emission_fact_kerosene"])
 	copper_emission_fact_natural_gas = np.array(df_in["copper_emission_fact_natural_gas"])
+	copper_emission_fact_pliqgas = np.array(df_in["copper_emission_fact_pliqgas"])
+	copper_emission_fact_fueloil = np.array(df_in["copper_emission_fact_fueloil"])
+
+	# calculate demand by en use
+
+	copper_dem_open_pit_mine_diesel = copper_production * copper_intensity_useful_energy * copper_share_open_pit_mine * copper_open_pit_mine_diesel / copper_efficiency_open_pit_mine_diesel
+	copper_dem_open_pit_mine_electricitiy = copper_production * copper_intensity_useful_energy * copper_share_open_pit_mine * copper_open_pit_mine_electricitiy / copper_efficiency_open_pit_mine_electricitiy
+	copper_dem_open_pit_mine_hydrogen = copper_production * copper_intensity_useful_energy * copper_share_open_pit_mine * copper_open_pit_mine_hydrogen / copper_efficiency_open_pit_mine_hydrogen
+
+	copper_dem_subt_mine_diesel = copper_production * copper_intensity_useful_energy * copper_share_subt_mine * copper_subt_mine_diesel / copper_efficiency_subt_mine_diesel
+	copper_dem_subt_mine_electricitiy = copper_production * copper_intensity_useful_energy * copper_share_subt_mine * copper_subt_mine_electricitiy / copper_efficiency_subt_mine_electricitiy
+	copper_dem_subt_mine_hydrogen = copper_production * copper_intensity_useful_energy * copper_share_subt_mine * copper_subt_mine_hydrogen / copper_efficiency_subt_mine_hydrogen
+
+	copper_dem_motor_diesel = copper_production * copper_intensity_useful_energy * copper_share_motor * copper_motor_diesel / copper_efficiency_motor_diesel
+	copper_dem_motor_electricitiy = copper_production * copper_intensity_useful_energy * copper_share_motor * copper_motor_electricitiy / copper_efficiency_motor_electricitiy
+	copper_dem_motor_hydrogen = copper_production * copper_intensity_useful_energy * copper_share_motor * copper_motor_hydrogen / copper_efficiency_motor_hydrogen
+
+	copper_dem_other_electricity = copper_production * copper_intensity_useful_energy * copper_share_other * copper_other_electricity / copper_efficiency_other_electricity
+	copper_dem_other_natural_gas = copper_production * copper_intensity_useful_energy * copper_share_other * copper_other_natural_gas / copper_efficiency_other_natural_gas
+	copper_dem_other_diesel = copper_production * copper_intensity_useful_energy * copper_share_other * copper_other_diesel / copper_efficiency_other_diesel
+
+	copper_dem_heat_diesel = copper_production * copper_intensity_useful_energy * copper_share_heat * copper_heat_diesel / copper_efficiency_heat_diesel
+	copper_dem_heat_electricitiy = copper_production * copper_intensity_useful_energy * copper_share_heat * copper_heat_electricitiy / copper_efficiency_heat_electricitiy
+	copper_dem_heat_hydrogen = copper_production * copper_intensity_useful_energy * copper_share_heat * copper_heat_hydrogen / copper_efficiency_heat_hydrogen
+	copper_dem_heat_natural_gas = copper_production * copper_intensity_useful_energy * copper_share_heat * copper_heat_natural_gas / copper_efficiency_heat_natural_gas
+	copper_dem_heat_plqgas = copper_production * copper_intensity_useful_energy * copper_share_heat * copper_heat_plqgas / copper_efficiency_heat_plqgas
+	copper_dem_heat_solar = copper_production * copper_intensity_useful_energy * copper_share_heat * copper_heat_solar / copper_efficiency_heat_solar
 
 	# calculate demand in Tcal
-	copper_dem_diesel = copper_production*copper_intensity*copper_frac_diesel
-	copper_dem_natural_gas = copper_production*copper_intensity*copper_frac_natural_gas
-	copper_dem_electric = copper_production*copper_intensity*copper_frac_electric
-	copper_dem_hydrogen = copper_production*copper_intensity*copper_frac_hydrogen
+	copper_dem_diesel =copper_dem_open_pit_mine_diesel+copper_dem_subt_mine_diesel+copper_dem_motor_diesel+copper_dem_other_diesel+copper_dem_heat_diesel
+	copper_dem_kerosene = 0
+	copper_dem_natural_gas = copper_dem_other_natural_gas+copper_dem_heat_natural_gas
+	copper_dem_electric =copper_dem_open_pit_mine_electricitiy+copper_dem_subt_mine_electricitiy+copper_dem_motor_electricitiy+copper_dem_other_electricity+copper_dem_heat_electricitiy
+	copper_dem_hydrogen =copper_dem_open_pit_mine_hydrogen+copper_dem_subt_mine_hydrogen+copper_dem_heat_hydrogen+copper_dem_motor_hydrogen
+	copper_dem_pliqgas =copper_dem_heat_plqgas
+	copper_dem_fueloil =0
 
 	# calculate emission in millon tCO2
 	copper_emission_diesel = copper_dem_diesel*fact*copper_emission_fact_diesel / (10 ** 9)
+	copper_emission_kerosene= copper_dem_kerosene * fact * copper_emission_fact_kerosene / (10 ** 9)
 	copper_emission_natural_gas = copper_dem_natural_gas*fact*copper_emission_fact_natural_gas / (10 ** 9)
-	copper_emission =copper_emission_diesel+copper_emission_natural_gas
+	copper_emission_pliqgas = copper_dem_pliqgas * fact * copper_emission_fact_pliqgas / (10 ** 9)
+	copper_emission_fueloil = copper_dem_fueloil * fact * copper_emission_fact_fueloil / (10 ** 9)
+
+	copper_emission =copper_emission_diesel+copper_emission_kerosene+copper_emission_natural_gas+copper_emission_pliqgas+copper_emission_fueloil
 
 	dict_emission = {"copper": copper_emission}
 	dict_electric_demand = {"copper": copper_dem_electric*fact2}
@@ -83,34 +154,93 @@ def sm_industry_and_mining(df_in, dict_sector_abv):
 	# Read input parameters defined in parameter_ranges.csv
 	gdp = np.array(df_in["pib"])*np.array(df_in["pib_scalar_transpiort"])
 	other_industries_intensity = np.array(df_in["other_industries_intensity"])
-	other_industries_frac_diesel = np.array(df_in["other_industries_frac_diesel"])
-	other_industries_frac_natural_gas = np.array(df_in["other_industries_frac_natural_gas"])
-	other_industries_frac_electric = np.array(df_in["other_industries_frac_electric"])
-	other_industries_frac_biomass = np.array(df_in["other_industries_frac_biomass"])
-	other_industries_frac_coal = np.array(df_in["other_industries_frac_coal"])
-	other_industries_frac_hydrogen = np.array(df_in["other_industries_frac_hydrogen"])
-	other_industries_frac_thermal_solar = np.array(df_in["other_industries_frac_thermal_solar"])
-	other_industries_frac_solar = np.array(df_in["other_industries_frac_solar"])
+
+	#
+	gdp = np.array(df_in["gdp"])
+	growth_rate_gdp= np.array(df_in["growth_rate_gdp"])
+	other_industries_elasticity = np.array(df_in["other_industries_elasticity"])
+	other_industries_rate_useful_energy = np.array(df_in["other_industries_rate_useful_energy"])
+	other_industries_share_motor = np.array(df_in["other_industries_share_motor"])
+	other_industries_share_other = np.array(df_in["other_industries_share_other"])
+	other_industries_share_heat = np.array(df_in["other_industries_share_heat"])
+	other_industries_motor_diesel = np.array(df_in["other_industries_motor_diesel"])
+	other_industries_motor_pliqgas = np.array(df_in["other_industries_motor_pliqgas"])
+	other_industries_motor_electric = np.array(df_in["other_industries_motor_electric"])
+	other_industries_motor_hydrogen = np.array(df_in["other_industries_motor_hydrogen"])
+	other_industries_other_electric = np.array(df_in["other_industries_other_electric"])
+	other_industries_heat_coal = np.array(df_in["other_industries_heat_coal"])
+	other_industries_heat_electric = np.array(df_in["other_industries_heat_electric"])
+	other_industries_heat_solar = np.array(df_in["other_industries_heat_solar"])
+	other_industries_heat_pliqgas = np.array(df_in["other_industries_heat_pliqgas"])
+	other_industries_heat_natural_gas = np.array(df_in["other_industries_heat_natural_gas"])
+	other_industries_heat_biomass = np.array(df_in["other_industries_heat_biomass"])
+	other_industries_heat_diesel = np.array(df_in["other_industries_heat_diesel"])
+	other_industries_heat_fuel_oil = np.array(df_in["other_industries_heat_fuel_oil"])
+	other_industries_heat_hydrogen = np.array(df_in["other_industries_heat_hydrogen"])
+	other_industries_efficiency_motor_diesel = np.array(df_in["other_industries_efficiency_motor_diesel"])
+	other_industries_efficiency_motor_pliqgas = np.array(df_in["other_industries_efficiency_motor_pliqgas"])
+	other_industries_efficiency_motor_electric = np.array(df_in["other_industries_efficiency_motor_electric"])
+	other_industries_efficiency_motor_hydrogen = np.array(df_in["other_industries_efficiency_motor_hydrogen"])
+	other_industries_efficiency_other_electric = np.array(df_in["other_industries_efficiency_other_electric"])
+	other_industries_efficiency_heat_coal = np.array(df_in["other_industries_efficiency_heat_coal"])
+	other_industries_efficiency_heat_electric = np.array(df_in["other_industries_efficiency_heat_electric"])
+	other_industries_efficiency_heat_solar = np.array(df_in["other_industries_efficiency_heat_solar"])
+	other_industries_efficiency_heat_pliqgas = np.array(df_in["other_industries_efficiency_heat_pliqgas"])
+	other_industries_efficiency_heat_natural_gas = np.array(df_in["other_industries_efficiency_heat_natural_gas"])
+	other_industries_efficiency_heat_biomass = np.array(df_in["other_industries_efficiency_heat_biomass"])
+	other_industries_efficiency_heat_diesel = np.array(df_in["other_industries_efficiency_heat_diesel"])
+	other_industries_efficiency_heat_fuel_oil = np.array(df_in["other_industries_efficiency_heat_fuel_oil"])
+	other_industries_efficiency_heat_hydrogen = np.array(df_in["other_industries_efficiency_heat_hydrogen"])
 	other_industries_emission_fact_diesel = np.array(df_in["other_industries_emission_fact_diesel"])
 	other_industries_emission_fact_natural_gas = np.array(df_in["other_industries_emission_fact_natural_gas"])
 	other_industries_emission_fact_coal = np.array(df_in["other_industries_emission_fact_coal"])
+	other_industries_emission_fact_pliqgas = np.array(df_in["other_industries_emission_fact_pliqgas"])
+	other_industries_emission_fact_fueloil = np.array(df_in["other_industries_emission_fact_fueloil"])
+
+	#
 	year = np.array(df_in["year"])  # vector years
 
-	# calculate demand in Tcal as function of GDP
-	other_industries_dem = dem_other_industries(year, gdp)
+	other_industries_total_demand = dem_other_industries(year, growth_rate_gdp,other_industries_elasticity)
+	other_industries_useful_energy = other_industries_total_demand*other_industries_rate_useful_energy
 
-	other_industries_dem_diesel = other_industries_dem * other_industries_frac_diesel
-	other_industries_dem_natural_gas = other_industries_dem * other_industries_frac_natural_gas
-	other_industries_dem_electric = other_industries_dem * other_industries_frac_electric
-	other_industries_dem_coal = other_industries_dem* other_industries_frac_coal
-	other_industries_dem_biomass = other_industries_dem * other_industries_frac_biomass
-	other_industries_dem_hydrogen = other_industries_dem * other_industries_frac_hydrogen
+	# calculate demand in Tcal by en use
+	other_industries_dem_motor_diesel = other_industries_useful_energy * other_industries_share_motor * other_industries_motor_diesel / other_industries_efficiency_motor_diesel
+	other_industries_dem_motor_pliqgas = other_industries_useful_energy * other_industries_share_motor * other_industries_motor_pliqgas / other_industries_efficiency_motor_pliqgas
+	other_industries_dem_motor_electric = other_industries_useful_energy * other_industries_share_motor * other_industries_motor_electric / other_industries_efficiency_motor_electric
+	other_industries_dem_motor_hydrogen = other_industries_useful_energy * other_industries_share_motor * other_industries_motor_hydrogen / other_industries_efficiency_motor_hydrogen
+
+	other_industries_dem_other_electric = other_industries_useful_energy * other_industries_share_other * other_industries_other_electric / other_industries_efficiency_other_electric
+
+	other_industries_dem_heat_coal = other_industries_useful_energy * other_industries_share_heat * other_industries_heat_coal / other_industries_efficiency_heat_coal
+	other_industries_dem_heat_electric = other_industries_useful_energy * other_industries_share_heat * other_industries_heat_electric / other_industries_efficiency_heat_electric
+	other_industries_dem_heat_solar = other_industries_useful_energy * other_industries_share_heat * other_industries_heat_solar / other_industries_efficiency_heat_solar
+	other_industries_dem_heat_pliqgas = other_industries_useful_energy * other_industries_share_heat * other_industries_heat_pliqgas / other_industries_efficiency_heat_pliqgas
+	other_industries_dem_heat_natural_gas = other_industries_useful_energy * other_industries_share_heat * other_industries_heat_natural_gas / other_industries_efficiency_heat_natural_gas
+	other_industries_dem_heat_biomass = other_industries_useful_energy * other_industries_share_heat * other_industries_heat_biomass / other_industries_efficiency_heat_biomass
+	other_industries_dem_heat_diesel = other_industries_useful_energy * other_industries_share_heat * other_industries_heat_diesel / other_industries_efficiency_heat_diesel
+	other_industries_dem_heat_fuel_oil = other_industries_useful_energy * other_industries_share_heat * other_industries_heat_fuel_oil / other_industries_efficiency_heat_fuel_oil
+	other_industries_dem_heat_hydrogen = other_industries_useful_energy * other_industries_share_heat * other_industries_heat_hydrogen / other_industries_efficiency_heat_hydrogen
+
+	# total demand by type of energy
+
+	other_industries_dem_diesel = other_industries_dem_motor_diesel+other_industries_dem_heat_diesel
+	other_industries_dem_natural_gas = other_industries_dem_heat_natural_gas
+	other_industries_dem_electric = other_industries_dem_motor_electric+other_industries_dem_other_electric+other_industries_dem_heat_electric
+	other_industries_dem_coal = other_industries_dem_heat_coal
+	other_industries_dem_biomass = other_industries_dem_heat_biomass
+	other_industries_dem_solar = other_industries_dem_heat_solar
+	other_industries_dem_hydrogen = other_industries_dem_motor_hydrogen+other_industries_dem_heat_hydrogen
+	other_industries_dem_pliqgas = other_industries_dem_motor_pliqgas+other_industries_dem_heat_pliqgas
+	other_industries_dem_fueloil = other_industries_dem_heat_fuel_oil
 
 	# calculate emission in millon tCO2
-	other_industries_emission_diesel = other_industries_dem_diesel * fact * other_industries_emission_fact_diesel / (10 ** 9)
-	other_industries_emission_natural_gas = other_industries_dem_natural_gas * fact * other_industries_emission_fact_natural_gas / (10 ** 9)
-	other_industries_emission_coal = other_industries_dem_coal * fact * other_industries_emission_fact_coal / (10 ** 9)
-	other_industries_emission = other_industries_emission_diesel+other_industries_emission_natural_gas+other_industries_emission_coal
+
+	other_industries_emission_diesel = other_industries_dem_diesel * other_industries_emission_fact_diesel * fact/ (10 ** 9)
+	other_industries_emission_natural_gas = other_industries_dem_natural_gas * other_industries_emission_fact_natural_gas * fact/ (10 ** 9)
+	other_industries_emission_coal = other_industries_dem_coal * other_industries_emission_fact_coal * fact/ (10 ** 9)
+	other_industries_emission_pliqgas = other_industries_dem_pliqgas * other_industries_emission_fact_pliqgas * fact/ (10 ** 9)
+	other_industries_emission_fueloil = other_industries_dem_fueloil * other_industries_emission_fact_fueloil * fact/ (10 ** 9)
+	other_industries_emission = other_industries_emission_diesel + other_industries_emission_natural_gas + other_industries_emission_coal+other_industries_emission_pliqgas+other_industries_emission_fueloil
 
 	# update
 	dict_emission.update({"other_industries": other_industries_emission})

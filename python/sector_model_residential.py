@@ -27,6 +27,7 @@ def sm_residential(df_in, dict_sector_abv):
 	residential_frac_biomass = np.array(df_in["residential_frac_biomass"])
 	residential_frac_pliqgas = np.array(df_in["residential_frac_pliqgas"])
 	residential_frac_solar = np.array(df_in["residential_frac_solar"])
+	residential_frac_hydrogen = np.array(df_in["residential_frac_hydrogen"])
 	residential_emission_fact_natural_gas = np.array(df_in["residential_emission_fact_natural_gas"])
 	residential_emission_fact_kerosene = np.array(df_in["residential_emission_fact_kerosene"])
 	residential_emission_fact_pliqgas = np.array(df_in["residential_emission_fact_pliqgas"])

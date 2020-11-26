@@ -527,14 +527,13 @@ if (os.path.exists(dir_tmp_export)) == True:
 #make the directory anew
 os.makedirs(dir_tmp_export, exist_ok = True)
 
-
+#dictionary of keep fields
+dict_fields_keep_export = {}
 #get reduced experimental design data to export
 if os.path.exists(sr.fp_csv_fields_keep_experimental_design_multi_sector):
 	fields_keep_ed = pd.read_csv(sr.fp_csv_fields_keep_experimental_design_multi_sector)
 	#fill na
 	fields_keep_ed = fields_keep_ed.fillna(0)
-	#dictionary of keep fields
-	dict_fields_keep_export = {}
 	#update types
 	for field in [x for x in fields_keep_ed.columns if x != "field"]:
 		fields_keep_ed[field] = np.array(fields_keep_ed[field]).astype(int)
@@ -553,6 +552,8 @@ else:
 	for f_type in ["all", "diff"]:
 		#set field
 		field = "include_" + f_type + "_file"
+		#string to add to dictionary
+		str_dict = field.lower().replace("include_", "").replace("_file", "")
 		#extraction fields
 		fields_ext = list(exp_design.columns)
 		#update

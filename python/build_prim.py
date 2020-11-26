@@ -13,12 +13,19 @@ import setup_runs as sr
 
 #initialize dictionary of categories
 dict_field_type = {"master_id": "key"}
-#results files
-dict_results = {
-	"python": pd.read_csv(sr.fp_csv_output_multi_sector),
-	"analytica": pd.read_csv(sr.fp_csv_output_multi_sector_analytica),
-	"gams": pd.read_csv(sr.fp_csv_output_multi_sector_pmr).rename(columns = {"agno": "year"})
+#results information
+dict_fp_results = {
+	"python": sr.fp_csv_output_multi_sector,
+	"analytica": sr.fp_csv_output_multi_sector_analytica,
+	"gams": sr.fp_csv_output_multi_sector_pmr
 }
+dict_results = {}
+#read in
+for k in dict_fp_results.keys():
+	df_tmp = pd.read_csv(dict_fp_results[k])
+	df_tmp = df_tmp.rename(columns = {"Agno": "year", "agno": "year"})
+	dict_results.update({k: df_tmp.copy()})
+
 #experimental design
 df_ed = pd.read_csv(sr.fp_csv_experimental_design_msec)
 #get maximum year
@@ -58,6 +65,14 @@ for k in dict_results.keys():
 	df_tmp = df_tmp[df_tmp["year"] == year_max][["master_id"] + fields_ext]
 	df_prim = pd.merge(df_prim, df_tmp, how = "inner", on = ["master_id"])
 
+#get final masters
+masters_keep = df_prim["master_id"].unique()
+#loop to re-export
+for k in dict_fp_results.keys():
+	df_tmp = dict_results[k]
+	df_tmp = df_tmp[df_tmp["master_id"].isin(masters_keep)].reset_index(drop = True)
+	#export
+	df_tmp.to_csv(dict_fp_results[k], index = None, encoding = "UTF-8")
 
 
 ##  BUILD ATTRIBUTE FILE

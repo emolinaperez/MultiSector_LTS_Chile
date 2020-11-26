@@ -4,17 +4,19 @@ strategy_id,strategy id,filter,all,1
 cement_production,cement production,input,,1
 copper_production,copper production,input,,1
 cumplimiento_metas,cumplimiento metas,input,,1
+ef_captura,ef captura,input,,1
 especies_exoticas,especies exoticas,input,,1
 especies_nativas,especies nativas,input,,1
 fishing_production,fishing production,input,,1
 incendio_bosque_nativo,incendio bosque nativo,input,,1
 incendio_plantaciones_forestales,incendio plantaciones forestales,input,,1
+incertidumbre_incendio_bn,incertidumbre incendio bn,input,,1
+incertidumbre_incendio_plantaciones,incertidumbre incendio plantaciones,input,,1
 iron_production,iron production,input,,1
 medida_biodigestores,medida biodigestores,input,,1
 medida_cambio_dieta_bovina,medida cambio dieta bovina,input,,1
 medida_captura_c_suelos,medida captura c suelos,input,,1
 medida_uso_eficiente_fertilizante,medida uso eficiente fertilizante,input,,1
-nueva_cap_recuperacion,nueva cap recuperacion,input,,1
 pib,pib,input,,1
 poblacion,poblacion,input,,1
 pqe_vehicular,pqe vehicular,input,,1
@@ -23,17 +25,9 @@ precio_cerdo,precio cerdo,input,,1
 precio_leche,precio leche,input,,1
 precio_maiz,precio maiz,input,,1
 precio_pollo,precio pollo,input,,1
-ptas_antofa,ptas antofa,input,,1
 ptas_biobio,ptas biobio,input,,1
 ptas_valpo,ptas valpo,input,,1
-ptasls_coq,ptasls coq,input,,1
-public_frac_biomass,public frac biomass,input,,1
-public_frac_electric,public frac electric,input,,1
-public_frac_natural_gas,public frac natural gas,input,,1
-public_frac_pliqgas,public frac pliqgas,input,,1
 public_intensity,public intensity,input,,1
-pulp_frac_biomass,pulp frac biomass,input,,1
-pulp_frac_electric,pulp frac electric,input,,1
 pulp_intensity,pulp intensity,input,,1
 pulp_production,pulp production,input,,1
 recuperacion_bn,recuperacion bn,input,,1
@@ -64,6 +58,7 @@ transport_train13_pkm,transport train13 pkm,input,,1
 transport_train5_pkm,transport train5 pkm,input,,1
 transport_train8_pkm,transport train8 pkm,input,,1
 transport_trip_distance_private,transport trip distance private,input,,1
+var_demanda_legna,var demanda legna,input,,1
 fuel_price_coal,fuel price coal,input,,1
 fuel_price_diesel,fuel price diesel,input,,1
 fuel_price_fuel_oil,fuel price fuel oil,input,,1
