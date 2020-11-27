@@ -18,7 +18,11 @@ def sm_industry_and_mining(df_in, dict_sector_abv):
 	# conversion factor Tcal to GWh
 	fact2 = 1.162952
 
-	#SUB SECTOR: COPPER MINING MODEL - Mineria del cobre
+	# Common parameters
+	share_electric_grid_to_hydrogen = np.array(df_in["share_electric_grid_to_hydrogen"])
+	electrolyzer_efficiency = np.array(df_in["electrolyzer_efficiency"])
+
+	# SUB SECTOR: COPPER MINING MODEL - Mineria del cobre
 
 	# Read input parameters defined in parameter_ranges.csv
 
@@ -97,26 +101,28 @@ def sm_industry_and_mining(df_in, dict_sector_abv):
 	copper_dem_heat_solar = copper_production * copper_intensity_useful_energy * copper_share_heat * copper_heat_solar / copper_efficiency_heat_solar
 
 	# calculate demand in Tcal
-	copper_dem_diesel =copper_dem_open_pit_mine_diesel+copper_dem_subt_mine_diesel+copper_dem_motor_diesel+copper_dem_other_diesel+copper_dem_heat_diesel
+	copper_dem_diesel = copper_dem_open_pit_mine_diesel + copper_dem_subt_mine_diesel + copper_dem_motor_diesel + copper_dem_other_diesel + copper_dem_heat_diesel
 	copper_dem_kerosene = 0
-	copper_dem_natural_gas = copper_dem_other_natural_gas+copper_dem_heat_natural_gas
-	copper_dem_electric =copper_dem_open_pit_mine_electricitiy+copper_dem_subt_mine_electricitiy+copper_dem_motor_electricitiy+copper_dem_other_electricity+copper_dem_heat_electricitiy
-	copper_dem_hydrogen =copper_dem_open_pit_mine_hydrogen+copper_dem_subt_mine_hydrogen+copper_dem_heat_hydrogen+copper_dem_motor_hydrogen
-	copper_dem_pliqgas =copper_dem_heat_plqgas
-	copper_dem_fueloil =0
+	copper_dem_natural_gas = copper_dem_other_natural_gas + copper_dem_heat_natural_gas
+	copper_dem_electric = copper_dem_open_pit_mine_electricitiy + copper_dem_subt_mine_electricitiy + copper_dem_motor_electricitiy + copper_dem_other_electricity + copper_dem_heat_electricitiy
+	copper_dem_hydrogen = copper_dem_open_pit_mine_hydrogen + copper_dem_subt_mine_hydrogen + copper_dem_heat_hydrogen + copper_dem_motor_hydrogen
+	copper_dem_pliqgas = copper_dem_heat_plqgas
+	copper_dem_fueloil = 0
 
 	# calculate emission in millon tCO2
-	copper_emission_diesel = copper_dem_diesel*fact*copper_emission_fact_diesel / (10 ** 9)
-	copper_emission_kerosene= copper_dem_kerosene * fact * copper_emission_fact_kerosene / (10 ** 9)
-	copper_emission_natural_gas = copper_dem_natural_gas*fact*copper_emission_fact_natural_gas / (10 ** 9)
+	copper_emission_diesel = copper_dem_diesel * fact * copper_emission_fact_diesel / (10 ** 9)
+	copper_emission_kerosene = copper_dem_kerosene * fact * copper_emission_fact_kerosene / (10 ** 9)
+	copper_emission_natural_gas = copper_dem_natural_gas * fact * copper_emission_fact_natural_gas / (10 ** 9)
 	copper_emission_pliqgas = copper_dem_pliqgas * fact * copper_emission_fact_pliqgas / (10 ** 9)
 	copper_emission_fueloil = copper_dem_fueloil * fact * copper_emission_fact_fueloil / (10 ** 9)
 
-	copper_emission =copper_emission_diesel+copper_emission_kerosene+copper_emission_natural_gas+copper_emission_pliqgas+copper_emission_fueloil
+	copper_emission = copper_emission_diesel + copper_emission_kerosene + copper_emission_natural_gas + copper_emission_pliqgas + copper_emission_fueloil
+
+	# electric demand to produce hydrogen
+	electric_demand_hydrogen = copper_dem_hydrogen / electrolyzer_efficiency * share_electric_grid_to_hydrogen
 
 	dict_emission = {"copper": copper_emission}
-	dict_electric_demand = {"copper": copper_dem_electric*fact2}
-
+	dict_electric_demand = {"copper": copper_dem_electric * fact2}
 
 	# SUB SECTOR: PULP ENERGY MODEL - Papel y Celulosa
 
@@ -143,21 +149,24 @@ def sm_industry_and_mining(df_in, dict_sector_abv):
 	# calculate emission in millon tCO2
 	pulp_emission_diesel = pulp_dem_diesel * fact * pulp_emission_fact_diesel / (10 ** 9)
 	pulp_emission_natural_gas = pulp_dem_natural_gas * fact * pulp_emission_fact_natural_gas / (10 ** 9)
-	pulp_emission =pulp_emission_diesel+ pulp_emission_natural_gas
+	pulp_emission = pulp_emission_diesel + pulp_emission_natural_gas
+
+	# electric demand to produce hydrogen
+	electric_demand_hydrogen = electric_demand_hydrogen + pulp_dem_hydrogen / electrolyzer_efficiency * share_electric_grid_to_hydrogen
 
 	# update
 	dict_emission.update({"pulp": pulp_emission})
-	dict_electric_demand.update({"pulp": pulp_dem_electric*fact2})
+	dict_electric_demand.update({"pulp": pulp_dem_electric * fact2})
 
 	# SUB SECTOR: Other industries - Industrias
 
 	# Read input parameters defined in parameter_ranges.csv
-	gdp = np.array(df_in["pib"])*np.array(df_in["pib_scalar_transpiort"])
+	gdp = np.array(df_in["pib"]) * np.array(df_in["pib_scalar_transpiort"])
 	other_industries_intensity = np.array(df_in["other_industries_intensity"])
 
 	#
 	gdp = np.array(df_in["gdp"])
-	growth_rate_gdp= np.array(df_in["growth_rate_gdp"])
+	growth_rate_gdp = np.array(df_in["growth_rate_gdp"])
 	other_industries_elasticity = np.array(df_in["other_industries_elasticity"])
 	other_industries_rate_useful_energy = np.array(df_in["other_industries_rate_useful_energy"])
 	other_industries_share_motor = np.array(df_in["other_industries_share_motor"])
@@ -200,8 +209,8 @@ def sm_industry_and_mining(df_in, dict_sector_abv):
 	#
 	year = np.array(df_in["year"])  # vector years
 
-	other_industries_total_demand = dem_other_industries(year, growth_rate_gdp,other_industries_elasticity)
-	other_industries_useful_energy = other_industries_total_demand*other_industries_rate_useful_energy
+	other_industries_total_demand = dem_other_industries(year, growth_rate_gdp, other_industries_elasticity)
+	other_industries_useful_energy = other_industries_total_demand * other_industries_rate_useful_energy
 
 	# calculate demand in Tcal by en use
 	other_industries_dem_motor_diesel = other_industries_useful_energy * other_industries_share_motor * other_industries_motor_diesel / other_industries_efficiency_motor_diesel
@@ -223,28 +232,35 @@ def sm_industry_and_mining(df_in, dict_sector_abv):
 
 	# total demand by type of energy
 
-	other_industries_dem_diesel = other_industries_dem_motor_diesel+other_industries_dem_heat_diesel
+	other_industries_dem_diesel = other_industries_dem_motor_diesel + other_industries_dem_heat_diesel
 	other_industries_dem_natural_gas = other_industries_dem_heat_natural_gas
-	other_industries_dem_electric = other_industries_dem_motor_electric+other_industries_dem_other_electric+other_industries_dem_heat_electric
+	other_industries_dem_electric = other_industries_dem_motor_electric + other_industries_dem_other_electric + other_industries_dem_heat_electric
 	other_industries_dem_coal = other_industries_dem_heat_coal
 	other_industries_dem_biomass = other_industries_dem_heat_biomass
 	other_industries_dem_solar = other_industries_dem_heat_solar
-	other_industries_dem_hydrogen = other_industries_dem_motor_hydrogen+other_industries_dem_heat_hydrogen
-	other_industries_dem_pliqgas = other_industries_dem_motor_pliqgas+other_industries_dem_heat_pliqgas
+	other_industries_dem_hydrogen = other_industries_dem_motor_hydrogen + other_industries_dem_heat_hydrogen
+	other_industries_dem_pliqgas = other_industries_dem_motor_pliqgas + other_industries_dem_heat_pliqgas
 	other_industries_dem_fueloil = other_industries_dem_heat_fuel_oil
 
 	# calculate emission in millon tCO2
 
-	other_industries_emission_diesel = other_industries_dem_diesel * other_industries_emission_fact_diesel * fact/ (10 ** 9)
-	other_industries_emission_natural_gas = other_industries_dem_natural_gas * other_industries_emission_fact_natural_gas * fact/ (10 ** 9)
-	other_industries_emission_coal = other_industries_dem_coal * other_industries_emission_fact_coal * fact/ (10 ** 9)
-	other_industries_emission_pliqgas = other_industries_dem_pliqgas * other_industries_emission_fact_pliqgas * fact/ (10 ** 9)
-	other_industries_emission_fueloil = other_industries_dem_fueloil * other_industries_emission_fact_fueloil * fact/ (10 ** 9)
-	other_industries_emission = other_industries_emission_diesel + other_industries_emission_natural_gas + other_industries_emission_coal+other_industries_emission_pliqgas+other_industries_emission_fueloil
+	other_industries_emission_diesel = other_industries_dem_diesel * other_industries_emission_fact_diesel * fact / (
+				10 ** 9)
+	other_industries_emission_natural_gas = other_industries_dem_natural_gas * other_industries_emission_fact_natural_gas * fact / (
+				10 ** 9)
+	other_industries_emission_coal = other_industries_dem_coal * other_industries_emission_fact_coal * fact / (10 ** 9)
+	other_industries_emission_pliqgas = other_industries_dem_pliqgas * other_industries_emission_fact_pliqgas * fact / (
+				10 ** 9)
+	other_industries_emission_fueloil = other_industries_dem_fueloil * other_industries_emission_fact_fueloil * fact / (
+				10 ** 9)
+	other_industries_emission = other_industries_emission_diesel + other_industries_emission_natural_gas + other_industries_emission_coal + other_industries_emission_pliqgas + other_industries_emission_fueloil
+
+	# electric demand to produce hydrogen
+	electric_demand_hydrogen = electric_demand_hydrogen + other_industries_dem_hydrogen / electrolyzer_efficiency * share_electric_grid_to_hydrogen
 
 	# update
 	dict_emission.update({"other_industries": other_industries_emission})
-	dict_electric_demand.update({"other_industries": other_industries_dem_electric*fact2})
+	dict_electric_demand.update({"other_industries": other_industries_dem_electric * fact2})
 
 	# SUB SECTOR: CEMENT Industry- Industria del cemento
 
@@ -278,12 +294,14 @@ def sm_industry_and_mining(df_in, dict_sector_abv):
 	cement_emission_natural_gas = cement_dem_natural_gas * fact * cement_emission_fact_natural_gas / (10 ** 9)
 	cement_emission_coal = cement_dem_coal * fact * cement_emission_fact_coal / (10 ** 9)
 	cement_emission_kerosene = cement_dem_kerosene * fact * cement_emission_fact_kerosene / (10 ** 9)
-	cement_emission = cement_emission_diesel+cement_emission_natural_gas+cement_emission_coal+cement_emission_kerosene
+	cement_emission = cement_emission_diesel + cement_emission_natural_gas + cement_emission_coal + cement_emission_kerosene
+
+	# electric demand to produce hydrogen
+	electric_demand_hydrogen = electric_demand_hydrogen + cement_dem_hydrogen / electrolyzer_efficiency * share_electric_grid_to_hydrogen
 
 	# update
 	dict_emission.update({"cement": cement_emission})
-	dict_electric_demand.update({"cement": cement_dem_electric*fact2})
-
+	dict_electric_demand.update({"cement": cement_dem_electric * fact2})
 
 	# SUB SECTOR: IRON Industry- Minieria del hierro
 	iron_production = np.array(df_in["iron_production"])
@@ -312,11 +330,14 @@ def sm_industry_and_mining(df_in, dict_sector_abv):
 	iron_emission_diesel = iron_dem_diesel * fact * iron_emission_fact_diesel / (10 ** 9)
 	iron_emission_natural_gas = iron_dem_natural_gas * fact * iron_emission_fact_natural_gas / (10 ** 9)
 	iron_emission_coal = iron_dem_coal * fact * iron_emission_fact_coal / (10 ** 9)
-	iron_emission = iron_emission_diesel+iron_emission_natural_gas+iron_emission_coal
+	iron_emission = iron_emission_diesel + iron_emission_natural_gas + iron_emission_coal
+
+	# electric demand to produce hydrogen
+	electric_demand_hydrogen = electric_demand_hydrogen + iron_dem_hydrogen / electrolyzer_efficiency * share_electric_grid_to_hydrogen
 
 	# update
 	dict_emission.update({"iron": iron_emission})
-	dict_electric_demand.update({"iron": iron_dem_electric*fact2})
+	dict_electric_demand.update({"iron": iron_dem_electric * fact2})
 
 	# SUB SECTOR: Steel Industry- Industria del acero
 	steel_production = np.array(df_in["steel_production"])
@@ -349,11 +370,14 @@ def sm_industry_and_mining(df_in, dict_sector_abv):
 	steel_emission_natural_gas = steel_dem_natural_gas * fact * steel_emission_fact_natural_gas / (10 ** 9)
 	steel_emission_coal = steel_dem_coal * fact * steel_emission_fact_coal / (10 ** 9)
 	steel_emission_kerosene = steel_dem_kerosene * fact * steel_emission_fact_kerosene / (10 ** 9)
-	steel_emission= steel_emission_diesel+steel_emission_natural_gas+steel_emission_coal+steel_emission_kerosene
+	steel_emission = steel_emission_diesel + steel_emission_natural_gas + steel_emission_coal + steel_emission_kerosene
+
+	# electric demand to produce hydrogen
+	electric_demand_hydrogen = electric_demand_hydrogen + steel_dem_hydrogen / electrolyzer_efficiency * share_electric_grid_to_hydrogen
 
 	# update
 	dict_emission.update({"steel": steel_emission})
-	dict_electric_demand.update({"steel": steel_dem_electric*fact2})
+	dict_electric_demand.update({"steel": steel_dem_electric * fact2})
 
 	# SUB SECTOR: Sugar - Azucar
 
@@ -386,6 +410,9 @@ def sm_industry_and_mining(df_in, dict_sector_abv):
 	sugar_emission_coal = sugar_dem_coal * fact * sugar_emission_fact_coal / (10 ** 9)
 	sugar_emission = sugar_emission_diesel + sugar_emission_natural_gas + sugar_emission_coal
 
+	# electric demand to produce hydrogen
+	electric_demand_hydrogen = electric_demand_hydrogen + sugar_dem_hydrogen / electrolyzer_efficiency * share_electric_grid_to_hydrogen
+
 	# update
 	dict_emission.update({"sugar": sugar_emission})
 	dict_electric_demand.update({"sugar": sugar_dem_electric * fact2})
@@ -413,13 +440,16 @@ def sm_industry_and_mining(df_in, dict_sector_abv):
 	saltpeter_dem_electric = saltpeter_production * saltpeter_intensity * saltpeter_frac_electric
 	saltpeter_dem_biomass = saltpeter_production * saltpeter_intensity * saltpeter_frac_biomass
 	saltpeter_dem_hydrogen = saltpeter_production * saltpeter_intensity * saltpeter_frac_hydrogen
-	saltpeter_dem_coal = saltpeter_production * saltpeter_intensity *saltpeter_frac_coal
+	saltpeter_dem_coal = saltpeter_production * saltpeter_intensity * saltpeter_frac_coal
 
 	# calculate emission in millon tCO2
 	saltpeter_emission_diesel = saltpeter_dem_diesel * fact * saltpeter_emission_fact_diesel / (10 ** 9)
 	saltpeter_emission_natural_gas = saltpeter_dem_natural_gas * fact * saltpeter_emission_fact_natural_gas / (10 ** 9)
 	saltpeter_emission_coal = saltpeter_dem_coal * fact * saltpeter_emission_fact_coal / (10 ** 9)
 	saltpeter_emission = saltpeter_emission_diesel + saltpeter_emission_natural_gas + saltpeter_emission_coal
+
+	# electric demand to produce hydrogen
+	electric_demand_hydrogen = electric_demand_hydrogen + saltpeter_dem_hydrogen / electrolyzer_efficiency * share_electric_grid_to_hydrogen
 
 	# update
 	dict_emission.update({"saltpeter": saltpeter_emission})
@@ -452,13 +482,17 @@ def sm_industry_and_mining(df_in, dict_sector_abv):
 
 	# calculate emission in millon tCO2
 	other_mining_emission_diesel = other_mining_dem_diesel * fact * other_mining_emission_fact_diesel / (10 ** 9)
-	other_mining_emission_natural_gas = other_mining_dem_natural_gas * fact * other_mining_emission_fact_natural_gas / (10 ** 9)
+	other_mining_emission_natural_gas = other_mining_dem_natural_gas * fact * other_mining_emission_fact_natural_gas / (
+				10 ** 9)
 	other_mining_emission_coal = other_mining_dem_coal * fact * other_mining_emission_fact_coal / (10 ** 9)
 	other_mining_emission = other_mining_emission_diesel + other_mining_emission_natural_gas + other_mining_emission_coal
 
+	# electric demand to produce hydrogen
+	electric_demand_hydrogen = electric_demand_hydrogen + other_mining_dem_hydrogen / electrolyzer_efficiency * share_electric_grid_to_hydrogen
+
 	# update
-	dict_emission.update({"other_mining":  other_mining_emission})
-	dict_electric_demand.update({"other_mining":  other_mining_dem_electric * fact2})
+	dict_emission.update({"other_mining": other_mining_emission})
+	dict_electric_demand.update({"other_mining": other_mining_dem_electric * fact2})
 
 	# SUB SECTOR: Fishing - Pesca
 
@@ -491,40 +525,48 @@ def sm_industry_and_mining(df_in, dict_sector_abv):
 	fishing_emission_coal = fishing_dem_coal * fact * fishing_emission_fact_coal / (10 ** 9)
 	fishing_emission = fishing_emission_diesel + fishing_emission_natural_gas + fishing_emission_coal
 
+	# electric demand to produce hydrogen
+	electric_demand_hydrogen = electric_demand_hydrogen + fishing_dem_hydrogen / electrolyzer_efficiency * share_electric_grid_to_hydrogen
+
 	# update
 	dict_emission.update({"fishing": fishing_emission})
 	dict_electric_demand.update({"fishing": fishing_dem_electric * fact2})
-	
-	
+
+	# electric demand to produce hydrogen
+	electric_demand_hydrogen = electric_demand_hydrogen * fact2
+
 	##  final output dictionary
 	dict_out = {}
-	
+
 	vec_total_emissions = 0
-	#add emissions to master output
+	# add emissions to master output
 	for k in dict_emission.keys():
-		#new key conveys emissions
+		# new key conveys emissions
 		k_new = (dict_sector_abv["industry_and_mining"]) + "-emissions_" + str(k) + "-mtco2e"
-		#add to output
+		# add to output
 		dict_out.update({k_new: dict_emission[k].copy()})
-		#update total
+		# update total
 		vec_total_emissions = vec_total_emissions + np.array(dict_emission[k])
-		
+
 	vec_total_demand_electricity = 0
-	#add electric demand to master output
+	# add electric demand to master output
 	for k in dict_electric_demand.keys():
-		#new key conveys emissions
+		# new key conveys emissions
 		k_new = (dict_sector_abv["industry_and_mining"]) + "-electricity_" + str(k) + "_demand-gwh"
-		#add to output
+		# add to output
 		dict_out.update({k_new: dict_electric_demand[k].copy()})
-		#update total
+		# update total
 		vec_total_demand_electricity = vec_total_demand_electricity + np.array(dict_electric_demand[k])
-		
-	#add totals
+
+	# update with electricity to produce hydrogen
+	vec_total_demand_electricity = vec_total_demand_electricity + electric_demand_hydrogen
+
+	# add totals
 	dict_out.update({
 		(dict_sector_abv["industry_and_mining"] + "-emissions_total-mtco2e"): vec_total_emissions,
 		(dict_sector_abv["industry_and_mining"] + "-electricity_total_demand-gwh"): vec_total_demand_electricity,
+		(dict_sector_abv["industry_and_mining"] + "-electricity_hydrogen-gwh"): electric_demand_hydrogen,
 	})
-		
-	# return
-	return dict_out#dict_emission,dict_electric_demand
 
+	# return
+	return dict_out  # dict_emission,dict_electric_demand
