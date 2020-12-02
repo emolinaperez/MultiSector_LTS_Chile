@@ -155,6 +155,42 @@ df_data_price.to_csv(dr_in_gams_energ, index=False)
 first_scen = df_master_id.min()
 last_scen = df_master_id.max()
 
+##############################################################################
+# Read data hydrologies from pmr data input
+dr_in_gams_data_hidro = os.path.join(dr_data_input,"data_hidrologias.csv")
+df_data_hydro = pd.read_csv(dr_in_gams_data_hidro)
+df_data_hydro_id_hydro = df_data_hydro["ID_Hidro"].copy()
+df_data_hydro_probability = df_data_hydro["Probabilidad_Excedencia"].copy()
+
+#file where we export hydro
+dr_in_gams_hydro = os.path.join(dr_data_input, "data_hidrologias_escenarios.csv")
+
+#read info from experimental desing
+df_hydrologies = df_scenarios["hydrology_exceedance_probability"].copy()
+
+#load data
+probability = np.ones(last_scen-first_scen+1)
+scenarios=np.ones(last_scen-first_scen+1)
+hydrological_scenarios=np.ones(last_scen-first_scen+1)
+
+ii=0
+#read probability from experimental desing
+for i in range(len(df_year)):
+    if df_year[i] == 2050:
+        probability[ii] = df_hydrologies[i]
+        scenarios[ii]=df_master_id[i]
+        ii=ii+1
+
+#assign hydrological scenario
+for ii in range(last_scen-first_scen+1):
+    for jj in range(len(df_data_hydro_id_hydro)):
+        if probability[ii] >= df_data_hydro_probability[jj]:
+            hydrological_scenarios[ii]=df_data_hydro_id_hydro[jj]
+
+#export data to data_input
+#df_data_hydrologies = pd.DataFrame({'Escenario':scenarios, 'Escenario_Hidrologico':hydrological_scenarios,'Probabilidad_Excedencia':probability})
+df_data_hydrologies = pd.DataFrame({'Escenario':scenarios.astype(int),'Escenario_Hidrologico':hydrological_scenarios.astype(int)})
+df_data_hydrologies.to_csv(dr_in_gams_hydro, index=False)
 
 
 ##############################################################################
