@@ -33,7 +33,7 @@ Author: JMV
 Date: Fri, Jul 17, 2020 11:00 AM
 DiagState: 2,283,157,1288,561,17
 FontStyle: Arial,15
-FileInfo: 0,Model DDPLTS_IPPU,2,2,0,0,L:\Modelos\2020-DDPLTS\DDPLTS-IPPU.ana
+FileInfo: 0,Model DDPLTS_IPPU,2,2,0,0,C:\Users\adm\Documents\GitHub\MultiSector_LTS_Chile\analytica\ippu\20201123-DDPLTS-IPPU.ana
 
 Library Funciones
 Title: Funciones
@@ -6523,13 +6523,13 @@ Att_ResultSliceState: [Tipo_Emisiones_HFC,2,TipoBanco,3,Time,1]
 {!40600|Att_ClusterIndex: Null}
 
 Index SubC_Uso_SAO
+Att_PrevIndexValue: ['F.1.1 Ref Comercial e Industrial','F.1.2 Ref Residencial','F.1.3 AC Movil','F.1.3 AC Fijo','F.2 Agente Espumante','F.3 Proteccion Fuego']
 Title: SubCategoria Uso SAO
 Units: ktCO2e
 Definition: ['F.1.1 Ref Comercial e Industrial','F.1.2 Ref Residencial','F.1.3 AC Movil','F.1.3 AC Fijo','F.2 Agente Espumante','F.3 Proteccion Fuego']
 NodeLocation: 1120,40,1
 NodeSize: 64,24
 WindState: 2,98,82,720,350
-Att_PrevIndexValue: ['F.1.1 Ref Comercial e Industrial','F.1.2 Ref Residencial','F.1.3 AC Movil','F.1.3 AC Fijo','F.2 Agente Espumante','F.3 Proteccion Fuego']
 
 Constant Map_SC_Uso_SAO
 Title: Map SC Uso SAO
@@ -6798,12 +6798,12 @@ DefnState: 2,308,314,1160,303,0,DFNM
 ReformDef: [Time,SubC_Uso_SAO]
 
 Index Refrigerantes_MMA
+Att_PrevIndexValue: ['HFC134a','HFC125','HFC143a','HFC32','HCFC','CFC','Isobutano','Propano','HFO','CO2']
 Title: Refrigerantes MMA
 Definition: ['HFC134a','HFC125','HFC143a','HFC32','HCFC','CFC','Isobutano','Propano','HFO','CO2']
 NodeLocation: 152,64,1
 NodeSize: 64,24
 {!40300|Att_SlicerPopupSize: 227,176}
-Att_PrevIndexValue: ['HFC134a','HFC125','HFC143a','HFC32','HCFC','CFC','Isobutano','Propano','HFO','CO2']
 
 Constant Distribucion_Consumo
 Title: Distribucion Consumo

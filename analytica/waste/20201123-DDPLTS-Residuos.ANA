@@ -98,7 +98,7 @@ DefaultSize: 48,24
 DiagState: 2,211,18,1713,852,17
 DiagramColor: 65535,65535,65535
 FontStyle: Calibri, 15
-FileInfo: 0,Model Emision_residuos_1,2,2,0,0,C:\Users\adm\Dropbox\30-Analisis\Analytica\discoL\Modelos\2020-DDPLTS\DDPLTS-Residuos.ANA
+FileInfo: 0,Model Emision_residuos_1,2,2,0,0,C:\Users\adm\Documents\GitHub\MultiSector_LTS_Chile\analytica\waste\20201123-DDPLTS-Residuos.ANA
 OutlinerState: 2,40,50,448,280
 {!40400|Att_clearTypeFonts: 0}
 
@@ -2009,6 +2009,7 @@ Definition: F_DSN('LecturaDatos\DatosResiduos.xlsx')
 NodeLocation: 344,56,1
 NodeSize: 48,24
 NodeInfo: 1,,0
+WindState: 2,104,39,720,350
 ValueState: 2,132,138,1080,402,,MIDM
 Aliases: Alias Al512249981
 
@@ -8730,6 +8731,8 @@ Att_ResultSliceState: [Escenario,2,Time,101,Region,0,Self,1]
 
 Module Emisiones_por_quema1
 Title: Emisiones por quema
+Author: adm
+Date: Thu, Nov 26, 2020 12:44 PM
 NodeLocation: 760,424,1
 NodeSize: 48,24
 
@@ -9612,6 +9615,8 @@ Original: Emisiones_excretas
 
 Module Distribucion_de_TOWS
 Title: Distribucion de TOW
+Author: adm
+Date: Thu, Nov 26, 2020 12:44 PM
 NodeLocation: 240,200,1
 NodeSize: 48,24
 DiagState: 2,0,0,944,609,17
@@ -9919,6 +9924,8 @@ Close Distribucion_de_TOWS
 
 Module OLD
 Title: OLD
+Author: adm
+Date: Thu, Nov 26, 2020 12:44 PM
 NodeLocation: 168,32,1
 NodeSize: 48,24
 NodeInfo: 1,0,0
@@ -10004,6 +10011,8 @@ Att__TotalsIndex: [Tratamiento]
 
 Module TOW1
 Title: TOW
+Author: adm
+Date: Thu, Nov 26, 2020 12:44 PM
 NodeLocation: 240,344,1
 NodeSize: 48,24
 
@@ -10041,7 +10050,7 @@ NodeLocation: 400,48,1
 NodeSize: 48,24
 WindState: 2,178,152,717,350
 ValueState: 2,61,84,1210,773,0,MIDM
-Aliases: Alias Al112860925, Alias Al1102716669
+Aliases: Alias Al1102716669, Alias Al112860925
 ReformVal: [Time,Null]
 Att__TotalsIndex: [Region]
 Att_ResultSliceState: [Region,0,Time,6]
@@ -10079,6 +10088,8 @@ Original: TOW
 
 Module S1
 Title: S
+Author: adm
+Date: Thu, Nov 26, 2020 12:44 PM
 NodeLocation: 384,344,1
 NodeSize: 48,24
 DiagState: 2,426,165,944,480,17
@@ -10280,6 +10291,8 @@ Original: S
 
 Module Metano_recuperado3
 Title: Metano recuperado
+Author: adm
+Date: Thu, Nov 26, 2020 12:44 PM
 NodeLocation: 384,448,1
 NodeSize: 48,24
 
@@ -10985,7 +10998,7 @@ NodeLocation: 320,272,1
 NodeSize: 48,32
 WindState: 2,462,37,1238,724
 DefnState: 2,0,0,905,296,0,DFNM
-ValueState: 2,96,53,1607,779,0,MIDM
+ValueState: 2,96,53,1607,779,1,MIDM
 Aliases: Alias Va6, Alias Va3, Alias Al64725629
 GraphSetup: Att_Stacked_Lines Graph_Primary_Valdim:0~
 Att_ContLineStyle Graph_Primary_Valdim:5~
