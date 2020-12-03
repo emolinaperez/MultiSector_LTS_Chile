@@ -757,15 +757,15 @@ df_data_hydro = pd.read_csv(sr.fp_csv_gams_data_hidrologias)
 #sort to ensure we can just take highest row that is less than or equal to prob
 df_data_hydro = df_data_hydro.sort_values(by = ["Probabilidad_Excedencia"]).reset_index(drop = True)
 #hydrologies from the experimental design
-df_ed_hyd = df_ed[df_ed["year"] == 2050][["master_id", "hydrology_exceedance_probability"]].copy().reset_index(drop = True)
+df_ed_hyd = df_out[df_out["year"] == 2050][["master_id", "hydrology_exceedance_probability"]].copy().reset_index(drop = True)
 #initialize
 hydrological_scenarios = np.zeros(len(df_ed_hyd)).astype(int)
 #loop to overwrite the scenarios
 for i in range(len(df_ed_hyd)):
     prob = float(df_ed_hyd["hydrology_exceedance_probability"].iloc[i])
-    tmp = np.where(df_data_hydro["Probabilidad_Excedencia"] <= prob)
+    tmp = np.where(df_data_hydro["Probabilidad_Excedencia"] >= prob)
     #get the associated hydro id
-    hydro_id = int(df_data_hydro["ID_Hidro"].iloc[max(tmp[0])])
+    hydro_id = int(df_data_hydro["ID_Hidro"].iloc[min(tmp[0])])
     #overwrite
     hydrological_scenarios[i] = hydro_id
 #add to data frame
