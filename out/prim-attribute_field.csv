@@ -2,12 +2,10 @@ field_name,field_display_name,field_prim_type,field_filter_default,include
 master_id,master id,key,,1
 strategy_id,strategy id,filter,all,1
 cement_production,cement production,input,,1
-copper_production,copper production,input,,1
 cumplimiento_metas,cumplimiento metas,input,,1
 ef_captura,ef captura,input,,1
-especies_exoticas,especies exoticas,input,,1
-especies_nativas,especies nativas,input,,1
 fishing_production,fishing production,input,,1
+hfcmma,hfcmma,input,,1
 incendio_bosque_nativo,incendio bosque nativo,input,,1
 incendio_plantaciones_forestales,incendio plantaciones forestales,input,,1
 incertidumbre_incendio_bn,incertidumbre incendio bn,input,,1
@@ -25,15 +23,30 @@ precio_cerdo,precio cerdo,input,,1
 precio_leche,precio leche,input,,1
 precio_maiz,precio maiz,input,,1
 precio_pollo,precio pollo,input,,1
+ptas_antofa,ptas antofa,input,,1
 ptas_biobio,ptas biobio,input,,1
 ptas_valpo,ptas valpo,input,,1
+ptasls_coq,ptasls coq,input,,1
+public_frac_biomass,public frac biomass,input,,1
+public_frac_electric,public frac electric,input,,1
+public_frac_natural_gas,public frac natural gas,input,,1
+public_frac_pliqgas,public frac pliqgas,input,,1
 public_intensity,public intensity,input,,1
+pulp_frac_biomass,pulp frac biomass,input,,1
+pulp_frac_electric,pulp frac electric,input,,1
 pulp_intensity,pulp intensity,input,,1
 pulp_production,pulp production,input,,1
 recuperacion_bn,recuperacion bn,input,,1
+rs_arauc,rs arauc,input,,1
+rs_aysen,rs aysen,input,,1
+rs_coq,rs coq,input,,1
+rs_magallanes,rs magallanes,input,,1
+rs_tarapaca,rs tarapaca,input,,1
+rs_valpo,rs valpo,input,,1
 saltpeter_production,saltpeter production,input,,1
 steel_production,steel production,input,,1
 sugar_production,sugar production,input,,1
+supuestos_mma_waste,supuestos mma waste,input,,1
 sustitucion_degradacion,sustitucion degradacion,input,,1
 tierras_convertidas_a_bn,tierras convertidas a bn,input,,1
 tierras_convertidas_a_plantaciones,tierras convertidas a plantaciones,input,,1

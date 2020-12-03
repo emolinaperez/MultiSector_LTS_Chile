@@ -590,11 +590,15 @@ exp_design_diff.to_csv(fp_ed_diff_out, index = None, encoding = "UTF-8")
 
 #files to copy in
 list_files_copy = [
+	sr.fp_csv_attribute_master,
+	sr.fp_csv_attribute_strategy,
+	sr.fp_csv_attribute_time_series,
+	sr.fp_csv_experimental_design_msec_single_vals,
+	sr.fp_csv_lhs_table_levers,
+	sr.fp_csv_lhs_table_multi_sector,
 	sr.fp_csv_output_multi_sector,
 	sr.fp_csv_output_multi_sector_base_year,
-	sr.fp_csv_output_multi_sector_diff,
-	sr.fp_csv_attribute_master,
-	sr.fp_csv_attribute_runs
+	sr.fp_csv_output_multi_sector_diff
 ]
 #add in analytica output?
 if sr.integrate_analytica_q:

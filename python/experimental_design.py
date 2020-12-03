@@ -1011,6 +1011,10 @@ if sr.integrate_analytica_q:
 				sr.fp_csv_experimental_design_msec,
 				sr.fp_csv_experimental_design_msec_single_vals,
 				sr.fp_csv_experimental_design_msec_masters_to_run
+			],
+			
+			sr.dir_ref_ade: [
+				sr.fp_csv_attribute_pyparams
 			]
 		}
 		
