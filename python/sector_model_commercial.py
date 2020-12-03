@@ -27,8 +27,9 @@ def sm_commercial(df_in, dict_sector_abv):
 	electrolyzer_efficiency = np.array(df_in["electrolyzer_efficiency"])
 
 	# Read input parameters defined in parameter_ranges.csv
-	gdp = np.array(df_in["pib"]) * np.array(df_in["pib_scalar_transpiort"])
-	growth_rate_gdp = np.array(df_in["growth_rate_gdp"])
+	gdp = np.array(df_in["pib"]) * np.array(df_in["pib_scalar_transport"])
+	growth_rate_gdp = np.array(df_in["gr_pib"])
+	#growth_rate_gdp = np.array(df_in["growth_rate_gdp"])
 	commercial_elasticity = np.array(df_in["commercial_elasticity"])
 	commercial_frac_diesel = np.array(df_in["commercial_frac_diesel"])
 	commercial_frac_natural_gas = np.array(df_in["commercial_frac_natural_gas"])

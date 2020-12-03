@@ -31,12 +31,27 @@ dict_rename = {
 	"OPEX": (sr.dict_sector_to_abv["electricity"] + "-costs_total_opex-UNITSHERE")
 }
 
-										 
+#get hydrology info
+df_ed_hyd = pd.read_csv(sr.fp_csv_gams_data_hidrologias_escenarios)
+#convert to dictionary
+dict_ed_hyd = sr.build_dict(df_ed_hyd[["Escenario", "Escenario_Hidrologico"]])
+
 for m in all_masters_run:
 	#get index
 	i = all_masters.index(m)
-	data_set_scen = pd.DataFrame([[i]], columns = ["Escenario"])
-	data_set_scen.to_csv(sr.fp_csv_gams_data_set_scen, index = False, header = True)
+	
+	##  export scenario information for gams
+
+	# scenario to run (for investment/price)
+	data_set_scen = pd.DataFrame([[m]], columns = ["Escenario"])
+	data_set_scen.to_csv(sr.fp_csv_gams_data_set_scen, index = False, header = True, encoding = "UTF-8")
+	
+	# hydrology to run
+	hydro_id = int(dict_ed_hyd[m])
+	data_set_hydro_id = pd.DataFrame([[hydro_id]], columns = ["ID_Hidro"])
+	data_set_hydro_id.to_csv(sr.fp_csv_gams_data_hidrologias_planificacion, index = False, header = True, encoding = "UTF-8")
+	data_set_hydro_id.to_csv(sr.fp_csv_gams_data_hidrologias_simulacion, index = False, header = True, encoding = "UTF-8")
+	
 	
 	print("\n" + "#"*30 + "\n###\n###    EMPEZANDO master_id " + str(m) + "\n###\n" + "#"*30 + "\n")
 	# Con la seleccion de escenario lista se procede a ejecutar el archivo de GAMS

@@ -183,8 +183,8 @@ df_tmp_correction_for_pib_peso_traj = pd.read_csv(sr.fp_csv_tmp_correction_for_p
 #get baseline data from experimental design
 df_tmp_correction_for_pib_peso_traj = pd.merge(df_tmp_correction_for_pib_peso_traj, exp_design[exp_design["master_id"] == 0][["year", "pib"]].copy(), how = "left", on = ["year"]).reset_index(drop = True)
 #add scalar and string name
-str_pib_scalar = "pib_scalar_transpiort"
-df_tmp_correction_for_pib_peso_traj[str_pib_scalar] = np.array(df_tmp_correction_for_pib_peso_traj["pib_peso"])/np.array(df_tmp_correction_for_pib_peso_traj["pib"])
+str_pib_scalar = "pib_scalar_transport"
+df_tmp_correction_for_pib_peso_traj[str_pib_scalar] = np.array(df_tmp_correction_for_pib_peso_traj["pib_peso_carlos_gr1"])/np.array(df_tmp_correction_for_pib_peso_traj["pib"])
 df_tmp_correction_for_pib_peso_traj = df_tmp_correction_for_pib_peso_traj[["year", str_pib_scalar]]
 #data to merge in
 dict_sector_merge = {

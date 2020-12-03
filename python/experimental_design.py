@@ -687,11 +687,47 @@ df_out = df_out[[x for x in df_out.columns if (x not in fields_drop)]]
 
 
 
+######################################
+###                                ###
+###    GENERATE GDP GROWTH RATE    ###
+###                                ###
+######################################
+
+print("\nBuilding growth rate...")
+#get gdp and years
+pib = np.array(df_out["pib"])
+yrs = np.array(df_out["year"])
+
+#get differences to use to take as root of growth rate
+yr_diff = yrs[1:] - yrs[0:(len(yrs) - 1)]
+#get growth rate in pib
+gr_pib_raw = pib[1:]/pib[0:(len(pib) - 1)] - 1
+#set the exponents
+vec_exp = np.array([max(1/x, 1) for x in yr_diff])
+gr_pib = gr_pib_raw**vec_exp
+#get position of negative elements
+ind_new_years = [i for i, x in enumerate(yr_diff) if x == min(yr_diff)]
+ind_new_years_ext = [i + 1 for i in ind_new_years]
+#update
+np.put(gr_pib, ind_new_years, gr_pib_raw[ind_new_years_ext])
+#add initial growth rate
+gr_pib = np.concatenate([np.array([gr_pib[0]]), gr_pib])
+#add to output dataframe
+df_out["gr_pib"] = gr_pib
+
+print("Growth rate complete.\n")
+
+
+
+
+
 ###############################
 ###                         ###
 ###    EXPORT GAMS FILES    ###
 ###                         ###
 ###############################
+
+##  PRICE AND INVESTMENT COST
 
 #set ids for different data frames
 dict_dfs_exp = {
@@ -708,8 +744,38 @@ for k in list(dict_dfs_exp.keys()):
     df_sub = df_sub.rename(columns = sr.dict_map_params_to_params_gams)
     #conver to long and rename
     df_sub = pd.melt(df_sub, ["master_id", "year"]).rename(columns = {"master_id": "Escenario", "year": "Agno", "variable": "Energeticos", "value": "Precio"})
+    #notify
+    print("Exporting GAMS " + str(k) + " file to: " + dict_dfs_exp[k]["exp_path"] + "...\n")
     #export
     df_sub.to_csv(dict_dfs_exp[k]["exp_path"], encoding = "UTF-8", index = None)
+
+
+##  HYDROLOGICAL
+
+# Read data hydrology indices from pmr data input
+df_data_hydro = pd.read_csv(sr.fp_csv_gams_data_hidrologias)
+#sort to ensure we can just take highest row that is less than or equal to prob
+df_data_hydro = df_data_hydro.sort_values(by = ["Probabilidad_Excedencia"]).reset_index(drop = True)
+#hydrologies from the experimental design
+df_ed_hyd = df_ed[df_ed["year"] == 2050][["master_id", "hydrology_exceedance_probability"]].copy().reset_index(drop = True)
+#initialize
+hydrological_scenarios = np.zeros(len(df_ed_hyd)).astype(int)
+#loop to overwrite the scenarios
+for i in range(len(df_ed_hyd)):
+    prob = float(df_ed_hyd["hydrology_exceedance_probability"].iloc[i])
+    tmp = np.where(df_data_hydro["Probabilidad_Excedencia"] <= prob)
+    #get the associated hydro id
+    hydro_id = int(df_data_hydro["ID_Hidro"].iloc[max(tmp[0])])
+    #overwrite
+    hydrological_scenarios[i] = hydro_id
+#add to data frame
+df_ed_hyd["Escenario_Hidrologico"] = hydrological_scenarios
+df_ed_hyd = df_ed_hyd[["master_id", "Escenario_Hidrologico"]].rename(columns = {"master_id": "Escenario"})
+#notify
+print("Exporting GAMS hydrology file to: " + sr.fp_csv_gams_data_hidrologias_escenarios + "...\n")
+#export data to data_input
+df_ed_hyd.to_csv(sr.fp_csv_gams_data_hidrologias_escenarios, index = False, encoding = "UTF-8")
+
 
 
 
@@ -1008,6 +1074,7 @@ if sr.integrate_analytica_q:
 		#set files to copy
 		dict_files_copy = {
 			sr.dir_ed_ade: [
+				sr.fp_csv_attribute_master,
 				sr.fp_csv_experimental_design_msec,
 				sr.fp_csv_experimental_design_msec_single_vals,
 				sr.fp_csv_experimental_design_msec_masters_to_run

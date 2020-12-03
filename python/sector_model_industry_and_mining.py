@@ -161,12 +161,14 @@ def sm_industry_and_mining(df_in, dict_sector_abv):
 	# SUB SECTOR: Other industries - Industrias
 
 	# Read input parameters defined in parameter_ranges.csv
-	gdp = np.array(df_in["pib"]) * np.array(df_in["pib_scalar_transpiort"])
+	gdp = np.array(df_in["pib"]) * np.array(df_in["pib_scalar_transport"])
+	growth_rate_gdp = np.array(df_in["gr_pib"])
+	
 	other_industries_intensity = np.array(df_in["other_industries_intensity"])
 
 	#
-	gdp = np.array(df_in["gdp"])
-	growth_rate_gdp = np.array(df_in["growth_rate_gdp"])
+	#gdp = np.array(df_in["gdp"])
+	#growth_rate_gdp = np.array(df_in["growth_rate_gdp"])
 	other_industries_elasticity = np.array(df_in["other_industries_elasticity"])
 	other_industries_rate_useful_energy = np.array(df_in["other_industries_rate_useful_energy"])
 	other_industries_share_motor = np.array(df_in["other_industries_share_motor"])

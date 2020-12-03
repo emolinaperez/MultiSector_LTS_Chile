@@ -37,7 +37,7 @@ def sm_transport(df_in, dict_sector_abv, odel_transport_pkm_aviation = None):
 	# Read input parameters defined in parameter_ranges.csv
 	year = np.array(df_in["year"])  # vector years
 	population = np.array(df_in["poblacion"])
-	gdp = np.array(df_in["pib"]) * np.array(df_in["pib_scalar_transpiort"])
+	gdp = np.array(df_in["pib"]) * np.array(df_in["pib_scalar_transport"])
 
 	# average distance by trip
 	trip_distance_private = np.array(df_in["transport_trip_distance_private"])
