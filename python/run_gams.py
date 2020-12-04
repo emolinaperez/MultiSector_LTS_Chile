@@ -49,7 +49,6 @@ for m in all_masters_run:
 	# hydrology to run
 	hydro_id = int(dict_ed_hyd[m])
 	data_set_hydro_id = pd.DataFrame([[hydro_id]], columns = ["ID_Hidro"])
-	data_set_hydro_id.to_csv(sr.fp_csv_gams_data_hidrologias_planificacion, index = False, header = True, encoding = "UTF-8")
 	data_set_hydro_id.to_csv(sr.fp_csv_gams_data_hidrologias_simulacion, index = False, header = True, encoding = "UTF-8")
 	
 	
