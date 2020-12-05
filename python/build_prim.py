@@ -32,7 +32,7 @@ df_ed = pd.read_csv(sr.fp_csv_experimental_design_msec)
 year_max = max(df_ed["year"])
 
 #initialize prim data frame
-fields_ed_id = ["master_id", "strategy_id"]
+fields_ed_id = ["master_id", "strategy_id", "time_series_id"]
 fields_ed_dat = [x for x in df_ed.columns if (x not in fields_ed_id) and ("_id" not in x) and (x != "year")]
 
 #update dictionary

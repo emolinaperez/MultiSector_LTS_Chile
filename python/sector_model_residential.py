@@ -48,7 +48,7 @@ def sm_residential(df_in, dict_sector_abv):
 	residential_emission_natural_gas = residential_dem_natural_gas * fact * residential_emission_fact_natural_gas / (10 ** 9)
 	residential_emission_kerosene = residential_dem_kerosene * fact * residential_emission_fact_kerosene / (10 ** 9)
 	residential_emission_pliqgas = residential_dem_pliqgas * fact * residential_emission_fact_pliqgas / (10 ** 9)
-	residential_emission = residential_emission_natural_gas+residential_emission_kerosene+residential_emission_pliqgas
+	residential_emission = residential_emission_natural_gas + residential_emission_kerosene+residential_emission_pliqgas
 
 	dict_emission = {"residential": residential_emission}
 	dict_electric_demand = {"residential": residential_dem_electric*fact2}
