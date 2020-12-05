@@ -1,0 +1,4500 @@
+{ Analytica Model Sector_UTCUTS, encoding="UTF-8" }
+SoftwareVersion 5.4.6
+
+
+{ System Variables with non-default values: }
+Time := Sequence(2019, 2050, 1)
+Units Time: año
+NodeLocation Time: 112,64,1
+NodeSize Time: 48,24
+NodeInfo Time: 1,,,,,,,0,,,,,,0
+WindState Time: 2,0,0,720,350
+{!40300|Att_SlicerPopupSize Time: 235,476}
+SampleSize := 1000
+NodeLocation SampleSize: 240,64,1
+NodeSize SampleSize: 48,24
+NodeInfo SampleSize: 1,,,,,,,0,,,,,,0
+TypeChecking := 1
+Checking := 1
+SaveOptions := 2
+SaveValues := 0
+NodeLocation SampleWeighting: 368,64,1
+NodeSize SampleWeighting: 48,24
+NodeInfo SampleWeighting: 1,,,,,,,0,,,,,,0
+{!40200|NodeLocation EnableComplexNumbers: 112,128,1}
+{!40200|NodeSize EnableComplexNumbers: 48,24}
+{!40200|NodeInfo EnableComplexNumbers: 1,,,,,,,0,,,,,,0}
+{!40400|Sys_WindowsMaximized := 1}
+{!40500|NodeLocation TextLocale: 240,128,1}
+{!40500|NodeSize TextLocale: 48,24}
+{!40500|NodeInfo TextLocale: 1,,,,,,,0,,,,,,0}
+{!40600|NodeLocation MaxEvaluationThreads: 368,128,1}
+{!40600|NodeSize MaxEvaluationThreads: 48,24}
+{!40600|NodeInfo MaxEvaluationThreads: 1,,,,,,,0,,,,,,0}
+{!40600|NodeLocation MaxModelThreads: 112,192,1}
+{!40600|NodeSize MaxModelThreads: 48,24}
+{!40600|NodeInfo MaxModelThreads: 1,,,,,,,0,,,,,,0}
+{!50000|NodeLocation DecimalForCopyPaste: 240,192,1}
+{!50000|NodeSize DecimalForCopyPaste: 48,24}
+{!50000|NodeInfo DecimalForCopyPaste: 1,,,,,,,0,,,,,,0}
+NodeLocation Sys_ComparisonTolera: 368,192,1
+NodeSize Sys_ComparisonTolera: 48,24
+NodeInfo Sys_ComparisonTolera: 1,,,,,,,0,,,,,,0
+{!50400|Sys_UseLegacyColors := 1}
+
+{!-50299|DiagramColor Model: 65535,65535,65535}
+{!-50299|DiagramColor Module: 65535,65535,65535}
+{!-50299|DiagramColor LinkModule: 65535,65535,65535}
+{!-50299|DiagramColor Library: 65535,65535,65535}
+{!-50299|DiagramColor LinkLibrary: 65535,65535,65535}
+{!-50299|DiagramColor Form: 65535,65535,65535}
+NodeInfo FormNode: 1,0,0,,0,0,,,,0,,,0
+NodeColor Text: 65535,65535,65535
+
+
+AskAttribute Value,Variable,Yes
+
+Model Sector_UTCUTS
+Title: Sector UTCUTS
+Description: Modelo de proyección de emisiones GEI para el sector Uso de la tierra, cambio de uso de la tierra y silvicultura hasta el año 2050
+Author: lunam
+Date: mar., sept. 15, 2020 10:28 a. m.
+DiagState: 2,227,108,624,307,17
+WindState: 2,130,85,720,350
+DiagramColor: 52428,52428,52428
+FontStyle: Arial,15
+FileInfo: 0,Model Sector_UTCUTS,2,2,0,0,C:\Users\andre\OneDrive\Documentos\GitHub\MultiSector_LTS_Chile\analytica\forestry\Modelo_Sector_Forestal_2020_12_05.ana
+
+Module Indices
+Title: Indices
+Author: lunam
+Date: mar., sept. 15, 2020 10:28 a. m.
+NodeLocation: 80,216,1
+NodeSize: 48,24
+DiagState: 2,-70,18,624,574,17
+WindState: 2,0,0,720,350
+
+Index Ano
+Title: Año
+Definition: Sequence(1990, 2050,1)
+NodeLocation: 128,72,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+{!40300|Att_SlicerPopupSize: 232,641}
+Att_PrevIndexValue: [1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030,2031,2032,2033,2034,2035,2036,2037,2038,2039,2040,2041,2042,2043,2044,2045,2046,2047,2048,2049,2050]
+
+Index Gas_GEI
+Title: Gas_GEI
+Definition: ['CO2','CH4','N2O']
+NodeLocation: 128,136,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+{!40300|Att_SlicerPopupSize: 242,80}
+Att_PrevIndexValue: ['CO2','CH4','N2O']
+
+Index Uso_previo
+Title: Uso_previo
+Description: Uso de suelo previo al cambio, utilizado para los puntos 4.B.2, 4.C.2, 4.D.2, 4.E.2 y 4.F.2
+Definition: ['Forestal','Pastizales','Cultivos','Humedales','Asentamientos','Otras tierras']
+NodeLocation: 1232,120,1
+NodeSize: 56,32
+WindState: 2,0,0,720,350
+{!40300|Att_SlicerPopupSize: 232,128}
+Att_PrevIndexValue: ['Forestal','Pastizales','Cultivos','Humedales','Asentamientos','Otras tierras']
+
+Index Uso_Actual
+Title: Uso_Actual
+Description: Determina el uso actual del suelo, usado en los puntos 4.B.1, 4.B.2, 4.C.1, 4.C.2, 4.D.1, 4.D.2, 4.E.1, 4.E.2, 4.F.1 y 4.F.2
+Definition: ['4.A Forestal','4.B Cultivo','4.C Pastizal','4.D Humedal','4.E Asentamientos','4.F Otras tierras']
+NodeLocation: 1232,192,1
+NodeSize: 56,32
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+{!40300|Att_SlicerPopupSize: 302,112}
+Att_PrevIndexValue: ['4.A Forestal','4.B Cultivo','4.C Pastizal','4.D Humedal','4.E Asentamientos','4.F Otras tierras']
+
+Index Tipo_cobertura
+Title: Tipo_cobertura
+Description: Tpos de coberturas incendiadas con información disponible, Fuentes CONAF y proyecciones del INGEI.
+Definition: ['Cultivos','Matorrales','Pastizales']
+IndexVals: ['item 1']
+NodeLocation: 1024,120,1
+NodeSize: 64,24
+WindState: 2,0,0,720,350
+Att_PrevIndexValue: ['Cultivos','Matorrales','Pastizales']
+
+Index Coef_Aux_Tierras
+Title: Coef_Aux_Tierras
+Description: Coeficiente utilizado para las tierras que cambian a X, , obtenidos del Modelo VAR especificos de cada uno de los usos de suelo
+Definition: ['L1.Forestales','L1.Cultivos','L1.Pastizales','L1.Humedales','L1.Asentamientos','L1.Otras tierras']
+IndexVals: ['item 1']
+NodeLocation: 1232,272,1
+NodeSize: 48,32
+WindState: 2,0,0,720,350
+Att_PrevIndexValue: ['L1.Forestales','L1.Cultivos','L1.Pastizales','L1.Humedales','L1.Asentamientos','L1.Otras tierras']
+
+Index Coef_Aux_Inc
+Title: Coef_Aux_Inc
+Description: Coeficientes para la proyeccion de hectareas incendiadas, obtenidos del Modelo VAR
+Definition: ['L1.Cultivo','L1.Matorral','L1.Pastizal']
+NodeLocation: 1024,192,1
+NodeSize: 64,24
+WindState: 2,0,0,720,350
+Att_PrevIndexValue: ['L1.Cultivo','L1.Matorral','L1.Pastizal']
+
+Text Te1960237309
+Title: Indices Tierras convertidas en X
+NodeLocation: 1236,284,-1
+NodeSize: 100,260
+NodeInfo: 1,,,,,1
+WindState: 2,0,0,720,350
+NodeColor: 65535,65531,39321
+
+Text Te1339480317
+Title: Indices Tierras que permanecen como tales
+NodeLocation: 1024,284,-1
+NodeSize: 96,260
+NodeInfo: 1,,,,,1
+WindState: 2,0,0,720,350
+NodeColor: 65535,52425,39321
+
+Text Te309451005
+Title: Generales
+NodeLocation: 136,284,-1
+NodeSize: 112,260
+NodeInfo: 1,,,,,1
+NodeColor: 29491,29491,29491
+
+Text Te424169341
+Title: Índices Pérdida de Biomasa
+NodeLocation: 712,284,-1
+NodeSize: 128,260
+NodeInfo: 1,,,,,1
+NodeColor: 39321,52431,65535
+
+Index Co_Especie
+Title: Co_Especie
+Description: Origen de trozas cosechadas asociadas a la categoría Pérdida de Biomasa
+Definition: ['Pinus radiata','Eucalyptus ssp','Otras exóticas','Especies nativas']
+NodeLocation: 680,88,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+Att_PrevIndexValue: ['Pinus radiata','Eucalyptus ssp','Otras exóticas','Especies nativas']
+
+Index Regiones
+Att_PrevIndexValue: ['Arica','Tarapacá','Antofagasta','Atacama','Coquimbo','Valparaíso','Metropolitana','OHiggins','Maule','Ñuble','Biobío','Araucanía','Los Ríos','Los Lagos','Aisén','Magallanes']
+Title: Regiones
+Definition: ['Arica','Tarapacá','Antofagasta','Atacama','Coquimbo','Valparaíso','Metropolitana','OHiggins','Maule','Ñuble','Biobío','Araucanía','Los Ríos','Los Lagos','Aisén','Magallanes']
+IndexVals: ['item 1']
+NodeLocation: 128,264,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+
+Index Le_Especie
+Title: Le_Especie
+Description: Especies de origen para leña recolectada
+Definition: ['Leña Especies nativas','Leña Especies exóticas']
+NodeLocation: 680,152,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+{!40300|Att_SlicerPopupSize: 232,48}
+Att_PrevIndexValue: ['Leña Especies nativas','Leña Especies exóticas']
+
+Index Inc_Origen
+Title: Inc_Origen
+Description: Categorías de superficies de incendios forestales para la categoróa Pérdida de Biomasa, según nomenclatura INGEI
+Definition: ['Incendio Bosque Nativo','Incendio Plantaciones Forestales']
+NodeLocation: 680,224,1
+NodeSize: 56,24
+WindState: 2,754,48,720,350
+{!40300|Att_SlicerPopupSize: 227,48}
+Att_PrevIndexValue: ['Incendio Bosque Nativo','Incendio Plantaciones Forestales']
+
+Text Te1602109670
+Title: Índices Aumento de Biomasa y Cambio Vegetación
+NodeLocation: 416,284,-1
+NodeSize: 152,260
+NodeInfo: 1,,,,,1
+NodeColor: 39321,65535,52425
+
+Index Nativo_plantacion
+Title: Nativo_plantación
+Description: Tipo de manejo para bosque nativo, para ser agrupados en la categoría de aumento de biomasa
+Definition: ['Bosque_nativo','Plantaciones']
+NodeLocation: 360,176,1
+NodeSize: 72,24
+WindState: 2,0,0,720,350
+{!40300|Att_SlicerPopupSize: 227,64}
+Att_PrevIndexValue: ['Bosque_nativo','Plantaciones']
+
+Index Parametros
+Att_PrevIndexValue: ['Densidad','BEF','R','CF']
+Title: Parametros
+Definition: ['Densidad','BEF','R','CF']
+NodeLocation: 696,288,1
+NodeSize: 72,24
+WindState: 2,0,0,720,350
+
+Index Cat_manejo
+Title: Cat_manejo
+Definition: ['Renovales','Plan_manejo','Parques_reservas','Plantaciones']
+NodeLocation: 360,120,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+{!40300|Att_SlicerPopupSize: 227,80}
+Att_PrevIndexValue: ['Renovales','Plan_manejo','Parques_reservas','Plantaciones']
+
+Index VAR1
+Title: VAR
+Definition: ['Cte','L1.P','L1.BN']
+NodeLocation: 360,240,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+Att_PrevIndexValue: ['Cte','L1.P','L1.BN']
+
+Index Cat_manejo_BN
+Title: Cat_manejo_BN
+Definition: ['Renovales','Plan_manejo','Parques_reservas']
+NodeLocation: 368,304,1
+NodeSize: 72,24
+WindState: 2,0,0,720,350
+
+Index Coef_cosP
+Title: Coef_cosP
+Definition: ['K','a','b','c','d','e']
+NodeLocation: 680,352,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+Att_PrevIndexValue: ['K','a','b','c','d','e']
+
+Index Coef_cosN
+Title: Coef_cosN
+Definition: ['K','a','b','c','d']
+NodeLocation: 680,416,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+
+Index Cat_PBiom
+Title: Cat_PBiom
+Definition: ['Cosecha','Leña','Incendios','Quema']
+NodeLocation: 680,480,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+
+Index Rest_Sust
+Title: Rest_Sust
+Definition: ['Restitucion','Sustitucion']
+NodeLocation: 360,368,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+Att_PrevIndexValue: ['Restitucion','Sustitucion']
+
+Index Cat_TF
+Title: Cat_TF
+Definition: ['Tieras forestales que permanecen como tales','Tierras convertidas en tierras forestales']
+NodeLocation: 352,496,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+{!40300|Att_SlicerPopupSize: 227,48}
+Att_PrevIndexValue: ['Tieras forestales que permanecen como tales','Tierras convertidas en tierras forestales']
+
+Index Cat_TF_que_permanece
+Title: Cat_TF que permanecen
+Definition: ['Aumento de Biomasa','Perdida de Biomasa','Cambio en la vegetacion']
+NodeLocation: 360,432,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+{!40300|Att_SlicerPopupSize: 227,80}
+
+Index Cat_tierras_conv
+Title: Cat_tierras conv
+Definition: ['Tierras convertidas a BN','Tierras convertidas a plantaciones']
+NodeLocation: 480,432,1
+NodeSize: 56,24
+WindState: 2,608,60,720,350
+{!40300|Att_SlicerPopupSize: 232,64}
+Att_PrevIndexValue: ['Tierras convertidas a BN','Tierras convertidas a plantaciones']
+
+Index Estrategias
+Title: Escenarios
+Definition: ['BAU','Carbono Neutralidad Base','CN RDM1']
+NodeLocation: 128,328,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+{!40300|Att_SlicerPopupSize: 232,64}
+
+Text Te1955346685
+Title: PyParameters
+NodeLocation: 440,636,-1
+NodeSize: 176,68
+NodeInfo: 1,,,,,1
+NodeColor: 65535,1,1
+
+Index pyparams
+Title: pyparams
+Definition: ['IncertidumbrePIB','IncertidumbrePoblacion','Recuperacion_BN','Tierras convertidas a BN','Tierras convertidas a plantaciones','Incendio Bosque Nativo','Incendio Plantaciones Forestales','Sustitución y degradación','Incertidumbre Incendio BN','Incertidumbre Incendio Plantaciones','Var Demanda Leña 2019']
+IndexVals: ['item 1']
+NodeLocation: 360,632,1
+NodeSize: 64,24
+WindState: 2,187,172,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+Att_PrevIndexValue: ['IncertidumbrePIB','IncertidumbrePoblacion','Recuperacion_BN','Tierras convertidas a BN','Tierras convertidas a plantaciones','Incendio Bosque Nativo','Incendio Plantaciones Forestales','Sustitución y degradación','Incertidumbre Incendio BN','Incertidumbre Incendio Plantaciones','Var Demanda Leña 2019']
+
+Constant pyparams_interface
+Title: pyparams_interface
+Units: Varias unidades
+Description: PIB, población y P_Leña (m3) tienen su propia unidad, 'Recuperacion_BN',  'tierras convertidas a BN' y 'tierras convertidas a plantaciones' tienen un factor multiplicativo que aumenta o disminuye las hectareas aplicadas en la medida del mismo nombre.
+Definition: Table(Time,pyparams)(~
+262.030649432419G,19.107216M,1,1,1,1,1,1,1,1,1,~
+246.308810466474G,19.45831M,1,1,1,1,1,1,1,1,0.953824029236468,~
+257.380391496942G,19.678363M,1,1,1,1,1,1,1,1,0.967568551451631,~
+265.657744887483G,19.828563M,1,1,1,1,1,1,1,1,0.971546620730471,~
+273.48136547442G,19.960889M,1,1,1,1,1,1,1,1,0.972196597435268,~
+280.838014205682G,20.086377M,1,1,1,1,1,1,1,1,0.96942500064945,~
+287.858964560824G,20.206953M,1,1,1,1,1,1,1,1,0.963602010764598,~
+295.055438674844G,20.322807M,1,1,1,1,1,1,1,1,0.956012882844098,~
+302.431824641715G,20.433791M,1,1,1,1,1,1,1,1,0.946925156515428,~
+309.992620257758G,20.539666M,1,1,1,1,1,1,1,1,0.936620902241551,~
+317.742435764202G,20.64023M,1,1,1,1,1,1,1,1,0.925327659007642,~
+325.685996658307G,20.735289M,1,1,1,1,1,1,1,1,0.913167922656919,~
+333.828146574765G,20.826397M,1,1,1,1,1,1,1,1,0.900154655528096,~
+342.173850239134G,20.912278M,1,1,1,1,1,1,1,1,0.886108959082674,~
+350.728196495112G,20.992831M,1,1,1,1,1,1,1,1,0.870746560634019,~
+359.49640140749G,21.067996M,1,1,1,1,1,1,1,1,0.853792610643611,~
+368.483811442677G,21.137769M,1,1,1,1,1,1,1,1,0.83506289425761,~
+377.695906728744G,21.202223M,1,1,1,1,1,1,1,1,0.815303340530624,~
+387.138304396963G,21.261462M,1,1,1,1,1,1,1,1,0.794182202479747,~
+396.584553067644G,21.31563M,1,1,1,1,1,1,1,1,0.772446254827106,~
+406.02873447933G,21.364889M,1,1,1,1,1,1,1,1,0.750825127567158,~
+415.465044320405G,21.409418M,1,1,1,1,1,1,1,1,0.730396241671894,~
+424.887799841225G,21.449428M,1,1,1,1,1,1,1,1,0.712108684633124,~
+434.291446822696G,21.485105M,1,1,1,1,1,1,1,1,0.696649408363498,~
+443.670565910333G,21.516611M,1,1,1,1,1,1,1,1,0.684416433125499,~
+453.019878325143G,21.544064M,1,1,1,1,1,1,1,1,0.675577662882036,~
+462.334250964641G,21.567513M,1,1,1,1,1,1,1,1,0.670190596602208,~
+471.608700909164G,21.587015M,1,1,1,1,1,1,1,1,0.668409420260421,~
+481.040874927347G,21.602589M,1,1,1,1,1,1,1,1,0.670955576519301,~
+490.661692425894G,21.614271M,1,1,1,1,1,1,1,1,0.679403818126615,~
+500.474926274412G,21.622101M,1,1,1,1,1,1,1,1,0.69822483452541,~
+510.4844247999G,21.626079M,1,1,1,1,1,1,1,1,0.743467333357252)
+NodeLocation: 520,632,1
+NodeSize: 80,24
+WindState: 2,631,83,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformDef: [Time,pyparams]
+
+Index Strategy_ID
+Title: Strategy_ID
+Definition: [0,1]
+NodeLocation: 120,408,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+
+Index Categorias_con_Incen
+Title: Categorias con Incendios
+Definition: ['4.A Forestal','4.B Cultivo','4.C Pastizal','4.D Humedal','4.E Asentamientos','4.F Otras tierras','Incendios']
+NodeLocation: 120,488,1
+NodeSize: 48,32
+{!40300|Att_SlicerPopupSize: 237,144}
+
+Index Medidas
+Title: Medidas
+Definition: ['Aumento Planes de Manejo','Forestación','Disminución Degradación','Control de Incendios']
+NodeLocation: 128,200,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+Att_PrevIndexValue: ['Aumento Planes de Manejo','Forestación','Disminución Degradación','Control de Incendios']
+
+Close Indices
+
+Module A4_A__Tierras_Forest
+Title: 4.A. Tierras Forestales
+Author: lunam
+Date: mar., sept. 15, 2020 10:28 a. m.
+NodeLocation: 408,168,1
+NodeSize: 72,40
+DiagState: 2,23,8,1065,632,17
+WindState: 2,0,0,720,350
+
+Module Tierras_Forestales_q
+Title: Tierras Forestales que permanecen como tales
+Author: diego
+Date: lun., oct. 19, 2020 2:01 p. m.
+NodeLocation: 288,64,1
+NodeSize: 72,40
+DiagState: 2,379,23,624,427,17
+
+Module Perdida_de_Biomasa
+Title: Pérdida de Biomasa
+Author: lunam
+Date: mié., oct. 7, 2020 7:23 p. m.
+NodeLocation: 168,224,1
+NodeSize: 48,32
+DiagState: 2,744,58,624,417,17
+
+Variable C_Cosecha
+Title: Pérdida_C Cosecha
+Units: t C
+Description: Pérdida de carbono por madera cosechada. Metodología a partir de Informe INGEI
+Definition: ~
+var futuro:=(P_cosecha_trozas*Co_BEF*Co_Densidad*(1+Co_R)*Co_CF);~
+var consolidado:= if ano=time then futuro[time=ano] else 0;~
+if Ano>2018 then sum(consolidado,time) else (H_Cosecha_trozas*Co_BEF*Co_Densidad*(1+Co_R)*Co_CF)~
+
+NodeLocation: 704,56,1
+NodeSize: 64,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+Att_ResultSliceState: [Co_Especie,1,Regiones,1,year,1]
+
+Module Co_Factores
+Title: Co_Factores
+Author: lunam
+Date: mié., oct. 7, 2020 7:23 p. m.
+NodeLocation: 112,56,1
+NodeSize: 64,24
+DiagState: 2,0,0,624,304,17
+
+Constant Co_Densidad
+Title: Co_Densidad
+Units: t/m3
+Description: Densidad básica de la madera. Eucalyptus ssp corresponde a un promedio entre E. nitens y E. globulus. Otras especies corresponde a un promedio entre P. menziesii y Populus ssp. Informe INGEI
+Definition: Table(Co_Especie)(0.39,0.49,0.33,0.5)
+NodeLocation: 104,48,1
+NodeSize: 64,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+
+Constant Co_BEF
+Title: Co_BEF
+Units: s/u
+Description: Factores de expansión de biomasa comercial arbórea. Fuente: Informe INGEI
+Definition: Table(Co_Especie)(1.56,1.77,1.64,1.75)
+NodeLocation: 104,112,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+
+Constant Co_R
+Title: Co_R
+Units: s/u
+Description: Factor R (relación entre raíces y biomasa aérea) para especies de árboles forestales. Fuente: Informe INGEI
+Definition: Table(Co_Especie)(0.25,0.22,0.25,0.29)
+NodeLocation: 104,176,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+{!50000|Att_ColumnWidths: [64]}
+
+Constant Co_CF
+Title: Co_CF
+Units: t C 
+Description: Fracción de carbono de la biomasa. Valor por defecto*
+Definition: Table(Co_Especie)(0.47,0.47,0.47,0.47)
+NodeLocation: 104,240,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+
+Close Co_Factores
+
+Constant H_Cosecha_trozas
+Title: H_Cosecha trozas
+Units: m3
+Description: Volúmenes históricos de trozas cosechadas, por región, especie y año. Fuente: Anuarios INFOR. 
+Definition: Table(Ano,Co_Especie)(~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+18.8063M,3.9872M,166.9K,1.4764M,~
+20.3846M,3.9746M,181.1K,1.1416M,~
+20.1879M,4.3887M,160.6K,753.8K,~
+22.0875M,4.5961M,161.6K,645.8K,~
+25.8016M,5.3412M,231.5K,623.7K,~
+25.7291M,5.9467M,332.4K,649.1K,~
+25.5394M,6.7695M,378.7K,535.6K,~
+27.495M,10.0577M,347.3K,515.5K,~
+26.9526M,12.0551M,346.5K,514.9K,~
+24.7589M,10.9104M,327.8K,410.8K,~
+22.8889M,10.8796M,366.5K,424.6K,~
+26.2117M,12.2092M,364.2K,366.2K,~
+26.4208M,11.8264M,493.9K,334.2K,~
+28.8646M,11.4475M,412.8K,315.3K,~
+30.5358M,11.6353M,422.4K,266.2K,~
+30.6885M,12.0963M,470.4K,378.9K,~
+30.847M,13.0189M,389.9K,300.2K,~
+30.6707M,14.4754M,346.2K,277.5K,~
+31.9156M,15.3138M,364.5K,260.3K,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0)
+NodeLocation: 112,120,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+ReformDef: [Ano,Co_Especie]
+Att_EditSliceState: [Co_Especie,1,Regiones,1,year,1]
+
+Module Le_Factores
+Title: Le_Factores
+Author: lunam
+Date: mié., oct. 7, 2020 7:23 p. m.
+NodeLocation: 128,360,1
+NodeSize: 64,24
+DiagState: 2,0,0,624,304,17
+
+Constant Le_Densidad
+Units: t/m3
+Description: Densidad básica de la madera, para las especies de origen para leña. Exótica corresponde a promedio de ssp exóticas. Informe INGEI
+Definition: Table(Le_Especie)(0.5,0.41)
+NodeLocation: 136,64,1
+NodeSize: 64,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+
+Constant Le_R
+Units: s/u
+Description: Factor R (relación entre raíces y biomasa aérea) para especies de árboles forestales. Exótico corresponde a promedio de ssp exóticas. Informe INGEI
+Definition: Table(Le_Especie)(0.29,0.25)
+NodeLocation: 136,128,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+
+Constant Le_BEF
+Title: Le_BEF
+Units: s/u
+Description: Factores de expansión de biomasa comercial arbórea para leña. Informe INGEI
+Definition: Table(Le_Especie)(1.28,1.28)
+NodeLocation: 136,192,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+
+Constant Le_CF
+Title: Le_CF
+Units: t C
+Description: Fracción de carbono de la biomasa. Valores por defecto*
+Definition: Table(Le_Especie)(0.47,0.47)
+NodeLocation: 136,256,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+
+Close Le_Factores
+
+Constant H_Lena
+Title: H_Leña
+Units: m3
+Description: Consumo histórico de leña, por región, año y origen de la leña.
+Definition: Table(Ano,Le_Especie)(~
+4.779054000000001M,2.806746M,~
+5.34429M,3.1387100000000005M,~
+5.927796000000001M,3.4814040000000005M,~
+5.494545000000001M,3.226955M,~
+5.763051M,3.384649M,~
+6.162282M,3.619117999999999M,~
+6.606179999999999M,3.87982M,~
+6.576633M,3.8624669999999995M,~
+7.059528M,4.1460720000000005M,~
+7.316063999999998M,4.296735999999999M,~
+7.642341M,4.488359M,~
+7.627283999999999M,4.479516M,~
+7.749252000000001M,4.551148M,~
+7.333829999999999M,4.30717M,~
+7.744842M,4.548558M,~
+8.260749M,4.851550999999999M,~
+8.49744M,4.99056M,~
+8.953308M,5.258292M,~
+9.185903999999998M,5.394896000000001M,~
+9.211671000000002M,5.410029M,~
+7.972461M,4.682239M,~
+10.078740000000002M,5.919259999999999M,~
+6.504838660625551M,6.5144941335285M,~
+6.534628018947285M,6.498358873325211M,~
+6.572288918248029M,6.602656603444951M,~
+6.6057975478266645M,6.594538949351794M,~
+6.643814081138626M,6.670613397196807M,~
+6.5722734453572305M,6.576132391369453M,~
+6.5722734453572305M,6.576132391369453M,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0)
+NodeLocation: 128,424,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+ValueState: 2,40,50,400,300,0,MIDM
+ReformDef: [Ano,Le_Especie]
+Att_EditSliceState: [Le_Especie,1,Regiones,1,Ano,1]
+{!50000|Att_ColumnWidths: [,Ano,\([63])]}
+
+Variable C_Lena
+Title: Pérdida_C Leña
+Units: t C
+Description: Pérdida de carbono asociado a categoría Perdida de Biomasa> Leña
+Definition: var futuro:=(P_Lena_py*Le_BEF*Le_Densidad*(1+Le_R))*Le_CF;~
+var consolidado:= if Ano=time then futuro[time=Ano] else 0;~
+if Ano>2018 then sum(consolidado,time) else ~
+(H_Lena*Le_BEF*Le_Densidad*(1+Le_R))*Le_CF~
+~
+~
+
+NodeLocation: 464,360,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+Att__TotalsIndex: [Regiones,Le_Especie]
+Att_ResultSliceState: [Le_Especie,0,Estrategias,1,Ano,1]
+
+Module Inc_Factores
+Title: Inc_Factores
+Author: lunam
+Date: mié., oct. 7, 2020 7:23 p. m.
+NodeLocation: 120,552,1
+NodeSize: 64,24
+DiagState: 2,0,0,624,304,17
+
+Text Te1307733885
+Title: Carbono
+NodeLocation: 280,124,-1
+NodeSize: 240,100
+
+Text Te1945268093
+Title: No-CO2
+NodeLocation: 280,304,-1
+NodeSize: 240,64
+
+Constant Inc_R
+Title: Inc_R
+Units: s/u
+Description: Factor R (relación entre raíces y biomasa aérea) para especies de árboles forestales. Fuente: Informe INGEI
+Definition: Table(Inc_Origen)(0.29,0.25)
+NodeLocation: 136,144,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+
+Constant Inc_CF
+Title: Inc_CF
+Units: s/u
+Description: Fracción de carbono de la biomasa. Valor por defecto*
+Definition: Table(Inc_Origen)(0.47,0.47)
+NodeLocation: 272,80,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+
+Constant Inc_fd
+Title: Inc_fd
+Units: s/u
+Description: Fracción de biomasa perdida por perturbaciones.
+Definition: Table(Inc_Origen)(0.73,0.81)
+NodeLocation: 272,144,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+
+Constant NoCO2_cf
+Title: NoCO2_cf
+Units: s/u
+Description: Factor de combustión. Valores por defecto
+Definition: Table(Gas_GEI)(0,0.45,0.45)
+NodeLocation: 256,312,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+
+Constant NoCO2_Gef
+Title: NoCO2_Gef
+Units: g/kg ms quemada
+Description: Factor de emisión, g kg-1 de materia seca quemada. Valores por defectp
+Definition: Table(Gas_GEI)(0,4.7,0.26)
+NodeLocation: 128,312,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+
+Constant Bw
+Title: Bw
+Units: t ms/ha
+Description: Biomasa aérea promedio (existencias) de superficies de Tierra afectadas por perturbaciones
+Definition: Table(Inc_Origen)(64.84487390123472,137.53080046240186)
+NodeLocation: 136,80,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+
+Close Inc_Factores
+
+Constant H_EM_Incendios
+Title: H_EM_Incendios
+Units: kt CO2 eq
+Description: Emisiones de gases GEI por año, debido a incendios, separados por origen de la vegetación, periodo histórico 1990-2018. Información 1990-2016 a partir de INGEI, y 2017-2018 estimada a partir de superficie de hectáreas quemadas
+Definition: Table(Ano,Gas_GEI,Inc_Origen)(~
+1020.743652342332,506.1593883500872,~
+1.2168105972263756,0.7178371237958185,~
+0.0673129266550761,0.039710138763172934,~
+1569.90313239784,1663.9565816712332,~
+1.8714539774379277,2.2452018409561925,~
+0.10352724130507683,0.12420265503161913,~
+180.4785812333619,368.47385783872835,~
+0.21514534987623413,0.46965265759276875,~
+0.011901657652727845,0.025980785313642528,~
+537.9310735448228,3397.017653119795,~
+0.641258193832175,3.8751257352822988,~
+0.03547385753114159,0.2143686576964676,~
+1097.3279200189982,7164.143160233494,~
+1.308105358918938,7.909996496363203,~
+0.07236327517423914,0.4375742742669006,~
+342.81847118975116,1025.6475469360485,~
+0.4086678841562212,1.2694874642744036,~
+0.022607159549067557,0.07022696610879682,~
+5332.677473465786,1298.2730680377806,~
+6.356991244974542,1.6499555785942044,~
+0.3516633454666768,0.09127413839031771,~
+1079.5738510627295,4431.478503861227,~
+1.2869410448423317,5.054906782602571,~
+0.07119248333170346,0.2796331411652486,~
+26.489569248613083K,597.536575353773,~
+31.577750695494164,0.7981744014768081,~
+1.7468542937932943,0.04415432859233407,~
+2631.73225764332,11.351043795289697K,~
+3.137241845995735,12.793989145376068,~
+0.17354954892742366,0.7077525910208038,~
+161.4146486771194,760.2283820448762,~
+0.19241957038594443,0.9221076736549522,~
+0.010644486872413948,0.05101021173410373,~
+86.53547483238576,377.4761582264335,~
+0.10315742113157836,0.5567586962320613,~
+5.706580743449016m,0.030799417238369344,~
+12.57389838036722K,6592.905632664302,~
+14.989123628218403,7.682180467473471,~
+0.8291855624120819,0.42497168543470265,~
+405.00568938378143,1239.336625870773,~
+0.48280017578192214,1.6038432297719611,~
+0.02670809483048931,0.08872324249802335,~
+682.1707083597912,2191.651450733875,~
+0.8132037315586772,2.709757393470189,~
+0.04498573834154385,0.14990147283026578,~
+1416.5016751414314,2005.1540468774806,~
+1.6885867919391673,2.5467247668897315,~
+0.09341118423493268,0.14088264667900643,~
+337.70483590054477,383.06867868888014,~
+0.40257200925562425,0.5050338139728497,~
+0.022269940937545175,0.027938040772966154,~
+209.397915141684,7650.512029950321,~
+0.24961958038810095,8.432981869230701,~
+0.013808742744873669,0.4665053799999963,~
+2595.5161709432364,1935.7587229001706,~
+3.0940692845150872,2.466206876736539,~
+0.17116127956891972,0.1364284655215958,~
+1860.3160121651724,6075.623047860945,~
+2.217650075607153,6.97970855785852,~
+0.12267851482082123,0.3861115372432373,~
+866.3940865397637,3826.703820326163,~
+1.03281318816596,4.241365533481913,~
+0.05713434657939353,0.23462873163942502,~
+600.8878796095601,1782.7211441951315,~
+0.716307897654782,2.016753465533785,~
+0.03962554327451986,0.11156508532740089,~
+2463.8830084270303,9363.987260243613,~
+2.937151701213356,10.487667233047851,~
+0.16248073240754735,0.580168825657966,~
+289.40611906479444,691.0714828980384,~
+0.3449959564011053,0.818149565034874,~
+0.019084882694529227,0.045259337640227076,~
+2944.828455580174,11.08863604037856K,~
+3.5104783297363955,12.314213068128057,~
+0.19419667355988576,0.6812117867475095,~
+10.49153892132905K,12.784356861317423K,~
+12.506779455734197,14.566665775808687,~
+0.6918643954235939,0.8058155535553744,~
+1338.1484551131796,1825.9081861868594,~
+1.5951832931876397,2.445838304217821,~
+0.08824418217633752,0.13530169342481563,~
+13.498645357284378K,67.54965637979003K,~
+35.184282260001574,81.87837136944246,~
+1.9463645505532783,4.529441820437243,~
+1330.1952739819258,2271.1278993905876,~
+3.4671602032602546,2.752882302291622,~
+0.1918003516697162,0.1522871060842174,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0)
+NodeLocation: 584,712,1
+NodeSize: 72,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformDef: [Ano,Gas_GEI]
+Att_EditSliceState: [Inc_Origen,1,Gas_GEI,3,Ano,1]
+
+Variable Perdida_C_Incendios
+Title: Pérdida_C Incendios
+Units: t C
+Description: Perdida de carbono asociada a perdida de biomasa debido a incendios forestales. Metodología a partir de informe INGEI
+Definition: if Estrategias='BAU' then ~
+(if Inc_Origen='Incendio Bosque Nativo' then P_IncNativo*Bw[Inc_Origen='Incendio Bosque Nativo']*(1+Inc_R[Inc_Origen='Incendio Bosque Nativo'])*Inc_CF[Inc_Origen='Incendio Bosque Nativo']*Inc_fd[Inc_Origen='Incendio Bosque Nativo'] else P_IncPlant*Bw[Inc_Origen='Incendio Plantaciones Forestales']*(1+Inc_R[Inc_Origen='Incendio Plantaciones Forestales'])*Inc_CF[Inc_Origen='Incendio Plantaciones Forestales']*Inc_fd[Inc_Origen='Incendio Plantaciones Forestales']) else ~
+(if Inc_Origen='Incendio Bosque Nativo' then~
+(P_IncNativo*Bw[Inc_Origen='Incendio Bosque Nativo']*(1+Inc_R[Inc_Origen='Incendio Bosque Nativo'])*Inc_CF[Inc_Origen='Incendio Bosque Nativo']*Inc_fd[Inc_Origen='Incendio Bosque Nativo'])*(1+Silvicultura_Prevent[Inc_Origen='Incendio Bosque Nativo']) ~
+else ~
+(P_IncPlant*Bw[Inc_Origen='Incendio Plantaciones Forestales']*(1+Inc_R[Inc_Origen='Incendio Plantaciones Forestales'])*Inc_CF[Inc_Origen='Incendio Plantaciones Forestales']*Inc_fd[Inc_Origen='Incendio Plantaciones Forestales'])*(1+Silvicultura_Prevent[Inc_Origen='Incendio Plantaciones Forestales']))~
+~
+
+NodeLocation: 408,544,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,1,MIDM
+ReformVal: [Time,Estrategias]
+Att__TotalsIndex: [Time]
+Att_ResultSliceState: [Inc_Origen,1,Escenarios,1,Time,1]
+
+Variable NoCO2_Incendios
+Title: NoCO2 Incendios
+Units: t GEI
+Description: Emisiones de gases GEI no CO2 debido a incendios forestales. Metodología Informe INGEI
+Definition: if Estrategias='BAU' then (if Inc_Origen='Incendio Bosque Nativo'~
+then (P_IncNativo*Bw[Inc_Origen='Incendio Bosque Nativo']*NoCO2_cf*NoCO2_Gef*10^-3)/1000~
+else (P_IncPlant*Bw[Inc_Origen='Incendio Plantaciones Forestales']*NoCO2_cf*NoCO2_Gef*10^-3)/1000)~
+else~
+(if Inc_Origen='Incendio Bosque Nativo'~
+then (P_IncNativo*Bw[Inc_Origen='Incendio Bosque Nativo']*NoCO2_cf*NoCO2_Gef*10^-3)/1000*(1+Silvicultura_Prevent[Inc_Origen='Incendio Bosque Nativo'])~
+else (P_IncPlant*Bw[Inc_Origen='Incendio Plantaciones Forestales']*NoCO2_cf*NoCO2_Gef*10^-3)/1000*(1+Silvicultura_Prevent[Inc_Origen='Incendio Plantaciones Forestales']))
+NodeLocation: 408,632,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,1,MIDM
+ReformVal: [Time,Estrategias]
+Att_ResultSliceState: [Gas_GEI,2,Inc_Origen,1,Estrategias,1,Time,1]
+
+Variable EM_Cosecha1
+Title: EM_Cosecha
+Units: kt CO2eq
+Description: Emisiones asociadas a categoría Perdida de Biomasa> Cosecha forestal
+Definition: if Gas_GEI='CO2' then C_Cosecha*(44/12)/1000~
+else 0
+NodeLocation: 912,56,1
+NodeSize: 64,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,1,MIDM
+ReformVal: [Ano,Estrategias]
+Att_ResultSliceState: [Gas_GEI,1,Co_Especie,1,Escenarios,1,Ano,1]
+
+Variable P_CosechaG
+Title: P_CosechaG
+Units: m3
+Description: Proyección de la cosecha de trozas por origen nativo o exótico, a partir de modelo autoregresivo. Proyección 2019-2050~
+~
+
+Definition: Dynamic(Coef_Cosecha[Coef_cosP='K']+H_CosechaG[Ano=2018]*Coef_Cosecha[Coef_cosP='a']+H_CosechaG[Ano=2017]*Coef_Cosecha[Coef_cosP='b']+H_CosechaG[Ano=2016]*Coef_Cosecha[Coef_cosP='c']+H_CosechaG[Ano=2015]*Coef_Cosecha[Coef_cosP='d']+P_Sup_Gen_medida[Time]*Coef_Cosecha[Coef_cosP='e'],~
+~
+Coef_Cosecha[Coef_cosP='K']+self[time-1]*Coef_Cosecha[Coef_cosP='a']+H_CosechaG[Ano=2018]*Coef_Cosecha[Coef_cosP='b']+H_CosechaG[Ano=2017]*Coef_Cosecha[Coef_cosP='c']+H_CosechaG[Ano=2016]*Coef_Cosecha[Coef_cosP='d']+P_Sup_Gen_medida[Time]*Coef_Cosecha[Coef_cosP='e'],~
+~
+Coef_Cosecha[Coef_cosP='K']+self[time-1]*Coef_Cosecha[Coef_cosP='a']+self[time-2]*Coef_Cosecha[Coef_cosP='b']+H_CosechaG[Ano=2018]*Coef_Cosecha[Coef_cosP='c']+H_CosechaG[Ano=2017]*Coef_Cosecha[Coef_cosP='d']+P_Sup_Gen_medida[Time]*Coef_Cosecha[Coef_cosP='e'],~
+~
+Coef_Cosecha[Coef_cosP='K']+self[time-1]*Coef_Cosecha[Coef_cosP='a']+self[time-2]*Coef_Cosecha[Coef_cosP='b']+self[time-3]*Coef_Cosecha[Coef_cosP='c']+H_CosechaG[Ano=2018]*Coef_Cosecha[Coef_cosP='d']+P_Sup_Gen_medida[Time]*Coef_Cosecha[Coef_cosP='e'],~
+~
+Coef_Cosecha[Coef_cosP='K']+self[time-1]*Coef_Cosecha[Coef_cosP='a']+self[time-2]*Coef_Cosecha[Coef_cosP='b']+self[time-3]*Coef_Cosecha[Coef_cosP='c']+self[time-4]*Coef_Cosecha[Coef_cosP='d']+P_Sup_Gen_medida[Time]*Coef_Cosecha[Coef_cosP='e']~
+)
+NodeLocation: 624,184,1
+NodeSize: 64,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,1,MIDM
+ReformVal: [Time,Nativo_plantacion]
+Att__TotalsIndex: []
+Att_ResultSliceState: [Escenarios,1,Nativo_plantacion,2,Time,1]
+
+Constant Coef_Cosecha
+Title: Coef_Cosecha
+Units: s/u
+Description: Coeficientes de modelo autorregresivo para estimación de proyección de cosecha de trozas en la industria forestal. Ajustado según valores históricos
+Definition: Table(Nativo_plantacion,Coef_cosP)(~
+54.66K,0.3279,0.3441,-0.03231,0.1155,0,~
+11.03M,0.8079,-0.4231,0.5348,-0.01836,-2.232)
+NodeLocation: 112,176,1
+NodeSize: 64,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+ReformDef: [Coef_cosP,Nativo_plantacion]
+
+Constant P_Lena
+Title: P_Leña
+Units: m3
+Description: Proyección de volúmenes de leña utilizados. Valor corresponde a promedio histórico. Se cambiará por input desde el sector energía 
+Definition: Table(Time,Le_Especie)(~
+6.593289487585556M,6.604014746546492M,~
+6.593289487585556M,6.604014746546492M,~
+6.593289487585556M,6.604014746546492M,~
+6.593289487585556M,6.604014746546492M,~
+6.593289487585556M,6.604014746546492M,~
+6.593289487585556M,6.604014746546492M,~
+6.593289487585556M,6.604014746546492M,~
+6.593289487585556M,6.604014746546492M,~
+6.593289487585556M,6.604014746546492M,~
+6.593289487585556M,6.604014746546492M,~
+6.593289487585556M,6.604014746546492M,~
+6.593289487585556M,6.604014746546492M,~
+6.593289487585556M,6.604014746546492M,~
+6.593289487585556M,6.604014746546492M,~
+6.593289487585556M,6.604014746546492M,~
+6.593289487585556M,6.604014746546492M,~
+6.593289487585556M,6.604014746546492M,~
+6.593289487585556M,6.604014746546492M,~
+6.593289487585556M,6.604014746546492M,~
+6.593289487585556M,6.604014746546492M,~
+6.593289487585556M,6.604014746546492M,~
+6.593289487585556M,6.604014746546492M,~
+6.593289487585556M,6.604014746546492M,~
+6.593289487585556M,6.604014746546492M,~
+6.593289487585556M,6.604014746546492M,~
+6.593289487585556M,6.604014746546492M,~
+6.593289487585556M,6.604014746546492M,~
+6.593289487585556M,6.604014746546492M,~
+6.593289487585556M,6.604014746546492M,~
+6.593289487585556M,6.604014746546492M,~
+6.593289487585556M,6.604014746546492M,~
+6.593289487585556M,6.604014746546492M)
+NodeLocation: 312,432,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+DefnState: 2,557,36,817,600,0,DFNM
+ValueState: 2,40,50,400,300,0,MIDM
+ReformDef: [Time,Le_Especie]
+{!50000|Att_ColumnWidths: [,Time,\([64])]}
+
+Variable EM_Lena1
+Title: EM_Leña
+Units: kt CO2eq
+Description: Emisiones asociadas a Pérdida de Biomasa>Leña
+Definition: if Gas_GEI='CO2' then C_Lena*(44/12)/1000 else 0
+NodeLocation: 920,360,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformVal: [Ano,Estrategias]
+Att__TotalsIndex: [Le_Especie]
+Att_ResultSliceState: [Gas_GEI,1,Le_Especie,0,Estrategias,1,Ano,1]
+{!50000|Att_ColumnWidths: [,Ano,\([,,,,,,,66])]}
+
+Variable EM_Incendios
+Title: EM_Incendios
+Units: kt CO2 eq
+Description: Emisiones de gases GEI por año, debido a incendios, separados por origen de la vegetación, periodo completo 1990-2050
+Definition: if Gas_GEI='CO2' then~
+var futuro:=Perdida_C_Incendios*(44/12)/1000;~
+var consolidado:= if ano=time then futuro[time=ano] else 0;~
+if Ano>2018 then sum(consolidado,time) else H_EM_Incendios[Gas_GEI='CO2']~
+else if Gas_GEI='CH4' then~
+var futuro:=NoCO2_Incendios[Gas_GEI='CH4']*PCG_GEI[Gas_GEI='CH4'];~
+var consolidado:= if ano=time then futuro[time=ano] else 0;~
+if Ano>2018 then sum(consolidado,time) else H_EM_Incendios[Gas_GEI='CH4']*PCG_GEI[Gas_GEI='CH4']~
+else ~
+var futuro:=NoCO2_Incendios[Gas_GEI='N2O']*PCG_GEI[Gas_GEI='N2O'];~
+var consolidado:= if ano=time then futuro[time=ano] else 0;~
+if Ano>2018 then sum(consolidado,time) else H_EM_Incendios[Gas_GEI='N2O']*PCG_GEI[Gas_GEI='N2O']~
+
+NodeLocation: 904,584,1
+NodeSize: 64,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,CONF
+ReformVal: [Ano,Estrategias,0]
+Att__TotalsIndex: [Inc_Origen]
+Att_ResultSliceState: [Gas_GEI,1,Inc_Origen,0,Sys_LocalIndex('Probability'),3,Estrategias,2,Ano,1]
+
+Variable EM_Quema2
+Title: EM_quema
+Units: kt CO2eq
+Description: Emisones asociadas a la quema de residuos forestales para el periodo completo 1990-2050, para cada tipo de gas GEI en CO2eq
+Definition: ~
+var futuro:=(P_Quema*PCG_GEI);~
+var consolidado:= if Ano=time then futuro[time=Ano] else 0;~
+if Ano>2018 then sum(consolidado,time) else ~
+H_Quema*PCG_GEI
+NodeLocation: 920,840,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,1,MIDM
+ReformVal: [Time,Gas_GEI]
+Att_ResultSliceState: [Ano,11,Gas_GEI,1,Time,1]
+
+Constant P_Quema
+Title: P_Quema
+Units: kt GEI
+Description: Emisones proyectadas asociadas a la quema de residuos forestales, para el periodo 2017-2050, para cada tipo de gas GEI. Para la proyección se tomó un periodo histórico
+Definition: Table(Time,Gas_GEI)(~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858)
+NodeLocation: 144,816,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+ReformDef: [Time,Gas_GEI]
+
+Constant H_Quema
+Title: H_Quema
+Units: kt GEI
+Description: Valores históricos de emisión de gases GEI para quema de residuos forestales. Fuente INGEI
+Definition: Table(Ano,Gas_GEI)(~
+0,3.22107186902219,0.178186954456546,~
+0,3.79275848232493,0.209812171362655,~
+0,2.71954719098034,0.150443036096785,~
+0,3.15090993376129,0.174305655910199,~
+0,2.38209420088458,0.131775423878721,~
+0,2.16297954590617,0.119654187645873,~
+0,1.53189621299118,0.084743194761214,~
+0,1.17574748855002,0.0650413504304265,~
+0,1.72102087309807,0.0952054100011696,~
+0,1.07781389873033,0.0596237475893374,~
+0,1.15881854754985,0.0641048558219067,~
+0,0.950184594288554,0.052563403088303,~
+0,1.08211063094204,0.0598614391584958,~
+0,0.487008184556459,0.0269408782946126,~
+0,1.23447980239285,0.0682903720472643,~
+0,0.979764457890588,0.0541997359684155,~
+0,1.40610976796061,0.077784795674417,~
+0,3.24896768786111,0.179730127413593,~
+0,1.19233013271215,0.065958688192587,~
+0,1.20611824060196,0.0667214345864913,~
+0,1.50205582238325,0.0830924497488604,~
+0,0.680597321913691,0.0376500646165021,~
+0,0.4614849435126,0.0255289543219736,~
+0,0.323935138464132,0.0179198161703563,~
+0,0.443210122284167,0.024518006764656,~
+0,0.752702266927379,0.0416388488087486,~
+0,0.907179688331979,0.0501844082907052,~
+0,1.5167739646971283,0.0839066448555858,~
+0,1.5167739646971283,0.0839066448555858,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0)
+NodeLocation: 144,872,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+ValueState: 2,40,50,400,300,0,MIDM
+ReformDef: [Ano,Gas_GEI]
+
+Constant A__trozas
+Title: % trozas
+Units: s/u
+Description: Porcentaje de trozas cosechadas para cada tipo de origen. Estimados a partir del promedio de los últimos 5 años de información histórica
+Definition: Table(Co_Especie)(0.5734493762452537,0.36082458893055913,0.06572612217855116,0)
+NodeLocation: 656,256,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+
+Constant H_CosechaG
+Title: H_CosechaG
+Units: m3
+Description: Valores históricos de cosecha separados solamente en cosecha de trozas de especies nativas y exóticas. 
+Definition: Table(Ano,Nativo_plantacion)(~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+1.4764M,22.9604M,~
+1.1416M,24.5403M,~
+753.8K,24.7372M,~
+645.8K,26.8452M,~
+623.7K,31.3743M,~
+649.1K,32.0082M,~
+535.6K,32.6876M,~
+515.5K,37.9M,~
+514.9K,39.3542M,~
+410.8K,35.9971M,~
+424.6K,34.135M,~
+366.2K,38.7851M,~
+334.2K,38.7411M,~
+315.3K,40.7249M,~
+266.2K,42.5935M,~
+378.9K,43.2552M,~
+300.2K,44.2558M,~
+277.5K,45.4923M,~
+260.3K,47.5939M,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0)
+NodeLocation: 112,248,1
+NodeSize: 64,24
+WindState: 2,0,0,720,350
+ReformDef: [Ano,Nativo_plantacion]
+
+Alias Al1882298621
+Title: P_SupGeneral
+Definition: 1
+NodeLocation: 304,136,1
+NodeSize: 64,24
+Original: P_SupGeneral
+
+Variable P_cosecha_trozas
+Title: P_cosecha trozas
+Units: m3
+Description: Separación de proyección de trozas cosechadas por cada origen, para años 2019-2050
+Definition: if Co_Especie='Pinus radiata' then P_CosechaG[Nativo_plantacion='Plantaciones']*A__trozas[Co_Especie='Pinus radiata']~
+else if Co_Especie='Eucalyptus ssp' then P_CosechaG[Nativo_plantacion='Plantaciones']*A__trozas[Co_Especie='Eucalyptus ssp']~
+else if Co_Especie='Otras exóticas' then P_CosechaG[Nativo_plantacion='Plantaciones']*A__trozas[Co_Especie='Otras exóticas']~
+else P_CosechaG[Nativo_plantacion='Bosque_nativo'] 
+NodeLocation: 784,192,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,1,MIDM
+Att_ResultSliceState: [Escenarios,1,Co_Especie,1,Time,1]
+
+Chance P_IncNativo
+Title: P_IncNativo
+Units: ha
+Description: Proyección de superficie incendiada de bosque nativo para cada año. Parámetros de la distribución obtenidos a partir de datos históricos
+Definition: Weibull(2.027711,41504.407537)*pyparams_interface[pyparams='Incertidumbre Incendio BN']
+NodeLocation: 120,624,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,CONF
+ReformVal: [Null,Null,Undefined,Undefined,Undefined,1]
+
+Chance P_IncPlant
+Title: P_IncPlant
+Units: ha
+Description: Proyección de superficie incendiada de plantaciones para cada año. Parámetros de la distribución obtenidos a partir de datos históricos
+Definition: Exponential(7.127962e-05)*pyparams_interface[pyparams='Incertidumbre Incendio Plantaciones']
+NodeLocation: 120,688,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,CONF
+ReformVal: [Null,Null]
+
+Constant PCG_GEI
+Title: PCG_GEI
+Units: s/u
+Description: Potencial de calentamiento global, para transformación de gases GEI a CO2 eq
+Definition: Table(Gas_GEI)(1,25,298)
+NodeLocation: 376,712,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+
+Text Te1395677437
+Title: Pérdida de Biomasa por Cosecha forestal
+NodeLocation: 524,148,-1
+NodeSize: 492,140
+NodeInfo: 1,,,,,1
+NodeColor: 52427,60621,65535
+
+Text Te1286625533
+Title: Pérdida de Biomasa para Leña
+NodeLocation: 524,384,-1
+NodeSize: 492,88
+NodeInfo: 1,,,,,1
+NodeColor: 52427,56425,65535
+
+Text Te1202739453
+Title: Emisiones por Incendios Forestales
+NodeLocation: 524,616,-1
+NodeSize: 492,136
+NodeInfo: 1,,,,,1
+NodeColor: 65535,58979,52427
+
+Text Te829446397
+Title: Emisiones por quema de residuos forestales
+NodeLocation: 524,836,-1
+NodeSize: 492,76
+NodeInfo: 1,,,,,1
+NodeColor: 55705,55705,55705
+
+Variable EM_Perdida_de_Biomas
+Title: EM_Perdida de Biomasa
+Units: kt CO2eq
+Description: Emisiones de gases GEI para la categoría completa de Pérdida de Biomasa.
+Definition: if Cat_PBiom='Cosecha' then sum(EM_Cosecha1,Co_Especie) else if Cat_PBiom='Leña' then sum(EM_Lena1,Le_Especie) else if Cat_PBiom='Incendios' then sum(EM_Incendios,Inc_Origen) else EM_Quema2
+NodeLocation: 1168,368,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,1,MIDM
+Att_ResultSliceState: [Gas_GEI,1,Escenarios,1,Cat_PBiom,1,Ano,1]
+
+Variable P_Lena_py
+Title: P_Leña_py
+Units: m3
+Description: permite extraer de pyparams los m3 de leña, que permite aumentar o disminuir en funcion de las medidas aplicadas
+Definition: if Estrategias='BAU' then P_Lena else P_Lena*pyparams_interface[pyparams='Var Demanda Leña 2019']
+NodeLocation: 464,432,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+
+Variable P_Sup_Gen_medida
+Title: P_Sup_Gen_medida
+Definition: if  Estrategias='BAU' then P_SupGeneral else~
+~
+(if Nativo_plantacion='Bosque_nativo' then P_SupGeneral[Nativo_plantacion='Bosque_nativo']+Cumulate(Ha_Dmayr20_py[Cat_tierras_conv='Tierras convertidas a BN']) else P_SupGeneral[Nativo_plantacion='Plantaciones']+Cumulate(Ha_Dmayr20_py[Cat_tierras_conv='Tierras convertidas a plantaciones']))
+NodeLocation: 464,136,1
+NodeSize: 56,32
+WindState: 2,758,136,719,350
+ValueState: 2,40,50,400,300,1,MIDM
+ReformVal: [Time,Estrategias]
+Att_ResultSliceState: [Nativo_plantacion,1,Escenarios,2,Time,1]
+
+Close Perdida_de_Biomasa
+
+Module Aumento_de_Biomasa
+Title: Aumento de Biomasa
+Author: lunam
+Date: mié., oct. 14, 2020 2:22 a. m.
+NodeLocation: 168,104,1
+NodeSize: 48,32
+DiagState: 2,0,0,624,601,17
+
+Variable P_Superficie_LB
+Title: P_Superficie_LB
+Units: ha
+Description: Separación de la superficie proyectada a nivel general, para obtener valores de superficie por tipo de manejo de bosque nativo.
+Definition: If Estrategias='BAU' then~
+(if Cat_manejo='Renovales' then P_SupGeneral[Nativo_plantacion='Bosque_nativo']*A__manejo[Cat_manejo='Renovales'] else ~
+if Cat_manejo='Plan_manejo' then P_SupGeneral[Nativo_plantacion='Bosque_nativo']*A__manejo[Cat_manejo='Plan_manejo'] else ~
+if Cat_manejo='Parques_reservas' then P_SupGeneral[Nativo_plantacion='Bosque_nativo']*A__manejo[Cat_manejo='Parques_reservas'] else  ~
+P_SupGeneral[Nativo_plantacion='Plantaciones'])~
+else~
+(if Cat_manejo='Renovales' then~
+(P_SupGeneral[Nativo_plantacion='Bosque_nativo']+Cumulate(Ha_Dmayr20_py[Cat_tierras_conv='Tierras convertidas a BN']))*A__manejo[Cat_manejo='Renovales'] ~
+else ~
+if Cat_manejo='Plan_manejo' then ~
+(P_SupGeneral[Nativo_plantacion='Bosque_nativo']+Cumulate(Ha_Dmayr20_py[Cat_tierras_conv='Tierras convertidas a BN']))*A__manejo[Cat_manejo='Plan_manejo'] ~
+else ~
+if Cat_manejo='Parques_reservas' then ~
+(P_SupGeneral[Nativo_plantacion='Bosque_nativo']+Cumulate(Ha_Dmayr20_py[Cat_tierras_conv='Tierras convertidas a BN']))*A__manejo[Cat_manejo='Parques_reservas']~
+else  ~
+P_SupGeneral[Nativo_plantacion='Plantaciones']+Cumulate(Ha_Dmayr20_py[Cat_tierras_conv='Tierras convertidas a plantaciones']))~
+
+NodeLocation: 432,224,1
+NodeSize: 96,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+Att_ResultSliceState: [Escenarios,1,Cat_manejo,1,Time,1]
+
+Variable EM_aumentoB
+Title: EM_aumentoB
+Units: kt CO2eq
+Description: Emision total asociada al aumento de biomasa, para el periodo completo 1990-2050. La emisión se encuentra separada por tipo de gas GEI, sin embargo en esta categoría solo se presentan emisiones de CO2
+Definition: if Gas_GEI='CO2' then~
+var futuro:=(FE_biomasa*P_Superficie);~
+var consolidado:= if Ano=time then futuro[time=Ano] else 0;~
+if Ano>2018 then sum(consolidado,time) else H_Emisiones~
+else 0
+NodeLocation: 888,264,1
+NodeSize: 88,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformVal: [Ano,Estrategias]
+Att__TotalsIndex: [Gas_GEI]
+Att_ResultSliceState: [Gas_GEI,0,Cat_manejo,3,Estrategias,1,Ano,1]
+
+Constant FE_biomasa
+Title: FE_biomasa
+Units: ktonCO2/ha
+Description: Valores de factores de emisión por hectárea para la categoría de aumento de biomasa, para cada tipo forestal. Estimados en base a INGEI considerando un promedio de los últimos 5 años de información histórica.
+Definition: Table(Cat_manejo)(-0.010925809857893532,-9.820673297188571m,-0.011011504312809187,-0.01829490067851012)
+NodeLocation: 144,288,1
+NodeSize: 64,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+Aliases: Alias Al750967037
+ReformDef: [Time,0]
+
+Text Te1736655741
+Title: Emisiones asociadas a Aumento de Biomasa
+NodeLocation: 588,200,-1
+NodeSize: 540,152
+NodeInfo: 1,,,,,1
+NodeColor: 52427,58983,65535
+
+Variable P_SupGeneral
+Title: P_SupGeneral
+Units: ha
+Description: Proyección de la superficie considerando un modelo VAR, a nivel general para bosque nativo y plantaciones. Proyección entre 2019 y 2050
+Definition: dynamic(Coef_VAR[VAR1='Cte'] + H_SupGeneral[Ano=2018,Nativo_plantacion='Plantaciones']*Coef_VAR[VAR1='L1.P'] + H_SupGeneral[Ano=2018,Nativo_plantacion='Bosque_nativo']*Coef_VAR[VAR1='L1.BN'], Coef_VAR[VAR1='Cte'] + self[time-1,Nativo_plantacion='Plantaciones']*Coef_VAR[VAR1='L1.P'] + self[time-1,Nativo_plantacion='Bosque_nativo']*Coef_VAR[VAR1='L1.BN']~
+)~
+~
+
+NodeLocation: 376,112,1
+NodeSize: 64,24
+WindState: 2,-51,323,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+Aliases: Alias Al1882298621
+{!50000|Att_ColumnWidths: [,Time,\([,,,,,,,,,,66])]}
+
+Constant H_Emisiones
+Title: H_Emisiones
+Units: kt CO2
+Description: Emisiones históricas de la categoría de Aumento de Biomasa, para cada tipo de manejo. Fuente: INGEI
+Definition: Table(Ano,Cat_manejo)(~
+-43.96538241850845K,-1225.8891938919453,-18.182967354455715K,-2622.6032383599527,~
+-44.410316008613896K,-1931.0477034855692,-18.416937742954542K,-3336.5278223823375,~
+-44.92044780419346K,-2751.6213606260226,-18.67069541968643K,-4126.717044988875,~
+-45.49164725359579K,-3471.187197169176,-18.91583882246439K,-4898.34921768625,~
+-46.10956162363397K,-4263.384233773918,-19.141736851445625K,-6329.533054507564,~
+-46.77202483059423K,-5133.31984910576,-19.33527437981997K,-8475.874355147114,~
+-47.350853860488016K,-5932.132358948376,-19.499140670563116K,-11.28130513112431K,~
+-47.896654940046516K,-6651.812757288388,-19.63927118457653K,-13.705925739911898K,~
+-48.428196780148726K,-7450.548891003338,-19.75762241406145K,-15.719355967045632K,~
+-48.90572222392787K,-8143.489458636022,-19.84751799076265K,-17.078436333620793K,~
+-49.2481073420349K,-8747.561115487857,-19.923025808257873K,-20.204093512657208K,~
+-49.505787495818266K,-9346.51913172657,-20.00958519841455K,-21.921159985022015K,~
+-49.72136556332353K,-9818.319184614307,-20.106623716247053K,-22.07890527740493K,~
+-49.904479208484976K,-10.12088134843233K,-20.22518697734396K,-26.864573080753034K,~
+-50.001242636780065K,-10.358886819403495K,-20.259369713519212K,-27.88990880109825K,~
+-49.93442176091987K,-10.55051613538966K,-20.29201171094952K,-29.087865206822884K,~
+-49.83919743667117K,-10.72776095400497K,-20.32461162160764K,-30.39780037406331K,~
+-49.71977686449906K,-10.868933223221835K,-20.36733275050573K,-31.550024034869635K,~
+-49.65175297632334K,-11.022511298993964K,-20.437391377924585K,-32.626955102260486K,~
+-49.53019633973067K,-11.14306485577366K,-20.415670157354936K,-34.26657286730195K,~
+-49.40562192844417K,-11.255230589825893K,-20.39181556914398K,-36.38407910684823K,~
+-49.2724359891793K,-11.404162506082817K,-20.36445822312447K,-39.20081431006267K,~
+-49.127296591123406K,-11.5572468781401K,-20.333606280473872K,-40.76727896790277K,~
+-48.98452566106975K,-11.753374109320572K,-20.300761813527344K,-42.47502345876087K,~
+-48.84004844438543K,-11.951669217281564K,-20.265765092358444K,-44.12605118254417K,~
+-48.69319281257534K,-12.194631201847988K,-20.23014750049057K,-46.65536675412217K,~
+-48.5361352206507K,-12.468508170065432K,-20.189499656280434K,-47.28114013017447K,~
+-48.80626639348501K,-12.512713642567656K,-20.25402367157075K,-41.88663247596588K,~
+-48.79626742338821K,-12.687060115131915K,-20.250745446632234K,-42.149365544609966K,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0)
+NodeLocation: 568,312,1
+NodeSize: 64,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+ReformDef: [Ano,Cat_manejo]
+
+Constant A__manejo
+Title: % manejo
+Units: s/u
+Description: Porcecntajes asociados a cada tipo de manejo, para el caso de bosque nativo. Los porcentajes se calculan como un promedio entre los 5 últimos años de información histórica.
+Definition: Table(Cat_manejo)(0.5935720893651932,0.16204957950087467,0.244378331133932,0)
+NodeLocation: 136,224,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+
+Constant Coef_VAR
+Title: Coef_VAR
+Units: s/u
+Description: Coeficientes obtenidos externamente para ajuste de modelos VAR para proyección de superficie de tierras forestales.
+Definition: Table(Nativo_plantacion,VAR1)(~
+612.950548417K,-0.010205,0.923424,~
+28.379764965K,0.916468,0.025127)
+NodeLocation: 136,168,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+ReformDef: [Nativo_plantacion,VAR1]
+
+Constant H_SupGeneral
+Title: H_SupGeneral
+Units: ha
+Description: Valores históricos de superficies a nivel general, considerando total de superficie de plantaciones y de bosque nativo. Fuente: Anuario INFOR para el caso de plantaciones hasta 2018, e Informe INGEI para el caso de Bosque Nativo. Para este último los valores para los años 2017 y 2018 fueron estimados mediante regresión simple considerando los últimos 5 años de información 
+Definition: Table(Ano,Nativo_plantacion)(~
+6.491127M,1.46053M,~
+6.57134M,1.555255M,~
+6.662625M,1.572144M,~
+6.736249M,1.694104M,~
+6.815379M,1.747523M,~
+6.899391M,1.818185M,~
+6.975398M,1.835985M,~
+7.042576M,1.881925M,~
+7.115729M,1.914846M,~
+7.179965M,1.952288M,~
+7.235019M,1.989101M,~
+7.288862M,2.037403M,~
+7.33154M,2.073661M,~
+7.35826M,2.04643M,~
+7.379878M,2.0786469M,~
+7.397209M,2.082502M,~
+7.412774M,2.194495M,~
+7.42502M,2.25578M,~
+7.438601M,2.256242M,~
+7.448829M,2.320346M,~
+7.458466M,2.34185M,~
+7.472266M,2.394916M,~
+7.487178M,2.4143887M,~
+7.507686M,2.44759M,~
+7.527171M,2.426722M,~
+7.551696M,2.396562M,~
+7.578706M,2.414208M,~
+7.5805326M,2.289525M,~
+7.597072727M,2.303886M,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0)
+NodeLocation: 136,112,1
+NodeSize: 64,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+ReformDef: [Nativo_plantacion,Ano]
+
+Variable P_Superficie
+Title: P_Superficie
+Units: ha
+Description: Proyección de superficie por tipo de manejo, considerando escenario BAU y medidas
+Definition: if Estrategias='BAU' then P_superficie_LB else ~
+if Cat_manejo='Plan_manejo' then P_superficie_LB+Variacion_Sup_Manejo~
+else~
+P_superficie_LB
+NodeLocation: 624,224,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformVal: [Time,Estrategias]
+Att_ResultSliceState: [Cat_manejo,2,Estrategias,1,Time,1]
+
+Objective Superficie_python
+Title: Superficie_python
+Definition: P_Superficie[Estrategias='Carbono Neutralidad Base']
+NodeLocation: 696,96,1
+NodeSize: 80,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,1,MIDM
+
+Close Aumento_de_Biomasa
+
+Module Cambio_en_la_vegetac
+Title: Cambio en la vegetación
+Author: diego
+Date: lun., oct. 19, 2020 2:01 p. m.
+NodeLocation: 168,336,1
+NodeSize: 56,32
+DiagState: 2,0,0,624,304,17
+
+Variable EM_cambioveg1
+Title: EM_cambioveg
+Units: ktonCO2eq
+Description: Emisiones totales asociadas al cambio de vegetación en tierras forestales, para el periodo 1990-2050, para cada tipo de gas GEI. En este caso, solo se reportan emisiones de CO2
+Definition: if Gas_GEI='CO2' then ~
+var futuro:=(P_Rest_medida*FE_rest_sust1);~
+var consolidado:= if ano=time then futuro[time=ano] else 0;~
+if ano>2018 then sum(consolidado,time) else H_EM_rest_sust~
+else 0
+NodeLocation: 920,152,1
+NodeSize: 64,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,1,CONF
+ReformVal: [Year,Cambio_veg]
+Att_ResultSliceState: [Rest_Sust,1,Escenarios,2,Gas_GEI,1,Sys_LocalIndex('Probability'),1,Ano,1]
+
+Constant FE_rest_sust1
+Title: FE_rest_sust
+Units: kt CO2/ha
+Description: Emisiónes asociadas al cambio de vegetación dentro de las tierras forestales, en kt CO2/ha
+Definition: Table(Rest_Sust)(-3.0382184197757407m,-0.026519156250725606)
+NodeLocation: 544,96,1
+NodeSize: 64,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+
+Text Te772458749
+Title: Emisiones asociadas a Cambio en la vegetación
+NodeLocation: 572,180,-1
+NodeSize: 540,132
+NodeInfo: 1,,,,,1
+NodeColor: 57311,57311,57311
+
+Constant H_EM_rest_sust
+Title: H_EM_rest_sust
+Units: kt COeq
+Description: Emisiones históricas para emisiones asociadas a tierras forestales con cambio en la vegetación. INGEI, 2017  y 2018 como promedio de los últimos 5 años. 
+Definition: Table(Ano,Rest_Sust)(~
+-16.14326302303827,-1201.5930539714336,~
+-31.94059095408833,-1682.5658739027976,~
+-47.7379188851384,-1945.7233269692033,~
+-63.53524681618843,-2393.659195993032,~
+-79.33257474723848,-2516.461961094975,~
+-95.12990267828854,-2724.4345956480647,~
+-110.92723060933852,-2249.0773378041713,~
+-126.72455854038859,-2028.9212195898008,~
+-142.52188647143873,-1860.162036244149,~
+-158.3192144024888,-1786.420897710549,~
+-174.11654233353875,-1372.3415602485866,~
+-189.9138702645888,-1332.5662618576016,~
+-194.30463171291996,-4181.090309263151,~
+-198.96084003145654,-3287.4487953889,~
+-203.6170483499933,-3453.211708619291,~
+-208.27325666853005,-3583.6341156863887,~
+-212.92946498706655,-3852.7080206481123,~
+-217.5856733056032,-4333.460843534048,~
+-219.45510314939335,-4087.339836245607,~
+-221.4050212149657,-4185.797818227276,~
+-207.5576113494884,-3911.5316914708897,~
+-193.71020148401115,-3853.548440714217,~
+-179.8627916185337,-3731.790934564845,~
+-166.0153817530562,-3683.9473531812223,~
+-152.16797188757886,-3374.2354966007615,~
+-138.32056202210146,-2973.3759489804597,~
+-124.47315215662407,-2978.1420005193727,~
+-151.68670046940758,-3341.4136875914264,~
+-147.5505914414617,-3320.1983625908456,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0)
+NodeLocation: 560,232,1
+NodeSize: 72,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+ReformDef: [Ano,Rest_Sust]
+
+Variable P_Rest_medida
+Title: P_Rest_medida
+Definition: If Estrategias='BAU' then P_rest_sust else P_rest_sust*(1+Prev__Sustitucion_Fo)
+NodeLocation: 552,160,1
+NodeSize: 72,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+Att_ResultSliceState: [Escenarios,2,Rest_Sust,1,Time,1]
+
+Chance P_rest
+Definition: Weibull(2.733933, 50673.719331)~
+
+NodeLocation: 152,120,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+
+Chance P_Sust
+Title: P_Sust
+Definition: Weibull(3.216583e+00, 2.618701e+05)
+NodeLocation: 152,200,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+
+Variable P_rest_sust
+Title: P_rest_sust
+Definition: if Rest_Sust='Restitucion' then P_rest else P_Sust
+NodeLocation: 296,160,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+
+Close Cambio_en_la_vegetac
+
+Objective EM_TF_que_permanecen
+Title: EM_TF que permanecen como tales
+Units: MM t CO2eq
+Description: Emisiones asociadas a tierras forestales que permanecen como tales, para el periodo 1990-2050
+Definition: if Cat_TF_que_permanece='Aumento de Biomasa' then sum(EM_aumentoB,Cat_manejo)/1000 else if Cat_TF_que_permanece='Perdida de Biomasa' then sum(EM_Perdida_de_Biomas,Cat_PBiom)/1000 else sum(EM_cambioveg1, Rest_Sust)/1000~
+
+NodeLocation: 456,224,1
+NodeSize: 56,32
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformVal: [Ano,Cat_TF_que_permanece,Undefined,Undefined,Undefined,2]
+Att__TotalsIndex: [Gas_GEI,Cat_TF_que_permanece]
+Att_ResultSliceState: [Gas_GEI,0,Estrategias,3,Cat_TF_que_permanece,1,Ano,1]
+
+Text Te1763694845
+Title: Emisiones asociadas a tierras forestales que permanecen como tales
+NodeLocation: 448,208,-1
+NodeSize: 416,184
+NodeInfo: 1,,,,,1
+NodeColor: 55705,55705,55705
+
+Close Tierras_Forestales_q
+
+Module Tierras_convertidas_
+Title: Tierras convertidas en tierras forestales
+Author: diego
+Date: lun., oct. 19, 2020 2:01 p. m.
+NodeLocation: 288,296,1
+NodeSize: 56,40
+DiagState: 2,666,-16,624,304,17
+
+Constant FE_tierras_conv
+Title: FE_tierras conv
+Units: kt CO2/ha
+Description: Factores de emision asociadas a tierras convertidas en tierras forestales. Estimados a partir de información histórica de INGEI
+Definition: Table(Cat_tierras_conv)(-2.356796785214597m,-0.041503447173769206)
+NodeLocation: 312,72,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+
+Constant H_sup_tierras_conv
+Title: H_sup tierras conv
+Units: ha
+Description: Superficie de tierras convertidas a tierras forestales, diferenciando entre tierras convertidas a bosque nativo y tierras convertidas en plantaciones forestales. Periodo 1990-2018, con 2017 y 2018 estimados como promedio de los últimos 5 años
+Definition: Table(Ano,Cat_tierras_conv)(~
+31.573K,950K,~
+63.147K,1M,~
+94.72K,1.02M,~
+126.293K,1.07M,~
+157.867K,1.05M,~
+189.44K,1.04M,~
+221.013K,980K,~
+252.587K,950K,~
+284.16K,900K,~
+315.733K,900K,~
+347.306K,840K,~
+378.88K,820K,~
+404.121K,890K,~
+429.363K,700K,~
+454.604K,700K,~
+479.846K,720K,~
+505.087K,740K,~
+530.329K,790K,~
+554.403K,760K,~
+578.477K,800K,~
+570.978K,740K,~
+563.479K,710K,~
+555.979K,700K,~
+548.48K,700K,~
+540.981K,660K,~
+533.482K,610K,~
+525.982K,600K,~
+518.48319999999925K,595.8689458689503K,~
+510.984K,579.3304843304902K,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0)
+NodeLocation: 152,216,1
+NodeSize: 64,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+ReformDef: [Ano,Cat_tierras_conv]
+
+Constant Coef_VAR_TC
+Title: Coef_VAR_TC
+Units: s/u
+Description: Coeficientes de modelo VAR ajustado para proyeccion de tierras convertidas en tierras forestales.
+Definition: Table(VAR1,Cat_tierras_conv)(~
+59.84499582K,586.628494721K,~
+-0.016453,0.458003,~
+0.933957,-0.374216)
+NodeLocation: 152,288,1
+NodeSize: 64,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+ReformDef: [Cat_tierras_conv,VAR1]
+
+Variable P_sup_tierras_conv
+Title: P_sup_tierras_conv
+Units: ha
+Description: Proyección de tierras convertidas en tierras forestales, considerando tierras cconvertidas en bosque nativo y tierras convertidas en plantaciones. periodo 2019-2050
+Definition: dynamic(Coef_VAR_TC[VAR1='Cte']+ H_sup_tierras_conv[Ano=2018,Cat_tierras_conv='Tierras convertidas a BN']*Coef_VAR_TC[VAR1='L1.BN']+H_sup_tierras_conv[Ano=2018,Cat_tierras_conv='Tierras convertidas a plantaciones']*Coef_VAR_TC[VAR1='L1.P'],~
+Coef_VAR_TC[VAR1='Cte']+ self[time-1,Cat_tierras_conv='Tierras convertidas a BN']*Coef_VAR_TC[VAR1='L1.BN']+self[time-1,Cat_tierras_conv='Tierras convertidas a plantaciones']*Coef_VAR_TC[VAR1='L1.P']~
+)~
+~
+
+NodeLocation: 352,248,1
+NodeSize: 80,24
+WindState: 2,0,0,720,350
+ValueState: 2,388,12,675,689,1,MIDM
+
+Constant H_EM_tierras_conv
+Title: H_EM tierras conv
+Units: kt CO2 
+Description: Emisiones históricas asociadas a tierras convertidas en tierras forestales, periodo 1990-2018. Para 2017 y 2018 se considera promedio de los útlimos 5 años
+Definition: Table(Ano,Cat_tierras_conv)(~
+438.3234301584865,-25.16356540570133K,~
+317.8104044162926,-26.81183323147839K,~
+197.2973786740989,-27.475454313349535K,~
+76.78435293190506,-29.067221513503006K,~
+-43.72867281028875,-29.41011562620819K,~
+-164.24169855248243,-30.378611653260803K,~
+-284.75472429467635,-28.73680118660821K,~
+-405.26775003687,-27.93421027677334K,~
+-525.7807757790638,-27.294106030996136K,~
+-646.2938015212578,-26.98300033411512K,~
+-766.8068272634516,-25.530480012158918K,~
+-887.3198530056452,-25.448048892804312K,~
+-1119.2050855642533,-28.511336653670252K,~
+-1185.6258030973138,-24.580264770176524K,~
+-1252.0465206303738,-25.67178331259739K,~
+-1318.467238163434,-26.390196916158246K,~
+-1384.887955696494,-27.529032412612873K,~
+-1451.3086732295546,-29.52826205094402K,~
+-1536.8147959763846,-29.84803855616458K,~
+-1593.8153510013371,-30.705332336355867K,~
+-1530.3028802840952,-29.642859568855365K,~
+-1466.790409566854,-29.235513679066866K,~
+-1403.277938849612,-29.19092862204324K,~
+-1339.7654681323702,-29.0108965618101K,~
+-1276.2529974151291,-27.578262362526715K,~
+-1212.7405266978872,-24.765922004125925K,~
+-1149.2280559806454,-25.191991907246625K,~
+-1274.9818103028208,-27.14325445164506K,~
+-1267.9122683940195,-26.761422737646386K,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0)
+NodeLocation: 152,144,1
+NodeSize: 64,24
+WindState: 2,0,0,720,350
+ReformDef: [Ano,Cat_tierras_conv]
+
+Objective EM_tierras_conv
+Title: EM_tierras conv
+Units: MM t CO2eq
+Description: Emisiones asociadas a la categoría de tierras convertidas en tierras forestales
+Definition: if Gas_GEI='CO2' then~
+var futuro:=(FE_tierras_conv* P_Sup_tierras_medida)/1000;~
+var consolidado:= if Ano=time then futuro[time=Ano] else 0;~
+if Ano>2018 then sum(consolidado,time) else H_EM_tierras_conv/1000~
+else 0
+NodeLocation: 792,176,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformVal: [Ano,Estrategias]
+Att__TotalsIndex: [Cat_tierras_conv]
+Att_ResultSliceState: [Gas_GEI,1,Cat_tierras_conv,0,Escenarios,2,Ano,1]
+
+Text Te95410429
+Title: Emisiones asociadas a tierras convertidas en tierras forestales
+NodeLocation: 484,180,-1
+NodeSize: 444,164
+NodeInfo: 1,,,,,1
+NodeColor: 55705,55705,55705
+
+Variable P_Sup_tierras_medida
+Title: P_Sup_tierras_medidas
+Definition: if Estrategias='BAU' then P_sup_tierras_conv else (P_sup_tierras_conv+Forestacion)
+NodeLocation: 616,248,1
+NodeSize: 96,24
+WindState: 2,98,56,720,350
+ValueState: 2,-39,41,400,621,0,MIDM
+Att_ResultSliceState: [Cat_tierras_conv,2,Estrategias,1,Time,1]
+
+Close Tierras_convertidas_
+
+Objective EM_TF1
+Title: EM_TF
+Units: MM t CO2eq
+Description: Emisiones totales de la categoría tierras forestales, para el periodo 1990-2050
+Definition: if Cat_TF='Tieras forestales que permanecen como tales' then sum(EM_TF_que_permanecen,Cat_TF_que_permanece) else sum(EM_tierras_conv,Cat_tierras_conv) 
+NodeLocation: 528,192,1
+NodeSize: 48,24
+WindState: 2,-35,300,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformVal: [Ano,Estrategias]
+Att__TotalsIndex: [Gas_GEI,Cat_TF]
+Att_ResultSliceState: [Gas_GEI,0,Cat_TF,0,Estrategias,1,Ano,1]
+{!50000|Att_RowHeights: [,Cat_TF,\([16,16])]}
+
+Objective EM_total
+Title: EM_total
+Units: MM t CO2eq
+Description: Output auxiliar que une el  punto 4.A.1 con el Punto 4.A.2, util para la suma final de absorciones y emisiones del sector
+Definition: if Uso_Actual='4.A Forestal' then EM_TF1[Cat_TF=~
+'Tieras forestales que permanecen como tales']+EM_TF1[Cat_TF='Tierras convertidas en tierras forestales'] else 0
+NodeLocation: 656,192,1
+NodeSize: 48,24
+WindState: 2,633,105,720,351
+ValueState: 2,346,112,416,303,0,MIDM
+ReformVal: [Ano,Estrategias]
+Att__TotalsIndex: [Gas_GEI,Uso_Actual]
+Att_ResultSliceState: [Gas_GEI,0,Uso_Actual,0,Estrategias,1,Ano,1]
+
+Close A4_A__Tierras_Forest
+
+Module Medidas_de_Mitigacio
+Title: Medidas de Mitigacion
+Author: lunam
+Date: dom., oct. 18, 2020 11:36 p. m.
+NodeLocation: 248,64,1
+NodeSize: 56,32
+DiagState: 2,-75,11,664,491,17
+WindState: 2,0,0,720,350
+
+Variable Captura_Area_de_mane
+Title: Captura Area de manejo
+Units: t CO2
+Description: Aumento de la captura de CO2 debido a la medida de mitigación. Se consideran los mismos factores de emisión que en la categoría Tierras Forestales que permanecen como tales> Planes de manejo.
+Definition: Variacion_Sup_Manejo*FE_biomasa*1000
+NodeLocation: 904,288,1
+NodeSize: 48,32
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+Att__TotalsIndex: [Cat_manejo]
+
+Text Te1015208189
+Title: Medidas de Mitigacion
+NodeLocation: 480,368,-1
+NodeSize: 104,240
+NodeInfo: 1,,,,,1
+Aliases: Alias Al673660669
+NodeColor: 52427,56425,65535
+
+Alias Al750967037
+Title: FE_biomasa
+Definition: 1
+NodeLocation: 752,248,1
+NodeSize: 64,24
+Original: FE_biomasa
+
+Variable Ha_Manejo_py
+Title: Ha_Manejo_py
+Units: ha
+Description: Variable auxiliar pyparams que multiplica las hectareas de la medida de BN restauracion con el porcentaje proveniente de pyparams
+Definition: Medidas_de_Mitigaci1[Medidas='Aumento Planes de Manejo']*pyparams_interface[pyparams='Recuperacion_BN']
+NodeLocation: 256,288,1
+NodeSize: 80,24
+WindState: 2,499,102,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+
+Variable Forestacion
+Title: Forestación
+Units: ha
+Description: medida de forestación, permite sumar las hectareas forestadas y eliminarlas de las tierras convertidas luego de 20 años
+Definition: Cumulate(Ha_Forestacion_py) - Cumulate(Ha_Dmayr20_py)
+NodeLocation: 480,192,1
+NodeSize: 56,24
+WindState: 2,0,0,719,350
+ValueState: 2,84,90,416,303,0,MIDM
+Aliases: Alias Al1747402493
+
+Variable Ha_Forestacion_py
+Title: Ha_Forestacion_py
+Definition: If Cat_tierras_conv='Tierras convertidas a BN' then Medidas_de_Mitigaci1[Medidas='Forestación']*Porc__Forestacion_Bo *pyparams_interface[pyparams='Tierras convertidas a BN'] else Medidas_de_Mitigaci1[Medidas='Forestación']*(1-Porc__Forestacion_Bo)*pyparams_interface[pyparams='Tierras convertidas a plantaciones']
+NodeLocation: 256,128,1
+NodeSize: 80,24
+WindState: 2,-26,52,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+Aliases: Alias Al692240125
+
+Variable Silv_prev_py
+Title: Silv_prev_py
+Definition: If Inc_Origen='Incendio Bosque Nativo' then Medidas_de_Mitigaci1[Medidas='Control de Incendios']*pyparams_interface[pyparams='Incendio Bosque Nativo'] else Medidas_de_Mitigaci1[Medidas='Control de Incendios']*pyparams_interface[pyparams='Incendio Plantaciones Forestales']
+NodeLocation: 256,376,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+Att__TotalsIndex: [Time,Inc_Origen]
+
+Variable Silvicultura_Prevent
+Title: Silvicultura Preventiva
+Definition: Cumulate(Silv_prev_py*-1)
+NodeLocation: 480,376,1
+NodeSize: 56,32
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+Aliases: Alias Al405225213
+{!50000|Att_ColumnWidths: [,Time,\([,,65])]}
+
+Variable Ha_Dmayr20_py
+Title: Ha_Dmayr20_py
+Definition: dynamic(if Ha_Forestacion_py[Time = time-20] = Null then 0 else if Cat_tierras_conv='Tierras convertidas a BN' then 0 else Ha_Forestacion_py[Time = time-20])
+NodeLocation: 256,200,1
+NodeSize: 72,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+
+Variable Prev__Degradacion_y_
+Title: Prev. Degradación y sustitución
+Definition: Medida_prev_Sust*pyparams_interface[pyparams='Sustitución y degradación']
+NodeLocation: 480,472,1
+NodeSize: 56,32
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+Aliases: Alias Al1478967037
+Att__TotalsIndex: []
+Att_ResultSliceState: [Uso_Actual,2,Uso_previo,1,Time,1]
+{!50000|Att_ColumnWidths: [,Time,\([,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,61])]}
+
+Constant Medida_prev_Sust
+Title: Medida_prev_Sust
+Definition: Table(Time,Uso_previo,Uso_Actual)(~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,-1.9217069176144658m,-8.53838152946236m,0,-430.64823739702706u,-220.37442663725828u,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,-3.8434138352289315m,-0.01707676305892472,0,-861.2964747940541u,-440.74885327451656u,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,-5.765120752843397m,-0.02561514458838708,0,-1.291944712191081m,-661.1232799117748u,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,-7.686827670457863m,-0.03415352611784944,0,-1.7225929495881082m,-881.4977065490331u,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,-9.608534588072329m,-0.0426919076473118,0,-2.1532411869851355m,-1.1018721331862915m,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,-0.011530241505686795,-0.05123028917677416,0,-2.583889424382162m,-1.3222465598235495m,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,-0.01345194842330126,-0.059768670706236524,0,-3.014537661779189m,-1.542620986460808m,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,-0.015373655340915726,-0.06830705223569888,0,-3.4451858991762165m,-1.7629954130980662m,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,-0.017295362258530192,-0.07684543376516124,0,-3.8758341365732435m,-1.9833698397353247m,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0)
+NodeLocation: 80,472,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+ValueState: 2,40,50,400,300,0,MIDM
+ReformDef: [Time,Uso_previo]
+Att__TotalsIndex: [Uso_previo,Time,Uso_Actual]
+Att_ResultSliceState: [Uso_Actual,0,Uso_previo,1,Time,1]
+Att_EditSliceState: [Uso_Actual,3,Uso_previo,1,Time,1]
+{!50000|Att_ColumnWidths: [,Time,\([,,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62])]}
+
+Constant Medida_Sust_Forestal
+Title: Medida_Sust_Forestal
+Definition: Table(Time,Rest_Sust)(~
+0,0,~
+0,0,~
+0,0,~
+-0.016666666666666666,0,~
+-0.03333333333333333,0,~
+-0.05,0,~
+-0.06666666666666667,0,~
+-0.08333333333333333,0,~
+-0.09999999999999999,0,~
+-0.11666666666666665,0,~
+-0.13333333333333333,0,~
+-0.15,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0,~
+0,0)
+NodeLocation: 80,560,1
+NodeSize: 56,40
+WindState: 2,0,0,720,350
+ReformDef: [Time,Rest_Sust]
+
+Variable Prev__Sustitucion_Fo
+Title: Prev. Sustitución Forestal
+Definition: Medida_Sust_Forestal*pyparams_interface[pyparams='Sustitución y degradación']
+NodeLocation: 480,560,1
+NodeSize: 56,32
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+Aliases: Alias Al942096125
+
+Variable Variacion_Sup_Manejo
+Title: Variación Sup Manejo
+Units: ha
+Description: Medida asociada a variación de superficie. Los valores corresponden a hectáreas acumuladas a cada año
+Definition: Cumulate(Ha_Manejo_py)
+NodeLocation: 480,288,1
+NodeSize: 88,16
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+Aliases: Alias Al634478333
+
+Constant Medidas_de_Mitigaci1
+Title: Medidas de Mitigación
+Definition: Table(Time,Medidas)(~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+22.2222222222222K,22.2222222222222K,0.0277777777777778,0.0277777777777778,~
+22.2222222222222K,22.2222222222222K,0.0277777777777778,0.0277777777777778,~
+22.2222222222222K,22.2222222222222K,0.0277777777777778,0.0277777777777778,~
+22.2222222222222K,22.2222222222222K,0.0277777777777778,0.0277777777777778,~
+22.2222222222222K,22.2222222222222K,0.0277777777777778,0.0277777777777778,~
+22.2222222222222K,22.2222222222222K,0.0277777777777778,0.0277777777777778,~
+22.2222222222222K,22.2222222222222K,0.0277777777777778,0.0277777777777778,~
+22.2222222222222K,22.2222222222222K,0.0277777777777778,0.0277777777777778,~
+22.2222222222222K,22.2222222222222K,0.0277777777777778,0.0277777777777778,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0,~
+0,0,0,0)
+NodeLocation: 72,256,1
+NodeSize: 48,32
+WindState: 2,98,82,720,350
+ReformDef: [Time,Medidas]
+
+Constant Porc__Forestacion_Bo
+Title: Porc. Forestacion Bosque Nativo
+Definition: .35
+NodeLocation: 256,48,1
+NodeSize: 56,40
+WindState: 2,98,70,720,350
+
+Text Te446873341
+Title: Captura por Medida
+NodeLocation: 836,368,-1
+NodeSize: 164,240
+NodeInfo: 1,,,,,1
+NodeColor: 39321,58983,65535
+
+Close Medidas_de_Mitigacio
+
+Module A4_X_1_Tierras_conve
+Title: 4.X.1 Tierras convertidas en X
+Author: diego
+Date: vie., ago. 14, 2020 6:16 p. m.
+NodeLocation: 400,312,1
+NodeSize: 56,40
+DiagState: 2,17,4,1267,500,17
+WindState: 2,0,0,720,350
+
+Variable Tierras_conv_a_X
+Title: Tierras_conv_a_X
+Units: Ton CO2 eq
+Description: Suma de Biomasa, materia organica muerta y carbono en el suelo, para Cultivos, pastizales, humedales, asentamientos y otras tierras.
+Definition: If Uso_Actual='4.D Humedal'Then (Cambio_Biomasa_TaX*GWP_Gases[Gas_GEI='CO2']) Else(Cambio_C_suelo*GWP_Gases[Gas_GEI='CO2'])+(Cambio_Biomasa_TaX*GWP_Gases[Gas_GEI='CO2'])+(Cambio_MOM*GWP_Gases[Gas_GEI='CO2'])
+NodeLocation: 456,168,1
+NodeSize: 80,24
+WindState: 2,191,129,720,250
+ValueState: 2,40,50,400,300,0,MIDM
+GraphSetup: Att_ForceCategorical Graph_Primary_Valdim:1
+ReformVal: [Ano,Uso_previo]
+Att_ResultSliceState: [Uso_Actual1,4,Uso_previo,2,Year,4]
+{!40600|Att_ClusterIndex: Uso_Actual}
+{!50000|Att_ColumnWidths: [,Uso_previo,[,,,76,103],Ano,\([,,,,,,,,,64])]}
+
+Objective Tierras_a_X_por_gas
+Title: Emisiones tierras convertidas (MM t CO2eq)
+Units: MM t CO2eq
+Description: Emisiones (en ton CO2 eq/año) por tipo de GEI
+Definition: if Gas_GEI='CO2' then Sum(Tierras_conv_a_X, Uso_previo)/1000000 Else 0
+NodeLocation: 688,168,1
+NodeSize: 88,32
+WindState: 2,0,0,720,350
+ValueState: 2,68,-11,1081,546,1,MIDM
+GraphSetup: Att_GraphIndexRange Ano:1,,0,,,,,21,61,1~
+Att_ForceCategorical Graph_Primary_Valdim:1~
+Att_StackedBar Graph_Primary_Valdim:1
+ReformVal: [Ano,Uso_Actual]
+Att_ResultSliceState: [Uso_Actual,1,Estrategias,1,Gas_GEI,1,Ano,1]
+
+Module Biomasa
+Title: Biomasa
+Author: diego
+Date: lun., oct. 19, 2020 10:11 a. m.
+NodeLocation: 280,88,1
+NodeSize: 48,24
+DiagState: 2,0,0,752,376,17
+
+Variable BAntes1
+Title: BAntes
+Units: Ton d.m./ha
+Description: suma de la biomasa aerea y biomasa subterranea que estaba antes del cambio de uso de suelo
+Definition: Biomasa_Aerea+Biomasa_Sub
+NodeLocation: 400,72,1
+NodeSize: 48,32
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+Att__TotalsIndex: []
+Att_ResultSliceState: [R1,1,Biomasa_Aerea1,1,Uso_previo,1]
+
+Constant BDespues1
+Att_PrevIndexValue: ['Biomasa']
+Title: BDespues
+Units: ton d.m./ha
+Description: bajo un método de nivel 1 se supone que se pierde toda la biomasa del ecosistema anterior, justo después de la conversión, incluso si no hay un cambio abrupto, y se supone que la biomasa residual (BDESPUÉS) es, por lo tanto, cero (es decir, se elimina toda la vegetación de la tierra antes de que se establezca la vegetación). para los pastizales se asume un porcentaje de vegetación solo para hacer calzar la información del INGEI, esto debido a la falta de información que permita seleccionar los valores correctos para esta sección.
+Definition: Table(Uso_previo,Ano,Uso_Actual)(~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,6.1,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,13.5,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0)
+NodeLocation: 400,160,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformDef: [Uso_previo,Ano]
+Att_ResultSliceState: [Uso_Actual,5,Uso_previo,1,Ano,1]
+Att_EditSliceState: [Uso_Actual,3,Ano,5,Uso_previo,1]
+
+Constant Frac_C
+Att_PrevIndexValue: ['FC']
+Title: Frac_C
+Units: ton C/ton d.m.
+Description: Parte de la ecuación para determinar biomasa. datos extraidos del NIR, como tambien de las tablas del IPCC, las utilizadas son templado, boreal y Todas, Tabla 4.3
+Definition: Table(Uso_previo)(0.47,0.5,0.5,0.5,0.5,0)
+IndexVals: ['FC']
+NodeLocation: 400,248,1
+NodeSize: 56,32
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformDef: [Uso_previo,Self]
+{!40300|Att_SlicerPopupSize: 232,32}
+{!50000|Att_ColumnWidths: [,Uso_Actual,\([,,,,,64])]}
+
+Objective Cambio_Biomasa_TaX
+Title: Cambio_Biomasa_TaX~
+
+Units: Ton C/año
+Description: Ecuación 2.16 IPCC, Cambio en la biomasa de las tierras convertidas a X
+Definition: (BDespues1-BAntes1)*H_P_Conv_X*Frac_C
+NodeLocation: 600,152,1
+NodeSize: 96,56
+WindState: 2,608,210,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformVal: [Ano,Uso_previo]
+Att__TotalsIndex: [Biomasa_Aerea]
+Att_ResultSliceState: [Uso_Actual,1,Estrategias,1,Uso_previo,2,Ano,1]
+{!50000|Att_ColumnWidths: [,Ano,\([,,,,,,,,,,,66])]}
+
+Constant Biomasa_Sub
+Title: Biomasa_Sub
+Units: ton d.m./ha
+Description: Biomasa subterranea de los distintos usos de la tierra, calculados con el R y la Biomasa aerea
+Definition: Biomasa_Aerea*R1
+NodeLocation: 248,40,1
+NodeSize: 64,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformVal: [Biomasa_Aerea,Undefined]
+
+Constant Biomasa_Aerea
+Att_PrevIndexValue: []
+Title: Biomasa_Aerea
+Units: ton d.m./ Ha
+Description: Cantidad de biomasa en la superficie
+Definition: Table(Uso_previo,Ano)(~
+79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,79.49,~
+2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.7,~
+10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,~
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,~
+2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,~
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)
+NodeLocation: 248,120,1
+NodeSize: 72,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformDef: [Ano,Uso_previo]
+{!40300|Att_SlicerPopupSize: 227,32}
+{!50000|Att_ColumnWidths: [,Uso_Actual,[,,,,100],Ano,\([66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66,66])]}
+
+Constant R1
+Att_PrevIndexValue: ['']
+Title: R
+Description: Relacion Biomasa aerea y biomasa subterranea
+Definition: Table(Uso_previo)(0.258,4,0.2,0,0,0)
+IndexVals: ['']
+NodeLocation: 88,40,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformDef: [Uso_previo,Undefined]
+{!40300|Att_SlicerPopupSize: 227,32}
+
+Close Biomasa
+
+Module Materia_Organica_Mue
+Title: Materia Organica Muerta
+Author: diego
+Date: lun., oct. 19, 2020 10:11 a. m.
+NodeLocation: 280,168,1
+NodeSize: 48,32
+DiagState: 2,0,0,752,376,17
+
+Constant MOM_uso_Previo
+Att_PrevIndexValue: ['MOM Antigua']
+Title: MOM_uso_Previo
+Units: Ton C/Ha
+Description: Se consideró el método nivel 1 de las Directrices del IPCC de 2006, que supone que la materia~
+muerta y los depósitos de hojarasca están en equilibrio, de modo que no es necesario estimar los~
+cambios en las existencias de carbono para estos depósitos. Cantidad de Materia Organica Muerta antes de la conversión.
+Definition: Table(Uso_Actual)(~
+0,0,0,0,0,0)
+IndexVals: ['MOM Antigua']
+NodeLocation: 104,48,1
+NodeSize: 80,32
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+
+Constant MOM_uso_actual
+Att_PrevIndexValue: ['MOM nueva']
+Title: MOM_uso_actual
+Units: ton C/ha
+Description: Se consideró el método nivel 1 de las Directrices del IPCC de 2006, que supone que la materia~
+muerta y los depósitos de hojarasca están en equilibrio, de modo que no es necesario estimar los~
+cambios en las existencias de carbono para estos depósitos. MOM bajo la nueva categoria de uso.
+Definition: Table(Uso_Actual)(~
+0,0,0,0,0,0)
+IndexVals: ['MOM nueva']
+NodeLocation: 104,128,1
+NodeSize: 72,32
+WindState: 2,0,0,720,350
+
+Constant Lapso
+Att_PrevIndexValue: ['Tiempo Trans']
+Title: Lapso
+Units: Sin unidad
+Description: lapso en el que se produce la transición de la vieja a la nueva categoría de uso de la tierra, año. El valor por defecto en el Nivel 1 es de 20 años para los incrementos de existencias de carbono y de 1 año para las pérdidas de carbono.
+Definition: Table(Uso_Actual)(~
+1,1,1,1,1,1)
+IndexVals: ['Tiempo Trans']
+NodeLocation: 104,216,1
+NodeSize: 48,40
+WindState: 2,0,0,720,350
+
+Objective Cambio_MOM
+Title: Cambio_MOM
+Units: ton C/año
+Description: Ecuacion 2.23, Cambio en la materia organica muerta por cambio de uso de suelo a otra categoria.
+Definition: (MOM_uso_actual-MOM_uso_Previo)*Lapso*H_P_Conv_X
+NodeLocation: 320,128,1
+NodeSize: 64,56
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+Att_ResultSliceState: [Materia_Organica_mu1,1,MOM_bajo_la_nueva_ca,1,lapso_en_el_que_se_p,1,Uso_Actual,2,Uso_previo,1,Ano,1]
+
+Close Materia_Organica_Mue
+
+Module Carbono_en_el_Suelo
+Title: Carbono en el Suelo
+Author: diego
+Date: lun., oct. 19, 2020 10:11 a. m.
+NodeLocation: 280,248,1
+NodeSize: 48,32
+DiagState: 2,0,0,752,376,17
+
+Variable SOC1
+Title: SOC0
+Units: ton C
+Description: Ecuación 2.25
+Definition: SOCref1*H_P_Conv_X*F_I1*F_LU1*F_MG1
+NodeLocation: 232,352,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+Att_ResultSliceState: [Uso_Actual,3,Uso_previo,1,Ano,1]
+
+Variable SOC0_T1
+Title: SOC0-T
+Units: ton C
+Description: Ecuación 2.25
+Definition: SOCref1*F_IT_1*F_LUT_1*F_MGT_1*H_P_Conv_X
+NodeLocation: 240,80,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+Att_ResultSliceState: [Uso_Actual,3,F_IT_1,1,F_LUT_1,1,F_MGT_1,1,Uso_previo,1,Ano,1]
+{!50000|Att_ColumnWidths: [,Ano,\([63,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,])]}
+
+Objective Cambio_C_suelo
+Title: Cambio_C_suelo
+Units: ton C año-
+Description: Ecuacion 2.25 IPCC, Cambio de carbono en el suelo.
+Definition: (SOC1-SOC0_T1)/D1
+NodeLocation: 424,224,1
+NodeSize: 72,32
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformVal: [Uso_previo,Ano]
+Att_ResultSliceState: [Uso_Actual,4,Ano,1,Uso_previo,1]
+
+Constant D1
+Title: D
+Units: año
+Description: dependencia temporal de los factores de cambio de existencias, que es el lapso por defecto para la transición entre los valores de equilibrio del SOC, año. Habitualmente 20 años, pero depende de las hipótesis que se apliquen en el cálculo de los factores FLU, FMG y FI. Si T es mayor que D, úsese el valor de T para obtener la tasa anual de cambio durante el tiempo de inventario (0 – T años). Default, 20 años
+Definition: 20
+NodeLocation: 424,320,1
+NodeSize: 16,16
+WindState: 2,0,0,720,350
+
+Constant F_LU1
+Att_PrevIndexValue: ['FLU']
+Title: F_LU
+Units: Sin dimension
+Description: Factor de cambio de existencias para sistemas de uso de la tierra o subsistemas de un uso de la tierra en particular en el ultimo año del inventario, sin dimensión. Datos obtenidos del  del NIR
+Definition: Table(Uso_previo,Uso_Actual)(~
+1,0.69,1,1,0.8,1,~
+1,0.69,1,1,0.8,1,~
+1,0.69,1,1,0.8,1,~
+1,0.69,1,1,0.8,1,~
+1,0.69,1,1,0.8,1,~
+1,0.69,1,1,0.8,1)
+IndexVals: ['FLU']
+NodeLocation: 64,304,1
+NodeSize: 32,16
+WindState: 2,0,0,714,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformDef: [Uso_previo,Uso_Actual]
+Att_EditSliceState: [Uso_previo,1,Uso_Actual,1,Self,1]
+{!50000|Att_ColumnWidths: [,Uso_Actual,\([65,64,64,63,63,64])]}
+
+Constant F_MG1
+Att_PrevIndexValue: ['FMG']
+Title: F_MG
+Units: Sin dimension
+Description: factor de cambio de existencias para el régimen de gestión en el ultimo año del inventario, datos sacados del NIR
+Definition: Table(Uso_Actual)(1,1,1,1,1,1)
+IndexVals: ['FMG']
+NodeLocation: 64,352,1
+NodeSize: 32,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+ReformDef: [Uso_previo,Undefined]
+{!50000|Att_ColumnWidths: [62]}
+
+Constant F_I1
+Att_PrevIndexValue: ['FI']
+Title: F_I
+Description: factor de cambio de existencias para el aporte de materia orgánica en el ultimo año del inventario,datos sacados del NIR
+Definition: Table(Uso_Actual)(~
+1,1,1,1,1,1)
+IndexVals: ['FI']
+NodeLocation: 64,400,1
+NodeSize: 24,16
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+{!50000|Att_ColumnWidths: [62]}
+
+Constant SOCref1
+Title: SOCref
+Units: ton C
+Description: Definido para el biobio de manera momentanea
+Definition: 78.20
+NodeLocation: 72,224,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+
+Constant F_IT_1
+Att_PrevIndexValue: ['FI']
+Title: F_IT-0
+Units: Sin dimension
+Description: factor de cambio de existencias para el aporte de materia orgánica al inicio del inventario,datos sacados del NIR
+Definition: Table(Uso_previo)(~
+1,1,1,1,1,1)
+IndexVals: ['FI']
+NodeLocation: 72,144,1
+NodeSize: 48,16
+WindState: 2,0,0,720,350
+{!50000|Att_ColumnWidths: [62]}
+
+Constant F_LUT_1
+Att_PrevIndexValue: ['FLU']
+Title: F_LUT-0
+Units: Sin dimension
+Description: Factor de cambio de existencias para sistemas de uso de la tierra o subsistemas de un uso de la tierra en particular al inicio del inventario, sin dimensión. Datos obtenidos del  del NIR
+Definition: Table(Uso_previo,Uso_Actual)(~
+1,1,1,1,1,1,~
+1,1,1,1,1,1,~
+0.69,0.69,0.69,0.69,0.69,0.69,~
+1,1,1,1,1,1,~
+0.8,0.8,0.8,0.8,0.8,0.8,~
+1,1,1,1,1,1)
+IndexVals: ['FLU']
+NodeLocation: 72,32,1
+NodeSize: 48,16
+WindState: 2,-5,3,714,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformDef: [Uso_Actual,Uso_previo]
+ReformVal: [Uso_previo,Uso_Actual]
+Att_EditSliceState: [Uso_Actual,4,Self,1,Uso_previo,4]
+
+Constant F_MGT_1
+Att_PrevIndexValue: ['FMG']
+Title: F_MGT-0
+Units: Sin dimension
+Description: factor de cambio de existencias para el régimen de gestión al inicio del inventario, datos sacados del NIR
+Definition: Table(Uso_previo)(~
+1,1,1,1,1,1)
+IndexVals: ['FMG']
+NodeLocation: 72,88,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+ReformDef: [Uso_previo,Undefined]
+{!50000|Att_ColumnWidths: [62]}
+
+Close Carbono_en_el_Suelo
+
+Module Hectareas_Proyectad1
+Title: Hectareas Proyectadas
+Author: diego
+Date: lun., oct. 19, 2020 10:11 a. m.
+NodeLocation: 128,168,1
+NodeSize: 64,24
+DiagState: 2,0,0,752,460,17
+
+Variable S_Conv_X
+Title: S_Conv_X
+Units: ha
+Description: Superficies obtenidas invirtiendo las ecuaciones de calculo de emisiones y los valores por defecto que se entregan en el INGEI.
+Definition: Table(Uso_previo,Ano,Uso_Actual)(~
+0,1492.178099685553,39.4020290642641K,498.55837717654885,300.6314457213084,1930.8464655953767,~
+0,1560.1967563451967,39.402029064264076K,498.55837717654885,306.3633194852559,1973.1267597369852,~
+0,1628.21541300484,39.402029064264076K,498.55837717654885,312.0951932492034,2015.407053878594,~
+0,1696.2340696644833,39.402029064264076K,498.55837717654885,317.8270670131509,2057.6873480202025,~
+0,1764.2527263241268,39.402029064264076K,498.55837717654885,323.5589407770985,2099.9676421618115,~
+0,1832.27138298377,39.402029064264076K,498.55837717654885,329.2908145410459,2142.2479363034204,~
+0,1900.2900396434138,39.402029064264076K,498.55837717654885,335.02268830499344,2184.5282304450293,~
+0,1968.308696303057,39.402029064264076K,498.55837717654885,340.7545620689409,2226.8085245866378,~
+0,2036.3273529627004,39.402029064264076K,498.55837717654885,346.48643583288845,2269.0888187282467,~
+0,2104.3460096223444,39.402029064264076K,498.55837717654885,352.2183095968359,2311.369112869855,~
+0,2172.364666281988,39.402029064264076K,498.55837717654885,357.95018336078346,2353.649407011464,~
+0,2240.383322941631,39.402029064264076K,498.55837717654885,363.68205712473093,2395.929701153073,~
+0,2466.963704089079,17.8503627266932K,164.69487390431834,479.0674621953922,2656.292681617998,~
+0,2522.8132931740975,17.8503627266932K,164.69487390431834,485.84940088594914,2702.244699540741,~
+0,2578.662882259116,17.8503627266932K,164.69487390431834,492.63133957650615,2748.1967174634838,~
+0,2522.8132931740975,17.8503627266932K,164.69487390431834,499.4132782670632,2794.1487353862267,~
+0,2690.3620604291527,17.8503627266932K,164.69487390431834,506.19521695762023,2840.1007533089696,~
+0,2746.211649514171,17.8503627266932K,164.69487390431834,512.9771556481774,2886.052771231712,~
+0,3000.4766574586347,11.703886540905612K,68.49652276131859,565.8887836131007,2941.236869343175,~
+0,3058.481757752698,11.703886540905612K,68.49652276131859,573.1152548010477,2987.1796685204445,~
+0,3048.468201387118,11.703886540905612K,68.49652276131859,574.6098522250471,2990.8421735561055,~
+0,3038.454645021539,11.703886540905612K,68.49652276131859,576.1044496490465,2994.504678591766,~
+0,3028.441088655958,11.703886540905612K,68.49652276131859,577.599047073046,2998.1671836274268,~
+0,3018.4275322903777,11.703886540905612K,68.49652276131859,579.0936444970455,3001.829688663087,~
+0,3008.413975924798,11.703886540905612K,68.49652276131859,580.5882419210449,3005.4921936987485,~
+0,2998.4004195592183,11.703886540905612K,68.49652276131859,582.0828393450442,3009.154698734409,~
+0,2988.386863193638,11.703886540905612K,68.49652276131859,583.5774367690437,3012.81720377007,~
+0,3010.149417,11.433600690297999K,68.49652276131859,607.8746946109602,3021.851487,~
+0,3029.7202128729004,11.162138770709365K,68.49652276131859,577.4712525694656,3030.332397,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,12.544605415462873K,0,679.1397265810026,1329.6921534581606,388.5487015441327,~
+0,14.193742235497844K,0,679.1397265810026,1439.0719562790405,535.9813330769274,~
+0,15.842879055532818K,0,679.1397265810026,1548.4517590999203,683.4139646097224,~
+0,17.492015875567788K,0,679.1397265810026,1657.8315619208001,830.846596142517,~
+0,19.14115269560276K,0,679.1397265810026,1767.2113647416802,978.2792276753117,~
+0,20.790289515637734K,0,679.1397265810026,1876.5911675625598,1125.7118592081065,~
+0,22.439426335672706K,0,679.1397265810026,1985.9709703834396,1273.1444907409011,~
+0,24.088563155707678K,0,679.1397265810026,2095.35077320432,1420.5771222736962,~
+0,25.737699975742646K,0,679.1397265810026,2204.7305760251998,1568.0097538064906,~
+0,27.38683679577762K,0,679.1397265810026,2314.110378846079,1715.4423853392857,~
+0,29.03597361581259K,0,679.1397265810026,2423.490181666959,1862.8750168720803,~
+0,30.68511043584756K,0,679.1397265810026,2532.8699844878397,2010.3076484048754,~
+0,28.558760899335703K,0,196.51302814654477,2727.638378076514,1887.9365073928784,~
+0,29.74265859967643K,0,196.51302814654477,2845.3687968799713,1934.9816866126785,~
+0,30.926556300017142K,0,196.51302814654477,2963.09921568343,1982.0268658324776,~
+0,29.74265859967643K,0,196.51302814654477,3080.8296344868877,2029.0720450522772,~
+0,33.29435170069859K,0,196.51302814654477,3198.5600532903445,2076.1172242720772,~
+0,34.47824940103931K,0,196.51302814654477,3316.2904720938022,2123.1624034918764,~
+0,35.762057203659286K,0,79.0754805667789,3411.1163338445135,2087.9885528452055,~
+0,36.9674336747883K,0,79.0754805667789,3527.128610246248,2104.4420214225206,~
+0,36.52367332588234K,0,79.0754805667789,3533.7610838271025,1973.46285846704,~
+0,36.07991297697636K,0,79.0754805667789,3540.393557407957,1842.48369551156,~
+0,35.63615262807041K,0,79.0754805667789,3547.0260309888113,1711.50453255608,~
+0,35.19239227916444K,0,79.0754805667789,3553.6585045696643,1580.5253696006002,~
+0,34.74863193025849K,0,79.0754805667789,3560.2909781505195,1449.5462066451205,~
+0,34.30487158135252K,0,79.0754805667789,3566.923451731375,1318.5670436896403,~
+0,33.86111123244655K,0,79.0754805667789,3573.5559253122283,1187.5878807341603,~
+0,33.627850226K,0,79.0754805667789,3498.8048707653397,1178.221098,~
+0,33.515216363980595K,0,79.0754805667789,3415.4519992589762,1168.983948,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,38.37999933041738K,634.7511344954647,8937.001907911044,0,~
+0,0,35.64150123813009K,634.7511344954647,9154.772265053525,0,~
+0,0,32.903003145842806K,634.7511344954647,9372.542622196004,0,~
+0,0,30.164505053555516K,634.7511344954647,9590.312979338485,0,~
+0,0,27.42600696126822K,634.7511344954647,9808.083336480962,0,~
+0,0,24.687508868980934K,634.7511344954647,10.025853693623443K,0,~
+0,0,21.949010776693664K,634.7511344954647,10.243624050765922K,0,~
+0,0,19.210512684406367K,634.7511344954647,10.461394407908405K,0,~
+0,0,16.472014592119085K,634.7511344954647,10.679164765050882K,0,~
+0,0,13.733516499831781K,634.7511344954647,10.896935122193361K,0,~
+0,0,10.995018407544523K,634.7511344954647,11.114705479335844K,0,~
+0,0,8256.520315257238,634.7511344954647,11.33247583647832K,0,~
+0,0,9821.616267557394,328.4213344556679,8090.431736096363,0,~
+0,0,11.104794011025238K,328.4213344556679,8223.389569173047,0,~
+0,0,12.387971754493099K,328.4213344556679,8356.347402249734,0,~
+0,0,13.671149497960932K,328.4213344556679,8489.305235326416,0,~
+0,0,14.954327241428771K,328.4213344556679,8622.2630684031,0,~
+0,0,14.954327241428771K,328.4213344556679,8755.220901479783,0,~
+0,0,19.811386456648775K,309.31729058441556,8656.82134405212,0,~
+0,0,20.90754222834494K,309.31729058441556,8784.026599413424,0,~
+0,0,19.578115290400397K,309.31729058441556,8693.461497632241,0,~
+0,0,18.24868835245584K,309.31729058441556,8602.896395851063,0,~
+0,0,16.91926141451129K,309.31729058441556,8512.331294069883,0,~
+0,0,15.589834476566723K,309.31729058441556,8421.766192288707,0,~
+0,0,14.260407538622196K,309.31729058441556,8331.201090507526,0,~
+0,0,12.930980600677613K,309.31729058441556,8240.635988726353,0,~
+0,0,11.60155366273307K,309.31729058441556,8150.070886945175,0,~
+0,0,11.224382662950002K,309.31729058441556,7708.361493164019,0,~
+0,0,10.851846968509417K,309.31729058441556,8003.418283741368,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,884.2389895212909,0,0,43.28273211496636,0,~
+0,1768.4779790425819,0,0,86.56546422993272,0,~
+0,2652.716968563872,0,0,129.84819634489912,0,~
+0,3536.9559580851637,0,0,173.13092845986543,0,~
+0,4421.194947606456,0,0,216.41366057483162,0,~
+0,5305.433937127747,0,0,259.69639268979824,0,~
+0,6189.672926649039,0,0,302.9791248047643,0,~
+0,7073.9119161703275,0,0,346.26185691973086,0,~
+0,7958.150905691619,0,0,389.54458903469697,0,~
+0,8842.389895212913,0,0,432.82732114966325,0,~
+0,9726.628884734204,0,0,476.1100532646301,0,~
+0,10.610867874255495K,0,0,519.3927853795965,0,~
+0,10.904281154059097K,0,0,537.5324716587993,0,~
+0,11.197694433862698K,0,0,555.6721579380027,0,~
+0,11.491107713666306K,0,0,573.8118442172055,0,~
+0,11.197694433862698K,0,0,591.9515304964089,0,~
+0,12.077934273273508K,0,0,610.0912167756118,0,~
+0,12.37134755307711K,0,0,628.2309030548146,0,~
+0,12.51060933978594K,0,0,642.8448419398659,0,~
+0,12.649871126494776K,0,0,657.4587808249172,0,~
+0,11.904893923682312K,0,0,628.7899875950013,0,~
+0,11.159916720869853K,0,0,600.1211943650858,0,~
+0,10.414939518057396K,0,0,571.4524011351702,0,~
+0,9669.962315244937,0,0,542.7836079052553,0,~
+0,8924.985112432478,0,0,514.1148146753402,0,~
+0,8180.007909620021,0,0,485.4460214454242,0,~
+0,7435.030706807563,0,0,456.7772282155087,0,~
+0,7311.202396999999,0,0,399.02145595880006,0,~
+0,7206.460012412498,0,0,339.81302095021397,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,6.862067035147391,0,0,~
+0,0,0,6.862067035147392,0,0,~
+0,0,0,6.862067035147392,0,0,~
+0,0,0,6.862067035147392,0,0,~
+0,0,0,6.862067035147392,0,0,~
+0,0,0,6.862067035147392,0,0,~
+0,0,0,6.862067035147392,0,0,~
+0,0,0,6.862067035147392,0,0,~
+0,0,0,6.862067035147392,0,0,~
+0,0,0,6.862067035147392,0,0,~
+0,0,0,6.862067035147392,0,0,~
+0,0,0,6.862067035147392,0,0,~
+0,0,0,0.6018686868686868,0,0,~
+0,0,0,0.6018686868686868,0,0,~
+0,0,0,0.6018686868686868,0,0,~
+0,0,0,0.6018686868686868,0,0,~
+0,0,0,0.6018686868686868,0,0,~
+0,0,0,0.6018686868686868,0,0,~
+0,0,0,4.805386363636363,0,0,~
+0,0,0,4.805386363636363,0,0,~
+0,0,0,4.805386363636363,0,0,~
+0,0,0,4.805386363636363,0,0,~
+0,0,0,4.805386363636363,0,0,~
+0,0,0,4.805386363636363,0,0,~
+0,0,0,4.805386363636363,0,0,~
+0,0,0,4.805386363636363,0,0,~
+0,0,0,4.805386363636363,0,0,~
+0,0,0,4.805386363636363,0,0,~
+0,0,0,4.805386363636363,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0)
+NodeLocation: 104,48,1
+NodeSize: 56,32
+WindState: 2,0,0,720,350
+DefnState: 2,906,25,514,303,0,DFNM
+ValueState: 2,40,50,400,300,0,MIDM
+ReformDef: [Uso_previo,Ano]
+Att_ResultSliceState: [Uso_Actual1,2,Uso_previo,1,Year,1]
+Att_EditSliceState: [Uso_Actual1,2,Year,1,Uso_previo,1]
+{!50000|Att_ColumnWidths: [,Ano,[,,,63,,66,,,,,,,,65,,,,,83,,,84,,,,,61],Uso_previo,\([,,66])]}
+
+Variable H_P_Conv_X
+Title: H_P_Conv_X
+Units: ha
+Description: Suma de las hectareas del inventario mas las hectareas proyectadas de las tierras convertidas a X.
+Definition: var Futuro:= (if Estrategias='BAU' then P_Sup_conv Else (P_Sup_conv)*(1+Prev__Degradacion_y_));~
+var consolidado := if Ano=time then futuro[time=Ano] else 0;~
+if Ano>2018 then sum(consolidado, time) else S_Conv_X~
+
+NodeLocation: 320,48,1
+NodeSize: 88,24
+WindState: 2,0,0,720,350
+ValueState: 2,36,42,416,303,0,MIDM
+ReformVal: [Ano,Uso_previo]
+Att__TotalsIndex: []
+Att_ResultSliceState: [Uso_Actual,2,Estrategias,2,Uso_previo,1,Ano,1]
+{!40600|Att_ClusterIndex: Medidas1}
+
+Constant Coef_tierras_conv
+Title: Coef_tierras_conv
+Description: Coeficientes obtenidos de los modelos VAR para las tierras convertidas en X
+Definition: Table(Uso_previo,Uso_Actual,Coef_Aux_Tierras)(~
+0,0,0,0,0,0,~
+0.9606,0,3m,5.1m,0,0,~
+0.9096,0.0679,0,0,0,0,~
+1,0,0,0,0,0,~
+-0.7834,7.6m,0.3151,-0.2691,0,0,~
+0.9853,0,0.0449,0,0,0,~
+0,0,0,0,0,0,~
+3.4036,0,0.6168,0.3458,0,0,~
+0,0,0,0,0,0,~
+0,0,1,0,0,0,~
+-0.1244,4.6m,0.9773,0.0908,0,0,~
+1.7m,0,0.9878,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+-0.0692,1.0373,0,0,0,0,~
+0,1,0,0,0,0,~
+21.1417,0.8485,-3.4569,1.7703,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0.4904,0,-0.0546,1.0349,0,0,~
+0,0,0,0,0,0,~
+0,0,0,1,0,0,~
+-0.0453,3.5m,-0.0169,1.0012,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,1,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0,~
+0,0,0,0,0,1,~
+0,0,0,0,0,0,~
+0,0,0,0,0,0)
+NodeLocation: 104,200,1
+NodeSize: 48,32
+WindState: 2,39,401,720,350
+ReformDef: [Uso_previo,Coef_Aux_Tierras]
+Att_EditSliceState: [Uso_Actual1,2,Coef_Aux_Tierras,1,Uso_previo,1]
+{!50000|Att_ColumnWidths: [,Uso_previo,\([70,70,70,70,99])]}
+
+Variable P_Sup_conv
+Title: P_Sup_conv
+Description: Proyeccion de las hectareas de tierras convertidas en X usando los coeficientes del modelo VAR
+Definition: Dynamic(S_Conv_X[Ano=2018,Uso_previo='Forestal']*Coef_tierras_conv[Coef_Aux_Tierras='L1.Forestales']+~
+S_Conv_X[Ano=2018, Uso_previo='Cultivos']*     Coef_tierras_conv[Coef_Aux_Tierras='L1.Cultivos']+ ~
+S_Conv_X[Ano=2018, Uso_previo='Pastizales']*   Coef_tierras_conv[Coef_Aux_Tierras='L1.Pastizales']+~
+S_Conv_X[Ano=2018, Uso_previo='Humedales']*    Coef_tierras_conv[Coef_Aux_Tierras='L1.Humedales']+~
+S_Conv_X[Ano=2018, Uso_previo='Asentamientos']*Coef_tierras_conv[Coef_Aux_Tierras='L1.Asentamientos']+~
+S_Conv_X[Ano=2018, Uso_previo='Otras tierras']*Coef_tierras_conv[Coef_Aux_Tierras='L1.Otras tierras'], ~
+self[time-1, Uso_previo='Forestal']*      Coef_tierras_conv[Coef_Aux_Tierras='L1.Forestales']+~
+self[time-1, Uso_previo='Cultivos']*      Coef_tierras_conv[Coef_Aux_Tierras='L1.Cultivos']+~
+self[time-1, Uso_previo='Pastizales']*    Coef_tierras_conv[Coef_Aux_Tierras='L1.Pastizales']+~
+self[time-1, Uso_previo='Humedales']*     Coef_tierras_conv[Coef_Aux_Tierras='L1.Humedales']+~
+self[time-1, Uso_previo='Asentamientos']* Coef_tierras_conv[Coef_Aux_Tierras='L1.Asentamientos']+~
+self[time-1, Uso_previo='Otras tierras']* Coef_tierras_conv[Coef_Aux_Tierras='L1.Otras tierras'])
+NodeLocation: 104,120,1
+NodeSize: 56,24
+WindState: 2,9,359,1511,350
+ValueState: 2,119,143,516,266,1,MIDM
+Att_ResultSliceState: [Uso_Actual,3,Uso_previo,1,Time,1]
+{!50000|Att_ColumnWidths: [,Time,\([57])]}
+
+Close Hectareas_Proyectad1
+
+Alias Al1392630013
+Title: GWP Gases
+Definition: 1
+NodeLocation: 456,288,1
+NodeSize: 48,24
+Original: GWP_Gases
+
+Close A4_X_1_Tierras_conve
+
+Module A4_X_2_X_que_permane
+Title: 4.X.2 X que permanecen como tales
+Author: diego
+Date: lun., ago. 31, 2020 12:45 p. m.
+NodeLocation: 400,488,1
+NodeSize: 64,32
+DiagState: 2,278,-13,752,278,17
+WindState: 2,0,0,720,350
+
+Variable X_por_sup_Incend
+Title: X_por_sup_Incend
+Units: Ton CO2 eq
+Description: Emisiones por las hectareas quemadas segun tipo de superficie.
+Definition: (Emisiones_de_gases_n*GWP_Gases)
+NodeLocation: 248,168,1
+NodeSize: 80,16
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformVal: [0,0]
+Att_ResultSliceState: [Gas_GEI,2,Tipo_cobertura,1,Medidas,1,Ano,1]
+
+Objective X_perm_como_Tales
+Title: X_perm_como_Tales
+Units: MM t CO2eq
+Description: Emisiones de las tierras que permanecen como tales, separado en los distintos tipos de GEI emitidos
+Definition: If Uso_Actual='4.B Cultivo' Then X_por_sup_Incend[Tipo_cobertura='Cultivos']/1000000 Else If Uso_Actual='4.C Pastizal' Then (X_por_sup_Incend[Tipo_cobertura='Matorrales']+X_por_sup_Incend[Tipo_cobertura='Pastizales'])/1000000 Else 0
+NodeLocation: 464,168,1
+NodeSize: 88,32
+WindState: 2,476,40,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformVal: [Ano,Uso_Actual]
+Att_ResultSliceState: [Medidas1,1,Gas_GEI,1,Uso_Actual,1,Ano,1]
+
+Module Hectareas_proyectad2
+Title: Hectareas proyectadas
+Author: diego
+Date: lun., oct. 19, 2020 10:11 a. m.
+NodeLocation: 88,96,1
+NodeSize: 64,24
+DiagState: 2,118,76,752,451,17
+
+Variable Ha_Incendios
+Title: Ha_Incendios
+Units: ha
+Description: Para los pastizales, las hectareas fueron extraidas del inventario de conaf, para los cultivos, fueron extraidas invirtiendo las ecuaciones usando como dato las emisiones del ingei, no se posee la información de cultivos entre 1990 y 2000, entre 2000 y 2010 y entre 2010 y 2013 por lo que se interpolaron.
+Definition: Table(Ano,Tipo_cobertura)(~
+716.5038485686139,8024.08,6342.97,~
+1734.8685368633317,14.4055K,12.68622K,~
+628.2673618962372,8444.84,9396.12,~
+819.2763301899383,14.5024K,15.14144K,~
+726.2982104545869,20.94041K,20.66545K,~
+785.0665998653287,6803.6,8159.03,~
+894.0983698364886,10.08553K,5811.82,~
+929.6980799711347,11.00058K,7486.94,~
+546.341238163346,10.76964K,12.77976K,~
+1700.0866716412145,27.67028K,14.11204K,~
+451.9281205418883,5292,5166.35,~
+446.96373779580074,2300.19,3341.55,~
+1829.0169809701583,13.15632K,13.04029K,~
+197.30249999999995,11.89204K,14.42413K,~
+842.9512499999997,14.4861K,12.69045K,~
+1131.9187499999994,17.79134K,23.21293K,~
+147.59999999999997,5932.59,7439.94,~
+3007.8562499999994,6743.77,5118.6,~
+782.4037500000001,12.0429K,5039.81,~
+1202.0062499999997,15.06067K,9498.04,~
+455.2087499999999,15.88292K,15.63617K,~
+408.1949999999999,13.03686K,13.59386K,~
+4544.954999999999,19.63409K,19.63113K,~
+246.13874999999993,5578.56,5670.37,~
+3923.6152499999985,27.2263763K,19.328177K,~
+1843.4137499999993,23.5857046999999K,19.4389388K,~
+1845.1799999999994,12.0876942000002K,9226.47420000008,~
+1852.540473,112.47275K,53.77042K,~
+1852.540473,9865.07,12.41155K,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0,~
+0,0,0)
+NodeLocation: 104,200,1
+NodeSize: 64,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+ValueState: 2,40,50,400,300,1,MIDM
+ReformDef: [Tipo_cobertura,Ano]
+{!50000|Att_ColumnWidths: [,Ano,\([,,,,,,,,,,,,,,,,,,,,,62])]}
+
+Variable Ha_P_Incendios
+Title: Ha_P_Incendios
+Description: Hectareas proyectadas mas historico incendiadas para cultivos y pastizales
+Definition: var Futuro:=  Incendios_Proyeccion;~
+var consolidado := if Ano=time then futuro[time=Ano] else 0;~
+if Ano>2018 then sum(consolidado, time) else Ha_Incendios
+NodeLocation: 296,168,1
+NodeSize: 72,32
+WindState: 2,63,55,720,350
+ValueState: 2,40,50,400,281,1,MIDM
+ReformVal: [Ano,Tipo_cobertura]
+Att_ResultSliceState: [Medidas1,1,Tipo_cobertura,1,Ano,1]
+
+Constant Coef_Incendios
+Title: Coef_Incendios
+Definition: Table(Tipo_cobertura,Coef_Aux_Inc)(~
+0.8302,-0.017,0.0327,~
+32.2795,0.649,-1.3755,~
+13.5782,-2m,0.2024)
+NodeLocation: 104,48,1
+NodeSize: 72,24
+WindState: 2,0,0,720,350
+ReformDef: [Tipo_cobertura,Coef_Aux_Inc]
+
+Variable Incendios_Proyeccion
+Title: Incendios_Proyeccion
+Definition: dynamic~
+(Ha_Incendios[Ano=2018, Tipo_cobertura='Cultivos']*Coef_Incendios[Coef_Aux_Inc='L1.Cultivo']+Ha_Incendios[Ano=2018, Tipo_cobertura='Matorrales']*Coef_Incendios[Coef_Aux_Inc='L1.Matorral']+~
+Ha_Incendios[Ano=2018,Tipo_cobertura='Pastizales']*Coef_Incendios[Coef_Aux_Inc='L1.Pastizal'],~
+self[time-1, Tipo_cobertura='Cultivos']*Coef_Incendios[Coef_Aux_Inc='L1.Cultivo']+~
+self[time-1, Tipo_cobertura='Matorrales']*Coef_Incendios[Coef_Aux_Inc='L1.Matorral']+~
+self[time-1, Tipo_cobertura='Pastizales']*Coef_Incendios[Coef_Aux_Inc='L1.Pastizal'])~
+
+NodeLocation: 104,120,1
+NodeSize: 88,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+
+Close Hectareas_proyectad2
+
+Module Emisiones_No_CO2
+Title: Emisiones No CO2
+Author: diego
+Date: lun., oct. 19, 2020 10:11 a. m.
+NodeLocation: 88,168,1
+NodeSize: 56,24
+DiagState: 2,0,0,752,376,17
+
+Variable Emisiones_de_gases_n
+Title: Emisiones de gases no CO2
+Units: ton gas no CO2/año
+Definition: Factor_de_Combustion*Factor_de_Emision*Masa_de_combustible*10^-3*Ha_P_Incendios
+NodeLocation: 248,128,1
+NodeSize: 48,32
+WindState: 2,208,40,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+
+Variable Masa_de_combustible
+Title: Masa de combustible
+Units: Ton/ha
+Description: Datos paramétricos para ladeterminación de emisiones no-CO2 de incendios Tabla 316 NIR~
+Para los pastizales, fue calculado invirtiendo las ecuaciones~
+~
+Datos del 2017 en adelante son repetidos, no hay información de los parametros utilizados~
+
+Definition: Table(Ano,Tipo_cobertura)(~
+8.4,1.77939425947193,1.77939425947193,~
+8.4,1.77939425947193,1.77939425947193,~
+8.4,1.77939425947193,1.77939425947193,~
+8.4,1.77939425947193,1.77939425947193,~
+8.4,1.77939425947193,1.77939425947193,~
+8.4,1.77939425947193,1.77939425947193,~
+8.4,1.77939425947193,1.77939425947193,~
+8.4,1.77939425947193,1.77939425947193,~
+8.4,1.77939425947193,1.77939425947193,~
+8.4,1.77939425947193,1.77939425947193,~
+8.4,1.71534135424405,1.71534135424405,~
+8.4,1.71534135424405,1.71534135424405,~
+8.4,1.71534135424405,1.71534135424405,~
+8.4,1.71534135424405,1.71534135424405,~
+8.4,1.71534135424405,1.71534135424405,~
+8.4,1.71534135424405,1.71534135424405,~
+8.4,1.71534135424405,1.71534135424405,~
+8.4,1.71534135424405,1.71534135424405,~
+8.4,1.71534135424405,1.71534135424405,~
+8.4,1.71534135424405,1.71534135424405,~
+8.4,1.74033664716099,1.74033664716099,~
+8.4,1.74033664716099,1.74033664716099,~
+8.4,1.74033664716099,1.74033664716099,~
+8.4,1.96651085482355,1.96651085482355,~
+8.4,1.88509006097328,1.88509006097328,~
+8.4,2.22408974050271,2.22408974050271,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925,~
+8.4,2.15228147331925,2.15228147331925)
+NodeLocation: 88,64,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+DefnState: 2,148,154,416,303,0,DFNM
+ValueState: 2,40,50,400,300,0,MIDM
+ReformDef: [Ano,Tipo_cobertura]
+{!50000|Att_ColumnWidths: [,Ano,\([,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,62])]}
+
+Constant Factor_de_Combustion
+Title: Factor de Combustion
+Units: Sin dimension
+Definition: Table(Gas_GEI,Tipo_cobertura)(~
+0,0,0,~
+2.7,2.3,2.3,~
+0.07,0.21,0.21)
+NodeLocation: 88,128,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+DefnState: 2,36,42,416,303,0,DFNM
+ValueState: 2,40,50,400,300,0,MIDM
+ReformDef: [Gas_GEI,Tipo_cobertura]
+
+Constant Factor_de_Emision
+Title: Factor de Emision
+Units: g/kg
+Definition: Table(Tipo_cobertura)(0.8,0.72,0.86)
+NodeLocation: 88,192,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformDef: [Tipo_cobertura,Null]
+
+Close Emisiones_No_CO2
+
+Alias Al948033789
+Title: GWP Gases
+Definition: 1
+NodeLocation: 248,280,1
+NodeSize: 48,24
+Original: GWP_Gases
+
+Variable Emisiones_Incendios_
+Title: Emisiones Incendios por Categoria
+Units: MM t CO2eq
+Definition: Table(Uso_Actual)(sum(EM_Incendios,Inc_Origen,Gas_GEI)/1000,sum(X_perm_como_Tales[Uso_Actual='4.B Cultivo'],Gas_GEI),sum(X_perm_como_Tales[Uso_Actual='4.C Pastizal'],Gas_GEI),sum(X_perm_como_Tales[Uso_Actual='4.D Humedal'],Gas_GEI),sum(X_perm_como_Tales[Uso_Actual='4.E Asentamientos'],Gas_GEI),sum(X_perm_como_Tales[Uso_Actual='4.F Otras tierras'],Gas_GEI))
+NodeLocation: 464,344,1
+NodeSize: 48,40
+WindState: 2,287,212,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+ValueState: 2,40,50,400,300,0,MIDM
+Aliases: Alias Al1347474173
+Att_ResultSliceState: [Gas_GEI,1,Medidas1,1,Escenarios,2,Uso_Actual,1,Ano,1]
+
+Close A4_X_2_X_que_permane
+
+Text Te85795709
+Title: Donde X es B,C,D,E y F
+NodeLocation: 400,552,-1
+NodeSize: 56,24
+
+Text Te320676733
+Title: Donde X es B,C,D,E y F
+NodeLocation: 400,384,-1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+
+Module Variables_Genericas
+Title: Variables Genericas
+Author: diego
+Date: lun., oct. 19, 2020 10:11 a. m.
+NodeLocation: 248,496,1
+NodeSize: 48,24
+DiagState: 2,0,0,752,376,17
+WindState: 2,0,0,720,350
+
+Constant GWP_Gases
+Title: GWP Gases
+Units: ton CO2 eq / ton GEI
+Description: conversion de gases GEI a ton CO2 eq
+Definition: Table(Gas_GEI)(-44/12,25,298)
+NodeLocation: 96,112,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+Aliases: Alias Al1392630013, Alias Al948033789
+
+Constant Medida_forestacion
+Title: Medida_forestacion
+Units: ha
+Description: Medida de aumento de las Ha forestales y de bosque nativo
+Definition: Table(Time)(0,0,0,0,6000,12K,18K,24K,30K,38K,46K,54K,62K,70K,70K,70K,70K,70K,70K,70K,70K,70K,70K,70K,70K,70K,70K,70K,70K,70K,70K,70K)
+NodeLocation: 104,176,1
+NodeSize: 80,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+ReformDef: [Time,0]
+
+Constant Medida_manejo
+Title: Medida_manejo
+Units: ha
+Description: Medida de aumento de hectareas bajo manejo forestal
+Definition: Table(Time)(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)
+NodeLocation: 96,48,1
+NodeSize: 72,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+ReformDef: [Time,0]
+
+Close Variables_Genericas
+
+Objective E_Sector_Forestal
+Title: E_Sector_Forestal
+Units: MM t CO2eq
+Description: Emisiones totales del sector UTCUTS para los escenarios BAU y Descarbonización
+Definition: Sum(Emisiones_medidas, Gas_GEI)
+NodeLocation: 872,320,1
+NodeSize: 96,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,1,MIDM
+GraphSetup: Att_StackedBar Graph_Primary_Valdim:1~
+Att_ForceCategorical Graph_Primary_Valdim:1~
+{!40600|Att_WaterfallBar Graph_Primary_Valdim:0}
+ReformVal: [Ano,Uso_Actual]
+Att__TotalsIndex: [Uso_Actual]
+Att_ResultSliceState: [Estrategias,1,Uso_Actual,1,Ano,1]
+
+Objective Emisiones_Python
+Title: Emisiones UTCUTS (MM t CO2eq)
+Units: MM t CO2eq
+Description: Emisiones totales del sector UTCUTS para  escenario analizado
+Definition: Emisiones_separando_[Estrategias='Carbono Neutralidad Base']
+NodeLocation: 1112,416,1
+NodeSize: 80,24
+WindState: 2,-11,152,720,350
+ValueState: 2,40,0,1164,538,0,MIDM
+GraphSetup: Att_GraphIndexRange Ano:1,,0,,,,,2010,2050,0~
+ProbIndex:[0.05,0.5,0.95]~
+Graph_LineThickness:3
+ReformVal: [Ano,Categorias_con_Incen,2]
+Att__TotalsIndex: [Uso_Actual,Categorias_con_Incen]
+Att_ResultSliceState: [Categorias_con_Incen,0,Sys_LocalIndex('Probability'),1,Ano,1]
+
+Objective Emisiones_separando_
+Title: Emisiones UTCUTS e Incendios
+Definition: if Categorias_con_Incen='4.A Forestal' then E_Sector_Forestal[Uso_Actual='4.A Forestal']-Emisiones_Incendios_[Uso_Actual='4.A Forestal']~
+else if Categorias_con_Incen='4.B Cultivo' then E_Sector_Forestal[Uso_Actual='4.B Cultivo']-Emisiones_Incendios_[Uso_Actual='4.B Cultivo']~
+else if Categorias_con_Incen='4.C Pastizal' then E_Sector_Forestal[Uso_Actual='4.C Pastizal']-Emisiones_Incendios_[Uso_Actual='4.C Pastizal']~
+else if Categorias_con_Incen='4.D Humedal'then E_Sector_Forestal[Uso_Actual='4.D Humedal']-Emisiones_Incendios_[Uso_Actual='4.D Humedal']~
+else if Categorias_con_Incen='4.E Asentamientos' then E_Sector_Forestal[Uso_Actual='4.E Asentamientos']-Emisiones_Incendios_[Uso_Actual='4.E Asentamientos']~
+else if Categorias_con_Incen='4.F Otras tierras' then E_Sector_Forestal[Uso_Actual='4.F Otras tierras']-Emisiones_Incendios_[Uso_Actual='4.F Otras tierras']~
+else sum(Emisiones_Incendios_,Uso_Actual)
+NodeLocation: 872,416,1
+NodeSize: 48,40
+WindState: 2,502,87,720,350
+ValueState: 2,99,-18,1016,545,0,MIDM
+GraphSetup: Att_ContLineStyle Graph_Primary_Valdim:1~
+Att_GraphIndexRange Ano:1,0,0,,,,,21,61,1~
+Att_StackedBar Graph_Primary_Valdim:1~
+Att_ForceCategorical Graph_Primary_Valdim:1
+ReformVal: [Ano,Estrategias]
+Att__TotalsIndex: [Categorias_con_Incen]
+Att_ResultSliceState: [Estrategias,2,Categorias_con_Incen,0,Ano,1]
+{!40600|Att_StackingIndex: Categorias_con_Incen}
+{!40600|Att_ClusterIndex: Null}
+
+Module Suma_de_resultados
+Title: Suma de resultados
+Author: andre
+Date: mar., nov. 10, 2020 6:34 p. m.
+NodeLocation: 648,320,1
+NodeSize: 56,24
+DiagState: 2,0,0,752,376,17
+
+Variable Emisiones_medidas
+Title: Emisiones_medidas
+Units: MM t CO2 eq
+Description: Suma del sector forestal con las tierras convertidas y las tierras que permanecen como tales de los sectores cultivos, pastizales, humedales, a sentamientos y otras tierras.
+Definition: Tierras_a_X_por_gas+X_perm_como_Tales+EM_total
+NodeLocation: 144,160,1
+NodeSize: 80,32
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,1,MIDM
+GraphSetup: Att_StackedBar Graph_Primary_Valdim:1~
+Att_ForceCategorical Graph_Primary_Valdim:1
+ReformVal: [Ano,Uso_Actual]
+Att__TotalsIndex: [Uso_Actual]
+Att_ResultSliceState: [Gas_GEI,1,Estrategias,2,Uso_Actual,1,Ano,1]
+{!40600|Att_StackingIndex: Uso_Actual}
+{!40600|Att_ClusterIndex: Null}
+
+Alias Al1347474173
+Title: Emisiones Incendios por Categoria
+Definition: 1
+NodeLocation: 128,64,1
+NodeSize: 48,40
+Original: Emisiones_Incendios_
+
+Close Suma_de_resultados
+
+Module CAPEX_OPEX
+Title: CAPEX OPEX~
+
+Author: diego
+Date: mié., nov. 25, 2020 11:19 a. m.
+NodeLocation: 408,64,1
+NodeSize: 48,24
+DiagState: 2,0,0,752,477,17
+
+Alias Al634478333
+Title: Variación Sup Manejo
+Definition: 1
+NodeLocation: 128,152,1
+NodeSize: 88,16
+Original: Variacion_Sup_Manejo
+
+Variable CAPEX_Unitario
+Title: CAPEX Unitario
+Definition: Table(Medidas)(0,1385,0,0)
+NodeLocation: 568,456,1
+NodeSize: 48,24
+WindState: 2,864,93,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+ReformDef: [Estrategias,Undefined]
+
+Variable OPEX_Unitario
+Title: OPEX Unitario
+Units: USD/ha
+Description: Valor OPEX unitario, por hectárea ingresada a plan de manejo
+Definition: Table(Medidas)(1628,1385,0,0)
+NodeLocation: 568,80,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+ValueState: 2,40,50,400,300,0,MIDM
+ReformDef: [Estrategias,0]
+
+Variable CAPEX_Total
+Title: CAPEX Total
+Units: MMUSD
+Description: CAPEX por medida implementada	
+Definition: if Medidas='Aumento Planes de Manejo' then ~
+(CAPEX_Unitario/10^6)*Variacion_Sup_Manejo[Cat_manejo='Plan_manejo'] ~
+else if Medidas='Forestación' then~
+(CAPEX_Unitario/10^6)* Sum(Ha_Forestacion_py, Cat_tierras_conv)~
+else if Medidas='Disminución Degradación' then~
+(CAPEX_Unitario/10^6)*(sum(Prev__Degradacion_y_,Uso_Actual, Uso_previo)+sum(Prev__Sustitucion_Fo, Rest_Sust))~
+else if Medidas='Control de Incendios' then~
+(CAPEX_Unitario/10^6)*(sum(Silvicultura_Prevent,Inc_Origen))
+NodeLocation: 568,384,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+DisplayOutputs: Variable Costo_Mitigacion1
+Att__TotalsIndex: [Time,Medidas]
+
+Variable OPEX_Total_Escenario
+Title: OPEX Total_Escenario
+Units: MM USD
+Description: Total OPEX para la medida
+Definition: if Medidas='Aumento Planes de Manejo' then ~
+(OPEX_Unitario/10^6)*Variacion_Sup_Manejo[Cat_manejo='Plan_manejo']~
+else if Medidas='Forestación' then~
+(OPEX_Unitario/10^6)* sum(Forestacion, Cat_tierras_conv)~
+else if Medidas='Disminución Degradación' then~
+(OPEX_Unitario/10^6)*(sum(Prev__Degradacion_y_,Uso_Actual, Uso_previo)+sum(Prev__Sustitucion_Fo, Rest_Sust))~
+else if Medidas='Control de Incendios' then~
+(OPEX_Unitario/10^6)*(sum(Silvicultura_Prevent,Inc_Origen))~
+
+NodeLocation: 568,152,1
+NodeSize: 72,24
+WindState: 2,731,53,720,350
+ValueState: 2,40,50,400,276,0,MIDM
+Att__TotalsIndex: [Time,Medidas]
+Att_ResultSliceState: [Medidas,3,Uso_previo,1,Time,1]
+{!50000|Att_ColumnWidths: [,Time,\([,,,,,,,,,,,,,,,,,,,,,,,64,64,64,64,64,64,64,64,64])]}
+
+Objective OPEX
+Title: OPEX
+Units: MMUSD
+Description: Total de OPEX por año
+Definition: sum(OPEX_Total_Escenario,Medidas)
+NodeLocation: 800,152,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+Aliases: Alias Al1371586301
+Att__TotalsIndex: [Time,Medidas]
+{!50000|Att_ColumnWidths: [,Time,\([,,,,,,70,,,,,62,62,62,62,62,62,62,62,62,62,62,62])]}
+
+Objective CAPEX
+Title: CAPEX
+Units: MMUSD
+Description: Total de CAPEX por año
+Definition: sum(Capex_Total,Medidas)
+NodeLocation: 792,384,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+DefnState: 2,40,50,400,300,0,DFNM
+ValueState: 2,40,50,400,300,0,MIDM
+Aliases: Alias Al834715389
+Att__TotalsIndex: [Time]
+
+Alias Al673660669
+Title: Medidas de Mitigacion
+Definition: 1
+NodeLocation: 128,256,-1
+NodeSize: 104,240
+NodeColor: 52427,56425,65535
+Original: Te1015208189
+
+Alias Al1747402493
+Title: Forestación
+Definition: 1
+NodeLocation: 128,72,1
+NodeSize: 56,24
+Original: Forestacion
+
+Alias Al405225213
+Title: Silvicultura Preventiva
+Definition: 1
+NodeLocation: 128,240,1
+NodeSize: 56,32
+Original: Silvicultura_Prevent
+
+Alias Al1478967037
+Title: Prev. Degradación y sustitución
+Definition: 1
+NodeLocation: 128,336,1
+NodeSize: 56,32
+Original: Prev__Degradacion_y_
+
+Alias Al942096125
+Title: Prev. Sustitución Forestal
+Definition: 1
+NodeLocation: 128,432,1
+NodeSize: 56,32
+Original: Prev__Sustitucion_Fo
+
+Module Costos_de_Mitigacion
+Title: Costos de Mitigación y Abatimiento
+Author: diego
+Date: mié., nov. 25, 2020 3:07 p. m.
+NodeLocation: 568,264,1
+NodeSize: 56,32
+DiagState: 2,0,0,752,376,17
+
+Variable Costo_de_Abatimient1
+Title: Costo de Abatimiento
+Units: MM USD/ tCO2
+Definition: Sum(Anualidad)/Sum(Captura_Area_de_mane)
+NodeLocation: 280,136,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+ValueState: 2,194,93,416,303,,MIDM
+
+Variable Costo_Mitigacion1
+Title: Costo Mitigacion
+NodeLocation: 280,216,1
+NodeSize: 48,24
+DisplayInputs: Variable CAPEX_Total
+
+Constant Tasa_de_Descuento
+Title: Tasa_de_Descuento
+Description: Tasa de descuento considerada 
+Definition: 0.06
+NodeLocation: 96,48,1
+NodeSize: 48,32
+WindState: 2,0,0,720,350
+
+Variable Anualidad
+Title: Anualidad
+Units: MM USD
+Definition: (OPEX_Total_Escenario[Estrategias='Descarbonización']-OPEX_Total_Escenario[Estrategias='BAU'])/((1+Tasa_de_Descuento)^(Time-2019))
+NodeLocation: 280,48,1
+NodeSize: 56,24
+WindState: 2,0,0,720,350
+ValueState: 2,40,50,400,300,0,MIDM
+Att_ResultSliceState: [Medidas1,1,Cat_manejo,1,Time,1]
+
+Text Te1138236669
+NodeLocation: 280,176,-1
+NodeSize: 64,72
+NodeInfo: 1,,,,,1
+NodeColor: 65531,1,65535
+
+Close Costos_de_Mitigacion
+
+Alias Al692240125
+Title: Ha_Forestacion_py
+Definition: 1
+NodeLocation: 352,72,1
+NodeSize: 69,27
+Original: Ha_Forestacion_py
+
+Text Te1126350589
+Title: CAPEX y OPEX
+NodeLocation: 676,256,-1
+NodeSize: 204,240
+NodeInfo: 1,,,,,1
+NodeColor: 65535,65531,39321
+
+Close CAPEX_OPEX
+
+Alias Al1371586301
+Title: OPEX
+Definition: 1
+NodeLocation: 872,64,1
+NodeSize: 48,24
+Original: OPEX
+
+Alias Al834715389
+Title: CAPEX
+Definition: 1
+NodeLocation: 872,136,1
+NodeSize: 48,24
+Original: CAPEX
+
+Close Sector_UTCUTS
+
