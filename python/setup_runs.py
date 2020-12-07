@@ -17,6 +17,8 @@ dir_model = os.path.dirname(dir_cur)
 dir_ref = os.path.join(dir_model, "ref")
 
 
+#archive
+dir_archive_runs = os.path.join(dir_model, "archive_runs")
 #basline modeling directory (previously baseline modeling)
 dir_bm = os.path.join(dir_ref, "baseline_future_transportation_parameters")
 #experimental design and attribute tables
@@ -342,6 +344,9 @@ fp_csv_gams_data_precio_energeticos_escenarios = os.path.join(dir_gams_input, "d
 fp_csv_gams_data_set_escenarios = os.path.join(dir_gams_input, "data_set_escenarios.csv")
 fp_csv_gams_data_set_scen = os.path.join(dir_gams_input, "data_set_escenario_sel.csv")
 fp_csv_gams_solution_generation_sector = os.path.join(dir_gams_output, "solution_generation_sector.csv")
+# GAMS PARALLELIZATION SUPPORT REFRENCE FILES
+fp_csv_gams_parallel_support_lines_to_remove = os.path.join(dir_ref, "gams_parallel_support-lines_to_remove.csv")
+fp_csv_gams_parallel_support_string_replacements = os.path.join(dir_ref, "gams_parallel_support-string_replacements.csv")
 # OTHER CSVS
 fp_csv_analytica_metrics_to_save = os.path.join(dir_ref, "analytica_metrics_to_save.csv")
 fp_csv_attribute_fuel = os.path.join(dir_ref, "attribute_fuel.csv")
@@ -380,9 +385,17 @@ fp_csv_tmp_correction_for_pib_peso_traj = os.path.join(dir_ref, "tmp_correction_
 
 ##  GAMS FILE
 fp_gams_modelo = os.path.join(dir_gams_modelo, "modelo_energetico_PMR_20201201.gms")
+fp_gams_modelo_nogdxcall = os.path.join(dir_gams_modelo, "modelo_energetico_PMR_20201201_nogdxcall.gms")
+fp_gams_pmr_prerun_gdx_build = os.path.join(dir_gams_modelo, "pmr_prerun_gdx_build.gms")
 
 ##  EXCEL
 fp_xlsx_parameter_correlation_matrices = os.path.join(dir_out, "parameter_correlation_matrices.xlsx")
+
+##  EXECUTABLES
+fp_exec_gams = str(dict_init["path_gams"])
+#check...
+if not os.path.exists(fp_exec_gams):
+	print("WARNING: gams executable '" + fp_exec_gams + "' not found.")
 
 ##############################
 #    SOME BOOLEAN QUERIES    #
@@ -399,10 +412,19 @@ if plt[0:min(len(plt), 3)] != "win":
 		integrate_analytica_q = (str(dict_init["integrate_analytica_q"]).lower() == "true")
 else:
 	integrate_analytica_q = True
+	print("\n"*10 + "YAY ANALYTICA" + "\n"*10)
 #use landuse difference for conversion?
 use_lu_diff_for_conv_q = (str(dict_init["use_lu_diff_for_conv_q"]).lower() == "true")
+#use parallel execution of gams?
+parallel_exec_gams_q = (str(dict_init["parallel_exec_gams_q"]).lower() == "true")
 
-
+#read in lhs tables? also default to false
+read_lhs_tables_q = False
+#check paths
+if (str(dict_init["read_lhs_tables_q"]).lower() == "true"):
+	#check for path
+	if os.path.exists(fp_csv_lhs_table_multi_sector) and os.path.exists(fp_csv_lhs_table_levers):
+		read_lhs_tables_q = True
 
 
 ##############################

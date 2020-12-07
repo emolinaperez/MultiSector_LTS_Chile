@@ -232,37 +232,107 @@ dict_submat_file_paths = {
 
 #initialize
 dict_submat_lhs = {}
-#break off components
-for i in range(0, len(vec_submat_lhs) - 1):
-    #set the field name for the dictionary
-    nm = vec_submat_lhs_names[i]
-    #check
-    if i > -1:
-        #get the indeces
-        p0 = sum(vec_submat_lhs[0:(i + 1)])
-    else:
-        p0 = 0
-    #set upper limit
-    p1 = sum(vec_submat_lhs[0:(i + 2)])
-    #temporary dataframe
-    df_tmp = pd.DataFrame(matrix_lhs[:, p0:p1], index = None)
-    #add name field
-    if dict_submat_lhs_fields[nm] != None:
-        df_tmp = df_tmp.rename(columns = dict_submat_lhs_fields[nm])
-        #set names
-        nms = list(df_tmp.columns)
-        #add run id
-        df_tmp["future_id"] = all_vals_add_sec["future_id"]
-        #reorder
-        df_tmp = df_tmp[["future_id"] + nms]
-    #update dictionary
-    dict_submat_lhs.update({nm: df_tmp})
 
-    #export raw lhs data
-    if export_ed_files_q:
-		#note/export
-        print("Exporting LHS for " + nm + " to " + dict_submat_file_paths[nm])
-        df_tmp.to_csv(dict_submat_file_paths[nm], index = None)
+if not sr.read_lhs_tables_q:
+	print("\n#####\n#####    GENERATING LHS TABLES WITH " + str(n_lhs) + " SAMPLES\n#####\n")
+	
+	#break off components
+	for i in range(0, len(vec_submat_lhs) - 1):
+		#set the field name for the dictionary
+		nm = vec_submat_lhs_names[i]
+		#check
+		if i > -1:
+			#get the indeces
+			p0 = sum(vec_submat_lhs[0:(i + 1)])
+		else:
+			p0 = 0
+		#set upper limit
+		p1 = sum(vec_submat_lhs[0:(i + 2)])
+		#temporary dataframe
+		df_tmp = pd.DataFrame(matrix_lhs[:, p0:p1], index = None)
+		#add name field
+		if dict_submat_lhs_fields[nm] != None:
+			df_tmp = df_tmp.rename(columns = dict_submat_lhs_fields[nm])
+			#set names
+			nms = list(df_tmp.columns)
+			#add run id
+			df_tmp["future_id"] = all_vals_add_sec["future_id"]
+			#reorder
+			df_tmp = df_tmp[["future_id"] + nms]
+		#update dictionary
+		dict_submat_lhs.update({nm: df_tmp})
+
+		#export raw lhs data
+		if export_ed_files_q:
+			#note/export
+			print("Exporting LHS for " + nm + " to " + dict_submat_file_paths[nm])
+			df_tmp.to_csv(dict_submat_file_paths[nm], index = None)
+			
+else:
+	#notify
+	print("\n#####\n#####    READING IN LHS TABLES\n#####\n")
+	#initialize list of "future ids"
+	set_future_ids_read = set({})
+	##  initialie booleans
+	
+	#initialize the set of futures that are read
+	init_sfir_q = True
+	#default the imbalance query to fale
+	set_imbalance_q = False
+	#default exitting to false
+	exit_q = False
+	
+	#Initialize
+	dict_read_futures = {}
+	#exit codes
+	dict_exit_codes = {
+		"set_imbalance": "Number of future_ids in LHS tables are not the same. Check the LHS files to ensure they are using the same future_id indexing.",
+		"set_nomatch": "LHS Tables have future ids that do not match specificed number of lhs trials."
+	}
+	#initialize index
+	i = 0
+	#read in lhs tables
+	while (i < len(vec_submat_lhs_names)) and not set_imbalance_q:
+		#get current file
+		nm = str(vec_submat_lhs_names[i])
+		#get file path
+		fp_read = dict_submat_file_paths[nm]
+		#read it in
+		df_tmp = pd.read_csv(fp_read)
+		#update dictionary
+		dict_submat_lhs.update({nm: df_tmp})
+		#check
+		if init_sfir_q:
+			#initialize
+			set_future_ids_read = set(df_tmp["future_id"])
+			#set of futures to compare to for individual exit
+			set_future_ids_read_compare = set_future_ids_read
+			#turn off initialization
+			init_sfir_q = False
+		else:
+			#current set of Future IDs
+			set_future_ids_read_cur = set(df_tmp["future_id"])
+			#read in and update the set of intersectional futures
+			set_future_ids_read = set_future_ids_read & set_future_ids_read_cur
+			#check
+			if set_future_ids_read_cur != set_future_ids_read_compare:
+				#if any set of futures doesn't match the first one, turn on the exit
+				sys.exit(dict_exit_codes["set_imbalance"])
+		#notify of successful completion
+		print(nm + " LHS table successfully read from " + fp_read)
+		#next ieration
+		i += 1
+
+	#cut out 0 (some files may have it, some may not)
+	set_future_ids_read = set_future_ids_read - set({0})
+	#set of what should be the future ids
+	set_check_future_ids = set(range(1, n_lhs + 1))
+	#compare
+	if set_future_ids_read != set_check_future_ids:
+		sys.exit(dict_exit_codes["set_nomatch"])
+		
+print("\nLHS complete.\n")
+
 
 ##  SET SOME NAMES
 fields_ed_add_sec = dict_submat_lhs["add_sec"].columns
@@ -822,9 +892,12 @@ if export_ed_files_q:
 	#temp overwrite
 	df_master_exp = df_attribute_master_id[(df_attribute_master_id["design_id"] == 0)]
 	#set gams vals
-	df_master_exp_gams = df_master_exp[df_master_exp["strategy_id"] > 0]
+	df_master_exp_gams = df_master_exp[df_master_exp["strategy_id"] > 0].copy()
 	#export
 	df_master_exp[["master_id"]].to_csv(sr.fp_csv_experimental_design_msec_masters_to_run, index = None, encoding = "UTF-8")
+	
+	#reorder gams
+	df_master_exp_gams = df_master_exp_gams.sort_values(by = ["future_id", "time_series_id"]).reset_index(drop = True)
 	df_master_exp_gams[["master_id"]].to_csv(sr.fp_csv_experimental_design_msec_masters_to_run_gams, index = None, encoding = "UTF-8")
 
 

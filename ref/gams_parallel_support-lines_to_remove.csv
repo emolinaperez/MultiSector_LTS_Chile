@@ -1,0 +1,8 @@
+line_comment_0,description
+67,remove h2 set
+71,remove esc_select set
+172-175,remove gdx load of esc_select
+695-697,remove gdx load of h2
+1312-1313,remove export of lp
+1486-1708,remove unnecessary output files
+1718-1726,remove unnecessary output files

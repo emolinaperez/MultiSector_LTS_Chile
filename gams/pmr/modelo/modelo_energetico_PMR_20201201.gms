@@ -1415,8 +1415,8 @@ solve Modelo_Energetico_PMR minimizing costo_sin_impuesto using mip;
 Equation
 generacion_maxima_etapa_sim(ifp,t,m)    'generacion maxima por etapa para cada simulacion';
 
-
-loop (h2, fplanta(ifp,t,m) = fplanta_aux(ifp,h2,m));
+*modified by James 12-06-2020 (30 is 2050 - 2020)
+loop ((t, h1, h2), fplanta(ifp,t,m) = min(1, max((34 - ord(t))/30, 0))*fplanta_aux(ifp,h1,m) + min(1, max((ord(t) - 4)/30, 0))*fplanta_aux(ifp,h2,m));
 
 sol_potencia_aux(i,t)=0;
 sol_potencia_aux(i,t)=datos_procesos(i,"Capacidad_Instalada")$(datos_procesos(i,"Estado")=1 and agno(t)<=datos_procesos(i,"Agno_fin"))+P.l(i,t)$(datos_procesos(i,"Estado")=0 or agno(t)>datos_procesos(i,"Agno_fin"));
@@ -1725,6 +1725,15 @@ putclose;
 *);
 *putclose;
 
+
+*temp—VERIFY fplanta
+File resultsFPLANT / "../data_output/fplanta.csv" /;
+put resultsFPLANT;
+put "master_id,tech,year,month,fplanta" /;
+loop((esc_selec,ifp,t,m),
+  put esc_selec.tl,",",ifp.tl,",",t.tl,",",m.tl,",",(fplanta(ifp,t,m))/
+);
+putclose;
 
 
 
