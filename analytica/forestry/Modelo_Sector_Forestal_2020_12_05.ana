@@ -63,7 +63,7 @@ DiagState: 2,227,108,624,307,17
 WindState: 2,130,85,720,350
 DiagramColor: 52428,52428,52428
 FontStyle: Arial,15
-FileInfo: 0,Model Sector_UTCUTS,2,2,0,0,C:\Users\andre\OneDrive\Documentos\GitHub\MultiSector_LTS_Chile\analytica\forestry\Modelo_Sector_Forestal_2020_12_05.ana
+FileInfo: 0,Model Sector_UTCUTS,2,2,0,0,C:\Users\andre\Dropbox (CCG-UC)\Carpeta del equipo CCG-UC\A Proyectos Actuales\2020-DDPLTSChile\Desarrollo\Envio 2020_12_04\Modelo_Sector_Forestal_2020_12_05.ana
 
 Module Indices
 Title: Indices
@@ -291,13 +291,13 @@ WindState: 2,0,0,720,350
 Att_PrevIndexValue: ['Restitucion','Sustitucion']
 
 Index Cat_TF
+Att_PrevIndexValue: ['Tieras forestales que permanecen como tales','Tierras convertidas en tierras forestales']
 Title: Cat_TF
 Definition: ['Tieras forestales que permanecen como tales','Tierras convertidas en tierras forestales']
 NodeLocation: 352,496,1
 NodeSize: 48,24
 WindState: 2,0,0,720,350
 {!40300|Att_SlicerPopupSize: 227,48}
-Att_PrevIndexValue: ['Tieras forestales que permanecen como tales','Tierras convertidas en tierras forestales']
 
 Index Cat_TF_que_permanece
 Title: Cat_TF que permanecen
@@ -2275,7 +2275,8 @@ Aliases: Alias Al405225213
 
 Variable Ha_Dmayr20_py
 Title: Ha_Dmayr20_py
-Definition: dynamic(if Ha_Forestacion_py[Time = time-20] = Null then 0 else if Cat_tierras_conv='Tierras convertidas a BN' then 0 else Ha_Forestacion_py[Time = time-20])
+Definition: dynamic(if Ha_Forestacion_py[Time = time-20] = Null then 0 else ~
+Ha_Forestacion_py[Time = time-20])
 NodeLocation: 256,200,1
 NodeSize: 72,24
 WindState: 2,0,0,720,350
