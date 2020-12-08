@@ -41,6 +41,9 @@ print("Check: n_lhs = " + str(n_lhs))
 #    MULTI SECTOR COMPONENTS    #
 #################################
 
+
+###   GET THE PARAMETER TABLE
+
 #read in uncertainty table for additional sectors
 parameter_table_additional_sectors = pd.read_csv(sr.fp_csv_parameter_ranges)
 #reduce
@@ -52,6 +55,21 @@ parameter_table_additional_sectors["parameter_constant_q"] = parameter_table_add
 parameter_table_additional_sectors["parameter_constant_q"] = np.array(parameter_table_additional_sectors["parameter_constant_q"]).astype(int)
 #initialize available groups
 groups_norm = set([int(x) for x in parameter_table_additional_sectors["normalize_group"] if not np.isnan(x)])
+
+# IDENTIFY PARAMETERS THAT DO NOT VARY
+df_apn = parameter_table_additional_sectors[["variable_name_lower", "min_2050", "max_2050"]].copy().drop_duplicates().reset_index(drop = True)
+#initialize the set
+all_params_novary = set({})
+#loop to build
+for p in df_apn["variable_name_lower"].unique():
+    df_apn_tmp = df_apn[df_apn["variable_name_lower"] == p]
+    #check to see if it doesn't vary
+    if len(df_apn_tmp) == 1:
+        if float(df_apn_tmp["min_2050"].iloc[0]) == float(df_apn_tmp["max_2050"].iloc[0]):
+            if float(df_apn_tmp["min_2050"].iloc[0]) == 1.0:
+                all_params_novary = all_params_novary | set({p})
+
+
 
 ###   NORMALIZATION GROUP IDS
 
@@ -299,6 +317,8 @@ else:
 		fp_read = dict_submat_file_paths[nm]
 		#read it in
 		df_tmp = pd.read_csv(fp_read)
+		#reorder it
+		#df_tmp = df_tmp[dict_submat_lhs_fields[nm]]
 		#update dictionary
 		dict_submat_lhs.update({nm: df_tmp})
 		#check
@@ -337,10 +357,15 @@ print("\nLHS complete.\n")
 ##  SET SOME NAMES
 fields_ed_add_sec = dict_submat_lhs["add_sec"].columns
 fields_ordered_parameters = [x for x in fields_ed_add_sec if x != "future_id"]
+sr.print_list_output(fields_ordered_parameters, "fields_ordered_parameters")
+
 #get parameters that are not ramped—they are constant across all years
 all_constant_params = set(parameter_table_additional_sectors[parameter_table_additional_sectors["parameter_constant_q"] == 1]["parameter"])
 all_constant_params = list(all_constant_params)
 all_constant_params.sort()
+
+sr.print_list_output(all_constant_params, "all_constant_params")
+
 #get indices
 indices_fop_all_constant_params = [fields_ordered_parameters.index(x) for x in all_constant_params]
 
@@ -501,8 +526,9 @@ if len(df_ld_shaped) > 0:
 	df_ld_shaped = pd.concat(df_ld_shaped)
 	#rename
 	df_ld_shaped = df_ld_shaped.rename(columns = dict([[x, "ld_" + x] for x in fields_new]))
-    
-    
+
+
+
 ##  CREATE RAMP VECTORS FOR UNCERTAINTY
 
 y_0 = int(sr.dict_init["add_sec_variation_start_year"]) - 1
@@ -671,22 +697,23 @@ for ts_id in all_vals_add_sec["time_series_id"]:
 #build output dataframe
 df_out = pd.concat(df_out, axis = 0)
 #set ordering
-fields_id = [x for x in df_out.columns if "_id" in x]
+fields_id = [x for x in df_out.columns if ("_id" == x[-3:])]
 fields_dat = [x for x in df_out.columns if (x not in (fields_id + ["year"]))]
 df_out = df_out[fields_id + ["year"] + fields_dat]
-
 #
 cols_to_export = []
 #loop over columns to check values (this is inefficient)
 for col in df_out.columns:
-	if "_id" not in col:
-		if len(set(df_out[col].unique())) == 1:
+	if col[-3:] != "_id":
+		if (len(set(df_out[col].unique())) == 1) and (col in all_params_novary):
 			cols_to_export.append(col)
 #convert to single values
 df_out_singles = df_out[cols_to_export].drop_duplicates()
+sr.print_list_output(list(df_out_singles.columns), "df_out_singles")
 #reduce
 df_out = df_out[[x for x in df_out.columns if x not in cols_to_export]]
 
+sr.print_list_output(list(df_out.columns), "df_out")
 
 
 #################################################################################################
@@ -755,8 +782,6 @@ df_out = df_out[[x for x in df_out.columns if (x not in fields_drop)]]
 
 
 
-
-
 ######################################
 ###                                ###
 ###    GENERATE GDP GROWTH RATE    ###
@@ -801,23 +826,23 @@ print("Growth rate complete.\n")
 
 #set ids for different data frames
 dict_dfs_exp = {
-    "inversion": {"substr": "investment", "exp_path": sr.fp_csv_gams_data_costo_inversion_procesos_escenarios},
-    "precio": {"substr": "fuel_price", "exp_path": sr.fp_csv_gams_data_precio_energeticos_escenarios}
+	"inversion": {"substr": "investment", "exp_path": sr.fp_csv_gams_data_costo_inversion_procesos_escenarios},
+	"precio": {"substr": "fuel_price", "exp_path": sr.fp_csv_gams_data_precio_energeticos_escenarios}
 }
 #loop
 for k in list(dict_dfs_exp.keys()):
-    #get substring id
-    substr_id = str(dict_dfs_exp[k]["substr"])
-    #get sub data frame
-    df_sub = df_out[["master_id", "year"] + [x for x in df_out.columns if (x in sr.dict_map_params_to_params_gams.keys()) and (x[0:min(len(x), len(substr_id))] == substr_id)]].copy()
-    #rename
-    df_sub = df_sub.rename(columns = sr.dict_map_params_to_params_gams)
-    #conver to long and rename
-    df_sub = pd.melt(df_sub, ["master_id", "year"]).rename(columns = {"master_id": "Escenario", "year": "Agno", "variable": "Energeticos", "value": "Precio"})
-    #notify
-    print("Exporting GAMS " + str(k) + " file to: " + dict_dfs_exp[k]["exp_path"] + "...\n")
-    #export
-    df_sub.to_csv(dict_dfs_exp[k]["exp_path"], encoding = "UTF-8", index = None)
+	#get substring id
+	substr_id = str(dict_dfs_exp[k]["substr"])
+	#get sub data frame
+	df_sub = df_out[["master_id", "year"] + [x for x in df_out.columns if (x in sr.dict_map_params_to_params_gams.keys()) and (x[0:min(len(x), len(substr_id))] == substr_id)]].copy()
+	#rename
+	df_sub = df_sub.rename(columns = sr.dict_map_params_to_params_gams)
+	#conver to long and rename
+	df_sub = pd.melt(df_sub, ["master_id", "year"]).rename(columns = {"master_id": "Escenario", "year": "Agno", "variable": "Energeticos", "value": "Precio"})
+	#notify
+	print("Exporting GAMS " + str(k) + " file to: " + dict_dfs_exp[k]["exp_path"] + "...\n")
+	#export
+	df_sub.to_csv(dict_dfs_exp[k]["exp_path"], encoding = "UTF-8", index = None)
 
 
 ##  HYDROLOGICAL
@@ -832,12 +857,12 @@ df_ed_hyd = df_out[df_out["year"] == 2050][["master_id", "hydrology_exceedance_p
 hydrological_scenarios = np.zeros(len(df_ed_hyd)).astype(int)
 #loop to overwrite the scenarios
 for i in range(len(df_ed_hyd)):
-    prob = float(df_ed_hyd["hydrology_exceedance_probability"].iloc[i])
-    tmp = np.where(df_data_hydro["Probabilidad_Excedencia"] >= prob)
-    #get the associated hydro id
-    hydro_id = int(df_data_hydro["ID_Hidro"].iloc[min(tmp[0])])
-    #overwrite
-    hydrological_scenarios[i] = hydro_id
+	prob = float(df_ed_hyd["hydrology_exceedance_probability"].iloc[i])
+	tmp = np.where(df_data_hydro["Probabilidad_Excedencia"] >= prob)
+	#get the associated hydro id
+	hydro_id = int(df_data_hydro["ID_Hidro"].iloc[min(tmp[0])])
+	#overwrite
+	hydrological_scenarios[i] = hydro_id
 #add to data frame
 df_ed_hyd["Escenario_Hidrologico"] = hydrological_scenarios
 df_ed_hyd = df_ed_hyd[["master_id", "Escenario_Hidrologico"]].rename(columns = {"master_id": "Escenario"})
@@ -991,12 +1016,12 @@ row_met = df_ed_xl_ranges[df_ed_xl_ranges["field"] == "metric_type"]
 set_keep_params = set(fields_data) | fields_append
 #loop
 for i in [x for x in df_ed_xl_ranges.columns if x != "field"]:
-    #get vals from rows
-    st = sr.dict_strat_id_to_strat[int(row_strat[i].iloc[0])]
-    met = str(row_met[i].iloc[0])
-    field_new = st + "_" + met
-    #update
-    dict_new_names.update({i: field_new})
+	#get vals from rows
+	st = sr.dict_strat_id_to_strat[int(row_strat[i].iloc[0])]
+	met = str(row_met[i].iloc[0])
+	field_new = st + "_" + met
+	#update
+	dict_new_names.update({i: field_new})
 #rename and reduce
 df_ed_xl_ranges = df_ed_xl_ranges[df_ed_xl_ranges["field"].isin(set_keep_params)].rename(columns = dict_new_names)
 #write output
@@ -1071,12 +1096,12 @@ row_met = df_ed_xl_ranges_vals[df_ed_xl_ranges_vals["field"] == "metric_type"]
 set_keep_params = set(fields_data) | fields_append
 #loop
 for i in [x for x in df_ed_xl_ranges_vals.columns if x != "field"]:
-    #get vals from rows
-    st = sr.dict_strat_id_to_strat[int(row_strat[i].iloc[0])]
-    met = str(row_met[i].iloc[0])
-    field_new = st + "_" + met
-    #update
-    dict_new_names.update({i: field_new})
+	#get vals from rows
+	st = sr.dict_strat_id_to_strat[int(row_strat[i].iloc[0])]
+	met = str(row_met[i].iloc[0])
+	field_new = st + "_" + met
+	#update
+	dict_new_names.update({i: field_new})
 #rename and reduce
 df_ed_xl_ranges_vals = df_ed_xl_ranges_vals[df_ed_xl_ranges_vals["field"].isin(set_keep_params)].rename(columns = dict_new_names)
 
@@ -1089,42 +1114,42 @@ all_crops_perm = ["bananas", "coffee", "fruits", "pina", "palm_oil"]
 all_crops_ann = ["others", "rice", "sugar_cane", "vegetables"]
 #string ids for agg
 dict_str_ids = {
-    "crops": "_yield_tonnes_ha",
-    "crops_annual": all_crops_ann,
-    "crops_perennial": all_crops_perm,
-    "forest": "_conv_to_cropland_area_ha",
-    "forest_primary": "_primary_forest_conv_to_cropland_area_ha",
-    "forest_secondary": "_secondary_forest_conv_to_cropland_area_ha"
+	"crops": "_yield_tonnes_ha",
+	"crops_annual": all_crops_ann,
+	"crops_perennial": all_crops_perm,
+	"forest": "_conv_to_cropland_area_ha",
+	"forest_primary": "_primary_forest_conv_to_cropland_area_ha",
+	"forest_secondary": "_secondary_forest_conv_to_cropland_area_ha"
 }
 dict_all = {}
 df_append = [df_ed_xl_ranges_vals]
 for nm in dict_str_ids.keys():
-    if type(dict_str_ids[nm]) == str:
-        all_vals = list(set([x.replace(dict_str_ids[nm], "") for x in df_ed_xl_ranges_vals["field"] if dict_str_ids[nm] in x]))
-        #add back in
-        if nm in ["forest_primary", "forest_secondary"]:
-            #string appendage
-            str_append = nm.replace("forest_", "") + "_forest"
-            all_vals = [(x + "_" + str_append) for x in all_vals]
-        all_vals.sort()
-    else:
-        all_vals = dict_str_ids[nm]
-    #add to dictionary
-    dict_all.update({nm: all_vals})
-    #add land use
-    all_vals = ["frac_lu_" + x for x in all_vals]
-    #get subdf
-    df_sub = df_ed_xl_ranges_vals[df_ed_xl_ranges_vals["field"].isin(all_vals)]
-    #fields to extract
-    fields_ext = [x for x in df_sub.columns if x != "field"]
-    
-    if len(df_sub) > 0:
-    	#array
-    	array_sub = (sum(np.array(df_sub[fields_ext]))*sr.area_cr).astype(int)
-    	#update
-    	df_sub = pd.concat([pd.DataFrame({"field": [nm]}), pd.DataFrame([array_sub], columns = fields_ext)], axis = 1)
-    #append
-    df_append.append(df_sub[fields_ord_out])
+	if type(dict_str_ids[nm]) == str:
+		all_vals = list(set([x.replace(dict_str_ids[nm], "") for x in df_ed_xl_ranges_vals["field"] if dict_str_ids[nm] in x]))
+		#add back in
+		if nm in ["forest_primary", "forest_secondary"]:
+			#string appendage
+			str_append = nm.replace("forest_", "") + "_forest"
+			all_vals = [(x + "_" + str_append) for x in all_vals]
+		all_vals.sort()
+	else:
+		all_vals = dict_str_ids[nm]
+	#add to dictionary
+	dict_all.update({nm: all_vals})
+	#add land use
+	all_vals = ["frac_lu_" + x for x in all_vals]
+	#get subdf
+	df_sub = df_ed_xl_ranges_vals[df_ed_xl_ranges_vals["field"].isin(all_vals)]
+	#fields to extract
+	fields_ext = [x for x in df_sub.columns if x != "field"]
+	
+	if len(df_sub) > 0:
+		#array
+		array_sub = (sum(np.array(df_sub[fields_ext]))*sr.area_cr).astype(int)
+		#update
+		df_sub = pd.concat([pd.DataFrame({"field": [nm]}), pd.DataFrame([array_sub], columns = fields_ext)], axis = 1)
+	#append
+	df_append.append(df_sub[fields_ord_out])
 df_ed_xl_ranges_vals_full = pd.concat(df_append, axis = 0)
 
 
@@ -1187,7 +1212,7 @@ print("Analytica done.")
 
 print("Experimental design generation complete.")
 
-    
+		
     
      
     

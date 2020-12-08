@@ -229,7 +229,7 @@ def build_linear_mix_vec(tuple_year, tuple_year_range):
 
 	return vec
 	
-
+#function for calculating differences
 def do_df_diff(df_in, df_master, additional_fm = [], field_year = "year"):
 	#fields to include as scenario
 	fields_scen = ["design_id", "time_series_id", "strategy_id", "future_id"]
@@ -308,7 +308,33 @@ def read_ini(fp_ini):
 	#return the dictionary
 	return dict_init
 			
-			
+
+# FUNCTION FOR READING ARCHIVE DATA
+
+def get_archive_run(fp_in, archive_run):
+	#set the archive directory
+	dir_arch = os.path.join(dir_archive_runs, archive_run)
+	#ensure it's been unzipped and exists
+	if os.path.exists(dir_arch):
+		fp_read = os.path.join(dir_arch, os.path.basename(fp_in))
+		#read the data set
+		if os.path.exists(fp_read):
+			out = pd.read_csv(fp_read)
+		else:
+			print("File '" + os.path.basename(fp_in) + "' not found in '" + dir_arch + "'.")
+			out = None
+	else:
+		print("Archive directory '" + dir_arch + "' not found.")
+		out = None
+
+	return out
+	
+	
+# FUNCTION FOR DISPLAYING LIST OUTPUT
+
+def print_list_output(list_in, header):
+	print("\n"*3 + "#"*30 + "\n" + header + ":\n" + (("\t%s\n")*len(list_in))%tuple(list_in) + "#"*30 + "\n"*3)
+
 
 #############################
 #    SET FULL FILE PATHS    #
@@ -457,5 +483,4 @@ if not os.path.exists(dir_out):
 if not os.path.exists(fp_csv_failed_runs):
     dfc = pd.DataFrame({"run_id": []})
     dfc.to_csv(fp_csv_failed_runs, index = None)
-
 

@@ -13,6 +13,8 @@ hfcmma,hfcmma,input,,1
 hydrology_exceedance_probability,hydrology exceedance probability,input,,1
 incendio_bosque_nativo,incendio bosque nativo,input,,1
 incendio_plantaciones_forestales,incendio plantaciones forestales,input,,1
+incertidumbre_incendio_bn,incertidumbre incendio bn,input,,1
+incertidumbre_incendio_plantaciones,incertidumbre incendio plantaciones,input,,1
 medida_biodigestores,medida biodigestores,input,,1
 medida_cambio_dieta_bovina,medida cambio dieta bovina,input,,1
 medida_captura_c_suelos,medida captura c suelos,input,,1
