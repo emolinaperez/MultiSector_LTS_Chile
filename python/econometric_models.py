@@ -141,3 +141,32 @@ def model_transport_pkm_saturacion(year, transport_demand_aviation_kerosene, tra
 			transport_demand_aviation_kerosene[i] = transport_demand_aviation_kerosene[i - 1] * 1.001
 
 	return transport_demand_aviation_kerosene
+
+
+def model_delta_capacity(year, capacity):
+	# Creacion de la variable que contiene aumento de capacidad
+	delta_capacity = np.ones(len(year))
+
+	for i in range(len(year)):
+		if year[i] == 2015:
+			delta_capacity[i] = capacity[i]
+		elif capacity[i] > capacity[i-1]:
+			delta_capacity[i] = capacity[i]-capacity[i-1]
+		else:
+			delta_capacity[i] = 0
+
+	return delta_capacity
+
+def model_capacity(year, capacity):
+	# Creacion de la variable que contiene aumento de capacidad
+	adjusted_capacity = np.ones(len(year))
+
+	for i in range(len(year)):
+		if year[i] == 2015:
+			adjusted_capacity[i] = capacity[i]
+		elif capacity[i] > adjusted_capacity[i-1]:
+			adjusted_capacity[i] = capacity[i]
+		else:
+			adjusted_capacity[i] = adjusted_capacity[i-1]
+
+	return adjusted_capacity

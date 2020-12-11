@@ -5,7 +5,7 @@ import os, os.path
 import time
 import pandas as pd
 import numpy as np
-from econometric_models import model_other_industries as dem_other_industries
+from econometric_models import model_other_industries as dem_other_industries,  model_delta_capacity,  model_capacity
 
 #############################
 #    INDUSTRY AND MINING    #
@@ -22,10 +22,36 @@ def sm_industry_and_mining(df_in, dict_sector_abv):
 	share_electric_grid_to_hydrogen = np.array(df_in["share_electric_grid_to_hydrogen"])
 	electrolyzer_efficiency = np.array(df_in["electrolyzer_efficiency"])
 
+	year = np.array(df_in["year"])  # vector years
+
+	#cost information
+	industry_and_mining_fuel_price_diesel = np.array(df_in["industry_and_mining_fuel_price_diesel"])
+	industry_and_mining_fuel_price_natural_gas = np.array(df_in["industry_and_mining_fuel_price_natural_gas"])
+	industry_and_mining_fuel_price_electric = np.array(df_in["industry_and_mining_fuel_price_electric"])
+	industry_and_mining_fuel_price_coal = np.array(df_in["industry_and_mining_fuel_price_coal"])
+	industry_and_mining_fuel_price_biomass = np.array(df_in["industry_and_mining_fuel_price_biomass"])
+	industry_and_mining_fuel_price_solar = np.array(df_in["industry_and_mining_fuel_price_solar"])
+	industry_and_mining_fuel_price_hydrogen = np.array(df_in["industry_and_mining_fuel_price_hydrogen"])
+	industry_and_mining_fuel_price_pliqgas = np.array(df_in["industry_and_mining_fuel_price_pliqgas"])
+	industry_and_mining_fuel_price_kerosene = np.array(df_in["industry_and_mining_fuel_price_kerosene"])
+	industry_and_mining_fuel_price_fuel_oil = np.array(df_in["industry_and_mining_fuel_price_fuel_oil"])
+	industry_and_mining_investment_cost_motor_diesel = np.array(df_in["industry_and_mining_investment_cost_motor_diesel"])
+	industry_and_mining_investment_cost_motor_pliqgas = np.array(df_in["industry_and_mining_investment_cost_motor_pliqgas"])
+	industry_and_mining_investment_cost_motor_electric = np.array(df_in["industry_and_mining_investment_cost_motor_electric"])
+	industry_and_mining_investment_cost_motor_hydrogen = np.array(df_in["industry_and_mining_investment_cost_motor_hydrogen"])
+	industry_and_mining_investment_cost_heat_coal = np.array(df_in["industry_and_mining_investment_cost_heat_coal"])
+	industry_and_mining_investment_cost_heat_electric = np.array(df_in["industry_and_mining_investment_cost_heat_electric"])
+	industry_and_mining_investment_cost_heat_solar = np.array(df_in["industry_and_mining_investment_cost_heat_solar"])
+	industry_and_mining_investment_cost_heat_pliqgas = np.array(df_in["industry_and_mining_investment_cost_heat_pliqgas"])
+	industry_and_mining_investment_cost_heat_natural_gas = np.array(df_in["industry_and_mining_investment_cost_heat_natural_gas"])
+	industry_and_mining_investment_cost_heat_biomass = np.array(df_in["industry_and_mining_investment_cost_heat_biomass"])
+	industry_and_mining_investment_cost_heat_diesel = np.array(df_in["industry_and_mining_investment_cost_heat_diesel"])
+	industry_and_mining_investment_cost_heat_fuel_oil = np.array(df_in["industry_and_mining_investment_cost_heat_fuel_oil"])
+	industry_and_mining_investment_cost_heat_hydrogen = np.array(df_in["industry_and_mining_investment_cost_heat_hydrogen"])
+
 	# SUB SECTOR: COPPER MINING MODEL - Mineria del cobre
 
 	# Read input parameters defined in parameter_ranges.csv
-
 	copper_production = np.array(df_in["copper_production"])
 	copper_intensity_useful_energy = np.array(df_in["copper_intensity_useful_energy"])
 	copper_share_open_pit_mine = np.array(df_in["copper_share_open_pit_mine"])
@@ -74,6 +100,14 @@ def sm_industry_and_mining(df_in, dict_sector_abv):
 	copper_emission_fact_natural_gas = np.array(df_in["copper_emission_fact_natural_gas"])
 	copper_emission_fact_pliqgas = np.array(df_in["copper_emission_fact_pliqgas"])
 	copper_emission_fact_fueloil = np.array(df_in["copper_emission_fact_fueloil"])
+	copper_activity_open_pit_mine = np.array(df_in["copper_activity_open_pit_mine"])
+	copper_activitiy_subt_mine = np.array(df_in["copper_activitiy_subt_mine"])
+	copper_activity_motor = np.array(df_in["copper_activity_motor"])
+	copper_activity_other = np.array(df_in["copper_activity_other"])
+	copper_activity_heat = np.array(df_in["copper_activity_heat"])
+	copper_open_investment_cost_pit_mine_diesel = np.array(df_in["copper_open_investment_cost_pit_mine_diesel"])
+	copper_open_investment_cost_pit_mine_electricitiy = np.array(df_in["copper_open_investment_cost_pit_mine_electricitiy"])
+	copper_open_investment_cost_pit_mine_hydrogen = np.array(df_in["copper_open_investment_cost_pit_mine_hydrogen"])
 
 	# calculate demand by en use
 
@@ -121,8 +155,42 @@ def sm_industry_and_mining(df_in, dict_sector_abv):
 	# electric demand to produce hydrogen
 	electric_demand_hydrogen = copper_dem_hydrogen / electrolyzer_efficiency * share_electric_grid_to_hydrogen
 
+	# OPEX (in millon US$)
+	copper_OPEX_diesel = copper_dem_diesel * industry_and_mining_fuel_price_diesel / (10 ** 6)
+	copper_OPEX_kerosene = copper_dem_kerosene * industry_and_mining_fuel_price_kerosene / (10 ** 6)
+	copper_OPEX_natural_gas = copper_dem_natural_gas * industry_and_mining_fuel_price_natural_gas/ (10 ** 6)
+	copper_OPEX_electric = copper_dem_electric * industry_and_mining_fuel_price_electric / (10 ** 6)
+	copper_OPEX_hydrogen = copper_dem_hydrogen * industry_and_mining_fuel_price_hydrogen / (10 ** 6)
+	copper_OPEX_pliqgas = copper_dem_pliqgas * industry_and_mining_fuel_price_pliqgas / (10 ** 6)
+	copper_OPEX_fueloil = copper_dem_fueloil * industry_and_mining_fuel_price_fuel_oil / (10 ** 6)
+
+	copper_OPEX = copper_OPEX_diesel+copper_OPEX_kerosene+copper_OPEX_natural_gas+copper_OPEX_electric+copper_OPEX_hydrogen+copper_OPEX_pliqgas+copper_OPEX_fueloil
+
+	# capacity (MW)
+	copper_open_capacity_pit_mine_diesel = copper_dem_open_pit_mine_diesel * fact2 * 10**3 / copper_activity_open_pit_mine
+	copper_open_capacity_pit_mine_electricitiy = copper_dem_open_pit_mine_electricitiy * fact2 * 10**3/ copper_activity_open_pit_mine
+	copper_open_capacity_pit_mine_hydrogen = copper_dem_open_pit_mine_hydrogen * fact2 * 10**3 / copper_activity_open_pit_mine
+
+	copper_open_capacity_pit_mine_diesel =  model_capacity (year,copper_open_capacity_pit_mine_diesel)
+	copper_open_capacity_pit_mine_electricitiy =  model_capacity (year,copper_open_capacity_pit_mine_electricitiy)
+	copper_open_capacity_pit_mine_hydrogen =  model_capacity (year,copper_open_capacity_pit_mine_hydrogen)
+
+	copper_open_delta_capacity_pit_mine_diesel = model_delta_capacity(year, copper_open_capacity_pit_mine_diesel)
+	copper_open_delta_capacity_pit_mine_electricitiy = model_delta_capacity(year, copper_open_capacity_pit_mine_electricitiy)
+	copper_open_delta_capacity_pit_mine_hydrogen = model_delta_capacity(year, copper_open_capacity_pit_mine_hydrogen)
+
+	# CAPEX (in millon US$)
+	copper_open_CAPEX_pit_mine_diesel = copper_open_delta_capacity_pit_mine_diesel * copper_open_investment_cost_pit_mine_diesel / (10 ** 3)
+	copper_open_CAPEX_pit_mine_electricitiy = copper_open_delta_capacity_pit_mine_electricitiy * copper_open_investment_cost_pit_mine_electricitiy / (10 ** 3)
+	copper_open_CAPEX_pit_mine_hydrogen = copper_open_delta_capacity_pit_mine_hydrogen * copper_open_investment_cost_pit_mine_hydrogen / (10 ** 3)
+
+	copper_CAPEX = copper_open_CAPEX_pit_mine_diesel+copper_open_CAPEX_pit_mine_electricitiy+copper_open_CAPEX_pit_mine_hydrogen
+
 	dict_emission = {"copper": copper_emission}
 	dict_electric_demand = {"copper": copper_dem_electric * fact2}
+	# CAPEX, OPEX
+	dict_CAPEX = {"copper": copper_CAPEX}
+	dict_OPEX ={"copper": copper_OPEX}
 
 	# SUB SECTOR: PULP ENERGY MODEL - Papel y Celulosa
 
@@ -207,9 +275,12 @@ def sm_industry_and_mining(df_in, dict_sector_abv):
 	other_industries_emission_fact_coal = np.array(df_in["other_industries_emission_fact_coal"])
 	other_industries_emission_fact_pliqgas = np.array(df_in["other_industries_emission_fact_pliqgas"])
 	other_industries_emission_fact_fueloil = np.array(df_in["other_industries_emission_fact_fueloil"])
+	other_industries_activity_motor = np.array(df_in["other_industries_activity_motor"])
+	other_industries_activity_other = np.array(df_in["other_industries_activity_other"])
+	other_industries_activity_heat = np.array(df_in["other_industries_activity_heat"])
 
 	#
-	year = np.array(df_in["year"])  # vector years
+
 
 	other_industries_total_demand = dem_other_industries(year, growth_rate_gdp, other_industries_elasticity)
 	other_industries_useful_energy = other_industries_total_demand * other_industries_rate_useful_energy
@@ -246,23 +317,95 @@ def sm_industry_and_mining(df_in, dict_sector_abv):
 
 	# calculate emission in millon tCO2
 
-	other_industries_emission_diesel = other_industries_dem_diesel * other_industries_emission_fact_diesel * fact / (
-				10 ** 9)
-	other_industries_emission_natural_gas = other_industries_dem_natural_gas * other_industries_emission_fact_natural_gas * fact / (
-				10 ** 9)
+	other_industries_emission_diesel = other_industries_dem_diesel * other_industries_emission_fact_diesel * fact / (10 ** 9)
+	other_industries_emission_natural_gas = other_industries_dem_natural_gas * other_industries_emission_fact_natural_gas * fact / (10 ** 9)
 	other_industries_emission_coal = other_industries_dem_coal * other_industries_emission_fact_coal * fact / (10 ** 9)
-	other_industries_emission_pliqgas = other_industries_dem_pliqgas * other_industries_emission_fact_pliqgas * fact / (
-				10 ** 9)
-	other_industries_emission_fueloil = other_industries_dem_fueloil * other_industries_emission_fact_fueloil * fact / (
-				10 ** 9)
+	other_industries_emission_pliqgas = other_industries_dem_pliqgas * other_industries_emission_fact_pliqgas * fact / (10 ** 9)
+	other_industries_emission_fueloil = other_industries_dem_fueloil * other_industries_emission_fact_fueloil * fact / (10 ** 9)
 	other_industries_emission = other_industries_emission_diesel + other_industries_emission_natural_gas + other_industries_emission_coal + other_industries_emission_pliqgas + other_industries_emission_fueloil
 
 	# electric demand to produce hydrogen
 	electric_demand_hydrogen = electric_demand_hydrogen + other_industries_dem_hydrogen / electrolyzer_efficiency * share_electric_grid_to_hydrogen
 
+	# capacity
+	other_industries_capacity_motor_diesel = other_industries_dem_motor_diesel * fact2 * (10 ** 3) / other_industries_activity_motor
+	other_industries_capacity_motor_pliqgas = other_industries_dem_motor_pliqgas * fact2 * (10 ** 3) / other_industries_activity_motor
+	other_industries_capacity_motor_electric = other_industries_dem_motor_electric * fact2 * (10 ** 3) / other_industries_activity_motor
+	other_industries_capacity_motor_hydrogen = other_industries_dem_motor_hydrogen * fact2 * (10 ** 3) / other_industries_activity_motor
+	other_industries_capacity_heat_coal = other_industries_dem_heat_coal * fact2 * (10 ** 3) / other_industries_activity_heat
+	other_industries_capacity_heat_electric = other_industries_dem_heat_electric * fact2 * (10 ** 3) / other_industries_activity_heat
+	other_industries_capacity_heat_solar = other_industries_dem_heat_solar * fact2 * (10 ** 3) / other_industries_activity_heat
+	other_industries_capacity_heat_pliqgas = other_industries_dem_heat_pliqgas * fact2 * (10 ** 3) / other_industries_activity_heat
+	other_industries_capacity_heat_natural_gas = other_industries_dem_heat_natural_gas * fact2 * (10 ** 3) / other_industries_activity_heat
+	other_industries_capacity_heat_biomass = other_industries_dem_heat_biomass * fact2 * (10 ** 3) / other_industries_activity_heat
+	other_industries_capacity_heat_diesel = other_industries_dem_heat_diesel * fact2 * (10 ** 3) / other_industries_activity_heat
+	other_industries_capacity_heat_fuel_oil = other_industries_dem_heat_fuel_oil * fact2 * (10 ** 3) / other_industries_activity_heat
+	other_industries_capacity_heat_hydrogen = other_industries_dem_heat_hydrogen * fact2 * (10 ** 3) / other_industries_activity_heat
+
+	other_industries_capacity_motor_diesel = model_capacity(year, other_industries_capacity_motor_diesel)
+	other_industries_capacity_motor_pliqgas = model_capacity(year, other_industries_capacity_motor_pliqgas)
+	other_industries_capacity_motor_electric = model_capacity(year, other_industries_capacity_motor_electric)
+	other_industries_capacity_motor_hydrogen = model_capacity(year, other_industries_capacity_motor_hydrogen)
+	other_industries_capacity_heat_coal = model_capacity(year, other_industries_capacity_heat_coal)
+	other_industries_capacity_heat_electric = model_capacity(year, other_industries_capacity_heat_electric)
+	other_industries_capacity_heat_solar = model_capacity(year, other_industries_capacity_heat_solar)
+	other_industries_capacity_heat_pliqgas = model_capacity(year, other_industries_capacity_heat_pliqgas)
+	other_industries_capacity_heat_natural_gas = model_capacity(year, other_industries_capacity_heat_natural_gas)
+	other_industries_capacity_heat_biomass = model_capacity(year, other_industries_capacity_heat_biomass)
+	other_industries_capacity_heat_diesel = model_capacity(year, other_industries_capacity_heat_diesel)
+	other_industries_capacity_heat_fuel_oil = model_capacity(year, other_industries_capacity_heat_fuel_oil)
+	other_industries_capacity_heat_hydrogen = model_capacity(year, other_industries_capacity_heat_hydrogen)
+
+	other_industries_delta_capacity_motor_diesel = model_delta_capacity(year, other_industries_capacity_motor_diesel)
+	other_industries_delta_capacity_motor_pliqgas = model_delta_capacity(year, other_industries_capacity_motor_pliqgas)
+	other_industries_delta_capacity_motor_electric = model_delta_capacity(year,other_industries_capacity_motor_electric)
+	other_industries_delta_capacity_motor_hydrogen = model_delta_capacity(year,other_industries_capacity_motor_hydrogen)
+	other_industries_delta_capacity_heat_coal = model_delta_capacity(year, other_industries_capacity_heat_coal)
+	other_industries_delta_capacity_heat_electric = model_delta_capacity(year, other_industries_capacity_heat_electric)
+	other_industries_delta_capacity_heat_solar = model_delta_capacity(year, other_industries_capacity_heat_solar)
+	other_industries_delta_capacity_heat_pliqgas = model_delta_capacity(year, other_industries_capacity_heat_pliqgas)
+	other_industries_delta_capacity_heat_natural_gas = model_delta_capacity(year,other_industries_capacity_heat_natural_gas)
+	other_industries_delta_capacity_heat_biomass = model_delta_capacity(year, other_industries_capacity_heat_biomass)
+	other_industries_delta_capacity_heat_diesel = model_delta_capacity(year, other_industries_capacity_heat_diesel)
+	other_industries_delta_capacity_heat_fuel_oil = model_delta_capacity(year, other_industries_capacity_heat_fuel_oil)
+	other_industries_delta_capacity_heat_hydrogen = model_delta_capacity(year, other_industries_capacity_heat_hydrogen)
+
+	#OPEX
+	other_industries_OPEX_diesel = other_industries_dem_diesel * industry_and_mining_fuel_price_diesel / (10 ** 6)
+	other_industries_OPEX_natural_gas = other_industries_dem_natural_gas * industry_and_mining_fuel_price_natural_gas / (10 ** 6)
+	other_industries_OPEX_electric = other_industries_dem_electric * industry_and_mining_fuel_price_electric / (10 ** 6)
+	other_industries_OPEX_coal = other_industries_dem_coal * industry_and_mining_fuel_price_coal / (10 ** 6)
+	other_industries_OPEX_biomass = other_industries_dem_biomass * industry_and_mining_fuel_price_biomass / (10 ** 6)
+	other_industries_OPEX_solar = other_industries_dem_solar * industry_and_mining_fuel_price_solar / (10 ** 6)
+	other_industries_OPEX_hydrogen = other_industries_dem_hydrogen * industry_and_mining_fuel_price_hydrogen / (10 ** 6)
+	other_industries_OPEX_pliqgas = other_industries_dem_pliqgas * industry_and_mining_fuel_price_pliqgas / (10 ** 6)
+	other_industries_OPEX_fuel_oil = other_industries_dem_fueloil * industry_and_mining_fuel_price_fuel_oil / (10 ** 6)
+	other_industries_OPEX = other_industries_OPEX_diesel+other_industries_OPEX_natural_gas+other_industries_OPEX_electric+other_industries_OPEX_coal+other_industries_OPEX_biomass+other_industries_OPEX_solar+other_industries_OPEX_hydrogen+other_industries_OPEX_pliqgas+other_industries_OPEX_fuel_oil
+
+	#CAPEX
+	other_industries_CAPEX_cost_motor_diesel = other_industries_delta_capacity_motor_diesel * industry_and_mining_investment_cost_motor_diesel / (10 ** 3)
+	other_industries_CAPEX_cost_motor_pliqgas = other_industries_delta_capacity_motor_pliqgas * industry_and_mining_investment_cost_motor_pliqgas / (10 ** 3)
+	other_industries_CAPEX_cost_motor_electric = other_industries_delta_capacity_motor_electric * industry_and_mining_investment_cost_motor_electric / (10 ** 3)
+	other_industries_CAPEX_cost_motor_hydrogen = other_industries_delta_capacity_motor_hydrogen * industry_and_mining_investment_cost_motor_hydrogen / (10 ** 3)
+	other_industries_CAPEX_heat_coal = other_industries_delta_capacity_heat_coal * industry_and_mining_investment_cost_heat_coal / (10 ** 3)
+	other_industries_CAPEX_heat_electric = other_industries_delta_capacity_heat_electric * industry_and_mining_investment_cost_heat_electric / (10 ** 3)
+	other_industries_CAPEX_heat_solar = other_industries_delta_capacity_heat_solar * industry_and_mining_investment_cost_heat_solar / (10 ** 3)
+	other_industries_CAPEX_heat_pliqgas = other_industries_delta_capacity_heat_pliqgas * industry_and_mining_investment_cost_heat_pliqgas / (10 ** 3)
+	other_industries_CAPEX_heat_natural_gas = other_industries_delta_capacity_heat_natural_gas * industry_and_mining_investment_cost_heat_natural_gas / (10 ** 3)
+	other_industries_CAPEX_heat_biomass = other_industries_delta_capacity_heat_biomass * industry_and_mining_investment_cost_heat_biomass / (10 ** 3)
+	other_industries_CAPEX_heat_diesel = other_industries_delta_capacity_heat_diesel * industry_and_mining_investment_cost_heat_diesel / (10 ** 3)
+	other_industries_CAPEX_heat_fuel_oil = other_industries_delta_capacity_heat_fuel_oil * industry_and_mining_investment_cost_heat_fuel_oil / (10 ** 3)
+	other_industries_CAPEX_heat_hydrogen = other_industries_delta_capacity_heat_hydrogen * industry_and_mining_investment_cost_heat_hydrogen / (10 ** 3)
+
+	other_industries_CAPEX = other_industries_CAPEX_cost_motor_diesel+other_industries_CAPEX_cost_motor_pliqgas+other_industries_CAPEX_cost_motor_electric+other_industries_CAPEX_cost_motor_hydrogen+other_industries_CAPEX_heat_coal+\
+							 other_industries_CAPEX_heat_electric+other_industries_CAPEX_heat_solar+other_industries_CAPEX_heat_pliqgas+other_industries_CAPEX_heat_natural_gas+other_industries_CAPEX_heat_biomass+other_industries_CAPEX_heat_diesel+other_industries_CAPEX_heat_fuel_oil+other_industries_CAPEX_heat_hydrogen
+
 	# update
 	dict_emission.update({"other_industries": other_industries_emission})
 	dict_electric_demand.update({"other_industries": other_industries_dem_electric * fact2})
+	#CAPEX, OPEX
+	dict_CAPEX.update({"other_industries": other_industries_CAPEX})
+	dict_OPEX.update({"other_industries": other_industries_OPEX})
 
 	# SUB SECTOR: CEMENT Industry- Industria del cemento
 
@@ -563,11 +706,33 @@ def sm_industry_and_mining(df_in, dict_sector_abv):
 	# update with electricity to produce hydrogen
 	vec_total_demand_electricity = vec_total_demand_electricity + electric_demand_hydrogen
 
+	# add OPEX to master output
+	vec_total_OPEX = 0
+	for k in dict_OPEX.keys():
+		# new key conveys emissions
+		k_new = (dict_sector_abv["industry_and_mining"]) + "-OPEX_" + str(k) + "-MMUSD"
+		# add to output
+		dict_out.update({k_new: dict_OPEX[k].copy()})
+		# update total
+		vec_total_OPEX = vec_total_OPEX + np.array(dict_OPEX[k])
+
+	# add OPEX to master output
+	vec_total_CAPEX = 0
+	for k in dict_CAPEX.keys():
+		# new key conveys emissions
+		k_new = (dict_sector_abv["industry_and_mining"]) + "-CAPEX_" + str(k) + "-MMUSD"
+		# add to output
+		dict_out.update({k_new: dict_CAPEX[k].copy()})
+		# update total
+		vec_total_CAPEX = vec_total_CAPEX + np.array(dict_CAPEX[k])
+
 	# add totals
 	dict_out.update({
 		(dict_sector_abv["industry_and_mining"] + "-emissions_total-mtco2e"): vec_total_emissions,
 		(dict_sector_abv["industry_and_mining"] + "-electricity_total_demand-gwh"): vec_total_demand_electricity,
 		(dict_sector_abv["industry_and_mining"] + "-electricity_hydrogen-gwh"): electric_demand_hydrogen,
+		(dict_sector_abv["industry_and_mining"] + "-OPEX-MMUSD"): vec_total_OPEX,
+		(dict_sector_abv["industry_and_mining"] + "-CAPEX-MMUSD"): vec_total_CAPEX,
 	})
 
 	# return
