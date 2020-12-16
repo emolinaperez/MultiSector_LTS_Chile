@@ -600,6 +600,11 @@ list_files_copy = [
 	sr.fp_csv_output_multi_sector_base_year,
 	sr.fp_csv_output_multi_sector_diff
 ]
+#add in the future for tornado runs
+if sr.tornado_q:
+	list_files_copy.append(sr.fp_csv_attribute_future)
+	
+
 #add in analytica output?
 if sr.integrate_analytica_q:
 	if os.path.exists(sr.fp_csv_output_multi_sector_analytica):

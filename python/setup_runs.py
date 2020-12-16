@@ -452,6 +452,8 @@ if (str(dict_init["read_lhs_tables_q"]).lower() == "true"):
 	if os.path.exists(fp_csv_lhs_table_multi_sector) and os.path.exists(fp_csv_lhs_table_levers):
 		read_lhs_tables_q = True
 
+#run tornado design?
+tornado_q = (str(dict_init["experimental_mode"]).lower() == "tornado")
 
 ##############################
 #    SOME ADDITIONAL DATA    #

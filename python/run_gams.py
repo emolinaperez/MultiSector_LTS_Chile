@@ -244,6 +244,76 @@ if sr.parallel_exec_gams_q:
 			return df_results
 		else:
 			return -99
+			
+	#define the function to run on each core (threading)
+	def run_gams_thread(workspace, checkpoint, m_id_list, list_lock, io_lock, dict_line_repls = dict_ind_lines_repl_vars, fp_gams = sr.fp_exec_gams):
+		
+		#example from transport8.py in gams
+		list_lock.acquire()
+		mi = checkpoint.add_modelinstance()
+		list_lock.release()
+		opt = ws.add_options()
+		opt.all_model_types = "cplexd"
+		
+		#local path on OS X: fp_gams = "/Applications/GAMS30.3/GAMS Terminal.app/Contents/MacOS/gams"
+		
+		print("\nRunning:\n\tmaster_id:\t" + str(m_id) + "\n\tprocess id:\t" + str(os.getpid()) + "\n\n")
+		#get template to work withand write
+		tmp = str_list_gams.copy()
+		#set filename for output from gams
+		fp_out_gams = sr.fp_csv_gams_solution_generation_sector.replace(".csv", ("-" + str(m_id) + ".csv"))
+		
+		#set dictionary of ids
+		dict_vars = {
+			"master_id": int(m_id),
+			"hydro_id": int(dict_master_to_hidro[int(m_id)]),
+			"fp_output": fp_out_gams
+		}
+
+		# replace ids with integer values
+		for id_type in dict_line_repls.keys():
+			if id_type in dict_vars.keys():
+				#get lines
+				for k in dict_line_repls[id_type]:
+					str_rep = "##" + id_type + "##"
+					#update template with real id
+					tmp[k] = tmp[k].replace(str_rep, str(dict_vars[id_type]))
+		
+		# write to output
+		fp_out = os.path.join(sr.dir_gams_modelo, "pmr_model-" + str(m_id) + ".gms")
+		#set writer
+		f = open(fp_out, "w")
+		f.writelines(tmp)
+		f.close()
+		
+		
+		# execute command
+		cmd = "\"" + fp_gams + "\" \"" + fp_out + "\" o=/dev/null lo=1 lf=/dev/null"
+		#cmd = "echo test"
+		#execute
+		rv = os.system(cmd)
+		
+		print("PMR complete for master_id = " + str(m_id) + ". Reading output...")
+		#read output
+		if os.path.exists(sr.fp_csv_gams_solution_generation_sector):
+			#get results
+			df_results = pd.read_csv(sr.fp_csv_gams_solution_generation_sector)
+			#ordered fields
+			fields_ord = list(df_results.columns)
+			#add master id
+			df_results["master_id"] = [m_id for i in range(len(df_results))]
+			#reorder and rename
+			df_results = df_results[["master_id"] + fields_ord].rename(columns = dict_rename)
+			
+			#get time and print output
+			time_elapsed = round(time.time() - t0, 2)
+			
+			print("PMR run master_id = " + str(m_id) + " complete.\nTotal time elapsed (checkpoint 4): " + str(time_elapsed))
+			
+			#return output data
+			return df_results
+		else:
+			return -99
 
 		
 	##  5. EXECUTE IN PARALLEL, COLLECT OUTPUT, AND WRITE OUTPUT
