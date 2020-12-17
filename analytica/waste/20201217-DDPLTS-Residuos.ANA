@@ -98,7 +98,7 @@ DefaultSize: 48,24
 DiagState: 2,22,24,1713,852,17
 DiagramColor: 65535,65535,65535
 FontStyle: Calibri, 15
-FileInfo: 0,Model Emision_residuos_1,2,2,0,0,C:\Users\adm\Dropbox\30-Analisis\Analytica\discoL\Modelos\2020-DDPLTS\DDPLTS-Residuos.ANA
+FileInfo: 0,Model Emision_residuos_1,2,2,0,0,C:\Users\adm\Documents\GitHub\MultiSector_LTS_Chile\analytica\waste\20201217-DDPLTS-Residuos.ANA
 OutlinerState: 2,40,50,448,280
 {!40400|Att_clearTypeFonts: 0}
 
@@ -1151,7 +1151,7 @@ NodeLocation: 152,56,1
 NodeSize: 52,28
 WindState: 2,-244,68,1024,651
 ValueState: 2,0,-23,1253,651,0,MIDM
-{!40300|Att_SlicerPopupSize: 402,238}
+{!40300|Att_SlicerPopupSize: 407,238}
 Att_PrevIndexValue: ['XV_Region_de_Arica_y_Parinacota','I__Region_de_Tarapaca','II__Region_de_Antofagasta','III__region_de_Atacama','IV_Region_de_Coquimbo','V__Region_de_Valparaiso','Region_Metropolitana','VI__Region_de_Ohiggins','VII__Region_del_Maule','XVI_Region_de_Nuble','VIII__del_Bio-Bio','IX__Region_de_la_Araucania','XIV__Region_de_Los_Rios','X__Region_de_Los_Lagos','XI__Region_de_Aysen','XII__Region_de_Magallanes']
 
 Index Escenarios_crecimien
@@ -1253,12 +1253,12 @@ ReformDef: [Medidas]
 ReformVal: [Medidas]
 
 Index Np
+Att_PrevIndexValue: ['No Aplicar','Nivel 1','Nivel 2','Nivel 3']
 Title: Nivel Penetracion
 Definition: ['No Aplicar','Nivel 1','Nivel 2','Nivel 3']
 NodeLocation: 296,448,1
 NodeSize: 48,24
 WindState: 2,102,90,476,224
-Att_PrevIndexValue: ['No Aplicar','Nivel 1','Nivel 2','Nivel 3']
 
 Index Tipo_indicador_total
 Title: Tipo Indicador Total
@@ -1603,12 +1603,12 @@ NodeSize: 48,24
 WindState: 2,102,90,964,208
 
 Index Metodos_Proyeccion
-Att_PrevIndexValue: ['What a Waste 2.0','MAPS','Tendencial - Log','Tendencial  - Exp','Tendencial - Lineal']
 Title: Metodos Proyeccion
 Definition: ['What a Waste 2.0','MAPS','Tendencial - Log','Tendencial  - Exp','Tendencial - Lineal']
 NodeLocation: 368,64,1
 NodeSize: 48,24
 ValueState: 2,212,218,416,303,,MIDM
+Att_PrevIndexValue: ['What a Waste 2.0','MAPS','Tendencial - Log','Tendencial  - Exp','Tendencial - Lineal']
 
 Variable Proyeccion_WaW2
 Title: Proyeccion WaW2
@@ -2115,13 +2115,13 @@ ValueState: 2,132,138,1080,402,,MIDM
 Aliases: Alias Al512249981
 
 Index Componentes
-Att_PrevIndexValue: ['Restos de alimentos','Papel y carton','Madera','Textiles','Otros - Plasticos','Otros - Vidrio','Otros - Metales','Otros - Residuos','Lodos']
 Title: Componentes
 Definition: ['Restos de alimentos','Papel y carton','Madera','Textiles','Otros - Plasticos','Otros - Vidrio','Otros - Metales','Otros - Residuos','Lodos']
 NodeLocation: 200,56,1
 NodeSize: 64,24
 WindState: 2,-702,257,1364,568
 {!40300|Att_SlicerPopupSize: 274,160}
+Att_PrevIndexValue: ['Restos de alimentos','Papel y carton','Madera','Textiles','Otros - Plasticos','Otros - Vidrio','Otros - Metales','Otros - Residuos','Lodos']
 
 Index Tiempodeposito1
 Title: tiempodeposito
@@ -2157,13 +2157,13 @@ NodeLocation: 224,176,1
 NodeSize: 48,24
 
 Index Tipo_SEDS
-Att_PrevIndexValue: ['SEDS no categorizado','No gestionado-poco profundo','Gestionado-anaeróbico','Vertedero','Basural','Relleno semiaeróbico','Relleno anaeróbico']
 Title: Tipo SDF
 Definition: ['SEDS no categorizado','No gestionado-poco profundo','Gestionado-anaeróbico','Vertedero','Basural','Relleno semiaeróbico','Relleno anaeróbico']
 NodeLocation: 536,312,1
 NodeSize: 48,24
 WindState: 2,492,187,720,350
 {!40300|Att_SlicerPopupSize: 302,80}
+Att_PrevIndexValue: ['SEDS no categorizado','No gestionado-poco profundo','Gestionado-anaeróbico','Vertedero','Basural','Relleno semiaeróbico','Relleno anaeróbico']
 
 Index FuenteDato
 Title: Fuente Dato~
@@ -13312,12 +13312,12 @@ Close Tratamiento_de_lodos
 Close A_MAPS2012
 
 Index Tratamiento
-Att_PrevIndexValue: ['Eliminación en río lago y mar','Planta de tratamiento centralizada aeróbico mal operada','Planta de tratamiento centralizada aeróbico bien operada','Laguna anaeróbica poco profunda','Digestor anaeróbico para lodos','Reactor anaeróbico','Cloaca en movimiento','Sistema séptico','Letrina Clima seco, familia reducida','Cloaca estancada']
 Title: Tratamiento
 Definition: ['Eliminación en río lago y mar','Planta de tratamiento centralizada aeróbico mal operada','Planta de tratamiento centralizada aeróbico bien operada','Laguna anaeróbica poco profunda','Digestor anaeróbico para lodos','Reactor anaeróbico','Cloaca en movimiento','Sistema séptico','Letrina Clima seco, familia reducida','Cloaca estancada']
 NodeLocation: 232,80,1
 NodeSize: 48,24
 {!40300|Att_SlicerPopupSize: 227,176}
+Att_PrevIndexValue: ['Eliminación en río lago y mar','Planta de tratamiento centralizada aeróbico mal operada','Planta de tratamiento centralizada aeróbico bien operada','Laguna anaeróbica poco profunda','Digestor anaeróbico para lodos','Reactor anaeróbico','Cloaca en movimiento','Sistema séptico','Letrina Clima seco, familia reducida','Cloaca estancada']
 
 Text Te1792094333
 Description: NO se tiene detalle regional~
@@ -13703,9 +13703,9 @@ Definition: caudal_instalado1*Costo_Inversion1
 NodeLocation: 856,440,1
 NodeSize: 48,24
 ValueState: 2,196,202,562,446,,MIDM
-ReformVal: [FuenteDato,Region]
-Att__TotalsIndex: [Time]
-Att_ResultSliceState: [Time,0,Region,1,FuenteDato,1]
+ReformVal: [FuenteDato,Time]
+Att__TotalsIndex: [Region]
+Att_ResultSliceState: [Region,0,Time,26,FuenteDato,1]
 
 Variable Costo_Fijo
 Title: Costo Fijo PTAS
@@ -13713,7 +13713,7 @@ Units: USD/año
 Definition: cumulate(CAPEX_PTAS,time)*Costo_Fijo1
 NodeLocation: 856,312,1
 NodeSize: 48,24
-ValueState: 2,276,282,977,555,,MIDM
+ValueState: 2,276,282,977,563,,MIDM
 
 Constant Costo_Fijo1
 Title: Costo Fijo PTAS
@@ -13737,12 +13737,15 @@ Definition: Caudal_afectado*Costo_Variable
 NodeLocation: 848,240,1
 NodeSize: 48,32
 ValueState: 2,340,346,1049,519,,MIDM
+ReformVal: [Time,Null]
+Att_ResultSliceState: [FuenteDato,2,Region,1,Time,1]
 
 Variable Costo_PTAS
 Title: Costo PTAS
 Units: USD2019
 Definition: if Indice_Costo='CAPEX' then sum(CAPEX_PTAS,Region) else~
-sum(Costo_Variable_PTAS+Costo_Fijo1, region)
+if Indice_Costo='OPEX' then~
+sum(Costo_Variable_PTAS+Costo_Fijo, region)
 NodeLocation: 1040,312,1
 NodeSize: 48,24
 ValueState: 2,374,309,416,504,,MIDM
@@ -15360,6 +15363,7 @@ NodeLocation: 448,232,1
 NodeSize: 48,24
 ValueState: 2,459,322,629,450,,MIDM
 Aliases: Alias Al1332480509
+ReformVal: [Time,Null]
 Att_ResultSliceState: [Indice_Costo,2,FuenteDato,1,Time,1]
 
 Close Indicadores_de_costo
