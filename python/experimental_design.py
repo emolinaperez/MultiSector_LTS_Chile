@@ -273,8 +273,8 @@ if sr.tornado_q:
 		apv = list(params_tmp[field_param])
 		
 		##  split out max and min
-		df_pt_max = params_tmp[[field_param, "parameter_constant_q", "max_2050"] + fields_param_years_add_sec].copy().rename(columns = {"max_2050": "range"})
-		df_pt_min = params_tmp[[field_param, "parameter_constant_q", "min_2050"] + fields_param_years_add_sec].copy().rename(columns = {"min_2050": "range"})
+		df_pt_max = params_tmp[["sector", field_param, "parameter_constant_q", "max_2050"] + fields_param_years_add_sec].copy().rename(columns = {"max_2050": "range"})
+		df_pt_min = params_tmp[["sector", field_param, "parameter_constant_q", "min_2050"] + fields_param_years_add_sec].copy().rename(columns = {"min_2050": "range"})
 		
 		#add fields
 		df_pt_max["type"] = ["max" for x in range(len(df_pt_max))]
@@ -285,13 +285,13 @@ if sr.tornado_q:
 		
 		
 		if init_fut_q:
-			df_future_out = params_tmp[[field_param, "type", "range", "parameter_constant_q"]].copy().reset_index(drop = True)
+			df_future_out = params_tmp[["sector", field_param, "type", "range", "parameter_constant_q"]].copy().reset_index(drop = True)
 			df_future_out = df_future_out
 			df_future_out["future_id"] = list(range(1, len(df_future_out) + 1))
 			#build dict
 			dict_fut = dict([[tuple(x[0:2]), int(x[2])] for x in np.array(df_future_out[[field_param, "type", "future_id"]])])
 			#reorder
-			df_future_out = df_future_out[["future_id", field_param, "type", "range", "parameter_constant_q"]].rename(columns = {field_param: "parameter", "range": "scale_value", "type": "range_value"})
+			df_future_out = df_future_out[["future_id", "sector", field_param, "type", "range", "parameter_constant_q"]].rename(columns = {field_param: "parameter", "range": "scale_value", "type": "range_value"})
 			init_fut_q = False
 			
 		

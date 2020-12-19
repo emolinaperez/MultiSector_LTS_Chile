@@ -35,7 +35,22 @@ exp_design_cols.sort()
 params = pd.read_csv(sr.fp_csv_parameter_ranges)
 #pull in master ids to run
 df_masters_to_run = pd.read_csv(sr.fp_csv_experimental_design_msec_masters_to_run)
-#reduce
+
+
+##  BEFORE REDUCING, BUILD CORRECTION FACTOS TO TRANSLATE PIB FROM USD TO PESOS (REQS MASTER ID 0)
+
+# Transportation correction for econometric model
+df_tmp_correction_for_pib_peso_traj = pd.read_csv(sr.fp_csv_tmp_correction_for_pib_peso_traj)
+#get baseline data from experimental design
+df_tmp_correction_for_pib_peso_traj = pd.merge(df_tmp_correction_for_pib_peso_traj, exp_design[exp_design["master_id"] == 0][["year", "pib"]].copy(), how = "left", on = ["year"]).reset_index(drop = True)
+#add scalar and string name
+str_pib_scalar = "pib_scalar_transport"
+df_tmp_correction_for_pib_peso_traj[str_pib_scalar] = np.array(df_tmp_correction_for_pib_peso_traj["pib_peso_carlos_gr1"])/np.array(df_tmp_correction_for_pib_peso_traj["pib"])
+df_tmp_correction_for_pib_peso_traj = df_tmp_correction_for_pib_peso_traj[["year", str_pib_scalar]]
+
+
+##  REDUCE THE DESIGN, REMOVE LEVER DELTA DATA
+
 exp_design = exp_design[exp_design["master_id"].isin(list(df_masters_to_run["master_id"]))].reset_index(drop = True)
 
 #remove lever delta data
@@ -178,14 +193,7 @@ dict_sector_functions = {
 
 ##  ADD DICTIONARY OF DATA TO MERGE FOR EACH SECTOR (IF APPLICABLE)
 
-# Transportation correction for econometric model
-df_tmp_correction_for_pib_peso_traj = pd.read_csv(sr.fp_csv_tmp_correction_for_pib_peso_traj)
-#get baseline data from experimental design
-df_tmp_correction_for_pib_peso_traj = pd.merge(df_tmp_correction_for_pib_peso_traj, exp_design[exp_design["master_id"] == 0][["year", "pib"]].copy(), how = "left", on = ["year"]).reset_index(drop = True)
-#add scalar and string name
-str_pib_scalar = "pib_scalar_transport"
-df_tmp_correction_for_pib_peso_traj[str_pib_scalar] = np.array(df_tmp_correction_for_pib_peso_traj["pib_peso_carlos_gr1"])/np.array(df_tmp_correction_for_pib_peso_traj["pib"])
-df_tmp_correction_for_pib_peso_traj = df_tmp_correction_for_pib_peso_traj[["year", str_pib_scalar]]
+
 #data to merge in
 dict_sector_merge = {
 	"industry_and_mining": df_tmp_correction_for_pib_peso_traj,
