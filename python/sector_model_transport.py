@@ -11,7 +11,7 @@ from econometric_models import model_transport_gasoline_demand, model_transport_
 #    TRANSPORT    #
 ###################
 
-def sm_transport(df_in, dict_sector_abv, odel_transport_pkm_aviation = None):
+def sm_transport(df_in, dict_sector_abv):# #model_transport_pkm_aviation = None):
 
 	# conversion factor Tcal to TJ
 	fact = 4.184
