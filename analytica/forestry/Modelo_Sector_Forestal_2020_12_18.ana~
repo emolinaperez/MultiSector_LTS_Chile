@@ -1,0 +1,45 @@
+﻿{Autosave/Recovery file for C:\Users\andre\OneDrive\Documentos\GitHub\MultiSector_LTS_Chile\analytica\forestry\Modelo_Sector_Forestal_2020_12_18.ana}
+{ Analytica Model Sector_UTCUTS, encoding="UTF-8" }
+SoftwareVersion 5.4.6
+
+
+SpliceIndex Time
+DefnState pyparams_interface:2,40,50,400,300,0,MIDM
+DefnState pyparams_interface:
+ValueState Emisiones_Python:
+ValueState Emisiones_Python:2,40,0,1164,538,0,MIDM
+SpliceIndex Uso_previo
+SpliceIndex Uso_Actual
+SpliceIndex Uso_previo
+SpliceIndex Uso_Actual
+SpliceIndex Gas_GEI
+SpliceIndex Tipo_cobertura
+SpliceIndex Nativo_plantacion
+SpliceIndex Time
+Att_ColumnWidths Emisiones_Python:[Undefined,Ano,\([Undefined,Undefined,Undefined,Undefined,Undefined,Undefined,61,Undefined,Undefined,Undefined,Undefined,Undefined,62])]
+ValueState Emisiones_separando_:
+ValueState Emisiones_separando_:2,99,0,1016,545,0,CONF
+Variable Va1
+Move Va1 Sector_UTCUTS
+NodeSize Va1:48,24
+NodeLocation Va1:504,504,1
+DisplayInputs Va1:Objective Emisiones_separando_
+DisplayOutputs Emisiones_separando_:Variable Va1
+WindState Va1:2,0,0,720,350
+Definition Va1:Emisiones_separando_[Estrategias='BAU']-Emisiones_separando_[Estrategias='Carbono Neutralidad Base']
+DisplayInputs Va1:
+DisplayOutputs Emisiones_separando_:
+ValueState Va1:2,40,50,400,300,0,MIDM
+ValueState Va1:
+ValueState Va1:2,40,50,400,300,0,MIDM
+Att__TotalsIndex Va1:[Categorias_con_Incen]
+ValueState Va1:2,40,50,400,300,1,MIDM
+GraphSetup Va1:Att_GraphIndexRange Ano:1,,1,,,,,1990,2050,0~
+Att_StackedBar Graph_Primary_Valdim:1~
+Att_ForceCategorical Graph_Primary_Valdim:1
+GraphSetup Va1:Att_ForceCategorical Graph_Primary_Valdim:1~
+Att_StackedBar Graph_Primary_Valdim:1~
+Att_GraphIndexRange Ano:1,,0,,,,,31,2050,1
+ValueState Emisiones_separando_:
+ValueState Emisiones_separando_:2,99,0,1016,545,0,CONF
+ValueState Emisiones_separando_:2,99,0,1016,545,0,MIDM
