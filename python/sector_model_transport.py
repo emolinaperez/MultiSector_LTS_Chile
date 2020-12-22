@@ -1,5 +1,5 @@
 # Transport energy model developed by Centro de Energia U. de Chile using RAND python framework
-# version 0.7 september 2020
+# version 1.0 december 2020
 
 import os, os.path
 import time
@@ -11,7 +11,7 @@ from econometric_models import model_transport_gasoline_demand, model_transport_
 #    TRANSPORT    #
 ###################
 
-def sm_transport(df_in, dict_sector_abv):# #model_transport_pkm_aviation = None):
+def sm_transport(df_in, dict_sector_abv, odel_transport_pkm_aviation = None):
 
 	# conversion factor Tcal to TJ
 	fact = 4.184
@@ -297,8 +297,7 @@ def sm_transport(df_in, dict_sector_abv):# #model_transport_pkm_aviation = None)
 	transport_demand_aviation_kerosene = model_transport_pkm_saturacion(year, transport_demand_aviation_kerosene,transport_saturation_aviation)
 
 	# calculate emission
-	transport_emission_aviation = transport_demand_aviation_kerosene * fact * emission_fact_kerosene_aviation / (
-				10 ** 9)
+	transport_emission_aviation = transport_demand_aviation_kerosene * fact * emission_fact_kerosene_aviation / (10 ** 9)
 
 
 	#############################################################################
@@ -451,7 +450,7 @@ def sm_transport(df_in, dict_sector_abv):# #model_transport_pkm_aviation = None)
 	for k in dict_emission.keys():
 		# new key conveys emissions
 		k_new = str(k).replace("transport_", (dict_sector_abv["transport"] + "-emissions_")) + "-mtco2e"
-		# add to output
+		# add to outputaz
 		dict_out.update({k_new: dict_emission[k].copy()})
 		# update total
 		vec_total_emissions = vec_total_emissions + np.array(dict_emission[k])
