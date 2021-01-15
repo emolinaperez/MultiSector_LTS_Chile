@@ -11,6 +11,8 @@ from econometric_models import model_transport_gasoline_demand, model_transport_
 #    TRANSPORT    #
 ###################
 
+scen_transport_private = -1  # -1 conservador, 0 moderado, 1 optimista
+
 def sm_transport(df_in, dict_sector_abv, odel_transport_pkm_aviation = None):
 
 	# conversion factor Tcal to TJ
@@ -38,6 +40,7 @@ def sm_transport(df_in, dict_sector_abv, odel_transport_pkm_aviation = None):
 	transport_private_investment_cost_gasoline = np.array(df_in["transport_private_investment_cost_gasoline"])
 	transport_private_investment_cost_diesel = np.array(df_in["transport_private_investment_cost_diesel"])
 	transport_private_investment_cost_electric = np.array(df_in["transport_private_investment_cost_electric"])
+	transport_private_investment_cost_hyb = np.array(df_in["transport_private_investment_cost_hyb"])
 	transport_bus_investment_cost_diesel = np.array(df_in["transport_bus_investment_cost_diesel"])
 	transport_bus_investment_cost_electric = np.array(df_in["transport_bus_investment_cost_electric"])
 	transport_truck_investment_cost_diesel = np.array(df_in["transport_truck_investment_cost_diesel"])
@@ -64,6 +67,7 @@ def sm_transport(df_in, dict_sector_abv, odel_transport_pkm_aviation = None):
 
 	frac_private_gasoline = np.array(df_in["transport_frac_private_gasoline"])
 	frac_private_electric = np.array(df_in["transport_frac_private_electric"])
+	frac_private_hyb = np.array(df_in["transport_frac_private_hyb"])
 
 	frac_taxi_gasoline = np.array(df_in["transport_frac_taxi_gasoline"])
 	frac_taxi_electric = np.array(df_in["transport_frac_taxi_electric"])
@@ -73,6 +77,8 @@ def sm_transport(df_in, dict_sector_abv, odel_transport_pkm_aviation = None):
 
 	intensity_private_gasoline = np.array(df_in["transport_intensity_private_gasoline"])
 	intensity_private_electric = np.array(df_in["transport_intensity_private_electric"])
+	intensity_private_hyb_electric = np.array(df_in["transport_intensity_private_hyb_electric"])
+	intensity_private_hyb_gasoline = np.array(df_in["transport_intensity_private_hyb_gasoline"])
 	intensity_taxi_gasoline = np.array(df_in["transport_intensity_taxi_gasoline"])
 	intensity_taxi_electric = np.array(df_in["transport_intensity_taxi_electric"])
 	intensity_bus_diesel = np.array(df_in["transport_intensity_bus_diesel"])
@@ -119,6 +125,7 @@ def sm_transport(df_in, dict_sector_abv, odel_transport_pkm_aviation = None):
 	# private
 	veh_km_private_gasoline = veh_km_private * frac_private_gasoline
 	veh_km_private_electric = veh_km_private * frac_private_electric
+	veh_km_private_hyb = veh_km_private * frac_private_hyb
 	# taxis
 	veh_km_private_to_taxi_gasoline = veh_km_private_to_taxi * frac_taxi_gasoline
 	veh_km_private_to_taxi_electric = veh_km_private_to_taxi * frac_taxi_electric
@@ -132,6 +139,8 @@ def sm_transport(df_in, dict_sector_abv, odel_transport_pkm_aviation = None):
 	# private
 	transport_dem_private_gasoline = veh_km_private_gasoline / intensity_private_gasoline * den_gasoline * pc_gasoline / (10 ** 9)
 	transport_dem_private_electric = veh_km_private_electric / intensity_private_electric / fact2 / (10 ** 6)
+	transport_dem_private_hyb_gasoline = veh_km_private_hyb / intensity_private_hyb_gasoline * den_gasoline * pc_gasoline / (10 ** 9)
+	transport_dem_private_hyb_electric = veh_km_private_hyb / intensity_private_hyb_electric / fact2 / (10 ** 6)
 	# taxis
 	transport_dem_taxi_gasoline = veh_km_private_to_taxi_gasoline / intensity_taxi_gasoline * den_gasoline * pc_gasoline / (10 ** 9)
 	transport_dem_taxi_electric = veh_km_private_to_taxi_electric / intensity_taxi_electric / fact2 / (10 ** 6)
@@ -216,7 +225,7 @@ def sm_transport(df_in, dict_sector_abv, odel_transport_pkm_aviation = None):
 	transport_truck_diesel_aux = transport_diesel_demand * transport_share_diesel_truck_aux
 
 	# TKM
-	transport_tkm = transport_truck_diesel_aux * intensity_truck_diesel * load_average_truck / den_diesel / pc_diesel * (10 ** 9)
+	transport_tkm = transport_truck_diesel_aux * intensity_truck_diesel * load_average_truck / den_diesel / pc_diesel * (10  ** 9)
 	transport_tkm_truck = transport_tkm * modal_split_truck
 	transport_tkm_truck_to_train = transport_tkm * modal_split_truck_to_train
 
@@ -309,7 +318,9 @@ def sm_transport(df_in, dict_sector_abv, odel_transport_pkm_aviation = None):
 	transport_OPEX_private_gasoline = transport_dem_private_gasoline * transport_fuel_price_gasoline / (10 ** 6)
 	transport_OPEX_private_diesel = transport_dem_private_diesel * transport_fuel_price_diesel / (10 ** 6)
 	transport_OPEX_private_electric = transport_dem_private_electric * transport_fuel_price_electric / (10 ** 6)
-	transport_OPEX_private = transport_OPEX_private_gasoline+transport_OPEX_private_diesel+transport_OPEX_private_electric
+	transport_OPEX_private_hyb = (transport_dem_private_hyb_electric * transport_fuel_price_electric + transport_dem_private_hyb_gasoline * transport_fuel_price_gasoline) / (10 ** 6)
+	transport_OPEX_private = transport_OPEX_private_gasoline+transport_OPEX_private_diesel+transport_OPEX_private_electric + transport_OPEX_private_hyb
+
 
 	#Capacity
 	transport_activity_private = 10000
@@ -317,20 +328,24 @@ def sm_transport(df_in, dict_sector_abv, odel_transport_pkm_aviation = None):
 	transport_capacity_private_gasoline = transport_dem_private_gasoline / (den_gasoline * pc_gasoline) * intensity_private_gasoline * (10 ** 9) / transport_activity_private
 	transport_capacity_private_diesel = transport_dem_private_diesel/ (den_diesel*pc_diesel) * intensity_private_diesel * (10**9)/ transport_activity_private
 	transport_capacity_private_electric = transport_dem_private_electric * fact2 * intensity_private_electric * (10 ** 6) / transport_activity_private
+	transport_capacity_private_hyb = (transport_dem_private_hyb_gasoline/ (den_gasoline * pc_gasoline) * intensity_private_hyb_gasoline * (10 ** 9) / transport_activity_private) + (transport_dem_private_hyb_electric * fact2 * intensity_private_hyb_electric * (10 ** 6) / transport_activity_private)
 
 	transport_capacity_private_gasoline = model_capacity(year, transport_capacity_private_gasoline)
 	transport_capacity_private_diesel = model_capacity(year, transport_capacity_private_diesel)
 	transport_capacity_private_electric = model_capacity(year, transport_capacity_private_electric)
+	transport_capacity_private_hyb = model_capacity(year, transport_capacity_private_hyb)
 
 	transport_delta_capacity_private_gasoline = model_delta_capacity(year, transport_capacity_private_gasoline)
 	transport_delta_capacity_private_diesel = model_delta_capacity(year, transport_capacity_private_diesel)
 	transport_delta_capacity_private_electric = model_delta_capacity(year, transport_capacity_private_electric)
+	transport_delta_capacity_private_hyb = model_delta_capacity(year, transport_capacity_private_hyb)
 
 	# CAPEX (in millon US$)
 	transport_CAPEX_private_gasoline = transport_delta_capacity_private_gasoline * transport_private_investment_cost_gasoline / (10 ** 6)
 	transport_CAPEX_private_diesel = transport_delta_capacity_private_diesel * transport_private_investment_cost_diesel / (10 ** 6)
 	transport_CAPEX_private_electric = transport_delta_capacity_private_electric * transport_private_investment_cost_electric / (10 ** 6)
-	transport_CAPEX_private = transport_CAPEX_private_gasoline+transport_CAPEX_private_diesel+transport_CAPEX_private_electric
+	transport_CAPEX_private_hyb = transport_delta_capacity_private_hyb * transport_private_investment_cost_hyb / (10 ** 6)
+	transport_CAPEX_private = transport_CAPEX_private_gasoline+transport_CAPEX_private_diesel+transport_CAPEX_private_electric + transport_CAPEX_private_hyb
 
 	# CAPEX, OPEX
 	dict_CAPEX = {"transport_private": transport_CAPEX_private}
@@ -431,7 +446,7 @@ def sm_transport(df_in, dict_sector_abv, odel_transport_pkm_aviation = None):
 					 "transport_maritime": transport_emission_maritime}
 
 	# export electric demand in GWh
-	transport_dem_electric = transport_dem_private_electric + transport_dem_bus_electric + transport_dem_taxi_electric + transport_dem_train_electric
+	transport_dem_electric = transport_dem_private_electric + transport_dem_private_hyb_electric + transport_dem_bus_electric + transport_dem_taxi_electric + transport_dem_train_electric
 	transport_dem_electric = transport_dem_electric * fact2
 	dict_electric_demand = {"transport": transport_dem_electric}
 
