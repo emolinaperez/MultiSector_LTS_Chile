@@ -1,3 +1,5 @@
-﻿summing_group,unit
+summing_group,unit
 emissions,MT CO2e
 electricity_demand,GWH
+costs,MM USD
+area,HA
