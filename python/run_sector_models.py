@@ -45,7 +45,7 @@ df_tmp_correction_for_pib_peso_traj = pd.read_csv(sr.fp_csv_tmp_correction_for_p
 df_tmp_correction_for_pib_peso_traj = pd.merge(df_tmp_correction_for_pib_peso_traj, exp_design[exp_design["master_id"] == 0][["year", "pib"]].copy(), how = "left", on = ["year"]).reset_index(drop = True)
 #add scalar and string name
 str_pib_scalar = "pib_scalar_transport"
-df_tmp_correction_for_pib_peso_traj[str_pib_scalar] = np.array(df_tmp_correction_for_pib_peso_traj["pib_peso_carlos_gr1"])/np.array(df_tmp_correction_for_pib_peso_traj["pib"])
+df_tmp_correction_for_pib_peso_traj[str_pib_scalar] = np.array(df_tmp_correction_for_pib_peso_traj["pib_peso_luis_20201218"])/np.array(df_tmp_correction_for_pib_peso_traj["pib"])
 df_tmp_correction_for_pib_peso_traj = df_tmp_correction_for_pib_peso_traj[["year", str_pib_scalar]]
 
 
@@ -606,7 +606,8 @@ list_files_copy = [
 	sr.fp_csv_lhs_table_multi_sector,
 	sr.fp_csv_output_multi_sector,
 	sr.fp_csv_output_multi_sector_base_year,
-	sr.fp_csv_output_multi_sector_diff
+	sr.fp_csv_output_multi_sector_diff,
+	sr.fp_csv_parameter_ranges
 ]
 #add in the future for tornado runs
 if sr.tornado_q:

@@ -29,6 +29,7 @@ def sm_industry_and_mining(df_in, dict_sector_abv):
 	industry_and_mining_fuel_price_natural_gas = np.array(df_in["industry_and_mining_fuel_price_natural_gas"])
 	industry_and_mining_fuel_price_electric = np.array(df_in["industry_and_mining_fuel_price_electric"])
 	industry_and_mining_fuel_price_coal = np.array(df_in["industry_and_mining_fuel_price_coal"])
+	industry_and_mining_fuel_price_coke = np.array(df_in["industry_and_mining_fuel_price_coke"])
 	industry_and_mining_fuel_price_biomass = np.array(df_in["industry_and_mining_fuel_price_biomass"])
 	industry_and_mining_fuel_price_solar = np.array(df_in["industry_and_mining_fuel_price_solar"])
 	industry_and_mining_fuel_price_hydrogen = np.array(df_in["industry_and_mining_fuel_price_hydrogen"])
@@ -40,6 +41,7 @@ def sm_industry_and_mining(df_in, dict_sector_abv):
 	industry_and_mining_investment_cost_motor_electric = np.array(df_in["industry_and_mining_investment_cost_motor_electric"])
 	industry_and_mining_investment_cost_motor_hydrogen = np.array(df_in["industry_and_mining_investment_cost_motor_hydrogen"])
 	industry_and_mining_investment_cost_heat_coal = np.array(df_in["industry_and_mining_investment_cost_heat_coal"])
+	industry_and_mining_investment_cost_heat_coke = np.array(df_in["industry_and_mining_investment_cost_heat_coke"])
 	industry_and_mining_investment_cost_heat_electric = np.array(df_in["industry_and_mining_investment_cost_heat_electric"])
 	industry_and_mining_investment_cost_heat_solar = np.array(df_in["industry_and_mining_investment_cost_heat_solar"])
 	industry_and_mining_investment_cost_heat_pliqgas = np.array(df_in["industry_and_mining_investment_cost_heat_pliqgas"])
@@ -454,7 +456,7 @@ def sm_industry_and_mining(df_in, dict_sector_abv):
 	pulp_CAPEX_heat = pulp_CAPEX_heat_coal + pulp_CAPEX_heat_electric + pulp_CAPEX_heat_solar + pulp_CAPEX_heat_pliqgas + pulp_CAPEX_heat_natural_gas + pulp_CAPEX_heat_biomass + pulp_CAPEX_heat_diesel + pulp_CAPEX_heat_fuel_oil + pulp_CAPEX_heat_hydrogen
 
 	# total CAPEX
-	pulp_CAPEX = pulp_CAPEX_motor_diesel + pulp_CAPEX_heat
+	pulp_CAPEX = pulp_CAPEX_motor + pulp_CAPEX_heat
 
 
 	# update
@@ -642,7 +644,7 @@ def sm_industry_and_mining(df_in, dict_sector_abv):
 	other_industries_CAPEX_heat = other_industries_CAPEX_heat_coal + other_industries_CAPEX_heat_electric + other_industries_CAPEX_heat_solar + other_industries_CAPEX_heat_pliqgas + other_industries_CAPEX_heat_natural_gas + other_industries_CAPEX_heat_biomass + other_industries_CAPEX_heat_diesel + other_industries_CAPEX_heat_fuel_oil + other_industries_CAPEX_heat_hydrogen
 
 	#total CAPEX
-	other_industries_CAPEX = other_industries_CAPEX_motor_diesel+other_industries_CAPEX_heat
+	other_industries_CAPEX = other_industries_CAPEX_motor+other_industries_CAPEX_heat
 
 	# update
 	dict_emission.update({"other_industries": other_industries_emission})
@@ -746,6 +748,7 @@ def sm_industry_and_mining(df_in, dict_sector_abv):
 	################# COST INFORMATION ##########################################
 
 	# capacity
+
 	other_mining_capacity_motor_diesel = other_mining_dem_motor_diesel * fact2 * (10 ** 3) / other_mining_activity_motor
 	other_mining_capacity_motor_pliqgas = other_mining_dem_motor_pliqgas * fact2 * (10 ** 3) / other_mining_activity_motor
 	other_mining_capacity_motor_electric = other_mining_dem_motor_electric * fact2 * (10 ** 3) / other_mining_activity_motor
@@ -790,8 +793,7 @@ def sm_industry_and_mining(df_in, dict_sector_abv):
 
 	# OPEX
 	other_mining_OPEX_diesel = other_mining_dem_diesel * industry_and_mining_fuel_price_diesel / (10 ** 6)
-	other_mining_OPEX_natural_gas = other_mining_dem_natural_gas * industry_and_mining_fuel_price_natural_gas / (
-				10 ** 6)
+	other_mining_OPEX_natural_gas = other_mining_dem_natural_gas * industry_and_mining_fuel_price_natural_gas / (10 ** 6)
 	other_mining_OPEX_electric = other_mining_dem_electric * industry_and_mining_fuel_price_electric / (10 ** 6)
 	other_mining_OPEX_coal = other_mining_dem_coal * industry_and_mining_fuel_price_coal / (10 ** 6)
 	other_mining_OPEX_biomass = other_mining_dem_biomass * industry_and_mining_fuel_price_biomass / (10 ** 6)
@@ -820,7 +822,7 @@ def sm_industry_and_mining(df_in, dict_sector_abv):
 	other_mining_CAPEX_heat = other_mining_CAPEX_heat_coal + other_mining_CAPEX_heat_electric + other_mining_CAPEX_heat_solar + other_mining_CAPEX_heat_pliqgas + other_mining_CAPEX_heat_natural_gas + other_mining_CAPEX_heat_biomass + other_mining_CAPEX_heat_diesel + other_mining_CAPEX_heat_fuel_oil + other_mining_CAPEX_heat_hydrogen
 
 	# total CAPEX
-	other_mining_CAPEX = other_mining_CAPEX_motor_diesel + other_mining_CAPEX_heat
+	other_mining_CAPEX = other_mining_CAPEX_motor + other_mining_CAPEX_heat
 
 	# update
 	dict_emission.update({"other_mining": other_mining_emission})
@@ -828,6 +830,396 @@ def sm_industry_and_mining(df_in, dict_sector_abv):
 	# CAPEX, OPEX
 	dict_CAPEX.update({"other_mining": other_mining_CAPEX})
 	dict_OPEX.update({"other_mining": other_mining_OPEX})
+
+	####################################################################################################################
+
+	# SUB SECTOR: Steel-Siderurgia- Industria del Acero
+
+	steel_production = np.array(df_in["steel_production"])
+	steel_intensity = np.array(df_in["steel_intensity"])
+	steel_intensity_reference = np.array(df_in["steel_intensity_reference"])
+	steel_share_motor = np.array(df_in["steel_share_motor"])
+	steel_share_other = np.array(df_in["steel_share_other"])
+	steel_share_heat = np.array(df_in["steel_share_heat"])
+	steel_motor_diesel = np.array(df_in["steel_motor_diesel"])
+	steel_motor_pliqgas = np.array(df_in["steel_motor_pliqgas"])
+	steel_motor_electric = np.array(df_in["steel_motor_electric"])
+	steel_motor_hydrogen = np.array(df_in["steel_motor_hydrogen"])
+	steel_other_electric = np.array(df_in["steel_other_electric"])
+	steel_heat_coal = np.array(df_in["steel_heat_coal"])
+	steel_heat_coke = np.array(df_in["steel_heat_coke"])
+	steel_heat_electric = np.array(df_in["steel_heat_electric"])
+	steel_heat_solar = np.array(df_in["steel_heat_solar"])
+	steel_heat_pliqgas = np.array(df_in["steel_heat_pliqgas"])
+	steel_heat_natural_gas = np.array(df_in["steel_heat_natural_gas"])
+	steel_heat_biomass = np.array(df_in["steel_heat_biomass"])
+	steel_heat_diesel = np.array(df_in["steel_heat_diesel"])
+	steel_heat_fuel_oil = np.array(df_in["steel_heat_fuel_oil"])
+	steel_heat_hydrogen = np.array(df_in["steel_heat_hydrogen"])
+	steel_efficiency_motor_diesel = np.array(df_in["steel_efficiency_motor_diesel"])
+	steel_efficiency_motor_pliqgas = np.array(df_in["steel_efficiency_motor_pliqgas"])
+	steel_efficiency_motor_electric = np.array(df_in["steel_efficiency_motor_electric"])
+	steel_efficiency_motor_hydrogen = np.array(df_in["steel_efficiency_motor_hydrogen"])
+	steel_efficiency_other_electric = np.array(df_in["steel_efficiency_other_electric"])
+	steel_efficiency_heat_coal = np.array(df_in["steel_efficiency_heat_coal"])
+	steel_efficiency_heat_coke = np.array(df_in["steel_efficiency_heat_coke"])
+	steel_efficiency_heat_electric = np.array(df_in["steel_efficiency_heat_electric"])
+	steel_efficiency_heat_solar = np.array(df_in["steel_efficiency_heat_solar"])
+	steel_efficiency_heat_pliqgas = np.array(df_in["steel_efficiency_heat_pliqgas"])
+	steel_efficiency_heat_natural_gas = np.array(df_in["steel_efficiency_heat_natural_gas"])
+	steel_efficiency_heat_biomass = np.array(df_in["steel_efficiency_heat_biomass"])
+	steel_efficiency_heat_diesel = np.array(df_in["steel_efficiency_heat_diesel"])
+	steel_efficiency_heat_fuel_oil = np.array(df_in["steel_efficiency_heat_fuel_oil"])
+	steel_efficiency_heat_hydrogen = np.array(df_in["steel_efficiency_heat_hydrogen"])
+	steel_emission_fact_diesel = np.array(df_in["steel_emission_fact_diesel"])
+	steel_emission_fact_natural_gas = np.array(df_in["steel_emission_fact_natural_gas"])
+	steel_emission_fact_coal = np.array(df_in["steel_emission_fact_coal"])
+	steel_emission_fact_coke = np.array(df_in["steel_emission_fact_coke"])
+	steel_emission_fact_pliqgas = np.array(df_in["steel_emission_fact_pliqgas"])
+	steel_emission_fact_fueloil = np.array(df_in["steel_emission_fact_fueloil"])
+	steel_plant_factor_sst = np.array(df_in["steel_plant_factor_sst"])
+	steel_activity_motor = np.array(df_in["steel_activity_motor"])
+	steel_activity_other = np.array(df_in["steel_activity_other"])
+	steel_activity_heat = np.array(df_in["steel_activity_heat"])
+	steel_investment_efficiency_improvement = np.array(df_in["steel_investment_efficiency_improvement"])
+
+	# calculate useful total demand
+
+	steel_useful_energy = steel_production * steel_intensity
+
+	# calculate demand in Tcal by en use
+	steel_dem_motor_diesel = steel_useful_energy * steel_share_motor * steel_motor_diesel / steel_efficiency_motor_diesel
+	steel_dem_motor_pliqgas = steel_useful_energy * steel_share_motor * steel_motor_pliqgas / steel_efficiency_motor_pliqgas
+	steel_dem_motor_electric = steel_useful_energy * steel_share_motor * steel_motor_electric / steel_efficiency_motor_electric
+	steel_dem_motor_hydrogen = steel_useful_energy * steel_share_motor * steel_motor_hydrogen / steel_efficiency_motor_hydrogen
+
+	steel_dem_other_electric = steel_useful_energy * steel_share_other * steel_other_electric / steel_efficiency_other_electric
+
+	steel_dem_heat_coal = steel_useful_energy * steel_share_heat * steel_heat_coal / steel_efficiency_heat_coal
+	steel_dem_heat_coke = steel_useful_energy * steel_share_heat * steel_heat_coke / steel_efficiency_heat_coke
+	steel_dem_heat_electric = steel_useful_energy * steel_share_heat * steel_heat_electric / steel_efficiency_heat_electric
+	steel_dem_heat_solar = steel_useful_energy * steel_share_heat * steel_heat_solar / steel_efficiency_heat_solar
+	steel_dem_heat_pliqgas = steel_useful_energy * steel_share_heat * steel_heat_pliqgas / steel_efficiency_heat_pliqgas
+	steel_dem_heat_natural_gas = steel_useful_energy * steel_share_heat * steel_heat_natural_gas / steel_efficiency_heat_natural_gas
+	steel_dem_heat_biomass = steel_useful_energy * steel_share_heat * steel_heat_biomass / steel_efficiency_heat_biomass
+	steel_dem_heat_diesel = steel_useful_energy * steel_share_heat * steel_heat_diesel / steel_efficiency_heat_diesel
+	steel_dem_heat_fuel_oil = steel_useful_energy * steel_share_heat * steel_heat_fuel_oil / steel_efficiency_heat_fuel_oil
+	steel_dem_heat_hydrogen = steel_useful_energy * steel_share_heat * steel_heat_hydrogen / steel_efficiency_heat_hydrogen
+
+	# total demand by type of energy
+
+	steel_dem_diesel = steel_dem_motor_diesel + steel_dem_heat_diesel
+	steel_dem_natural_gas = steel_dem_heat_natural_gas
+	steel_dem_electric = steel_dem_motor_electric + steel_dem_other_electric + steel_dem_heat_electric
+	steel_dem_coal = steel_dem_heat_coal
+	steel_dem_coke = steel_dem_heat_coke
+	steel_dem_biomass = steel_dem_heat_biomass
+	steel_dem_solar = steel_dem_heat_solar
+	steel_dem_hydrogen = steel_dem_motor_hydrogen + steel_dem_heat_hydrogen
+	steel_dem_pliqgas = steel_dem_motor_pliqgas + steel_dem_heat_pliqgas
+	steel_dem_fueloil = steel_dem_heat_fuel_oil
+
+	# calculate demand in Tcal by en use
+	steel_emission_diesel = steel_dem_diesel * steel_emission_fact_diesel * fact / (10 ** 9)
+	steel_emission_natural_gas = steel_dem_natural_gas * steel_emission_fact_natural_gas * fact / (10 ** 9)
+	steel_emission_coal = steel_dem_coal * steel_emission_fact_coal * fact / (10 ** 9)
+	steel_emission_coke = steel_dem_coke * steel_emission_fact_coke * fact / (10 ** 9)
+	steel_emission_pliqgas = steel_dem_pliqgas * steel_emission_fact_pliqgas * fact / (10 ** 9)
+	steel_emission_fueloil = steel_dem_fueloil * steel_emission_fact_fueloil * fact / (10 ** 9)
+	steel_emission = steel_emission_diesel + steel_emission_natural_gas + steel_emission_coal + steel_emission_coke+ steel_emission_pliqgas + steel_emission_fueloil
+
+	# electric demand to produce hydrogen
+	electric_demand_hydrogen = electric_demand_hydrogen + steel_dem_hydrogen / electrolyzer_efficiency * share_electric_grid_to_hydrogen
+
+	#############################################################################
+	################# COST INFORMATION ##########################################
+
+	# capacity
+
+	steel_capacity_motor_diesel = steel_dem_motor_diesel * fact2 * (10 ** 3) / steel_activity_motor
+	steel_capacity_motor_pliqgas = steel_dem_motor_pliqgas * fact2 * (10 ** 3) / steel_activity_motor
+	steel_capacity_motor_electric = steel_dem_motor_electric * fact2 * (10 ** 3) / steel_activity_motor
+	steel_capacity_motor_hydrogen = steel_dem_motor_hydrogen * fact2 * (10 ** 3) / steel_activity_motor
+	steel_capacity_heat_coal = steel_dem_heat_coal * fact2 * (10 ** 3) / steel_activity_heat
+	steel_capacity_heat_coke = steel_dem_heat_coke * fact2 * (10 ** 3) / steel_activity_heat
+	steel_capacity_heat_electric = steel_dem_heat_electric * fact2 * (10 ** 3) / steel_activity_heat
+	steel_capacity_heat_solar = steel_dem_heat_solar * fact2 * (10 ** 3) / steel_activity_heat
+	steel_capacity_heat_pliqgas = steel_dem_heat_pliqgas * fact2 * (10 ** 3) / steel_activity_heat
+	steel_capacity_heat_natural_gas = steel_dem_heat_natural_gas * fact2 * (10 ** 3) / steel_activity_heat
+	steel_capacity_heat_biomass = steel_dem_heat_biomass * fact2 * (10 ** 3) / steel_activity_heat
+	steel_capacity_heat_diesel = steel_dem_heat_diesel * fact2 * (10 ** 3) / steel_activity_heat
+	steel_capacity_heat_fuel_oil = steel_dem_heat_fuel_oil * fact2 * (10 ** 3) / steel_activity_heat
+	steel_capacity_heat_hydrogen = steel_dem_heat_hydrogen * fact2 * (10 ** 3) / steel_activity_heat
+
+	steel_capacity_motor_diesel = model_capacity(year, steel_capacity_motor_diesel)
+	steel_capacity_motor_pliqgas = model_capacity(year, steel_capacity_motor_pliqgas)
+	steel_capacity_motor_electric = model_capacity(year, steel_capacity_motor_electric)
+	steel_capacity_motor_hydrogen = model_capacity(year, steel_capacity_motor_hydrogen)
+	steel_capacity_heat_coal = model_capacity(year, steel_capacity_heat_coal)
+	steel_capacity_heat_coke = model_capacity(year, steel_capacity_heat_coke)
+	steel_capacity_heat_electric = model_capacity(year, steel_capacity_heat_electric)
+	steel_capacity_heat_solar = model_capacity(year, steel_capacity_heat_solar)
+	steel_capacity_heat_pliqgas = model_capacity(year, steel_capacity_heat_pliqgas)
+	steel_capacity_heat_natural_gas = model_capacity(year, steel_capacity_heat_natural_gas)
+	steel_capacity_heat_biomass = model_capacity(year, steel_capacity_heat_biomass)
+	steel_capacity_heat_diesel = model_capacity(year, steel_capacity_heat_diesel)
+	steel_capacity_heat_fuel_oil = model_capacity(year, steel_capacity_heat_fuel_oil)
+	steel_capacity_heat_hydrogen = model_capacity(year, steel_capacity_heat_hydrogen)
+
+	steel_delta_capacity_motor_diesel = model_delta_capacity(year, steel_capacity_motor_diesel)
+	steel_delta_capacity_motor_pliqgas = model_delta_capacity(year, steel_capacity_motor_pliqgas)
+	steel_delta_capacity_motor_electric = model_delta_capacity(year, steel_capacity_motor_electric)
+	steel_delta_capacity_motor_hydrogen = model_delta_capacity(year, steel_capacity_motor_hydrogen)
+	steel_delta_capacity_heat_coal = model_delta_capacity(year, steel_capacity_heat_coal)
+	steel_delta_capacity_heat_coke = model_delta_capacity(year, steel_capacity_heat_coke)
+	steel_delta_capacity_heat_electric = model_delta_capacity(year, steel_capacity_heat_electric)
+	steel_delta_capacity_heat_solar = model_delta_capacity(year, steel_capacity_heat_solar)
+	steel_delta_capacity_heat_pliqgas = model_delta_capacity(year, steel_capacity_heat_pliqgas)
+	steel_delta_capacity_heat_natural_gas = model_delta_capacity(year, steel_capacity_heat_natural_gas)
+	steel_delta_capacity_heat_biomass = model_delta_capacity(year, steel_capacity_heat_biomass)
+	steel_delta_capacity_heat_diesel = model_delta_capacity(year, steel_capacity_heat_diesel)
+	steel_delta_capacity_heat_fuel_oil = model_delta_capacity(year, steel_capacity_heat_fuel_oil)
+	steel_delta_capacity_heat_hydrogen = model_delta_capacity(year, steel_capacity_heat_hydrogen)
+
+	# OPEX
+	steel_OPEX_diesel = steel_dem_diesel * industry_and_mining_fuel_price_diesel / (10 ** 6)
+	steel_OPEX_natural_gas = steel_dem_natural_gas * industry_and_mining_fuel_price_natural_gas / (10 ** 6)
+	steel_OPEX_electric = steel_dem_electric * industry_and_mining_fuel_price_electric / (10 ** 6)
+	steel_OPEX_coal = steel_dem_coal * industry_and_mining_fuel_price_coal / (10 ** 6)
+	steel_OPEX_coke = steel_dem_coke * industry_and_mining_fuel_price_coke / (10 ** 6)
+	steel_OPEX_biomass = steel_dem_biomass * industry_and_mining_fuel_price_biomass / (10 ** 6)
+	steel_OPEX_solar = steel_dem_solar * industry_and_mining_fuel_price_solar / (10 ** 6)
+	steel_OPEX_hydrogen = steel_dem_hydrogen * industry_and_mining_fuel_price_hydrogen / (10 ** 6)
+	steel_OPEX_pliqgas = steel_dem_pliqgas * industry_and_mining_fuel_price_pliqgas / (10 ** 6)
+	steel_OPEX_fuel_oil = steel_dem_fueloil * industry_and_mining_fuel_price_fuel_oil / (10 ** 6)
+	steel_OPEX = steel_OPEX_diesel + steel_OPEX_natural_gas + steel_OPEX_electric + steel_OPEX_coal + steel_OPEX_coke + steel_OPEX_biomass + steel_OPEX_solar + steel_OPEX_hydrogen + steel_OPEX_pliqgas + steel_OPEX_fuel_oil
+
+	# CAPEX
+	steel_CAPEX_motor_diesel = steel_delta_capacity_motor_diesel * industry_and_mining_investment_cost_motor_diesel / (10 ** 3)
+	steel_CAPEX_motor_pliqgas = steel_delta_capacity_motor_pliqgas * industry_and_mining_investment_cost_motor_pliqgas / (10 ** 3)
+	steel_CAPEX_motor_electric = steel_delta_capacity_motor_electric * industry_and_mining_investment_cost_motor_electric / (10 ** 3)
+	steel_CAPEX_motor_hydrogen = steel_delta_capacity_motor_hydrogen * industry_and_mining_investment_cost_motor_hydrogen / (10 ** 3)
+	steel_CAPEX_motor = steel_CAPEX_motor_diesel + steel_CAPEX_motor_pliqgas + steel_CAPEX_motor_electric + steel_CAPEX_motor_hydrogen
+
+	steel_CAPEX_heat_coal = steel_delta_capacity_heat_coal * industry_and_mining_investment_cost_heat_coal / (10 ** 3)
+	steel_CAPEX_heat_coke = steel_delta_capacity_heat_coke * industry_and_mining_investment_cost_heat_coke / (10 ** 3)
+	steel_CAPEX_heat_electric = steel_delta_capacity_heat_electric * industry_and_mining_investment_cost_heat_electric / (10 ** 3)
+	steel_CAPEX_heat_solar = steel_delta_capacity_heat_solar * industry_and_mining_investment_cost_heat_solar / (10 ** 3)
+	steel_CAPEX_heat_pliqgas = steel_delta_capacity_heat_pliqgas * industry_and_mining_investment_cost_heat_pliqgas / (10 ** 3)
+	steel_CAPEX_heat_natural_gas = steel_delta_capacity_heat_natural_gas * industry_and_mining_investment_cost_heat_natural_gas / (10 ** 3)
+	steel_CAPEX_heat_biomass = steel_delta_capacity_heat_biomass * industry_and_mining_investment_cost_heat_biomass / (10 ** 3)
+	steel_CAPEX_heat_diesel = steel_delta_capacity_heat_diesel * industry_and_mining_investment_cost_heat_diesel / (10 ** 3)
+	steel_CAPEX_heat_fuel_oil = steel_delta_capacity_heat_fuel_oil * industry_and_mining_investment_cost_heat_fuel_oil / (10 ** 3)
+	steel_CAPEX_heat_hydrogen = steel_delta_capacity_heat_hydrogen * industry_and_mining_investment_cost_heat_hydrogen / (10 ** 3)
+	steel_CAPEX_heat = steel_CAPEX_heat_coal + steel_CAPEX_heat_coke+steel_CAPEX_heat_electric + steel_CAPEX_heat_solar + steel_CAPEX_heat_pliqgas + steel_CAPEX_heat_natural_gas + steel_CAPEX_heat_biomass + steel_CAPEX_heat_diesel + steel_CAPEX_heat_fuel_oil + steel_CAPEX_heat_hydrogen
+
+	#CAPEX efficiency improvement
+	steel_CAPEX_efficiency_improvement = steel_investment_efficiency_improvement * (steel_intensity_reference-steel_intensity) / (10 ** 6)
+
+	# total CAPEX
+	steel_CAPEX = steel_CAPEX_motor + steel_CAPEX_heat + steel_CAPEX_efficiency_improvement
+
+	# update
+	dict_emission.update({"steel": steel_emission})
+	dict_electric_demand.update({"steel": steel_dem_electric * fact2})
+	# CAPEX, OPEX
+	dict_CAPEX.update({"steel": steel_CAPEX})
+	dict_OPEX.update({"steel": steel_OPEX})
+
+	####################################################################################################################
+
+	# SUB SECTOR: iron- Industria del hierro
+
+	iron_production = np.array(df_in["iron_production"])
+	iron_intensity = np.array(df_in["iron_intensity"])
+	iron_intensity_reference = np.array(df_in["iron_intensity_reference"])
+	iron_share_motor = np.array(df_in["iron_share_motor"])
+	iron_share_other = np.array(df_in["iron_share_other"])
+	iron_share_heat = np.array(df_in["iron_share_heat"])
+	iron_motor_diesel = np.array(df_in["iron_motor_diesel"])
+	iron_motor_pliqgas = np.array(df_in["iron_motor_pliqgas"])
+	iron_motor_electric = np.array(df_in["iron_motor_electric"])
+	iron_motor_hydrogen = np.array(df_in["iron_motor_hydrogen"])
+	iron_other_electric = np.array(df_in["iron_other_electric"])
+	iron_heat_coal = np.array(df_in["iron_heat_coal"])
+	iron_heat_coke = np.array(df_in["iron_heat_coke"])
+	iron_heat_electric = np.array(df_in["iron_heat_electric"])
+	iron_heat_solar = np.array(df_in["iron_heat_solar"])
+	iron_heat_pliqgas = np.array(df_in["iron_heat_pliqgas"])
+	iron_heat_natural_gas = np.array(df_in["iron_heat_natural_gas"])
+	iron_heat_biomass = np.array(df_in["iron_heat_biomass"])
+	iron_heat_diesel = np.array(df_in["iron_heat_diesel"])
+	iron_heat_fuel_oil = np.array(df_in["iron_heat_fuel_oil"])
+	iron_heat_hydrogen = np.array(df_in["iron_heat_hydrogen"])
+	iron_efficiency_motor_diesel = np.array(df_in["iron_efficiency_motor_diesel"])
+	iron_efficiency_motor_pliqgas = np.array(df_in["iron_efficiency_motor_pliqgas"])
+	iron_efficiency_motor_electric = np.array(df_in["iron_efficiency_motor_electric"])
+	iron_efficiency_motor_hydrogen = np.array(df_in["iron_efficiency_motor_hydrogen"])
+	iron_efficiency_other_electric = np.array(df_in["iron_efficiency_other_electric"])
+	iron_efficiency_heat_coal = np.array(df_in["iron_efficiency_heat_coal"])
+	iron_efficiency_heat_coke = np.array(df_in["iron_efficiency_heat_coke"])
+	iron_efficiency_heat_electric = np.array(df_in["iron_efficiency_heat_electric"])
+	iron_efficiency_heat_solar = np.array(df_in["iron_efficiency_heat_solar"])
+	iron_efficiency_heat_pliqgas = np.array(df_in["iron_efficiency_heat_pliqgas"])
+	iron_efficiency_heat_natural_gas = np.array(df_in["iron_efficiency_heat_natural_gas"])
+	iron_efficiency_heat_biomass = np.array(df_in["iron_efficiency_heat_biomass"])
+	iron_efficiency_heat_diesel = np.array(df_in["iron_efficiency_heat_diesel"])
+	iron_efficiency_heat_fuel_oil = np.array(df_in["iron_efficiency_heat_fuel_oil"])
+	iron_efficiency_heat_hydrogen = np.array(df_in["iron_efficiency_heat_hydrogen"])
+	iron_emission_fact_diesel = np.array(df_in["iron_emission_fact_diesel"])
+	iron_emission_fact_natural_gas = np.array(df_in["iron_emission_fact_natural_gas"])
+	iron_emission_fact_coal = np.array(df_in["iron_emission_fact_coal"])
+	iron_emission_fact_coke = np.array(df_in["iron_emission_fact_coke"])
+	iron_emission_fact_pliqgas = np.array(df_in["iron_emission_fact_pliqgas"])
+	iron_emission_fact_fueloil = np.array(df_in["iron_emission_fact_fueloil"])
+	iron_plant_factor_sst = np.array(df_in["iron_plant_factor_sst"])
+	iron_activity_motor = np.array(df_in["iron_activity_motor"])
+	iron_activity_other = np.array(df_in["iron_activity_other"])
+	iron_activity_heat = np.array(df_in["iron_activity_heat"])
+	iron_investment_efficiency_improvement = np.array(df_in["iron_investment_efficiency_improvement"])
+
+	# calculate useful total demand
+
+	iron_useful_energy = iron_production * iron_intensity
+
+	# calculate demand in Tcal by en use
+	iron_dem_motor_diesel = iron_useful_energy * iron_share_motor * iron_motor_diesel / iron_efficiency_motor_diesel
+	iron_dem_motor_pliqgas = iron_useful_energy * iron_share_motor * iron_motor_pliqgas / iron_efficiency_motor_pliqgas
+	iron_dem_motor_electric = iron_useful_energy * iron_share_motor * iron_motor_electric / iron_efficiency_motor_electric
+	iron_dem_motor_hydrogen = iron_useful_energy * iron_share_motor * iron_motor_hydrogen / iron_efficiency_motor_hydrogen
+
+	iron_dem_other_electric = iron_useful_energy * iron_share_other * iron_other_electric / iron_efficiency_other_electric
+
+	iron_dem_heat_coal = iron_useful_energy * iron_share_heat * iron_heat_coal / iron_efficiency_heat_coal
+	iron_dem_heat_coke = iron_useful_energy * iron_share_heat * iron_heat_coke / iron_efficiency_heat_coke
+	iron_dem_heat_electric = iron_useful_energy * iron_share_heat * iron_heat_electric / iron_efficiency_heat_electric
+	iron_dem_heat_solar = iron_useful_energy * iron_share_heat * iron_heat_solar / iron_efficiency_heat_solar
+	iron_dem_heat_pliqgas = iron_useful_energy * iron_share_heat * iron_heat_pliqgas / iron_efficiency_heat_pliqgas
+	iron_dem_heat_natural_gas = iron_useful_energy * iron_share_heat * iron_heat_natural_gas / iron_efficiency_heat_natural_gas
+	iron_dem_heat_biomass = iron_useful_energy * iron_share_heat * iron_heat_biomass / iron_efficiency_heat_biomass
+	iron_dem_heat_diesel = iron_useful_energy * iron_share_heat * iron_heat_diesel / iron_efficiency_heat_diesel
+	iron_dem_heat_fuel_oil = iron_useful_energy * iron_share_heat * iron_heat_fuel_oil / iron_efficiency_heat_fuel_oil
+	iron_dem_heat_hydrogen = iron_useful_energy * iron_share_heat * iron_heat_hydrogen / iron_efficiency_heat_hydrogen
+
+	# total demand by type of energy
+
+	iron_dem_diesel = iron_dem_motor_diesel + iron_dem_heat_diesel
+	iron_dem_natural_gas = iron_dem_heat_natural_gas
+	iron_dem_electric = iron_dem_motor_electric + iron_dem_other_electric + iron_dem_heat_electric
+	iron_dem_coal = iron_dem_heat_coal
+	iron_dem_coke = iron_dem_heat_coke
+	iron_dem_biomass = iron_dem_heat_biomass
+	iron_dem_solar = iron_dem_heat_solar
+	iron_dem_hydrogen = iron_dem_motor_hydrogen + iron_dem_heat_hydrogen
+	iron_dem_pliqgas = iron_dem_motor_pliqgas + iron_dem_heat_pliqgas
+	iron_dem_fueloil = iron_dem_heat_fuel_oil
+
+	# calculate demand in Tcal by en use
+	iron_emission_diesel = iron_dem_diesel * iron_emission_fact_diesel * fact / (10 ** 9)
+	iron_emission_natural_gas = iron_dem_natural_gas * iron_emission_fact_natural_gas * fact / (10 ** 9)
+	iron_emission_coal = iron_dem_coal * iron_emission_fact_coal * fact / (10 ** 9)
+	iron_emission_coke = iron_dem_coke * iron_emission_fact_coke * fact / (10 ** 9)
+	iron_emission_pliqgas = iron_dem_pliqgas * iron_emission_fact_pliqgas * fact / (10 ** 9)
+	iron_emission_fueloil = iron_dem_fueloil * iron_emission_fact_fueloil * fact / (10 ** 9)
+	iron_emission = iron_emission_diesel + iron_emission_natural_gas + iron_emission_coal + iron_emission_coke + iron_emission_pliqgas + iron_emission_fueloil
+
+	# electric demand to produce hydrogen
+	electric_demand_hydrogen = electric_demand_hydrogen + iron_dem_hydrogen / electrolyzer_efficiency * share_electric_grid_to_hydrogen
+
+	################# COST INFORMATION ##########################################
+
+	# capacity
+
+	iron_capacity_motor_diesel = iron_dem_motor_diesel * fact2 * (10 ** 3) / iron_activity_motor
+	iron_capacity_motor_pliqgas = iron_dem_motor_pliqgas * fact2 * (10 ** 3) / iron_activity_motor
+	iron_capacity_motor_electric = iron_dem_motor_electric * fact2 * (10 ** 3) / iron_activity_motor
+	iron_capacity_motor_hydrogen = iron_dem_motor_hydrogen * fact2 * (10 ** 3) / iron_activity_motor
+	iron_capacity_heat_coal = iron_dem_heat_coal * fact2 * (10 ** 3) / iron_activity_heat
+	iron_capacity_heat_coke = iron_dem_heat_coke * fact2 * (10 ** 3) / iron_activity_heat
+	iron_capacity_heat_electric = iron_dem_heat_electric * fact2 * (10 ** 3) / iron_activity_heat
+	iron_capacity_heat_solar = iron_dem_heat_solar * fact2 * (10 ** 3) / iron_activity_heat
+	iron_capacity_heat_pliqgas = iron_dem_heat_pliqgas * fact2 * (10 ** 3) / iron_activity_heat
+	iron_capacity_heat_natural_gas = iron_dem_heat_natural_gas * fact2 * (10 ** 3) / iron_activity_heat
+	iron_capacity_heat_biomass = iron_dem_heat_biomass * fact2 * (10 ** 3) / iron_activity_heat
+	iron_capacity_heat_diesel = iron_dem_heat_diesel * fact2 * (10 ** 3) / iron_activity_heat
+	iron_capacity_heat_fuel_oil = iron_dem_heat_fuel_oil * fact2 * (10 ** 3) / iron_activity_heat
+	iron_capacity_heat_hydrogen = iron_dem_heat_hydrogen * fact2 * (10 ** 3) / iron_activity_heat
+
+	iron_capacity_motor_diesel = model_capacity(year, iron_capacity_motor_diesel)
+	iron_capacity_motor_pliqgas = model_capacity(year, iron_capacity_motor_pliqgas)
+	iron_capacity_motor_electric = model_capacity(year, iron_capacity_motor_electric)
+	iron_capacity_motor_hydrogen = model_capacity(year, iron_capacity_motor_hydrogen)
+	iron_capacity_heat_coal = model_capacity(year, iron_capacity_heat_coal)
+	iron_capacity_heat_coke = model_capacity(year, iron_capacity_heat_coke)
+	iron_capacity_heat_electric = model_capacity(year, iron_capacity_heat_electric)
+	iron_capacity_heat_solar = model_capacity(year, iron_capacity_heat_solar)
+	iron_capacity_heat_pliqgas = model_capacity(year, iron_capacity_heat_pliqgas)
+	iron_capacity_heat_natural_gas = model_capacity(year, iron_capacity_heat_natural_gas)
+	iron_capacity_heat_biomass = model_capacity(year, iron_capacity_heat_biomass)
+	iron_capacity_heat_diesel = model_capacity(year, iron_capacity_heat_diesel)
+	iron_capacity_heat_fuel_oil = model_capacity(year, iron_capacity_heat_fuel_oil)
+	iron_capacity_heat_hydrogen = model_capacity(year, iron_capacity_heat_hydrogen)
+
+	iron_delta_capacity_motor_diesel = model_delta_capacity(year, iron_capacity_motor_diesel)
+	iron_delta_capacity_motor_pliqgas = model_delta_capacity(year, iron_capacity_motor_pliqgas)
+	iron_delta_capacity_motor_electric = model_delta_capacity(year, iron_capacity_motor_electric)
+	iron_delta_capacity_motor_hydrogen = model_delta_capacity(year, iron_capacity_motor_hydrogen)
+	iron_delta_capacity_heat_coal = model_delta_capacity(year, iron_capacity_heat_coal)
+	iron_delta_capacity_heat_coke = model_delta_capacity(year, iron_capacity_heat_coke)
+	iron_delta_capacity_heat_electric = model_delta_capacity(year, iron_capacity_heat_electric)
+	iron_delta_capacity_heat_solar = model_delta_capacity(year, iron_capacity_heat_solar)
+	iron_delta_capacity_heat_pliqgas = model_delta_capacity(year, iron_capacity_heat_pliqgas)
+	iron_delta_capacity_heat_natural_gas = model_delta_capacity(year, iron_capacity_heat_natural_gas)
+	iron_delta_capacity_heat_biomass = model_delta_capacity(year, iron_capacity_heat_biomass)
+	iron_delta_capacity_heat_diesel = model_delta_capacity(year, iron_capacity_heat_diesel)
+	iron_delta_capacity_heat_fuel_oil = model_delta_capacity(year, iron_capacity_heat_fuel_oil)
+	iron_delta_capacity_heat_hydrogen = model_delta_capacity(year, iron_capacity_heat_hydrogen)
+
+	# OPEX
+	iron_OPEX_diesel = iron_dem_diesel * industry_and_mining_fuel_price_diesel / (10 ** 6)
+	iron_OPEX_natural_gas = iron_dem_natural_gas * industry_and_mining_fuel_price_natural_gas / (10 ** 6)
+	iron_OPEX_electric = iron_dem_electric * industry_and_mining_fuel_price_electric / (10 ** 6)
+	iron_OPEX_coal = iron_dem_coal * industry_and_mining_fuel_price_coal / (10 ** 6)
+	iron_OPEX_coke = iron_dem_coke * industry_and_mining_fuel_price_coke / (10 ** 6)
+	iron_OPEX_biomass = iron_dem_biomass * industry_and_mining_fuel_price_biomass / (10 ** 6)
+	iron_OPEX_solar = iron_dem_solar * industry_and_mining_fuel_price_solar / (10 ** 6)
+	iron_OPEX_hydrogen = iron_dem_hydrogen * industry_and_mining_fuel_price_hydrogen / (10 ** 6)
+	iron_OPEX_pliqgas = iron_dem_pliqgas * industry_and_mining_fuel_price_pliqgas / (10 ** 6)
+	iron_OPEX_fuel_oil = iron_dem_fueloil * industry_and_mining_fuel_price_fuel_oil / (10 ** 6)
+	iron_OPEX = iron_OPEX_diesel + iron_OPEX_natural_gas + iron_OPEX_electric + iron_OPEX_coal + iron_OPEX_coke + iron_OPEX_biomass + iron_OPEX_solar + iron_OPEX_hydrogen + iron_OPEX_pliqgas + iron_OPEX_fuel_oil
+
+	# CAPEX
+	iron_CAPEX_motor_diesel = iron_delta_capacity_motor_diesel * industry_and_mining_investment_cost_motor_diesel / (10 ** 3)
+	iron_CAPEX_motor_pliqgas = iron_delta_capacity_motor_pliqgas * industry_and_mining_investment_cost_motor_pliqgas / (10 ** 3)
+	iron_CAPEX_motor_electric = iron_delta_capacity_motor_electric * industry_and_mining_investment_cost_motor_electric / (10 ** 3)
+	iron_CAPEX_motor_hydrogen = iron_delta_capacity_motor_hydrogen * industry_and_mining_investment_cost_motor_hydrogen / (10 ** 3)
+	iron_CAPEX_motor = iron_CAPEX_motor_diesel + iron_CAPEX_motor_pliqgas + iron_CAPEX_motor_electric + iron_CAPEX_motor_hydrogen
+
+	iron_CAPEX_heat_coal = iron_delta_capacity_heat_coal * industry_and_mining_investment_cost_heat_coal / (10 ** 3)
+	iron_CAPEX_heat_coke = iron_delta_capacity_heat_coke * industry_and_mining_investment_cost_heat_coke / (10 ** 3)
+	iron_CAPEX_heat_electric = iron_delta_capacity_heat_electric * industry_and_mining_investment_cost_heat_electric / (10 ** 3)
+	iron_CAPEX_heat_solar = iron_delta_capacity_heat_solar * industry_and_mining_investment_cost_heat_solar / (10 ** 3)
+	iron_CAPEX_heat_pliqgas = iron_delta_capacity_heat_pliqgas * industry_and_mining_investment_cost_heat_pliqgas / (10 ** 3)
+	iron_CAPEX_heat_natural_gas = iron_delta_capacity_heat_natural_gas * industry_and_mining_investment_cost_heat_natural_gas / (10 ** 3)
+	iron_CAPEX_heat_biomass = iron_delta_capacity_heat_biomass * industry_and_mining_investment_cost_heat_biomass / (10 ** 3)
+	iron_CAPEX_heat_diesel = iron_delta_capacity_heat_diesel * industry_and_mining_investment_cost_heat_diesel / (10 ** 3)
+	iron_CAPEX_heat_fuel_oil = iron_delta_capacity_heat_fuel_oil * industry_and_mining_investment_cost_heat_fuel_oil / (10 ** 3)
+	iron_CAPEX_heat_hydrogen = iron_delta_capacity_heat_hydrogen * industry_and_mining_investment_cost_heat_hydrogen / (10 ** 3)
+	iron_CAPEX_heat = iron_CAPEX_heat_coal + iron_CAPEX_heat_coke + iron_CAPEX_heat_electric + iron_CAPEX_heat_solar + iron_CAPEX_heat_pliqgas + iron_CAPEX_heat_natural_gas + iron_CAPEX_heat_biomass + iron_CAPEX_heat_diesel + iron_CAPEX_heat_fuel_oil + iron_CAPEX_heat_hydrogen
+
+	# CAPEX efficiency improvement
+	iron_CAPEX_efficiency_improvement = iron_investment_efficiency_improvement * (iron_intensity_reference - iron_intensity) / (10 ** 6)
+
+	# total CAPEX
+	iron_CAPEX = iron_CAPEX_motor + iron_CAPEX_heat + iron_CAPEX_efficiency_improvement
+
+	# update
+	dict_emission.update({"iron": iron_emission})
+	dict_electric_demand.update({"iron": iron_dem_electric * fact2})
+	# CAPEX, OPEX
+	dict_CAPEX.update({"iron": iron_CAPEX})
+	dict_OPEX.update({"iron": iron_OPEX})
+
 
 	####################################################################################################################
 
@@ -871,86 +1263,6 @@ def sm_industry_and_mining(df_in, dict_sector_abv):
 	# update
 	dict_emission.update({"cement": cement_emission})
 	dict_electric_demand.update({"cement": cement_dem_electric * fact2})
-
-	####################################################################################################################
-
-	# SUB SECTOR: IRON Industry- Minieria del hierro
-	iron_production = np.array(df_in["iron_production"])
-	iron_intensity = np.array(df_in["iron_intensity"])
-	iron_frac_diesel = np.array(df_in["iron_frac_diesel"])
-	iron_frac_natural_gas = np.array(df_in["iron_frac_natural_gas"])
-	iron_frac_electric = np.array(df_in["iron_frac_electric"])
-	iron_frac_biomass = np.array(df_in["iron_frac_biomass"])
-	iron_frac_hydrogen = np.array(df_in["iron_frac_hydrogen"])
-	iron_frac_coal = np.array(df_in["iron_frac_coal"])
-	iron_frac_thermal_solar = np.array(df_in["iron_frac_thermal_solar"])
-	iron_frac_solar = np.array(df_in["iron_frac_solar"])
-	iron_emission_fact_diesel = np.array(df_in["iron_emission_fact_diesel"])
-	iron_emission_fact_natural_gas = np.array(df_in["iron_emission_fact_natural_gas"])
-	iron_emission_fact_coal = np.array(df_in["iron_emission_fact_coal"])
-
-	# calculate demand in Tcal
-	iron_dem_diesel = iron_production * iron_intensity * iron_frac_diesel
-	iron_dem_natural_gas = iron_production * iron_intensity * iron_frac_natural_gas
-	iron_dem_electric = iron_production * iron_intensity * iron_frac_electric
-	iron_dem_biomass = iron_production * iron_intensity * iron_frac_biomass
-	iron_dem_hydrogen = iron_production * iron_intensity * iron_frac_hydrogen
-	iron_dem_coal = iron_production * iron_intensity * iron_frac_coal
-
-	# calculate emission in millon tCO2
-	iron_emission_diesel = iron_dem_diesel * fact * iron_emission_fact_diesel / (10 ** 9)
-	iron_emission_natural_gas = iron_dem_natural_gas * fact * iron_emission_fact_natural_gas / (10 ** 9)
-	iron_emission_coal = iron_dem_coal * fact * iron_emission_fact_coal / (10 ** 9)
-	iron_emission = iron_emission_diesel + iron_emission_natural_gas + iron_emission_coal
-
-	# electric demand to produce hydrogen
-	electric_demand_hydrogen = electric_demand_hydrogen + iron_dem_hydrogen / electrolyzer_efficiency * share_electric_grid_to_hydrogen
-
-	# update
-	dict_emission.update({"iron": iron_emission})
-	dict_electric_demand.update({"iron": iron_dem_electric * fact2})
-
-	####################################################################################################################
-
-	# SUB SECTOR: Steel Industry- Industria del acero
-	steel_production = np.array(df_in["steel_production"])
-	steel_intensity = np.array(df_in["steel_intensity"])
-	steel_frac_diesel = np.array(df_in["steel_frac_diesel"])
-	steel_frac_natural_gas = np.array(df_in["steel_frac_natural_gas"])
-	steel_frac_electric = np.array(df_in["steel_frac_electric"])
-	steel_frac_biomass = np.array(df_in["steel_frac_biomass"])
-	steel_frac_hydrogen = np.array(df_in["steel_frac_hydrogen"])
-	steel_frac_coal = np.array(df_in["steel_frac_coal"])
-	steel_frac_kerosene = np.array(df_in["steel_frac_kerosene"])
-	steel_frac_thermal_solar = np.array(df_in["iron_frac_thermal_solar"])
-	steel_frac_solar = np.array(df_in["iron_frac_solar"])
-	steel_emission_fact_diesel = np.array(df_in["steel_emission_fact_diesel"])
-	steel_emission_fact_natural_gas = np.array(df_in["steel_emission_fact_natural_gas"])
-	steel_emission_fact_coal = np.array(df_in["steel_emission_fact_coal"])
-	steel_emission_fact_kerosene = np.array(df_in["steel_emission_fact_kerosene"])
-
-	# calculate demand in Tcal
-	steel_dem_diesel = steel_production * steel_intensity * steel_frac_diesel
-	steel_dem_natural_gas = steel_production * steel_intensity * steel_frac_natural_gas
-	steel_dem_electric = steel_production * steel_intensity * steel_frac_electric
-	steel_dem_biomass = steel_production * steel_intensity * steel_frac_biomass
-	steel_dem_hydrogen = steel_production * steel_intensity * steel_frac_hydrogen
-	steel_dem_coal = steel_production * steel_intensity * steel_frac_coal
-	steel_dem_kerosene = steel_production * steel_intensity * steel_frac_kerosene
-
-	# calculate emission in millon tCO2
-	steel_emission_diesel = steel_dem_diesel * fact * steel_emission_fact_diesel / (10 ** 9)
-	steel_emission_natural_gas = steel_dem_natural_gas * fact * steel_emission_fact_natural_gas / (10 ** 9)
-	steel_emission_coal = steel_dem_coal * fact * steel_emission_fact_coal / (10 ** 9)
-	steel_emission_kerosene = steel_dem_kerosene * fact * steel_emission_fact_kerosene / (10 ** 9)
-	steel_emission = steel_emission_diesel + steel_emission_natural_gas + steel_emission_coal + steel_emission_kerosene
-
-	# electric demand to produce hydrogen
-	electric_demand_hydrogen = electric_demand_hydrogen + steel_dem_hydrogen / electrolyzer_efficiency * share_electric_grid_to_hydrogen
-
-	# update
-	dict_emission.update({"steel": steel_emission})
-	dict_electric_demand.update({"steel": steel_dem_electric * fact2})
 
 	####################################################################################################################
 

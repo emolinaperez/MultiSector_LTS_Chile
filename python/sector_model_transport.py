@@ -418,7 +418,7 @@ def sm_transport(df_in, dict_sector_abv, odel_transport_pkm_aviation = None):
 	transport_activity_truck = 50000
 
 	transport_capacity_truck_diesel = transport_dem_truck_diesel / (den_diesel * pc_diesel) * intensity_truck_diesel * (10 ** 9) / transport_activity_truck
-	transport_capacity_truck_hydrogen = transport_dem_truck_diesel / pc_hydrogen * intensity_truck_hydrogen * (10 ** 9) / transport_activity_truck
+	transport_capacity_truck_hydrogen = transport_dem_truck_hydrogen / pc_hydrogen * intensity_truck_hydrogen * (10 ** 9) / transport_activity_truck
 
 	transport_capacity_truck_diesel = model_capacity(year, transport_capacity_truck_diesel)
 	transport_capacity_truck_hydrogen = model_capacity(year, transport_capacity_truck_hydrogen)

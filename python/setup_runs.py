@@ -410,8 +410,8 @@ fp_csv_waste_baseline_data = os.path.join(dir_ref, "waste_baseline_data.csv")
 fp_csv_tmp_correction_for_pib_peso_traj = os.path.join(dir_ref, "tmp_correction_for_pib_peso_traj.csv")
 
 ##  GAMS FILE
-fp_gams_modelo = os.path.join(dir_gams_modelo, "modelo_energetico_PMR_20201201.gms")
-fp_gams_modelo_nogdxcall = os.path.join(dir_gams_modelo, "modelo_energetico_PMR_20201201_nogdxcall.gms")
+fp_gams_modelo = os.path.join(dir_gams_modelo, "modelo_energetico_PMR_20210108.gms")
+fp_gams_modelo_nogdxcall = os.path.join(dir_gams_modelo, "modelo_energetico_PMR_20210108_nogdxcall.gms")
 fp_gams_pmr_prerun_gdx_build = os.path.join(dir_gams_modelo, "pmr_prerun_gdx_build.gms")
 
 ##  EXCEL

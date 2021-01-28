@@ -297,27 +297,32 @@ if sr.tornado_q:
 		
 		#array of baseline trajectories
 		array_traj = np.array(params_tmp[fields_param_years_add_sec])
+		#rows of this will be the ramp if the parameter is not constant, and 1 otherwise; apply to uncertinaty delta
 		array_mix = np.array([int(x)*vec_ramp_unc + (1 - int(x))*np.ones(len(fields_param_years_add_sec)) for x in (params_tmp["parameter_constant_q"] == 0)])
 		#ranges and scalar vector
 		vec_ranges = np.array(params_tmp["range"])
 		vec_scale = vec_ranges*np.array(params_tmp["2050"])
-		#rang values to use to overwrite scaled
-		w_const = np.where(np.array(params_tmp["parameter_constant_q"]) == 1)[0].astype(int)
-		#overwrite in the expansion vector
-		v_r_inds = vec_ranges[w_const]
-		np.put(vec_scale, w_const, v_r_inds)
-		#np.put(vec_ranges, w_noconst, )
-		#new array
-		array_new = (vec_scale*array_mix.transpose()).transpose() + array_traj*(1 - array_mix)
-		#i'm lazy, so loop to overwrite with parameter constant
-		for ind in w_const:
-			#number of columns
-			m = array_new.shape[1]
-			#index of positions to overwrite
-			ind_ow = (ind*m + np.array(range(m))).astype(ind)
-			#const mult vector
-			vec_mult = array_traj[ind]*vec_ranges[ind]
-			np.put(array_new, ind_ow, vec_mult)
+		vec_unc_delta = vec_scale - np.array(params_tmp["2050"])
+		#baseline trajectory + the
+		array_new = array_traj + (array_mix.transpose() * vec_unc_delta).transpose()
+		if False:
+			#rang values to use to overwrite scaled
+			w_const = np.where(np.array(params_tmp["parameter_constant_q"]) == 1)[0].astype(int)
+			#overwrite in the expansion vector
+			v_r_inds = vec_ranges[w_const]
+			np.put(vec_scale, w_const, v_r_inds)
+			#np.put(vec_ranges, w_noconst, )
+			#new array
+			array_new = (vec_scale*array_mix.transpose()).transpose() + array_traj*(1 - array_mix)
+			#i'm lazy, so loop to overwrite with parameter constant
+			for ind in w_const:
+				#number of columns
+				m = array_new.shape[1]
+				#index of positions to overwrite
+				ind_ow = (ind*m + np.array(range(m))).astype(ind)
+				#const mult vector
+				vec_mult = array_traj[ind]*vec_ranges[ind]
+				np.put(array_new, ind_ow, vec_mult)
 		
 		#intialize new design
 		new_design = []
@@ -744,43 +749,56 @@ else:
 
 	##  BUILD BASIC PERCENTAGE CHANGE MATRIX
 
+	dict_unc_delta = {}
+	
+	for ts_id in all_vals_add_sec["time_series_id"]:
+		df_ed_baseline = parameter_table_additional_sectors[(parameter_table_additional_sectors["strategy_id"] == strat_baseline) & (parameter_table_additional_sectors["time_series_id"] == ts_id)].copy()
+		df_ed_base = df_ed_baseline[extraction_fields_ld].copy()
+		df_ed_add_sec = dict_submat_lhs["add_sec"]
+		
+		#initialize array (in order of ext fields)
+		array_ed_add_sec = np.array(df_ed_add_sec[fields_ordered_parameters])
+		#order output array
+		df_max_min = pd.merge(pd.DataFrame(fields_ordered_parameters, columns = ["variable_name_lower"]), df_ed_baseline[["variable_name_lower", "min_2050", "max_2050"]], how = "left", left_on = ["variable_name_lower"], right_on = ["variable_name_lower"])
+		#generate transformed values of uncertainty
+		array_ed_add_sec_trans = array_ed_add_sec * np.array(df_max_min["max_2050"]) + (1 - array_ed_add_sec) * np.array(df_max_min["min_2050"])
+		#add in future 0 (0 change = 100%)
+		array_ed_add_sec_trans = np.concatenate([np.ones((1, array_ed_add_sec_trans.shape[1])), array_ed_add_sec_trans])
+		#get 2050 values for each parameter
+		df_po = pd.DataFrame(fields_ordered_parameters, columns = ["variable_name_lower"])
+		df_merge_in = parameter_table_additional_sectors[(parameter_table_additional_sectors["strategy_id"] == strat_baseline) & (parameter_table_additional_sectors["time_series_id"] == ts_id)]
+		df_po = pd.merge(df_po, df_merge_in[["variable_name_lower", "2050"]], how = "left", on = ["variable_name_lower"])
+		vec_pvals_2050 = np.array(df_po["2050"])
 
-	#for ts_id in all_vals_add_sec["time_series_id"]:
-	df_ed_baseline = parameter_table_additional_sectors[(parameter_table_additional_sectors["strategy_id"] == strat_baseline) & (parameter_table_additional_sectors["time_series_id"] == 0)].copy()
-	df_ed_base = df_ed_baseline[extraction_fields_ld].copy()
-	df_ed_add_sec = dict_submat_lhs["add_sec"]
-	#initialize array (in order of ext fields)
-	array_ed_add_sec = np.array(df_ed_add_sec[fields_ordered_parameters])
-	#order output array
-	df_max_min = pd.merge(pd.DataFrame(fields_ordered_parameters, columns = ["variable_name_lower"]), df_ed_baseline[["variable_name_lower", "min_2050", "max_2050"]], how = "left", left_on = ["variable_name_lower"], right_on = ["variable_name_lower"])
-	#generate transformed values of uncertainty
-	array_ed_add_sec_trans = array_ed_add_sec * np.array(df_max_min["max_2050"]) + (1 - array_ed_add_sec) * np.array(df_max_min["min_2050"])
-	#add in future 0 (0 change = 100%)
-	array_ed_add_sec_trans = np.concatenate([np.ones((1, array_ed_add_sec_trans.shape[1])), array_ed_add_sec_trans])
-	#set data frame of baseline percentage changes
-	df_perc_change_unc = []
-	#build outcome matrix
-	for i in range(len(param_years_add_sec)):
-		y = param_years_add_sec[i]
-		frac_base = vec_ramp_base[i]
-		frac_unc = vec_ramp_unc[i]
-		#build weighted array
-		array_tmp = np.ones(array_ed_add_sec_trans.shape)*(frac_base) + array_ed_add_sec_trans*(frac_unc)
-		#NOTE: FOR CONSTANT PARAMS, GET RID OF "RAMP"
-		array_tmp[:, indices_fop_all_constant_params] = array_ed_add_sec_trans[:, indices_fop_all_constant_params].copy()
-		#convert to data frame
-		df_tmp = pd.DataFrame(array_tmp, columns = fields_ordered_parameters)
-		#add year
-		df_tmp["year"] = [int(y) for x in range(len(df_tmp))]
-		df_tmp["future_id"] = [0] + list(df_ed_add_sec["future_id"])
-		#df_tmp["time_series_id"] = [ts_id for x in range(len(df_tmp))]
-		#organize
-		df_tmp = df_tmp[["future_id", "year"] + fields_ordered_parameters]
-		#update
-		df_perc_change_unc = df_perc_change_unc + [df_tmp]
-	#build master
-	df_perc_change_unc = pd.concat(df_perc_change_unc)
-	df_perc_change_unc = df_perc_change_unc.sort_values(by = ["future_id", "year"])
+		#set data frame of baseline percentage changes
+		df_unc_delta = []
+
+		#build outcome matrix
+		for i in range(len(param_years_add_sec)):
+			y = param_years_add_sec[i]
+			#build array of change from specified 2050 value
+			array_tmp = (array_ed_add_sec_trans - 1)*vec_ramp_unc[i]
+			#remove the "ramp" component for constant params
+			array_tmp[:, indices_fop_all_constant_params] = (array_ed_add_sec_trans[:, indices_fop_all_constant_params] - 1).copy()
+			#multiple everything by the delta from specified trajectory implied by the future
+			array_tmp = array_tmp*vec_pvals_2050
+			#convert to data frame
+			df_tmp = pd.DataFrame(array_tmp, columns = fields_ordered_parameters)
+			#add year
+			df_tmp["year"] = [int(y) for x in range(len(df_tmp))]
+			df_tmp["future_id"] = [0] + list(df_ed_add_sec["future_id"])
+			#organize
+			df_tmp = df_tmp[["future_id", "year"] + fields_ordered_parameters]
+			#update
+			df_unc_delta = df_unc_delta + [df_tmp]
+
+		#build master
+		df_unc_delta = pd.concat(df_unc_delta)
+		df_unc_delta = df_unc_delta.sort_values(by = ["future_id", "year"])
+
+		#update dictionary
+		dict_unc_delta.update({ts_id: df_unc_delta})
+
 
 
 	##  BUILD DATA FRAME BASIS FOR EXPERIMENTAL DESIGN FILE
@@ -833,22 +851,30 @@ else:
 			#add in
 			df_ed_merge = pd.merge(df_ed_merge, df_ed_base, how = "outer", left_on = ["year"], right_on = ["year"])
 			#renaming dictionary
-			dict_rnm = dict([x, "perc_" + x] for x in fields_ordered_parameters)
+			dict_rnm = dict([x, "unc_delta_" + x] for x in fields_ordered_parameters)
 			#breakout fields
-			fields_percs = [dict_rnm[x] for x in fields_ordered_parameters]
+			fields_unc_delta = [dict_rnm[x] for x in fields_ordered_parameters]
 				
 			#check if percentages need to be accounted for
 			if dict_data["vary_uncertainties"][key] == 1:
-				df_tmp = df_perc_change_unc
+				#get the total
+				df_tmp = dict_unc_delta[ts_id].copy()
 				#rename to columns
-				df_tmp = df_tmp.rename(columns = dict([x, "perc_" + x] for x in fields_ordered_parameters))
+				df_tmp = df_tmp.rename(columns = dict_rnm)
 				df_ed_merge = pd.merge(df_ed_merge, df_tmp, how = "left", left_on = ["future_id", "year"], right_on = ["future_id", "year"])
 				#id fields to breakout on
-				fields_id = [x for x in df_ed_merge.columns if (x not in fields_percs) and (x not in fields_ordered_parameters)]
+				fields_id = [x for x in df_ed_merge.columns if (x not in fields_unc_delta) and (x not in fields_ordered_parameters)]
 				#seprate out
 				df_ed_merge_ids = df_ed_merge[fields_id]
-				#convert to product array—has headers fields_ordered_parameters
-				array_design = np.array(df_ed_merge[fields_percs]) * np.array(df_ed_merge[fields_ordered_parameters])
+				
+				#lcheckr = list(df_ed_merge.columns)
+				#checkr = [x for x in lcheckr if (lcheckr.count(x) > 1)]
+				#sr.print_list_output(list(checkr), "checkr")
+				#print("Length df_ed_merge cols: " + str(len(df_ed_merge.columns)))
+				#print("Length df_ed_merge unique cols: " + str(len(set(df_ed_merge.columns))))
+
+				#convert to sum of two arrays—has headers fields_ordered_parameters
+				array_design = np.array(df_ed_merge[fields_ordered_parameters]) + np.array(df_ed_merge[fields_unc_delta])
 			else:
 				#id fields to breakout on
 				fields_id = [x for x in df_ed_merge.columns if (x not in fields_ordered_parameters)]
@@ -923,6 +949,65 @@ df_out = df_out[[x for x in df_out.columns if x not in cols_to_export]]
 sr.print_list_output(list(df_out.columns), "df_out")
 
 
+
+
+
+##############################################################
+###                                                        ###
+###    GET TRAJGROUP AND CONVERT TO TRAJMAX/TRAJMIN ETC    ###
+###                                                        ###
+##############################################################
+
+
+traj_id_str = "trajgroup"
+trajgroups = list(set([int(x.split("-")[0].split("_")[1]) for x in df_out.columns if traj_id_str in x]))
+trajgroups.sort()
+
+#some notifcation
+print("\ntSTARTING:\n\tLoop over raj_group.\n")
+print("\n")
+
+#get 2050 values
+dict_2050 = dict([[tuple(x[0:3]), x[3]] for x in np.array(parameter_table_additional_sectors[["time_series_id", "strategy_id", "parameter", "2050"]])])
+dict_rnm_trajgroup = {}
+
+#loop over groups
+for tg in trajgroups:
+    print("Building trajgroup " + str(tg) + "...\n")
+    substr_tg = traj_id_str + "_" + str(tg)
+    fields_tg = [x for x in df_out.columns if substr_tg in x]
+    #vector of lhs value
+    vec_lhs = np.array(df_out[substr_tg + "-lhs"])
+    #
+    fields_tg = list(set(fields_tg) - set({substr_tg + "-lhs"}))
+    dict_rnm = dict([[x, x.replace(substr_tg + "-", "")] for x in fields_tg])
+    #fields that need to be updated
+    fields_mix = [x for x in fields_tg if ("trajmix" in x)]
+    #
+    if True:
+        for fm in fields_mix:
+            fm_new = fm.replace(substr_tg + "-", "")
+            vec_2050_mix = np.array([dict_2050[tuple(list(x) + ["trajgroup_6-trajmix_transport_frac_private_electric"])] for x in np.array(df_out[["time_series_id", "strategy_id"]])])
+            #get the max range on the mixing vec
+            max_range = np.nan_to_num(1/vec_2050_mix)
+            vec_lhs_trans = vec_lhs*max_range
+            w = np.where(np.array(df_out["future_id"] == 0))
+            vec_lhs_trans[w] = 1
+            v_new = vec_lhs_trans*np.array(df_out[fm])
+            w_1 = np.where(v_new > 1)
+            w_0 = np.where(v_new < 0)
+            v_new[w_1] = 1
+            v_new[w_0] = 0
+            df_out[fm] = v_new
+        #update names
+        df_out = df_out.rename(columns = dict_rnm)
+        df_out = df_out[[x for x in df_out.columns if (x != substr_tg + "-lhs")]]
+        print("trajgroup " + str(tg) + " done.\n\n")
+                       
+         
+         
+         
+
 #################################################################################################
 ###                                                                                           ###
 ###    DO MIXING TRACJETORIES FOR THOSE SPECIFIED WITH "trajmax", "trajmin", and "trajmix"    ###
@@ -952,6 +1037,14 @@ for x in params_mix_loop:
 	fields_drop = fields_drop + [x_max, x_min, x_mix]
 	#get veector of mixing fractions
 	vec_mix = np.array(df_out[x_mix])
+	#bound the mix vectors (in case there are intermediate values that exceed the trajectory)
+	w_ceil = np.where(vec_mix > 1)[0]
+	w_floor = np.where(vec_mix < 0)[0]
+	if len(w_ceil) > 0:
+		np.put(vec_mix, w_ceil, np.ones(len(w_ceil)))
+	if len(w_floor) > 0:
+		np.put(vec_mix, w_floor, np.zeros(len(w_floor)))
+	
 	#default to both existing
 	max_q = True
 	min_q = True
@@ -1409,7 +1502,9 @@ if sr.integrate_analytica_q:
 			],
 			
 			sr.dir_ref_ade: [
-				sr.fp_csv_attribute_pyparams
+				sr.fp_csv_attribute_pyparams,
+				sr.fp_csv_analytica_metrics_to_save,
+				sr.fp_csv_attribute_summing_group
 			]
 		}
 		
