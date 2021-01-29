@@ -1,0 +1,8 @@
+archive_runs/
+experimental_design/
+out/
+gams/pmr/data_input/data_hidrologias_escenarios.csv
+gams/pmr/data_input/data_costo_inversion_procesos_escenarios.csv
+gams/pmr/data_input/data_set_escenarios.csv
+gams/pmr/data_input/data_demanda_electrica_escenarios.csv
+gams/pmr/data_input/data_precio_energeticos_escenarios.csv
