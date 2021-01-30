@@ -932,23 +932,6 @@ else:
 	#
 
 
-##  BUILD SINGLE VALUES DATA FRAME
-
-cols_to_export = []
-#loop over columns to check values (this is inefficient)
-for col in df_out.columns:
-	if col[-3:] != "_id":
-		if (len(set(df_out[col].unique())) == 1) and (col in all_params_novary):
-			cols_to_export.append(col)
-#convert to single values
-df_out_singles = df_out[cols_to_export].drop_duplicates()
-sr.print_list_output(list(df_out_singles.columns), "df_out_singles")
-#reduce
-df_out = df_out[[x for x in df_out.columns if x not in cols_to_export]]
-
-sr.print_list_output(list(df_out.columns), "df_out")
-
-
 
 
 
@@ -971,11 +954,15 @@ print("\n")
 dict_2050 = dict([[tuple(x[0:3]), x[3]] for x in np.array(parameter_table_additional_sectors[["time_series_id", "strategy_id", "parameter", "2050"]])])
 dict_rnm_trajgroup = {}
 
+
+sr.print_list_output(trajgroups, "trajgroups")
+
 #loop over groups
 for tg in trajgroups:
     print("Building trajgroup " + str(tg) + "...\n")
     substr_tg = traj_id_str + "_" + str(tg)
     fields_tg = [x for x in df_out.columns if substr_tg in x]
+    sr.print_list_output(fields_tg, "fields_tg")
     #vector of lhs value
     vec_lhs = np.array(df_out[substr_tg + "-lhs"])
     #
@@ -987,7 +974,7 @@ for tg in trajgroups:
     if True:
         for fm in fields_mix:
             fm_new = fm.replace(substr_tg + "-", "")
-            vec_2050_mix = np.array([dict_2050[tuple(list(x) + ["trajgroup_6-trajmix_transport_frac_private_electric"])] for x in np.array(df_out[["time_series_id", "strategy_id"]])])
+            vec_2050_mix = np.array([dict_2050[tuple(list(x) + [fm])] for x in np.array(df_out[["time_series_id", "strategy_id"]])])
             #get the max range on the mixing vec
             max_range = np.nan_to_num(1/vec_2050_mix)
             vec_lhs_trans = vec_lhs*max_range
@@ -1003,10 +990,32 @@ for tg in trajgroups:
         df_out = df_out.rename(columns = dict_rnm)
         df_out = df_out[[x for x in df_out.columns if (x != substr_tg + "-lhs")]]
         print("trajgroup " + str(tg) + " done.\n\n")
-                       
+
+
+
+
+
+########################################
+#    BUILD SINGLE VALUES DATA FRAME    #
+########################################
+
+cols_to_export = []
+#loop over columns to check values (this is inefficient)
+for col in df_out.columns:
+	if col[-3:] != "_id":
+		if (len(set(df_out[col].unique())) == 1) and (col in all_params_novary):
+			cols_to_export.append(col)
+#convert to single values
+df_out_singles = df_out[cols_to_export].drop_duplicates()
+sr.print_list_output(list(df_out_singles.columns), "df_out_singles")
+#reduce
+df_out = df_out[[x for x in df_out.columns if x not in cols_to_export]]
+
+sr.print_list_output(list(df_out.columns), "df_out")
          
          
          
+
 
 #################################################################################################
 ###                                                                                           ###
