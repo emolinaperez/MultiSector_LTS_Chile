@@ -36,7 +36,7 @@ df_attribute_time_series_id = pd.read_csv(sr.fp_csv_attribute_time_series)
 print("Check: export_ed_files_q = " + str(export_ed_files_q))
 print("Check: n_lhs = " + str(n_lhs))
 
-    
+	
 
 
 #################################
@@ -64,12 +64,12 @@ df_apn = parameter_table_additional_sectors[["variable_name_lower", "min_2050", 
 all_params_novary = set({})
 #loop to build
 for p in df_apn["variable_name_lower"].unique():
-    df_apn_tmp = df_apn[df_apn["variable_name_lower"] == p]
-    #check to see if it doesn't vary
-    if len(df_apn_tmp) == 1:
-        if float(df_apn_tmp["min_2050"].iloc[0]) == float(df_apn_tmp["max_2050"].iloc[0]):
-            if float(df_apn_tmp["min_2050"].iloc[0]) == 1.0:
-                all_params_novary = all_params_novary | set({p})
+	df_apn_tmp = df_apn[df_apn["variable_name_lower"] == p]
+	#check to see if it doesn't vary
+	if len(df_apn_tmp) == 1:
+		if float(df_apn_tmp["min_2050"].iloc[0]) == float(df_apn_tmp["max_2050"].iloc[0]):
+			if float(df_apn_tmp["min_2050"].iloc[0]) == 1.0:
+				all_params_novary = all_params_novary | set({p})
 #all parameters that vary
 all_params_vary = set(parameter_table_additional_sectors["variable_name_lower"]) - all_params_novary
 
@@ -90,15 +90,15 @@ else:
 	
 #loop over rows
 for i in range(0, len(group_id)):
-    #get current group
-    group_cur = group_id["normalize_group"].iloc[i]
-    #test for NaN
-    if np.isnan(group_cur):
-        norm_vec = norm_vec + [ind_group]
-        #next iteration
-        ind_group += 1
-    else:
-        norm_vec = norm_vec + [int(group_cur)]
+	#get current group
+	group_cur = group_id["normalize_group"].iloc[i]
+	#test for NaN
+	if np.isnan(group_cur):
+		norm_vec = norm_vec + [ind_group]
+		#next iteration
+		ind_group += 1
+	else:
+		norm_vec = norm_vec + [int(group_cur)]
 
 #add to group_id data frame
 group_id["norm_group_id"] = norm_vec
@@ -112,7 +112,7 @@ group_id_tmp = group_id[["type", "norm_group_id"]].drop_duplicates()
 group_id_tmp = group_id_tmp[group_id_tmp["type"].isin(["Accion", "accion"])]
 group_id_tmp["lever_group_id"] = range(1, len(group_id_tmp) + 1)
 if "lever_group_id" not in group_id.columns:
-    group_id = pd.merge(group_id, group_id_tmp[["norm_group_id", "lever_group_id"]], how = "left", left_on = ["norm_group_id"], right_on = ["norm_group_id"])
+	group_id = pd.merge(group_id, group_id_tmp[["norm_group_id", "lever_group_id"]], how = "left", left_on = ["norm_group_id"], right_on = ["norm_group_id"])
 #reduce
 group_id = group_id[["parameter", "type", "norm_group_id", "lever_group_id"]]
 #replace nas
@@ -151,29 +151,29 @@ print(parameter_table_additional_sectors.columns)
 print("\n\n")
 #initialize for all parameters
 all_vals_add_sec = {
-    "param_years": param_years_add_sec,
-    "future_id": list(range(1, n_lhs + 1)),
-    "design_id": list(df_attribute_design_id["design_id"]),
-    "time_series_id": list(set(df_attribute_time_series_id["time_series_id"]) & set(parameter_table_additional_sectors["time_series_id"]))
+	"param_years": param_years_add_sec,
+	"future_id": list(range(1, n_lhs + 1)),
+	"design_id": list(df_attribute_design_id["design_id"]),
+	"time_series_id": list(set(df_attribute_time_series_id["time_series_id"]) & set(parameter_table_additional_sectors["time_series_id"]))
 }
 #sort some
 all_vals_add_sec["time_series_id"].sort()
 
 #loop
 for field in fields_add_sec_all_vals:
-    #set the field name
-    str_field = field.lower().replace(" ", "_")
-    #
-    if field in ["lever_group_id", "norm_group_id"]:
-        set_field = set([x for x in parameter_table_additional_sectors[field] if x > 0])
-    else:
-        set_field = set(parameter_table_additional_sectors[field])
-    #update the dictionary
-    all_vals_add_sec.update({str_field: set_field})
+	#set the field name
+	str_field = field.lower().replace(" ", "_")
+	#
+	if field in ["lever_group_id", "norm_group_id"]:
+		set_field = set([x for x in parameter_table_additional_sectors[field] if x > 0])
+	else:
+		set_field = set(parameter_table_additional_sectors[field])
+	#update the dictionary
+	all_vals_add_sec.update({str_field: set_field})
 
-    
-    
-    
+	
+	
+	
 ###################################
 #    GENERATE ATTRIBUTE TABLES    #
 ###################################
@@ -767,7 +767,7 @@ else:
 		#get 2050 values for each parameter
 		df_po = pd.DataFrame(fields_ordered_parameters, columns = ["variable_name_lower"])
 		df_merge_in = parameter_table_additional_sectors[(parameter_table_additional_sectors["strategy_id"] == strat_baseline) & (parameter_table_additional_sectors["time_series_id"] == ts_id)]
-		df_po = pd.merge(df_po, df_merge_in[["variable_name_lower", "2050"]], how = "left", on = ["variable_name_lower"])
+		df_po = pd.merge(df_po, df_merge_in[["variable_name_lower"] + [str(x) for x in param_years_add_sec]], how = "left", on = ["variable_name_lower"])
 		vec_pvals_2050 = np.array(df_po["2050"])
 
 		#set data frame of baseline percentage changes
@@ -778,10 +778,10 @@ else:
 			y = param_years_add_sec[i]
 			#build array of change from specified 2050 value
 			array_tmp = (array_ed_add_sec_trans - 1)*vec_ramp_unc[i]
-			#remove the "ramp" component for constant params
-			array_tmp[:, indices_fop_all_constant_params] = (array_ed_add_sec_trans[:, indices_fop_all_constant_params] - 1).copy()
 			#multiple everything by the delta from specified trajectory implied by the future
 			array_tmp = array_tmp*vec_pvals_2050
+			#remove the "ramp" component for constant params
+			array_tmp[:, indices_fop_all_constant_params] = ((array_ed_add_sec_trans[:, indices_fop_all_constant_params] - 1).copy())*np.array(df_po[str(y)])[indices_fop_all_constant_params]
 			#convert to data frame
 			df_tmp = pd.DataFrame(array_tmp, columns = fields_ordered_parameters)
 			#add year
@@ -959,37 +959,37 @@ sr.print_list_output(trajgroups, "trajgroups")
 
 #loop over groups
 for tg in trajgroups:
-    print("Building trajgroup " + str(tg) + "...\n")
-    substr_tg = traj_id_str + "_" + str(tg)
-    fields_tg = [x for x in df_out.columns if substr_tg in x]
-    sr.print_list_output(fields_tg, "fields_tg")
-    #vector of lhs value
-    vec_lhs = np.array(df_out[substr_tg + "-lhs"])
-    #
-    fields_tg = list(set(fields_tg) - set({substr_tg + "-lhs"}))
-    dict_rnm = dict([[x, x.replace(substr_tg + "-", "")] for x in fields_tg])
-    #fields that need to be updated
-    fields_mix = [x for x in fields_tg if ("trajmix" in x)]
-    #
-    if True:
-        for fm in fields_mix:
-            fm_new = fm.replace(substr_tg + "-", "")
-            vec_2050_mix = np.array([dict_2050[tuple(list(x) + [fm])] for x in np.array(df_out[["time_series_id", "strategy_id"]])])
-            #get the max range on the mixing vec
-            max_range = np.nan_to_num(1/vec_2050_mix)
-            vec_lhs_trans = vec_lhs*max_range
-            w = np.where(np.array(df_out["future_id"] == 0))
-            vec_lhs_trans[w] = 1
-            v_new = vec_lhs_trans*np.array(df_out[fm])
-            w_1 = np.where(v_new > 1)
-            w_0 = np.where(v_new < 0)
-            v_new[w_1] = 1
-            v_new[w_0] = 0
-            df_out[fm] = v_new
-        #update names
-        df_out = df_out.rename(columns = dict_rnm)
-        df_out = df_out[[x for x in df_out.columns if (x != substr_tg + "-lhs")]]
-        print("trajgroup " + str(tg) + " done.\n\n")
+	print("Building trajgroup " + str(tg) + "...\n")
+	substr_tg = traj_id_str + "_" + str(tg)
+	fields_tg = [x for x in df_out.columns if substr_tg in x]
+	sr.print_list_output(fields_tg, "fields_tg")
+	#vector of lhs value
+	vec_lhs = np.array(df_out[substr_tg + "-lhs"])
+	#
+	fields_tg = list(set(fields_tg) - set({substr_tg + "-lhs"}))
+	dict_rnm = dict([[x, x.replace(substr_tg + "-", "")] for x in fields_tg])
+	#fields that need to be updated
+	fields_mix = [x for x in fields_tg if ("trajmix" in x)]
+	#
+	if True:
+		for fm in fields_mix:
+			fm_new = fm.replace(substr_tg + "-", "")
+			vec_2050_mix = np.array([dict_2050[tuple(list(x) + [fm])] for x in np.array(df_out[["time_series_id", "strategy_id"]])])
+			#get the max range on the mixing vec
+			max_range = np.nan_to_num(1/vec_2050_mix)
+			vec_lhs_trans = vec_lhs*max_range
+			w = np.where(np.array(df_out["future_id"] == 0))
+			vec_lhs_trans[w] = 1
+			v_new = vec_lhs_trans*np.array(df_out[fm])
+			w_1 = np.where(v_new > 1)
+			w_0 = np.where(v_new < 0)
+			v_new[w_1] = 1
+			v_new[w_0] = 0
+			df_out[fm] = v_new
+		#update names
+		df_out = df_out.rename(columns = dict_rnm)
+		df_out = df_out[[x for x in df_out.columns if (x != substr_tg + "-lhs")]]
+		print("trajgroup " + str(tg) + " done.\n\n")
 
 
 
@@ -1012,9 +1012,9 @@ sr.print_list_output(list(df_out_singles.columns), "df_out_singles")
 df_out = df_out[[x for x in df_out.columns if x not in cols_to_export]]
 
 sr.print_list_output(list(df_out.columns), "df_out")
-         
-         
-         
+		 
+		 
+		 
 
 
 #################################################################################################
@@ -1547,16 +1547,16 @@ print("Analytica done.")
 print("Experimental design generation complete.")
 
 		
-    
-     
-    
+	
+	 
+	
 
 
 
-    
-    
+	
+	
 
 
-    
+	
 
 
