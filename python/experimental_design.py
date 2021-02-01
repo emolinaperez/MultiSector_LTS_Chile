@@ -980,6 +980,9 @@ for tg in trajgroups:
 			vec_lhs_trans = vec_lhs*max_range
 			w = np.where(np.array(df_out["future_id"] == 0))
 			vec_lhs_trans[w] = 1
+			#convert to one if traj groups aren't varying
+			if not sr.vary_traj_groups_q:
+				vec_lhs_trans = np.ones(vec_lhs_trans.shape)
 			v_new = vec_lhs_trans*np.array(df_out[fm])
 			w_1 = np.where(v_new > 1)
 			w_0 = np.where(v_new < 0)
