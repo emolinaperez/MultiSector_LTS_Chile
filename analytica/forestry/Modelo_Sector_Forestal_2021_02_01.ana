@@ -63,7 +63,7 @@ DiagState: 2,0,3,737,665,17
 WindState: 2,130,85,720,350
 DiagramColor: 52428,52428,52428
 FontStyle: Arial,15
-FileInfo: 0,Model Sector_UTCUTS,2,2,0,0,C:\Users\andre\Dropbox (CCG-UC)\Carpeta del equipo CCG-UC\A Proyectos Actuales\2020-DDPLTSChile\Desarrollo\Envio 2021-02-02\Modelo_Sector_Forestal_2021_02_01.ana
+FileInfo: 0,Model Sector_UTCUTS,2,2,0,0,C:\Users\andre\OneDrive\Documentos\GitHub\MultiSector_LTS_Chile\analytica\forestry\Modelo_Sector_Forestal_2021_02_01.ana
 
 Module Indices
 Title: Indices
@@ -85,13 +85,13 @@ ValueState: 2,40,50,400,300,0,MIDM
 Att_PrevIndexValue: [1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030,2031,2032,2033,2034,2035,2036,2037,2038,2039,2040,2041,2042,2043,2044,2045,2046,2047,2048,2049,2050]
 
 Index Gas_GEI
+Att_PrevIndexValue: ['CO2','CH4','N2O']
 Title: Gas_GEI
 Definition: ['CO2','CH4','N2O']
 NodeLocation: 128,136,1
 NodeSize: 48,24
 WindState: 2,0,0,720,350
 {!40300|Att_SlicerPopupSize: 292,80}
-Att_PrevIndexValue: ['CO2','CH4','N2O']
 
 Index Uso_previo
 Title: Uso_previo
@@ -115,6 +115,7 @@ ValueState: 2,40,50,400,300,0,MIDM
 Att_PrevIndexValue: ['4.A Forestal','4.B Cultivo','4.C Pastizal','4.D Humedal','4.E Asentamientos','4.F Otras tierras']
 
 Index Tipo_cobertura
+Att_PrevIndexValue: ['Cultivos','Matorrales','Pastizales']
 Title: Tipo_cobertura
 Description: Tpos de coberturas incendiadas con información disponible, Fuentes CONAF y proyecciones del INGEI.
 Definition: ['Cultivos','Matorrales','Pastizales']
@@ -122,7 +123,6 @@ IndexVals: ['item 1']
 NodeLocation: 1024,120,1
 NodeSize: 64,24
 WindState: 2,0,0,720,350
-Att_PrevIndexValue: ['Cultivos','Matorrales','Pastizales']
 
 Index Coef_Aux_Tierras
 Title: Coef_Aux_Tierras
@@ -135,13 +135,13 @@ WindState: 2,0,0,720,350
 Att_PrevIndexValue: ['L1.Forestales','L1.Cultivos','L1.Pastizales','L1.Humedales','L1.Asentamientos','L1.Otras tierras']
 
 Index Coef_Aux_Inc
+Att_PrevIndexValue: ['L1.Cultivo','L1.Matorral','L1.Pastizal']
 Title: Coef_Aux_Inc
 Description: Coeficientes para la proyeccion de hectareas incendiadas, obtenidos del Modelo VAR
 Definition: ['L1.Cultivo','L1.Matorral','L1.Pastizal']
 NodeLocation: 1024,192,1
 NodeSize: 64,24
 WindState: 2,0,0,720,350
-Att_PrevIndexValue: ['L1.Cultivo','L1.Matorral','L1.Pastizal']
 
 Text Te1960237309
 Title: Indices Tierras convertidas en X
@@ -174,6 +174,7 @@ NodeInfo: 1,,,,,1
 NodeColor: 39321,52431,65535
 
 Index Co_Especie
+Att_PrevIndexValue: ['Pinus radiata','Eucalyptus ssp','Otras exóticas','Especies nativas']
 Title: Co_Especie
 Description: Origen de trozas cosechadas asociadas a la categoría Pérdida de Biomasa
 Definition: ['Pinus radiata','Eucalyptus ssp','Otras exóticas','Especies nativas']
@@ -181,7 +182,6 @@ NodeLocation: 680,88,1
 NodeSize: 56,24
 WindState: 2,0,0,720,350
 {!40300|Att_SlicerPopupSize: 232,96}
-Att_PrevIndexValue: ['Pinus radiata','Eucalyptus ssp','Otras exóticas','Especies nativas']
 
 Index Regiones
 Att_PrevIndexValue: ['Arica','Tarapacá','Antofagasta','Atacama','Coquimbo','Valparaíso','Metropolitana','OHiggins','Maule','Ñuble','Biobío','Araucanía','Los Ríos','Los Lagos','Aisén','Magallanes']
@@ -193,6 +193,7 @@ NodeSize: 48,24
 WindState: 2,0,0,720,350
 
 Index Le_Especie
+Att_PrevIndexValue: ['Leña Especies nativas','Leña Especies exóticas']
 Title: Le_Especie
 Description: Especies de origen para leña recolectada
 Definition: ['Leña Especies nativas','Leña Especies exóticas']
@@ -200,9 +201,9 @@ NodeLocation: 680,152,1
 NodeSize: 56,24
 WindState: 2,0,0,720,350
 {!40300|Att_SlicerPopupSize: 232,48}
-Att_PrevIndexValue: ['Leña Especies nativas','Leña Especies exóticas']
 
 Index Inc_Origen
+Att_PrevIndexValue: ['Incendio Bosque Nativo','Incendio Plantaciones Forestales']
 Title: Inc_Origen
 Description: Categorías de superficies de incendios forestales para la categoróa Pérdida de Biomasa, según nomenclatura INGEI
 Definition: ['Incendio Bosque Nativo','Incendio Plantaciones Forestales']
@@ -210,7 +211,6 @@ NodeLocation: 680,224,1
 NodeSize: 56,24
 WindState: 2,754,48,720,350
 {!40300|Att_SlicerPopupSize: 237,48}
-Att_PrevIndexValue: ['Incendio Bosque Nativo','Incendio Plantaciones Forestales']
 
 Text Te1602109670
 Title: Índices Aumento de Biomasa y Cambio Vegetación
@@ -220,6 +220,7 @@ NodeInfo: 1,,,,,1
 NodeColor: 39321,65535,52425
 
 Index Nativo_plantacion
+Att_PrevIndexValue: ['Bosque_nativo','Plantaciones']
 Title: Nativo_plantación
 Description: Tipo de manejo para bosque nativo, para ser agrupados en la categoría de aumento de biomasa
 Definition: ['Bosque_nativo','Plantaciones']
@@ -227,7 +228,6 @@ NodeLocation: 360,176,1
 NodeSize: 72,24
 WindState: 2,0,0,720,350
 {!40300|Att_SlicerPopupSize: 227,64}
-Att_PrevIndexValue: ['Bosque_nativo','Plantaciones']
 
 Index Parametros
 Att_PrevIndexValue: ['Densidad','BEF','R','CF']
@@ -238,21 +238,21 @@ NodeSize: 72,24
 WindState: 2,0,0,720,350
 
 Index Cat_manejo
+Att_PrevIndexValue: ['Renovales','Plan_manejo','Parques_reservas','Plantaciones']
 Title: Cat_manejo
 Definition: ['Renovales','Plan_manejo','Parques_reservas','Plantaciones']
 NodeLocation: 360,120,1
 NodeSize: 56,24
 WindState: 2,0,0,720,350
 {!40300|Att_SlicerPopupSize: 287,80}
-Att_PrevIndexValue: ['Renovales','Plan_manejo','Parques_reservas','Plantaciones']
 
 Index VAR1
+Att_PrevIndexValue: ['Cte','L1.P','L1.BN']
 Title: VAR
 Definition: ['Cte','L1.P','L1.BN']
 NodeLocation: 360,240,1
 NodeSize: 48,24
 WindState: 2,0,0,720,350
-Att_PrevIndexValue: ['Cte','L1.P','L1.BN']
 
 Index Cat_manejo_BN
 Title: Cat_manejo_BN
@@ -262,12 +262,12 @@ NodeSize: 72,24
 WindState: 2,0,0,720,350
 
 Index Coef_cosP
+Att_PrevIndexValue: ['K','a','b','c','d','e']
 Title: Coef_cosP
 Definition: ['K','a','b','c','d','e']
 NodeLocation: 680,352,1
 NodeSize: 56,24
 WindState: 2,0,0,720,350
-Att_PrevIndexValue: ['K','a','b','c','d','e']
 
 Index Coef_cosN
 Title: Coef_cosN
@@ -309,13 +309,13 @@ WindState: 2,0,0,720,350
 {!40300|Att_SlicerPopupSize: 227,80}
 
 Index Cat_tierras_conv
+Att_PrevIndexValue: ['Tierras convertidas a BN','Tierras convertidas a plantaciones']
 Title: Cat_tierras conv
 Definition: ['Tierras convertidas a BN','Tierras convertidas a plantaciones']
 NodeLocation: 480,432,1
 NodeSize: 56,24
 WindState: 2,608,60,720,350
 {!40300|Att_SlicerPopupSize: 287,64}
-Att_PrevIndexValue: ['Tierras convertidas a BN','Tierras convertidas a plantaciones']
 
 Index Estrategias
 Title: Escenarios
@@ -525,6 +525,14 @@ Att_ResultSliceState: [pyparams,10,Sys_LocalIndex('Step'),1]
 Att_XRole: -1
 Att_ColorRole: Null
 
+Index Medidas_Nuevas
+Title: Medidas Nuevas
+Description: Medidas más allá de la NDC de Chile
+Definition: ['Medida Algas Pardas','Medida PMR menos papel','Medida Aumento Parques Reservas','Medida Forestacion aumentada','Medida Manejo aumentada']
+NodeLocation: 1232,664,1
+NodeSize: 48,24
+WindState: 2,0,0,720,350
+
 Close Indices
 
 Module Medidas_de_Mitigacio
@@ -541,7 +549,7 @@ Module Forestacion1
 Title: Forestación
 Author: diego
 Date: mié., dic. 16, 2020 10:23 p. m.
-NodeLocation: 264,64,1
+NodeLocation: 264,72,1
 NodeSize: 56,24
 DiagState: 2,0,3,835,665,17
 NodeColor: 1,26216,52427
@@ -1730,21 +1738,21 @@ WindState: 2,21,80,720,350
 Att_PrevIndexValue: ['Roundwood','Sawnwood','Wood-Based Panels','Paper + Paperboard','Wood Pulp + Rec Paper','Industrial Roundwood','Other Industrial Roundwood','Chips and particles','Wood charcoal','Wood residues']
 
 Index PMR_vida_media
+Att_PrevIndexValue: ['Solid Wood','Paper']
 Title: PMR vida media
 Definition: ['Solid Wood','Paper']
 NodeLocation: 104,808,1
 NodeSize: 48,24
 WindState: 2,0,0,720,350
-Att_PrevIndexValue: ['Solid Wood','Paper']
 
 Index Anos_Stock
+Att_PrevIndexValue: [1900,1901,1902,1903,1904,1905,1906,1907,1908,1909,1910,1911,1912,1913,1914,1915,1916,1917,1918,1919,1920,1921,1922,1923,1924,1925,1926,1927,1928,1929,1930,1931,1932,1933,1934,1935,1936,1937,1938,1939,1940,1941,1942,1943,1944,1945,1946,1947,1948,1949,1950,1951,1952,1953,1954,1955,1956,1957,1958,1959,1960,1961]
 Title: Años Stock
 Definition: Sequence(1900, 1961, 1)
 NodeLocation: 104,864,1
 NodeSize: 48,24
 WindState: 2,0,0,720,350
 ValueState: 2,40,50,400,300,0,MIDM
-Att_PrevIndexValue: [1900,1901,1902,1903,1904,1905,1906,1907,1908,1909,1910,1911,1912,1913,1914,1915,1916,1917,1918,1919,1920,1921,1922,1923,1924,1925,1926,1927,1928,1929,1930,1931,1932,1933,1934,1935,1936,1937,1938,1939,1940,1941,1942,1943,1944,1945,1946,1947,1948,1949,1950,1951,1952,1953,1954,1955,1956,1957,1958,1959,1960,1961]
 
 Text Te2046388227
 Title: Indices PMR
@@ -2846,12 +2854,12 @@ NodeSize: 56,24
 DiagState: 2,0,0,752,376,17
 
 Index Actividades_Forestac
+Att_PrevIndexValue: ['Plantación','Riego','Limpia zarzas','Anillado Arboles','Tala arboles']
 Title: Actividades Forestacion
 Definition: ['Plantación','Riego','Limpia zarzas','Anillado Arboles','Tala arboles']
 NodeLocation: 80,56,1
 NodeSize: 56,32
 WindState: 2,0,0,720,350
-Att_PrevIndexValue: ['Plantación','Riego','Limpia zarzas','Anillado Arboles','Tala arboles']
 
 Constant Valores_Act_Forestac
 Title: Valores Act Forestacion
@@ -2876,13 +2884,13 @@ ReformDef: [Actividades_Forestac,Cotizaciones]
 Att_EditSliceState: [Cat_tierras_conv,2,Cotizaciones,1,Actividades_Forestac,1]
 
 Index Cotizaciones
+Att_PrevIndexValue: ['Valor experto 1','Valor experto 2']
 Title: Cotizaciones
 Description: Cotizaciores entregadas por expertos
 Definition: ['Valor experto 1','Valor experto 2']
 NodeLocation: 80,136,1
 NodeSize: 56,24
 WindState: 2,0,0,720,350
-Att_PrevIndexValue: ['Valor experto 1','Valor experto 2']
 
 Variable CAPEX_Un_Forestacion
 Title: CAPEX Unitario Forestación
@@ -2941,13 +2949,13 @@ NodeSize: 48,32
 DiagState: 2,0,0,752,376,17
 
 Index Actividades_CAPEX_Pl
+Att_PrevIndexValue: ['Zanja Infiltración','Siembra Directa','Enriquecimiento ecologico','Senderos Vigilancia','Primer Control especies exoticas']
 Title: Actividades~
 CAPEX Plan de Manejo 
 Definition: ['Zanja Infiltración','Siembra Directa','Enriquecimiento ecologico','Senderos Vigilancia','Primer Control especies exoticas']
 NodeLocation: 72,144,1
 NodeSize: 56,40
 WindState: 2,0,0,720,350
-Att_PrevIndexValue: ['Zanja Infiltración','Siembra Directa','Enriquecimiento ecologico','Senderos Vigilancia','Primer Control especies exoticas']
 
 Index Actividades_OPEX_Pla
 Title: Actividades OPEX Plan de Manejo
@@ -3156,12 +3164,12 @@ WindState: 2,0,0,720,350
 ValueState: 2,40,50,400,300,0,MIDM
 
 Index Actividades_Medida_C
+Att_PrevIndexValue: ['Cortafuegos']
 Title: Actividades Medida CAPEX Dis Incendios
 Definition: ['Cortafuegos']
 NodeLocation: 96,64,1
 NodeSize: 56,40
 WindState: 2,0,0,720,350
-Att_PrevIndexValue: ['Cortafuegos']
 
 Constant Valor_CAPEX_Act_Dism
 Title: Valor CAPEX Act Disminucion Incendios
@@ -3340,12 +3348,12 @@ WindState: 2,0,0,720,350
 ValueState: 2,40,50,400,300,0,MIDM
 
 Index Actividades_CAPEX_PM
+Att_PrevIndexValue: ['Planta de celulosa','Aserradero']
 Title: Actividades CAPEX PMR
 Definition: ['Planta de celulosa','Aserradero']
 NodeLocation: 80,208,1
 NodeSize: 56,32
 WindState: 2,0,0,720,350
-Att_PrevIndexValue: ['Planta de celulosa','Aserradero']
 
 Index Actividades_OPEX_PMR
 Title: Actividades OPEX PMR
@@ -6805,7 +6813,7 @@ ValueState: 2,40,50,400,300,0,MIDM
 
 Variable Escenario_NDC_
 Title: Escenario NDC+
-Definition: var escenariomostrar:= pyparams_interface_C[time=2030,pyparams='Medida Forestacion aumentada'];~
+Definition: var escenariomostrar:= max(pyparams_interface_C[time=2030,pyparams=Medidas_Nuevas],Medidas_Nuevas);~
 if escenariomostrar>0 then 1 else 0
 NodeLocation: 896,168,1
 NodeSize: 48,24
