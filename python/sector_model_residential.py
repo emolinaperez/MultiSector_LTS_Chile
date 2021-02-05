@@ -20,6 +20,75 @@ def sm_residential(df_in, dict_sector_abv):
 
 	year = np.array(df_in["year"])  # vector years
 
+	# conversion factor to fuel price from fisic unit to US$/Tcal
+	fuel_price_coal_conversion = 142.9
+	fuel_price_natural_gas_conversion = 4000
+	fuel_price_diesel_conversion = 91.7
+
+	# ratio between diesel and other fuels to model correlation
+	ratio_fuel_price_diesel_gasoline = 1.75
+	ratio_fuel_price_diesel_fuel_oil = 0.69
+	ratio_fuel_price_diesel_kerosene = 0.72
+	ratio_fuel_price_diesel_kerosene_aviation = 1.1
+
+	# cost information
+	# Conversion of fuel price to express all in US$/Tcal and to be coherent with the fuel prices of other sectors
+	fuel_price_diesel = np.array(df_in["fuel_price_diesel"])
+	residential_fuel_price_diesel = fuel_price_diesel * fuel_price_diesel_conversion
+	fuel_price_natural_gas = np.array(df_in["fuel_price_natural_gas"])
+	residential_fuel_price_natural_gas = fuel_price_natural_gas * fuel_price_natural_gas_conversion
+	fuel_price_coal = np.array(df_in["fuel_price_coal"])
+	residential_fuel_price_coal = fuel_price_coal * fuel_price_coal_conversion
+
+	fuel_price_gasoline = residential_fuel_price_diesel * ratio_fuel_price_diesel_gasoline
+	fuel_price_fuel_oil = residential_fuel_price_diesel * ratio_fuel_price_diesel_fuel_oil
+	fuel_price_kerosene = residential_fuel_price_diesel * ratio_fuel_price_diesel_kerosene
+	fuel_price_kerosene_aviation = residential_fuel_price_diesel * ratio_fuel_price_diesel_kerosene_aviation
+
+	residential_fuel_price_coal = fuel_price_fuel_oil
+	residential_fuel_price_kerosene = fuel_price_kerosene
+	residential_fuel_price_gasoline = fuel_price_gasoline
+	residential_fuel_price_kerosene_aviation = fuel_price_kerosene_aviation
+
+	# cost information
+	residential_fuel_price_electric = np.array(df_in["industry_and_mining_fuel_price_electric"])
+	residential_fuel_price_biomass = np.array(df_in["industry_and_mining_fuel_price_biomass"])
+	residential_fuel_price_pliqgas = np.array(df_in["industry_and_mining_fuel_price_pliqgas"])
+	residential_fuel_price_solar = np.array(df_in["industry_and_mining_fuel_price_solar"])
+	residential_fuel_price_hydrogen = np.array(df_in["industry_and_mining_fuel_price_hydrogen"])
+
+
+	residential_investment_cost_heating_electric = np.array(df_in["residential_investment_cost_heating_electric"])
+	residential_investment_cost_heating_biomass = np.array(df_in["residential_investment_cost_heating_biomass"])
+	residential_investment_cost_heating_natural_gas = np.array(df_in["residential_investment_cost_heating_natural_gas"])
+	residential_investment_cost_heating_kerosene = np.array(df_in["residential_investment_cost_heating_kerosene"])
+	residential_investment_cost_heating_pliqgas = np.array(df_in["residential_investment_cost_heating_pliqgas"])
+	residential_investment_cost_heating_solar = np.array(df_in["residential_investment_cost_heating_solar"])
+	residential_investment_cost_heating_hydrogen = np.array(df_in["residential_investment_cost_heating_hydrogen"])
+	residential_investment_cost_cooking_electric = np.array(df_in["residential_investment_cost_cooking_electric"])
+	residential_investment_cost_cooking_biomass = np.array(df_in["residential_investment_cost_cooking_biomass"])
+	residential_investment_cost_cooking_natural_gas = np.array(df_in["residential_investment_cost_cooking_natural_gas"])
+	residential_investment_cost_cooking_kerosene = np.array(df_in["residential_investment_cost_cooking_kerosene"])
+	residential_investment_cost_cooking_pliqgas = np.array(df_in["residential_investment_cost_cooking_pliqgas"])
+	residential_investment_cost_cooking_solar = np.array(df_in["residential_investment_cost_cooking_solar"])
+	residential_investment_cost_cooking_hydrogen = np.array(df_in["residential_investment_cost_cooking_hydrogen"])
+	residential_investment_cost_pv_solar = np.array(df_in["residential_investment_cost_pv_solar"])
+	residential_investment_cost_electric_appliance = np.array(df_in["residential_investment_cost_electric_appliance"])
+	residential_investment_cost_acs_electric = np.array(df_in["residential_investment_cost_acs_electric"])
+	residential_investment_cost_acs_biomass = np.array(df_in["residential_investment_cost_acs_biomass"])
+	residential_investment_cost_acs_natural_gas = np.array(df_in["residential_investment_cost_acs_natural_gas"])
+	residential_investment_cost_acs_kerosene = np.array(df_in["residential_investment_cost_acs_kerosene"])
+	residential_investment_cost_acs_pliqgas = np.array(df_in["residential_investment_cost_acs_pliqgas"])
+	residential_investment_cost_acs_solar = np.array(df_in["residential_investment_cost_acs_solar"])
+	residential_investment_cost_acs_hydrogen = np.array(df_in["residential_investment_cost_acs_hydrogen"])
+
+	residential_investment_cost_retrofit_house = np.array(df_in["residential_investment_cost_retrofit_house"])
+	residential_investment_cost_retrofit_apartment = np.array(df_in["residential_investment_cost_retrofit_apartment"])
+	residential_retrofit_house = np.array(df_in["residential_retrofit_house"])
+	residential_retrofit_apartment = np.array(df_in["residential_retrofit_apartment"])
+	residential_retrofit_energy_reduction_house = np.array(df_in["residential_retrofit_energy_reduction_house"])
+	residential_retrofit_energy_reduction_apartment = np.array(df_in["residential_retrofit_energy_reduction_apartment"])
+
 	# Read input parameters defined in parameter_ranges.csv
 	total_population = np.array(df_in["poblacion"])
 	residential_occ_rate = np.array(df_in["residential_occ_rate"])
@@ -101,36 +170,6 @@ def sm_residential(df_in, dict_sector_abv):
 	residential_efficiency_acs_solar = np.array(df_in["residential_efficiency_acs_solar"])
 	residential_efficiency_acs_hydrogen = np.array(df_in["residential_efficiency_acs_hydrogen"])
 	residential_efficiency_electric_appliance = np.array(df_in["residential_efficiency_electric_appliance"])
-	residential_investment_cost_heating_electric = np.array(df_in["residential_investment_cost_heating_electric"])
-	residential_investment_cost_heating_biomass = np.array(df_in["residential_investment_cost_heating_biomass"])
-	residential_investment_cost_heating_natural_gas = np.array(df_in["residential_investment_cost_heating_natural_gas"])
-	residential_investment_cost_heating_kerosene = np.array(df_in["residential_investment_cost_heating_kerosene"])
-	residential_investment_cost_heating_pliqgas = np.array(df_in["residential_investment_cost_heating_pliqgas"])
-	residential_investment_cost_heating_solar = np.array(df_in["residential_investment_cost_heating_solar"])
-	residential_investment_cost_heating_hydrogen = np.array(df_in["residential_investment_cost_heating_hydrogen"])
-	residential_investment_cost_cooking_electric = np.array(df_in["residential_investment_cost_cooking_electric"])
-	residential_investment_cost_cooking_biomass = np.array(df_in["residential_investment_cost_cooking_biomass"])
-	residential_investment_cost_cooking_natural_gas = np.array(df_in["residential_investment_cost_cooking_natural_gas"])
-	residential_investment_cost_cooking_kerosene = np.array(df_in["residential_investment_cost_cooking_kerosene"])
-	residential_investment_cost_cooking_pliqgas = np.array(df_in["residential_investment_cost_cooking_pliqgas"])
-	residential_investment_cost_cooking_solar = np.array(df_in["residential_investment_cost_cooking_solar"])
-	residential_investment_cost_cooking_hydrogen = np.array(df_in["residential_investment_cost_cooking_hydrogen"])
-	residential_investment_cost_pv_solar = np.array(df_in["residential_investment_cost_pv_solar"])
-	residential_investment_cost_electric_appliance = np.array(df_in["residential_investment_cost_electric_appliance"])
-	residential_investment_cost_acs_electric = np.array(df_in["residential_investment_cost_acs_electric"])
-	residential_investment_cost_acs_biomass = np.array(df_in["residential_investment_cost_acs_biomass"])
-	residential_investment_cost_acs_natural_gas = np.array(df_in["residential_investment_cost_acs_natural_gas"])
-	residential_investment_cost_acs_kerosene = np.array(df_in["residential_investment_cost_acs_kerosene"])
-	residential_investment_cost_acs_pliqgas = np.array(df_in["residential_investment_cost_acs_pliqgas"])
-	residential_investment_cost_acs_solar = np.array(df_in["residential_investment_cost_acs_solar"])
-	residential_investment_cost_acs_hydrogen = np.array(df_in["residential_investment_cost_acs_hydrogen"])
-	residential_fuel_price_electric = np.array(df_in["residential_fuel_price_electric"])
-	residential_fuel_price_biomass = np.array(df_in["residential_fuel_price_biomass"])
-	residential_fuel_price_natural_gas = np.array(df_in["residential_fuel_price_natural_gas"])
-	residential_fuel_price_kerosene = np.array(df_in["residential_fuel_price_kerosene"])
-	residential_fuel_price_pliqgas = np.array(df_in["residential_fuel_price_pliqgas"])
-	residential_fuel_price_solar = np.array(df_in["residential_fuel_price_solar"])
-	residential_fuel_price_hydrogen = np.array(df_in["residential_fuel_price_hydrogen"])
 	residential_emission_fact_natural_gas = np.array(df_in["residential_emission_fact_natural_gas"])
 	residential_emission_fact_kerosene = np.array(df_in["residential_emission_fact_kerosene"])
 	residential_emission_fact_pliqgas = np.array(df_in["residential_emission_fact_pliqgas"])
@@ -139,22 +178,28 @@ def sm_residential(df_in, dict_sector_abv):
 	residential_house = total_population / residential_occ_rate * residential_share_household_house
 	residential_apartment = total_population / residential_occ_rate * residential_share_household_apartment
 
+	residential_house_intensity_heating_with_retrofit = ((residential_house - residential_retrofit_house)*residential_house_intensity_heating+residential_retrofit_house*(1-residential_retrofit_energy_reduction_house))/residential_house
+	residential_apartment_intensity_heating_with_retrofit = ((residential_apartment - residential_retrofit_apartment) * residential_apartment_intensity_heating + residential_retrofit_apartment * (1 - residential_retrofit_energy_reduction_apartment))/residential_apartment
+
+	residential_retrofit_house_additional = model_delta_capacity(year, residential_retrofit_house)
+	residential_retrofit_apartment_additional= model_delta_capacity(year, residential_retrofit_apartment)
+
 	#demand
 	#heating
-	residential_dem_house_heating_electric = residential_house*residential_house_intensity_heating*residential_house_heating_electric/residential_efficiency_heating_electric/1000
-	residential_dem_house_heating_biomass = residential_house*residential_house_intensity_heating*residential_house_heating_biomass/residential_efficiency_heating_biomass/1000
-	residential_dem_house_heating_natural_gas = residential_house*residential_house_intensity_heating*residential_house_heating_natural_gas/residential_efficiency_heating_natural_gas/1000
-	residential_dem_house_heating_kerosene = residential_house*residential_house_intensity_heating*residential_house_heating_kerosene/residential_efficiency_heating_kerosene/1000
-	residential_dem_house_heating_pliqgas = residential_house*residential_house_intensity_heating*residential_house_heating_pliqgas/residential_efficiency_heating_pliqgas/1000
-	residential_dem_house_heating_solar = residential_house*residential_house_intensity_heating*residential_house_heating_solar/residential_efficiency_heating_solar/1000
-	residential_dem_house_heating_hydrogen = residential_house*residential_house_intensity_heating*residential_house_heating_hydrogen/residential_efficiency_heating_hydrogen/1000
-	residential_dem_apartment_heating_electric = residential_apartment * residential_apartment_intensity_heating * residential_apartment_heating_electric / residential_efficiency_heating_electric / 1000
-	residential_dem_apartment_heating_biomass = residential_apartment * residential_apartment_intensity_heating * residential_apartment_heating_biomass / residential_efficiency_heating_biomass / 1000
-	residential_dem_apartment_heating_natural_gas = residential_apartment * residential_apartment_intensity_heating * residential_apartment_heating_natural_gas / residential_efficiency_heating_natural_gas / 1000
-	residential_dem_apartment_heating_kerosene = residential_apartment * residential_apartment_intensity_heating * residential_apartment_heating_kerosene / residential_efficiency_heating_kerosene / 1000
-	residential_dem_apartment_heating_pliqgas = residential_apartment * residential_apartment_intensity_heating * residential_apartment_heating_pliqgas / residential_efficiency_heating_pliqgas / 1000
-	residential_dem_apartment_heating_solar = residential_apartment * residential_apartment_intensity_heating * residential_apartment_heating_solar / residential_efficiency_heating_solar / 1000
-	residential_dem_apartment_heating_hydrogen = residential_apartment * residential_apartment_intensity_heating * residential_apartment_heating_hydrogen / residential_efficiency_heating_hydrogen / 1000
+	residential_dem_house_heating_electric = residential_house*residential_house_intensity_heating_with_retrofit*residential_house_heating_electric/residential_efficiency_heating_electric/1000
+	residential_dem_house_heating_biomass = residential_house*residential_house_intensity_heating_with_retrofit*residential_house_heating_biomass/residential_efficiency_heating_biomass/1000
+	residential_dem_house_heating_natural_gas = residential_house*residential_house_intensity_heating_with_retrofit*residential_house_heating_natural_gas/residential_efficiency_heating_natural_gas/1000
+	residential_dem_house_heating_kerosene = residential_house*residential_house_intensity_heating_with_retrofit*residential_house_heating_kerosene/residential_efficiency_heating_kerosene/1000
+	residential_dem_house_heating_pliqgas = residential_house*residential_house_intensity_heating_with_retrofit*residential_house_heating_pliqgas/residential_efficiency_heating_pliqgas/1000
+	residential_dem_house_heating_solar = residential_house*residential_house_intensity_heating_with_retrofit*residential_house_heating_solar/residential_efficiency_heating_solar/1000
+	residential_dem_house_heating_hydrogen = residential_house*residential_house_intensity_heating_with_retrofit*residential_house_heating_hydrogen/residential_efficiency_heating_hydrogen/1000
+	residential_dem_apartment_heating_electric = residential_apartment * residential_apartment_intensity_heating_with_retrofit * residential_apartment_heating_electric / residential_efficiency_heating_electric / 1000
+	residential_dem_apartment_heating_biomass = residential_apartment * residential_apartment_intensity_heating_with_retrofit * residential_apartment_heating_biomass / residential_efficiency_heating_biomass / 1000
+	residential_dem_apartment_heating_natural_gas = residential_apartment * residential_apartment_intensity_heating_with_retrofit * residential_apartment_heating_natural_gas / residential_efficiency_heating_natural_gas / 1000
+	residential_dem_apartment_heating_kerosene = residential_apartment * residential_apartment_intensity_heating_with_retrofit * residential_apartment_heating_kerosene / residential_efficiency_heating_kerosene / 1000
+	residential_dem_apartment_heating_pliqgas = residential_apartment * residential_apartment_intensity_heating_with_retrofit * residential_apartment_heating_pliqgas / residential_efficiency_heating_pliqgas / 1000
+	residential_dem_apartment_heating_solar = residential_apartment * residential_apartment_intensity_heating_with_retrofit * residential_apartment_heating_solar / residential_efficiency_heating_solar / 1000
+	residential_dem_apartment_heating_hydrogen = residential_apartment * residential_apartment_intensity_heating_with_retrofit * residential_apartment_heating_hydrogen / residential_efficiency_heating_hydrogen / 1000
 
 	residential_dem_heating_electric = residential_dem_house_heating_electric+residential_dem_apartment_heating_electric
 	residential_dem_heating_biomass = residential_dem_house_heating_biomass+residential_dem_apartment_heating_biomass
@@ -349,8 +394,12 @@ def sm_residential(df_in, dict_sector_abv):
 
 	residential_CAPEX_electric_appliance_electric = residential_delta_capacity_electric_appliance_electric*residential_investment_cost_electric_appliance/(10**3)
 
+	#CAPEX retrofit
+	residential_CAPEX_retrofit=(residential_retrofit_house_additional*residential_investment_cost_retrofit_house + residential_retrofit_apartment_additional*residential_investment_cost_retrofit_apartment) / (10 ** 6)
+
+
 	#total CAPEX
-	residential_CAPEX = residential_CAPEX_heating+residential_CAPEX_cooking+residential_CAPEX_acs+residential_CAPEX_electric_appliance_electric
+	residential_CAPEX = residential_CAPEX_heating+residential_CAPEX_cooking+residential_CAPEX_acs+residential_CAPEX_electric_appliance_electric+residential_CAPEX_retrofit
 
 	##################################################################################################################
 	dict_emission = {"residential": residential_emission}

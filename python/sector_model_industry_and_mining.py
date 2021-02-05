@@ -21,21 +21,47 @@ def sm_industry_and_mining(df_in, dict_sector_abv):
 	# Common parameters
 	share_electric_grid_to_hydrogen = np.array(df_in["share_electric_grid_to_hydrogen"])
 	electrolyzer_efficiency = np.array(df_in["electrolyzer_efficiency"])
+	other_industries_plant_factor_sst = np.array(df_in["iron_plant_factor_sst"])
 
 	year = np.array(df_in["year"])  # vector years
 
+	# conversion factor to fuel price from fisic unit to US$/Tcal
+	fuel_price_coal_conversion = 142.9
+	fuel_price_natural_gas_conversion = 4000
+	fuel_price_diesel_conversion = 91.7
+
+	# ratio between diesel and other fuels to model correlation
+	ratio_fuel_price_diesel_gasoline = 1.75
+	ratio_fuel_price_diesel_fuel_oil = 0.69
+	ratio_fuel_price_diesel_kerosene = 0.72
+	ratio_fuel_price_diesel_kerosene_aviation = 1.1
+
 	#cost information
-	industry_and_mining_fuel_price_diesel = np.array(df_in["industry_and_mining_fuel_price_diesel"])
-	industry_and_mining_fuel_price_natural_gas = np.array(df_in["industry_and_mining_fuel_price_natural_gas"])
+	#Conversion of fuel price to express all in US$/Tcal and to be coherent with the fuel prices of other sectors
+	fuel_price_diesel = np.array(df_in["fuel_price_diesel"])
+	industry_and_mining_fuel_price_diesel = fuel_price_diesel*fuel_price_diesel_conversion
+	fuel_price_natural_gas = np.array(df_in["fuel_price_natural_gas"])
+	industry_and_mining_fuel_price_natural_gas = fuel_price_natural_gas*fuel_price_natural_gas_conversion
+	fuel_price_coal = np.array(df_in["fuel_price_coal"])
+	industry_and_mining_fuel_price_coal = fuel_price_coal*fuel_price_coal_conversion
+
+	fuel_price_gasoline = industry_and_mining_fuel_price_diesel*ratio_fuel_price_diesel_gasoline
+	fuel_price_fuel_oil = industry_and_mining_fuel_price_diesel*ratio_fuel_price_diesel_fuel_oil
+	fuel_price_kerosene = industry_and_mining_fuel_price_diesel*ratio_fuel_price_diesel_kerosene
+	fuel_price_kerosene_aviation = industry_and_mining_fuel_price_diesel * ratio_fuel_price_diesel_kerosene_aviation
+
+	industry_and_mining_fuel_price_fuel_oil = fuel_price_fuel_oil
+	industry_and_mining_fuel_price_kerosene = fuel_price_kerosene
+	industry_and_mining_fuel_price_gasoline = fuel_price_gasoline
+	industry_and_mining_fuel_price_kerosene_aviation = fuel_price_kerosene_aviation
+
 	industry_and_mining_fuel_price_electric = np.array(df_in["industry_and_mining_fuel_price_electric"])
-	industry_and_mining_fuel_price_coal = np.array(df_in["industry_and_mining_fuel_price_coal"])
 	industry_and_mining_fuel_price_coke = np.array(df_in["industry_and_mining_fuel_price_coke"])
 	industry_and_mining_fuel_price_biomass = np.array(df_in["industry_and_mining_fuel_price_biomass"])
 	industry_and_mining_fuel_price_solar = np.array(df_in["industry_and_mining_fuel_price_solar"])
 	industry_and_mining_fuel_price_hydrogen = np.array(df_in["industry_and_mining_fuel_price_hydrogen"])
 	industry_and_mining_fuel_price_pliqgas = np.array(df_in["industry_and_mining_fuel_price_pliqgas"])
-	industry_and_mining_fuel_price_kerosene = np.array(df_in["industry_and_mining_fuel_price_kerosene"])
-	industry_and_mining_fuel_price_fuel_oil = np.array(df_in["industry_and_mining_fuel_price_fuel_oil"])
+
 	industry_and_mining_investment_cost_motor_diesel = np.array(df_in["industry_and_mining_investment_cost_motor_diesel"])
 	industry_and_mining_investment_cost_motor_pliqgas = np.array(df_in["industry_and_mining_investment_cost_motor_pliqgas"])
 	industry_and_mining_investment_cost_motor_electric = np.array(df_in["industry_and_mining_investment_cost_motor_electric"])
@@ -249,7 +275,7 @@ def sm_industry_and_mining(df_in, dict_sector_abv):
 	copper_capacity_heat_hydrogen = copper_dem_heat_hydrogen * fact2 * 10 ** 3 / copper_activity_heat
 	copper_capacity_heat_natural_gas = copper_dem_heat_natural_gas * fact2 * 10 ** 3 / copper_activity_heat
 	copper_capacity_heat_plqgas = copper_dem_heat_plqgas * fact2 * 10 ** 3 / copper_activity_heat
-	copper_capacity_heat_solar = copper_dem_heat_solar * fact2 * 10 ** 3 / copper_activity_heat
+	copper_capacity_heat_solar = copper_dem_heat_solar * fact2 * 10 ** 3 / (8760*other_industries_plant_factor_sst)
 
 	copper_capacity_heat_diesel = model_capacity(year, copper_capacity_heat_diesel)
 	copper_capacity_heat_electricitiy = model_capacity(year, copper_capacity_heat_electricitiy)
@@ -389,7 +415,7 @@ def sm_industry_and_mining(df_in, dict_sector_abv):
 	pulp_capacity_motor_hydrogen = pulp_dem_motor_hydrogen * fact2 * (10 ** 3) / pulp_activity_motor
 	pulp_capacity_heat_coal = pulp_dem_heat_coal * fact2 * (10 ** 3) / pulp_activity_heat
 	pulp_capacity_heat_electric = pulp_dem_heat_electric * fact2 * (10 ** 3) / pulp_activity_heat
-	pulp_capacity_heat_solar = pulp_dem_heat_solar * fact2 * (10 ** 3) / pulp_activity_heat
+	pulp_capacity_heat_solar = pulp_dem_heat_solar * fact2 * (10 ** 3) / (8760*other_industries_plant_factor_sst)
 	pulp_capacity_heat_pliqgas = pulp_dem_heat_pliqgas * fact2 * (10 ** 3) / pulp_activity_heat
 	pulp_capacity_heat_natural_gas = pulp_dem_heat_natural_gas * fact2 * (10 ** 3) / pulp_activity_heat
 	pulp_capacity_heat_biomass = pulp_dem_heat_biomass * fact2 * (10 ** 3) / pulp_activity_heat
@@ -521,6 +547,7 @@ def sm_industry_and_mining(df_in, dict_sector_abv):
 	other_industries_activity_other = np.array(df_in["other_industries_activity_other"])
 	other_industries_activity_heat = np.array(df_in["other_industries_activity_heat"])
 
+
 	#
 	other_industries_total_demand = dem_other_industries(year, growth_rate_gdp, other_industries_elasticity)
 	other_industries_useful_energy = other_industries_total_demand * other_industries_rate_useful_energy
@@ -577,7 +604,7 @@ def sm_industry_and_mining(df_in, dict_sector_abv):
 	other_industries_capacity_motor_hydrogen = other_industries_dem_motor_hydrogen * fact2 * (10 ** 3) / other_industries_activity_motor
 	other_industries_capacity_heat_coal = other_industries_dem_heat_coal * fact2 * (10 ** 3) / other_industries_activity_heat
 	other_industries_capacity_heat_electric = other_industries_dem_heat_electric * fact2 * (10 ** 3) / other_industries_activity_heat
-	other_industries_capacity_heat_solar = other_industries_dem_heat_solar * fact2 * (10 ** 3) / other_industries_activity_heat
+	other_industries_capacity_heat_solar = other_industries_dem_heat_solar * fact2 * (10 ** 3) / (8760*other_industries_plant_factor_sst)
 	other_industries_capacity_heat_pliqgas = other_industries_dem_heat_pliqgas * fact2 * (10 ** 3) / other_industries_activity_heat
 	other_industries_capacity_heat_natural_gas = other_industries_dem_heat_natural_gas * fact2 * (10 ** 3) / other_industries_activity_heat
 	other_industries_capacity_heat_biomass = other_industries_dem_heat_biomass * fact2 * (10 ** 3) / other_industries_activity_heat
@@ -755,7 +782,7 @@ def sm_industry_and_mining(df_in, dict_sector_abv):
 	other_mining_capacity_motor_hydrogen = other_mining_dem_motor_hydrogen * fact2 * (10 ** 3) / other_mining_activity_motor
 	other_mining_capacity_heat_coal = other_mining_dem_heat_coal * fact2 * (10 ** 3) / other_mining_activity_heat
 	other_mining_capacity_heat_electric = other_mining_dem_heat_electric * fact2 * (10 ** 3) / other_mining_activity_heat
-	other_mining_capacity_heat_solar = other_mining_dem_heat_solar * fact2 * (10 ** 3) / other_mining_activity_heat
+	other_mining_capacity_heat_solar = other_mining_dem_heat_solar * fact2 * (10 ** 3) / (8760*other_mining_plant_factor_sst)
 	other_mining_capacity_heat_pliqgas = other_mining_dem_heat_pliqgas * fact2 * (10 ** 3) / other_mining_activity_heat
 	other_mining_capacity_heat_natural_gas = other_mining_dem_heat_natural_gas * fact2 * (10 ** 3) / other_mining_activity_heat
 	other_mining_capacity_heat_biomass = other_mining_dem_heat_biomass * fact2 * (10 ** 3) / other_mining_activity_heat
@@ -943,7 +970,7 @@ def sm_industry_and_mining(df_in, dict_sector_abv):
 	steel_capacity_heat_coal = steel_dem_heat_coal * fact2 * (10 ** 3) / steel_activity_heat
 	steel_capacity_heat_coke = steel_dem_heat_coke * fact2 * (10 ** 3) / steel_activity_heat
 	steel_capacity_heat_electric = steel_dem_heat_electric * fact2 * (10 ** 3) / steel_activity_heat
-	steel_capacity_heat_solar = steel_dem_heat_solar * fact2 * (10 ** 3) / steel_activity_heat
+	steel_capacity_heat_solar = steel_dem_heat_solar * fact2 * (10 ** 3) / (8760*other_industries_plant_factor_sst)
 	steel_capacity_heat_pliqgas = steel_dem_heat_pliqgas * fact2 * (10 ** 3) / steel_activity_heat
 	steel_capacity_heat_natural_gas = steel_dem_heat_natural_gas * fact2 * (10 ** 3) / steel_activity_heat
 	steel_capacity_heat_biomass = steel_dem_heat_biomass * fact2 * (10 ** 3) / steel_activity_heat
@@ -1137,7 +1164,7 @@ def sm_industry_and_mining(df_in, dict_sector_abv):
 	iron_capacity_heat_coal = iron_dem_heat_coal * fact2 * (10 ** 3) / iron_activity_heat
 	iron_capacity_heat_coke = iron_dem_heat_coke * fact2 * (10 ** 3) / iron_activity_heat
 	iron_capacity_heat_electric = iron_dem_heat_electric * fact2 * (10 ** 3) / iron_activity_heat
-	iron_capacity_heat_solar = iron_dem_heat_solar * fact2 * (10 ** 3) / iron_activity_heat
+	iron_capacity_heat_solar = iron_dem_heat_solar * fact2 * (10 ** 3) / (8760*other_industries_plant_factor_sst)
 	iron_capacity_heat_pliqgas = iron_dem_heat_pliqgas * fact2 * (10 ** 3) / iron_activity_heat
 	iron_capacity_heat_natural_gas = iron_dem_heat_natural_gas * fact2 * (10 ** 3) / iron_activity_heat
 	iron_capacity_heat_biomass = iron_dem_heat_biomass * fact2 * (10 ** 3) / iron_activity_heat

@@ -22,6 +22,60 @@ def sm_commercial(df_in, dict_sector_abv):
 	share_electric_grid_to_hydrogen = np.array(df_in["share_electric_grid_to_hydrogen"])
 	electrolyzer_efficiency = np.array(df_in["electrolyzer_efficiency"])
 
+	# conversion factor to fuel price from fisic unit to US$/Tcal
+	fuel_price_coal_conversion = 142.9
+	fuel_price_natural_gas_conversion = 4000
+	fuel_price_diesel_conversion = 91.7
+
+	# ratio between diesel and other fuels to model correlation
+	ratio_fuel_price_diesel_gasoline = 1.75
+	ratio_fuel_price_diesel_fuel_oil = 0.69
+	ratio_fuel_price_diesel_kerosene = 0.72
+	ratio_fuel_price_diesel_kerosene_aviation = 1.1
+
+	# cost information
+	# Conversion of fuel price to express all in US$/Tcal and to be coherent with the fuel prices of other sectors
+	fuel_price_diesel = np.array(df_in["fuel_price_diesel"])
+	commercial_fuel_price_diesel = fuel_price_diesel * fuel_price_diesel_conversion
+	fuel_price_natural_gas = np.array(df_in["fuel_price_natural_gas"])
+	commercial_fuel_price_natural_gas = fuel_price_natural_gas * fuel_price_natural_gas_conversion
+	fuel_price_coal = np.array(df_in["fuel_price_coal"])
+	commercial_fuel_price_coal = fuel_price_coal * fuel_price_coal_conversion
+
+	fuel_price_gasoline = commercial_fuel_price_diesel * ratio_fuel_price_diesel_gasoline
+	fuel_price_fuel_oil = commercial_fuel_price_diesel * ratio_fuel_price_diesel_fuel_oil
+	fuel_price_kerosene = commercial_fuel_price_diesel * ratio_fuel_price_diesel_kerosene
+	fuel_price_kerosene_aviation = commercial_fuel_price_diesel * ratio_fuel_price_diesel_kerosene_aviation
+
+	commercial_fuel_price_coal = fuel_price_fuel_oil
+	commercial_fuel_price_kerosene = fuel_price_kerosene
+	commercial_fuel_price_gasoline = fuel_price_gasoline
+	commercial_fuel_price_kerosene_aviation = fuel_price_kerosene_aviation
+
+	# cost information
+	commercial_fuel_price_electric = np.array(df_in["industry_and_mining_fuel_price_electric"])
+	commercial_fuel_price_biomass = np.array(df_in["industry_and_mining_fuel_price_biomass"])
+	commercial_fuel_price_pliqgas = np.array(df_in["industry_and_mining_fuel_price_pliqgas"])
+	commercial_fuel_price_solar = np.array(df_in["industry_and_mining_fuel_price_solar"])
+	commercial_fuel_price_hydrogen = np.array(df_in["industry_and_mining_fuel_price_hydrogen"])
+
+	# cost information
+	commercial_investment_cost_ACS_natural_gas = np.array(df_in["commercial_investment_cost_acs_natural_gas"])
+	commercial_investment_cost_ACS_pliqgas = np.array(df_in["commercial_investment_cost_acs_pliqgas"])
+	commercial_investment_cost_ACS_diesel = np.array(df_in["commercial_investment_cost_acs_diesel"])
+	commercial_investment_cost_heating_natural_gas = np.array(df_in["commercial_investment_cost_heating_natural_gas"])
+	commercial_investment_cost_heating_pliqgas = np.array(df_in["commercial_investment_cost_heating_pliqgas"])
+	commercial_investment_cost_heating_diesel = np.array(df_in["commercial_investment_cost_heating_diesel"])
+	commercial_investment_cost_heating_electric = np.array(df_in["commercial_investment_cost_heating_electric"])
+	commercial_investment_cost_motive_electric = np.array(df_in["commercial_investment_cost_motive_electric"])
+	commercial_investment_cost_other_natural_gas = np.array(df_in["commercial_investment_cost_other_natural_gas"])
+	commercial_investment_cost_other_pliqgas = np.array(df_in["commercial_investment_cost_other_pliqgas"])
+	commercial_investment_cost_other_diesel = np.array(df_in["commercial_investment_cost_other_diesel"])
+	commercial_investment_cost_other_electric = np.array(df_in["commercial_investment_cost_other_electric"])
+	commercial_investment_cost_other_biomass = np.array(df_in["commercial_investment_cost_other_biomass"])
+	commercial_investment_cost_other_kerosene = np.array(df_in["commercial_investment_cost_other_kerosene"])
+	commercial_investment_cost_other_gas = np.array(df_in["commercial_investment_cost_other_gas"])
+
 	# Read input parameters defined in parameter_ranges.csv
 	gdp = np.array(df_in["pib"]) * np.array(df_in["pib_scalar_transport"])
 	growth_rate_gdp = np.array(df_in["gr_pib"])
@@ -71,29 +125,7 @@ def sm_commercial(df_in, dict_sector_abv):
 	commercial_emission_fact_natural_gas = np.array(df_in["commercial_emission_fact_natural_gas"])
 	commercial_emission_fact_pliqgas = np.array(df_in["commercial_emission_fact_pliqgas"])
 	commercial_emission_fact_kerosene = np.array(df_in["commercial_emission_fact_kerosene"])
-	commercial_fuel_price_electric = np.array(df_in["commercial_fuel_price_electric"])
-	commercial_fuel_price_biomass = np.array(df_in["commercial_fuel_price_biomass"])
-	commercial_fuel_price_natural_gas = np.array(df_in["commercial_fuel_price_natural_gas"])
-	commercial_fuel_price_kerosene = np.array(df_in["commercial_fuel_price_kerosene"])
-	commercial_fuel_price_pliqgas = np.array(df_in["commercial_fuel_price_pliqgas"])
-	commercial_fuel_price_diesel = np.array(df_in["commercial_fuel_price_diesel"])
-	commercial_fuel_price_solar = np.array(df_in["commercial_fuel_price_solar"])
-	commercial_fuel_price_hydrogen = np.array(df_in["commercial_fuel_price_hydrogen"])
-	commercial_investment_cost_ACS_natural_gas = np.array(df_in["commercial_investment_cost_acs_natural_gas"])
-	commercial_investment_cost_ACS_pliqgas = np.array(df_in["commercial_investment_cost_acs_pliqgas"])
-	commercial_investment_cost_ACS_diesel = np.array(df_in["commercial_investment_cost_acs_diesel"])
-	commercial_investment_cost_heating_natural_gas = np.array(df_in["commercial_investment_cost_heating_natural_gas"])
-	commercial_investment_cost_heating_pliqgas = np.array(df_in["commercial_investment_cost_heating_pliqgas"])
-	commercial_investment_cost_heating_diesel = np.array(df_in["commercial_investment_cost_heating_diesel"])
-	commercial_investment_cost_heating_electric = np.array(df_in["commercial_investment_cost_heating_electric"])
-	commercial_investment_cost_motive_electric = np.array(df_in["commercial_investment_cost_motive_electric"])
-	commercial_investment_cost_other_natural_gas = np.array(df_in["commercial_investment_cost_other_natural_gas"])
-	commercial_investment_cost_other_pliqgas = np.array(df_in["commercial_investment_cost_other_pliqgas"])
-	commercial_investment_cost_other_diesel = np.array(df_in["commercial_investment_cost_other_diesel"])
-	commercial_investment_cost_other_electric = np.array(df_in["commercial_investment_cost_other_electric"])
-	commercial_investment_cost_other_biomass = np.array(df_in["commercial_investment_cost_other_biomass"])
-	commercial_investment_cost_other_kerosene = np.array(df_in["commercial_investment_cost_other_kerosene"])
-	commercial_investment_cost_other_gas = np.array(df_in["commercial_investment_cost_other_gas"])
+
 
 	# calculate demand in Tcal as function of GDP
 	# commercial_demand = np.exp(alfa+beta*np.log(gdp))
@@ -146,17 +178,17 @@ def sm_commercial(df_in, dict_sector_abv):
 	commercial_capacity_ACS_pliqgas = commercial_dem_ACS_pliqgas * fact2 * (10 ** 3) / commercial_activity_ACS
 	commercial_capacity_ACS_diesel = commercial_dem_ACS_diesel * fact2 * (10 ** 3) / commercial_activity_ACS
 	commercial_capacity_heating_natural_gas = commercial_dem_heating_natural_gas * fact2 * (10 ** 3) / commercial_activity_heating
-	commercial_capacity_heating_pliqgas = commercial_dem_heating_pliqgas * fact2 * (10 ** 3) / commercial_activity_ACS
-	commercial_capacity_heating_diesel = commercial_dem_heating_diesel * fact2 * (10 ** 3) / commercial_activity_ACS
-	commercial_capacity_heating_electric = commercial_dem_heating_electric * fact2 * (10 ** 3) / commercial_activity_ACS
-	commercial_capacity_motive_electric = commercial_dem_motive_electric * fact2 * (10 ** 3) / commercial_activity_other
-	commercial_capacity_other_natural_gas = commercial_dem_other_natural_gas * fact2 * (10 ** 3) / commercial_activity_ACS
-	commercial_capacity_other_pliqgas = commercial_dem_other_pliqgas * fact2 * (10 ** 3) / commercial_activity_ACS
-	commercial_capacity_other_diesel = commercial_dem_other_diesel * fact2 * (10 ** 3) / commercial_activity_ACS
-	commercial_capacity_other_electric = commercial_dem_other_electric * fact2 * (10 ** 3) / commercial_activity_ACS
-	commercial_capacity_other_biomass = commercial_dem_other_biomass * fact2 * (10 ** 3) / commercial_activity_ACS
-	commercial_capacity_other_kerosene = commercial_dem_other_kerosene * fact2 * (10 ** 3) / commercial_activity_ACS
-	commercial_capacity_other_gas = commercial_dem_other_gas * fact2 * (10 ** 3) / commercial_activity_ACS
+	commercial_capacity_heating_pliqgas = commercial_dem_heating_pliqgas * fact2 * (10 ** 3) / commercial_activity_heating
+	commercial_capacity_heating_diesel = commercial_dem_heating_diesel * fact2 * (10 ** 3) / commercial_activity_heating
+	commercial_capacity_heating_electric = commercial_dem_heating_electric * fact2 * (10 ** 3) / commercial_activity_heating
+	commercial_capacity_motive_electric = commercial_dem_motive_electric * fact2 * (10 ** 3) / commercial_activity_motive
+	commercial_capacity_other_natural_gas = commercial_dem_other_natural_gas * fact2 * (10 ** 3) / commercial_activity_other
+	commercial_capacity_other_pliqgas = commercial_dem_other_pliqgas * fact2 * (10 ** 3) / commercial_activity_other
+	commercial_capacity_other_diesel = commercial_dem_other_diesel * fact2 * (10 ** 3) / commercial_activity_other
+	commercial_capacity_other_electric = commercial_dem_other_electric * fact2 * (10 ** 3) / commercial_activity_other
+	commercial_capacity_other_biomass = commercial_dem_other_biomass * fact2 * (10 ** 3) / commercial_activity_other
+	commercial_capacity_other_kerosene = commercial_dem_other_kerosene * fact2 * (10 ** 3) / commercial_activity_other
+	commercial_capacity_other_gas = commercial_dem_other_gas * fact2 * (10 ** 3) /commercial_activity_other
 
 	commercial_capacity_ACS_natural_gas = model_capacity(year, commercial_capacity_ACS_natural_gas)
 	commercial_capacity_ACS_pliqgas = model_capacity(year, commercial_capacity_ACS_pliqgas)
