@@ -76,7 +76,7 @@ Date: mié., ago. 26, 2020 12:20 a. m.
 DiagState: 2,0,0,752,376,17
 WindState: 2,0,0,720,350
 FontStyle: Arial,15
-FileInfo: 0,Model Modelo_Sector_Agricu,2,2,0,0,C:\Users\Catalina Marinkovic\Dropbox (CCG-UC)\Carpeta del equipo CCG-UC\A Proyectos Actuales\2020-DDPLTSChile\Desarrollo\Modelo Agricultura\Modelo Sector Agricultura-04_02_2021.ana
+FileInfo: 0,Model Modelo_Sector_Agricu,2,2,0,0,C:\Users\andre\OneDrive\Documentos\GitHub\MultiSector_LTS_Chile\analytica\agriculture\Modelo Sector Agricultura-04_02_2021.ana
 
 Module Sector_Agricultura
 Title: Sector Agricultura
@@ -822,12 +822,12 @@ Att_ForceCategorical Graph_Primary_Valdim:1
 Att__TotalsIndex: [Tierras_de_Cultivo]
 
 Index Categorias_Tipo_de_C
+Att_PrevIndexValue: ['Praderas Forrajeras','Frutales','Cultivos Industriales','Viñas y Parronales','Cereales','Hortalizas']
 Title: Categorías Tipo de Cultivos
 Definition: ['Praderas Forrajeras','Frutales','Cultivos Industriales','Viñas y Parronales','Cereales','Hortalizas']
 NodeLocation: 224,424,1
 NodeSize: 56,32
 WindState: 2,0,0,720,350
-Att_PrevIndexValue: ['Praderas Forrajeras','Frutales','Cultivos Industriales','Viñas y Parronales','Cereales','Hortalizas']
 
 Constant Consolidado_Tipos_de
 Title: Consolidado Tipos de Cultivos
@@ -1599,6 +1599,7 @@ DiagState: 2,2,9,752,357,17
 WindState: 2,0,0,720,350
 
 Index I_Tipos_Fertilizant
+Att_PrevIndexValue: ['Fert. Inorganico','Fert. Organico CPP','Fert. Oganico SO','N Arroz','N Estiercol Pastoreo CPP','N Estiercol Pastoreo  SO','N Residuos Cosechas','Fert. Suelos Lixiviados']
 Title: Tipos de Fertilizantes
 Definition: ['Fert. Inorganico','Fert. Organico CPP','Fert. Oganico SO','N Arroz','N Estiercol Pastoreo CPP','N Estiercol Pastoreo  SO','N Residuos Cosechas','Fert. Suelos Lixiviados']
 IndexVals: ['item 1']
@@ -1606,18 +1607,18 @@ NodeLocation: 384,136,1
 NodeSize: 56,24
 WindState: 2,0,0,720,350
 ValueState: 2,40,50,400,300,0,MIDM
-Att_PrevIndexValue: ['Fert. Inorganico','Fert. Organico CPP','Fert. Oganico SO','N Arroz','N Estiercol Pastoreo CPP','N Estiercol Pastoreo  SO','N Residuos Cosechas','Fert. Suelos Lixiviados']
 
 Index GEI
+Att_PrevIndexValue: ['CO2','N2O','CH4']
 Title: GEI
 Definition: ['CO2','N2O','CH4']
 NodeLocation: 128,64,1
 NodeSize: 48,24
 WindState: 2,0,0,720,350
 {!40300|Att_SlicerPopupSize: 332,80}
-Att_PrevIndexValue: ['CO2','N2O','CH4']
 
 Index Regiones
+Att_PrevIndexValue: ['Región de Arica y Parinacota','Región de Tarapacá','Región de Antofagasta','Región de Atacama','Región de Coquimbo','Región de Valparaíso','Región Metropolitana de Santiago','Región del Libertador General Bernardo O''Higgins','Región del Maule','Región del Biobío','Región de La Araucanía','Región de Los Ríos','Región de Los Lagos','Región Ayén del General Carlos Ibáñez del Campo','Región de Magallanes y la Antártica Chilena']
 Title: Regiones
 Definition: ['Región de Arica y Parinacota','Región de Tarapacá','Región de Antofagasta','Región de Atacama','Región de Coquimbo','Región de Valparaíso','Región Metropolitana de Santiago','Región del Libertador General Bernardo O''Higgins','Región del Maule','Región del Biobío','Región de La Araucanía','Región de Los Ríos','Región de Los Lagos','Región Ayén del General Carlos Ibáñez del Campo','Región de Magallanes y la Antártica Chilena']
 NodeLocation: 136,192,1
@@ -1625,27 +1626,27 @@ NodeSize: 48,24
 WindState: 2,0,0,720,350
 DisplayOutputs: Variable Costo_Abatimiento_Bi
 {!40300|Att_SlicerPopupSize: 347,223}
-Att_PrevIndexValue: ['Región de Arica y Parinacota','Región de Tarapacá','Región de Antofagasta','Región de Atacama','Región de Coquimbo','Región de Valparaíso','Región Metropolitana de Santiago','Región del Libertador General Bernardo O''Higgins','Región del Maule','Región del Biobío','Región de La Araucanía','Región de Los Ríos','Región de Los Lagos','Región Ayén del General Carlos Ibáñez del Campo','Región de Magallanes y la Antártica Chilena']
 
 Index Tier
+Att_PrevIndexValue: ['Tier 1','Tier 2']
 Title: Tier
 Definition: ['Tier 1','Tier 2']
 NodeLocation: 128,120,1
 NodeSize: 48,24
 WindState: 2,0,0,720,350
 {!40300|Att_SlicerPopupSize: 232,48}
-Att_PrevIndexValue: ['Tier 1','Tier 2']
 
 Index I_Act_FE
+Att_PrevIndexValue: ['Emisiones Directas','Emisiones Volatización','Emisiones Lixiviación']
 Title: Act_FE
 Definition: ['Emisiones Directas','Emisiones Volatización','Emisiones Lixiviación']
 NodeLocation: 384,72,1
 NodeSize: 48,24
 WindState: 2,0,0,720,350
 {!40300|Att_SlicerPopupSize: 242,80}
-Att_PrevIndexValue: ['Emisiones Directas','Emisiones Volatización','Emisiones Lixiviación']
 
 Index I_Categoria_Ganad
+Att_PrevIndexValue: ['Aves de Corral','Avestruces y Emúes','Ciervos','Camélidos','Mulas y Asnos','Equinos','Caprinos','Ovinos','Jabalíes','Marranas(Poricino)','Verracos (Porcinos)','Juveniles (Porcinos)','Vacas lecheras en producción','Vacas lecheras secas','Vacas carne','Vaquillas','Adultos carne (novillos >2 años, toros y torunos, bueyes)','Jóvenes carne (novillos 1-2 años)','Terneros']
 Title: Categoría Ganadería
 Units: N° de cabezas
 Description: Categorías de Ganado para Fermentación Entérica y Manejo del Estiercol para GEI CH4. Para el caso de Aves de Corral, no aplica fermentación entérica, por lo que se consideró valor 0 para el Factor de Emisión de Fermentación Entérica
@@ -1656,9 +1657,9 @@ WindState: 2,1,167,720,350
 ValueState: 2,40,50,400,300,0,MIDM
 DisplayOutputs: Variable Costo_Abatimiento_Bi
 {!40300|Att_SlicerPopupSize: 262,294}
-Att_PrevIndexValue: ['Aves de Corral','Avestruces y Emúes','Ciervos','Camélidos','Mulas y Asnos','Equinos','Caprinos','Ovinos','Jabalíes','Marranas(Poricino)','Verracos (Porcinos)','Juveniles (Porcinos)','Vacas lecheras en producción','Vacas lecheras secas','Vacas carne','Vaquillas','Adultos carne (novillos >2 años, toros y torunos, bueyes)','Jóvenes carne (novillos 1-2 años)','Terneros']
 
 Index Tipos_FE_CH4_Ganader
+Att_PrevIndexValue: ['Fermentación Entérica','Manejo Estiercol']
 Title: Tipos FE CH4 Ganadería
 Definition: ['Fermentación Entérica','Manejo Estiercol']
 IndexVals: ['item 1']
@@ -1666,9 +1667,9 @@ NodeLocation: 672,96,1
 NodeSize: 64,24
 WindState: 2,0,0,720,350
 ValueState: 2,40,50,400,300,0,MIDM
-Att_PrevIndexValue: ['Fermentación Entérica','Manejo Estiercol']
 
 Index Tipos_FE_NO2_Ganader
+Att_PrevIndexValue: ['Emisiones Directas de N2O','Emisiones Indirectas de N2O']
 Title: Tipos FE NO2 Ganadería~
 
 Units: [kg N2O-N/kg N excretado
@@ -1677,9 +1678,9 @@ Definition: ['Emisiones Directas de N2O','Emisiones Indirectas de N2O']
 NodeLocation: 664,240,1
 NodeSize: 64,24
 WindState: 2,0,0,720,350
-Att_PrevIndexValue: ['Emisiones Directas de N2O','Emisiones Indirectas de N2O']
 
 Index anos
+Att_PrevIndexValue: [1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030,2031,2032,2033,2034,2035,2036,2037,2038,2039,2040,2041,2042,2043,2044,2045,2046,2047,2048,2049,2050]
 Title: años
 Units: años
 Definition: Sequence( 1990, 2050, 1 )
@@ -1689,25 +1690,24 @@ WindState: 2,0,0,720,350
 ValueState: 2,40,50,400,300,0,MIDM
 DisplayOutputs: Variable Costo_Abatimiento_Bi
 {!40300|Att_SlicerPopupSize: 232,785}
-Att_PrevIndexValue: [1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030,2031,2032,2033,2034,2035,2036,2037,2038,2039,2040,2041,2042,2043,2044,2045,2046,2047,2048,2049,2050]
 
 Index Escenarios
+Att_PrevIndexValue: ['BAU','Carbono Neutralidad Base ','CN RDM1']
 Title: Escenarios
 Definition: ['BAU','Carbono Neutralidad Base ','CN RDM1']
 NodeLocation: 128,304,1
 NodeSize: 64,24
 WindState: 2,0,0,720,350
 {!40300|Att_SlicerPopupSize: 242,64}
-Att_PrevIndexValue: ['BAU','Carbono Neutralidad Base ','CN RDM1']
 
 Index Tierras_de_Cultivo
+Att_PrevIndexValue: ['Frutales Mayores Caducifolios','Frutales Mayores Perennifolios','Viñas y Parronales','Chacras, Cultivos e Industriales. y F. Menores','Cereales (trigo, avena, cebada)','Arroz','Maíz','Hortalizas','Praderas establecidas','Forrajeras Anuales y Permanentes']
 Title: Tierras de Cultivo
 Definition: ['Frutales Mayores Caducifolios','Frutales Mayores Perennifolios','Viñas y Parronales','Chacras, Cultivos e Industriales. y F. Menores','Cereales (trigo, avena, cebada)','Arroz','Maíz','Hortalizas','Praderas establecidas','Forrajeras Anuales y Permanentes']
 IndexVals: ['item 1']
 NodeLocation: 384,200,1
 NodeSize: 48,24
 WindState: 2,0,0,720,350
-Att_PrevIndexValue: ['Frutales Mayores Caducifolios','Frutales Mayores Perennifolios','Viñas y Parronales','Chacras, Cultivos e Industriales. y F. Menores','Cereales (trigo, avena, cebada)','Arroz','Maíz','Hortalizas','Praderas establecidas','Forrajeras Anuales y Permanentes']
 
 Index PIB
 Att_PrevIndexValue: ['Escenario WEO IMF 13 OCT','Escenario MH IFP IIIT 2 OCT','Alt 1','Alt 2']
@@ -1794,12 +1794,12 @@ NodeLocation: 928,324,-1
 NodeSize: 128,316
 
 Index Enmienda
+Att_PrevIndexValue: ['Urea']
 Title: Enmienda
 Definition: ['Urea']
 NodeLocation: 376,328,1
 NodeSize: 48,24
 WindState: 2,0,0,720,350
-Att_PrevIndexValue: ['Urea']
 
 Index Tasa_de_descuento
 Att_PrevIndexValue: ['Media']
@@ -1811,6 +1811,7 @@ WindState: 2,0,0,720,350
 ValueState: 2,40,50,400,300,0,MIDM
 
 Index pyparams
+Att_PrevIndexValue: ['pib','poblacion','precio_leche','precio_maiz','precio_cerdo','precio_bovino','precio_pollo','Medida_CambioDietaBovina','Medida_CapturaCsuelos','Medida_Usoeficientefertilizante','Medida_Biodigestores','precio_soya','Medida_Cambio_Dieta_Nacional','Manejo_Holistico_de_gando']
 Title: pyparams
 Definition: ['pib','poblacion','precio_leche','precio_maiz','precio_cerdo','precio_bovino','precio_pollo','Medida_CambioDietaBovina','Medida_CapturaCsuelos','Medida_Usoeficientefertilizante','Medida_Biodigestores','precio_soya','Medida_Cambio_Dieta_Nacional','Manejo_Holistico_de_gando']
 IndexVals: ['item 1']
@@ -1818,7 +1819,6 @@ NodeLocation: 136,648,1
 NodeSize: 88,24
 WindState: 2,0,0,720,350
 ValueState: 2,40,50,400,300,0,MIDM
-Att_PrevIndexValue: ['pib','poblacion','precio_leche','precio_maiz','precio_cerdo','precio_bovino','precio_pollo','Medida_CambioDietaBovina','Medida_CapturaCsuelos','Medida_Usoeficientefertilizante','Medida_Biodigestores','precio_soya','Medida_Cambio_Dieta_Nacional','Manejo_Holistico_de_gando']
 
 Constant pyparams_interface
 Title: pyparams_interface
@@ -1872,23 +1872,24 @@ ReformVal: [Time,pyparams]
 {!50000|Att_ColumnWidths: [,pyparams,\([,,164,,,,,,,,,,,]),Time,\([62,103,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62])]}
 
 Index Subsectores
+Att_PrevIndexValue: ['Fermentacion Entérica','Gestión de Estiercol','Suelos Agricolas','Aplicación de Urea','Captura de C en Suelo']
 Title: Subsectores
 Definition: ['Fermentacion Entérica','Gestión de Estiercol','Suelos Agricolas','Aplicación de Urea','Captura de C en Suelo']
 NodeLocation: 128,528,1
 NodeSize: 56,24
 WindState: 2,8,25,720,350
 {!40300|Att_SlicerPopupSize: 252,112}
-Att_PrevIndexValue: ['Fermentacion Entérica','Gestión de Estiercol','Suelos Agricolas','Aplicación de Urea','Captura de C en Suelo']
 
 Index Destino_Estiercol
+Att_PrevIndexValue: ['N Pastoreo (Suelos Agrícolas) ','F. Orgánico (Manejo Estiercol)']
 Title: Destino Estiercol
 Definition: ['N Pastoreo (Suelos Agrícolas) ','F. Orgánico (Manejo Estiercol)']
 NodeLocation: 376,464,1
 NodeSize: 48,24
 WindState: 2,0,0,720,350
-Att_PrevIndexValue: ['N Pastoreo (Suelos Agrícolas) ','F. Orgánico (Manejo Estiercol)']
 
 Index I_Medidas
+Att_PrevIndexValue: ['Medida_CambioDietaBovina','Medida_Biodigestores','Medida_Usoeficientefertilizante','Medida_CapturaCsuelos','Medida_Cambio_Dieta_Nacional','Manejo_Holistico_de_gando']
 Title: Medidas
 Definition: ['Medida_CambioDietaBovina','Medida_Biodigestores','Medida_Usoeficientefertilizante','Medida_CapturaCsuelos','Medida_Cambio_Dieta_Nacional','Manejo_Holistico_de_gando']
 NodeLocation: 1184,72,1
@@ -1896,7 +1897,6 @@ NodeSize: 48,24
 WindState: 2,0,0,720,350
 ValueState: 2,40,50,400,300,0,MIDM
 {!40300|Att_SlicerPopupSize: 242,112}
-Att_PrevIndexValue: ['Medida_CambioDietaBovina','Medida_Biodigestores','Medida_Usoeficientefertilizante','Medida_CapturaCsuelos','Medida_Cambio_Dieta_Nacional','Manejo_Holistico_de_gando']
 
 Function Conv_anos_a_time(param1)
 Title: Conv años a time
@@ -5074,13 +5074,13 @@ Att__TotalsIndex: [Factores_de_Cambi,Regiones]
 Att_ResultSliceState: [Tierras_de_Cultivo,3,Factores_de_Cambi,0,Regiones,1,anos,1]
 
 Index Factores_de_Cambi
+Att_PrevIndexValue: ['FLU','FMG','FI']
 Title: Factores de Cambio
 Definition: ['FLU','FMG','FI']
 NodeLocation: 120,152,1
 NodeSize: 48,24
 WindState: 2,0,0,720,350
 {!40300|Att_SlicerPopupSize: 227,80}
-Att_PrevIndexValue: ['FLU','FMG','FI']
 
 Constant Factor_Distribucion1
 Title: Factor Distribución Regional
@@ -5092,12 +5092,12 @@ DefnState: 2,40,50,400,300,0,DFNM
 ValueState: 2,40,50,400,300,0,MIDM
 
 Index Momentos_Factores_de
+Att_PrevIndexValue: ['SOC_0','SOC_0-T']
 Title: Momentos Factores de Cambio
 Definition: ['SOC_0','SOC_0-T']
 NodeLocation: 120,224,1
 NodeSize: 56,32
 WindState: 2,0,0,720,350
-Att_PrevIndexValue: ['SOC_0','SOC_0-T']
 
 Variable SOC_0
 Title: SOC_0
@@ -15429,6 +15429,7 @@ NodeInfo: 1,,,,,,,0,,,,,,0
 DiagState: 2,0,0,1209,578,17
 
 Index Activador_Medida
+Att_PrevIndexValue: ['Sin Medida','Con Medida']
 Title: Activador Medida
 Description: Diferencia estado con o sin medida para el analisis unitario
 Definition: ['Sin Medida','Con Medida']
@@ -15436,7 +15437,6 @@ NodeLocation: 88,320,1
 NodeSize: 48,24
 WindState: 2,0,0,720,350
 ValueState: 2,40,50,400,300,0,MIDM
-Att_PrevIndexValue: ['Sin Medida','Con Medida']
 
 Variable Demanda_Per_capita
 Title: Demanda Per capita
@@ -15476,12 +15476,12 @@ Att_EditSliceState: [Activador_Medida,2,Alimentos,1,Time,1]
 {!50000|Att_ColumnWidths: [,Time,\([,,,65,,,,,,,,,,,,,67])]}
 
 Index Alimentos
+Att_PrevIndexValue: ['Carne','Hortalizas','Frutas','Cereales']
 Title: Alimentos
 Definition: ['Carne','Hortalizas','Frutas','Cereales']
 NodeLocation: 88,144,1
 NodeSize: 48,24
 WindState: 2,0,0,720,350
-Att_PrevIndexValue: ['Carne','Hortalizas','Frutas','Cereales']
 
 Variable Demanda_de_Alimentos
 Title: Demanda de Alimentos Nacional
@@ -15604,12 +15604,12 @@ WindState: 2,0,0,720,350
 ValueState: 2,40,50,400,300,0,MIDM
 
 Index Tipos_Carne
+Att_PrevIndexValue: ['Bovino','Porcino','Aves','Otros']
 Title: Tipos Carne
 Definition: ['Bovino','Porcino','Aves','Otros']
 NodeLocation: 80,264,1
 NodeSize: 48,24
 WindState: 2,0,0,720,350
-Att_PrevIndexValue: ['Bovino','Porcino','Aves','Otros']
 
 Variable Demanda_Carne_Desagr
 Title: Demanda Carne Desagregada
@@ -15766,13 +15766,13 @@ DefnState: 2,124,398,400,300,0,DFNM
 ValueState: 2,40,50,400,300,0,MIDM
 
 Index I_Manejo_Bovinos
+Att_PrevIndexValue: ['Convencional','Holístico']
 Title: Manejo Bovinos
 Units: N°cabezas/ha
 Definition: ['Convencional','Holístico']
 NodeLocation: 88,408,1
 NodeSize: 48,24
 WindState: 2,0,0,720,350
-Att_PrevIndexValue: ['Convencional','Holístico']
 
 Constant Captura_de_Carbono_A
 Title: Captura de Carbono Anual Praderas
@@ -25619,7 +25619,7 @@ ReformDef: [I_Medidas,Escenarios]
 
 Decision Tipo_Corrida
 Title: Tipo Corrida
-Definition: Choice(Self,2)
+Definition: Choice(Self,1)
 NodeLocation: 56,256,1
 NodeSize: 48,24
 WindState: 2,0,0,720,350
