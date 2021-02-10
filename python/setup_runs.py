@@ -455,8 +455,6 @@ if (str(dict_init["read_lhs_tables_q"]).lower() == "true"):
 
 #run tornado design?
 tornado_q = (str(dict_init["experimental_mode"]).lower() == "tornado")
-#vary trajectory groups
-vary_traj_groups_q = (str(dict_init["vary_traj_groups_q"]).lower() == "true")
 
 
 
