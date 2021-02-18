@@ -137,7 +137,7 @@ def model_transport_pkm_aviation(year, gdp):
 
 def model_transport_pkm_saturacion(year, transport_demand_aviation_kerosene, transport_saturation_aviation):
 	for i in range(len(year)):
-		if transport_demand_aviation_kerosene[i] > transport_saturation_aviation[i]:
+		if (transport_demand_aviation_kerosene[i] > transport_saturation_aviation[i]) & (year[i] > 2017):
 			transport_demand_aviation_kerosene[i] = transport_demand_aviation_kerosene[i - 1] * 1.001
 
 	return transport_demand_aviation_kerosene

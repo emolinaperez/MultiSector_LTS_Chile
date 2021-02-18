@@ -2,9 +2,9 @@ sector,output,scale_factor_mt,scale_factor_co2e,subset_keep,agg_by,units,summing
 agriculture,CAPEX_Agricultura,1,1,,year,MM USD,costs
 agriculture,Emisiones_Python,1,1,,year;;Subsectores,MT CO2e,emissions
 agriculture,OPEX_Agricultura,1,1,,year,MM USD,costs
-forestry,CAPEX,0.000001,1,,year,USD,costs
+forestry,CAPEX,1,1,,year,MM USD,costs
 forestry,Emisiones_Python,1,1,,year;;Categorias_con_Incen,MT CO2e,emissions
-forestry,OPEX,0.000001,1,,year,USD,costs
+forestry,OPEX,1,1,,year,USD,costs
 forestry,Superficie_python,1,1,,year;;Cat_manejo,Ha,area
 ippu,Emisiones,0.001,1,,year;;Subcategorias_IPPU,KT CO2e,emissions
 waste,costos_medidas,0.000001,1,,year;;Indice_Costo,USD,costs

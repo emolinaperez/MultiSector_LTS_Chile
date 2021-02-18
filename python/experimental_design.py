@@ -125,6 +125,7 @@ group_id = group_id.drop_duplicates()
 group_id = group_id[["parameter", "type", "variable_name_lower", "norm_group_id", "lever_group_id"]]
 
 
+
 ###   MERGE BACK IN TO PTAS AND CLEAN NAMES/DATA
 
 #set merge fields and merge
@@ -134,11 +135,13 @@ parameter_table_additional_sectors = pd.merge(parameter_table_additional_sectors
 fields_ext = [x for x in parameter_table_additional_sectors if (x not in ["normalize_group"])]
 #clean the data frame
 parameter_table_additional_sectors = parameter_table_additional_sectors[fields_ext]
+#fields that are allowed to be all na
+fields_allow_na = ["trajgroup_no_vary_q", "parameter_constant_q", "normalize_group"]
+for field in fields_allow_na:
+    if field in parameter_table_additional_sectors.columns:
+        parameter_table_additional_sectors[field] = np.array(parameter_table_additional_sectors[field].fillna(0)).astype(int)
+#drop nas
 parameter_table_additional_sectors = parameter_table_additional_sectors.dropna(axis = 1, how = "all")
-#clean the trajgroup column
-if "trajgroup_no_vary_q" in parameter_table_additional_sectors.columns:
-    parameter_table_additional_sectors["trajgroup_no_vary_q"] = parameter_table_additional_sectors["trajgroup_no_vary_q"].fillna(0)
-    parameter_table_additional_sectors["trajgroup_no_vary_q"] = np.array(parameter_table_additional_sectors["trajgroup_no_vary_q"]).astype(int)
 
 #dictionary to rename
 dict_ptas_rename = dict([[x, x.lower().replace(" ", "_")] for x in parameter_table_additional_sectors.columns])
@@ -1241,7 +1244,7 @@ if export_ed_files_q:
         #temp overwrite
         df_master_exp = df_attribute_master_id[(df_attribute_master_id["design_id"] == 0)]
         #set gams vals
-        df_master_exp_gams = df_master_exp[df_master_exp["strategy_id"] > 0].copy()
+        df_master_exp_gams = df_master_exp.copy()#[df_master_exp["strategy_id"] == 0].copy()
         #export
         df_master_exp[["master_id"]].to_csv(sr.fp_csv_experimental_design_msec_masters_to_run, index = None, encoding = "UTF-8")
         

@@ -13,7 +13,7 @@ import setup_runs as sr
 #restore from archive?
 restore_from_archive_q = True
 #set the name
-archive_name = "Chile_sector_package_2021_01_30_design_id-1"
+archive_name = "Chile_sector_package_2021_02_13_design_id-1"
 
 if restore_from_archive_q:
     print("\n\n" + "#"*30 + "\n###\n###    NOTE: BUILDING PRIM FROM ARCHIVE '" + archive_name + "'...\n###\n" + "#"*30 + "\n\n")
@@ -41,13 +41,25 @@ for k in dict_fp_results.keys():
 #experimental design
 if restore_from_archive_q:
     df_ed = sr.get_archive_run(sr.fp_csv_experimental_design_msec, archive_name)
+    df_params = sr.get_archive_run(sr.fp_csv_parameter_ranges, archive_name)
 else:
     df_ed = pd.read_csv(sr.fp_csv_experimental_design_msec)
+    df_params = pd.read_csv(sr.fp_csv_parameter_ranges)
 
+
+
+##  CHECK FOR TRAJGROUPS THAT NEED TO BE DROPPED
+
+fields_drop = list(df_params[df_params["trajgroup_no_vary_q"] == 1]["parameter"].unique())
+fields_drop = list(set([x for x in fields_drop if ("trajgroup_" in x) and ("-lhs" in x)]))
+sr.print_list_output(fields_drop, "fields_drop")
+#drop resulting values
+df_ed = df_ed[[x for x in df_ed.columns if x not in fields_drop]]
+    
+    
 
 #get maximum year
 year_max = max(df_ed["year"])
-
 #initialize prim data frame
 fields_ed_id = ["master_id", "strategy_id", "time_series_id"]
 fields_ed_dat = [x for x in df_ed.columns if (x not in fields_ed_id) and ("_id" not in x) and (x != "year")]

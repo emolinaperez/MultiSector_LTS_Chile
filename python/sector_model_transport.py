@@ -336,27 +336,55 @@ def sm_transport(df_in, dict_sector_abv, odel_transport_pkm_aviation = None):
     ###########################
 
     # Read input parameters defined in parameter_ranges.csv
+    if True:
+        intensity_aviation_kerosene = np.array(df_in["transport_intensity_aviation_kerosene"])
+        intensity_aviation_hydrogen = np.array(df_in["transport_intensity_aviation_hydrogen"])
+        transport_frac_aviation_kerosene = np.array(df_in["transport_frac_aviation_kerosene"])
+        transport_frac_aviation_hydrogen = np.array(df_in["transport_frac_aviation_hydrogen"])
+        emission_fact_kerosene_aviation = np.array(df_in["transport_emission_fact_kerosene_aviation"])
+        transport_saturation_aviation = np.array(df_in["transport_saturation_aviation"])
 
-    intensity_aviation_kerosene = np.array(df_in["transport_intensity_aviation_kerosene"])
-    intensity_aviation_hydrogen = np.array(df_in["transport_intensity_aviation_hydrogen"])
-    transport_frac_aviation_kerosene = np.array(df_in["transport_frac_aviation_kerosene"])
-    transport_frac_aviation_hydrogen = np.array(df_in["transport_frac_aviation_hydrogen"])
-    emission_fact_kerosene_aviation = np.array(df_in["transport_emission_fact_kerosene_aviation"])
-    transport_saturation_aviation = np.array(df_in["transport_saturation_aviation"])
+        #pkm = f(GDP)
+        transport_pkm_aviation = model_transport_pkm_aviation(year, gdp)
+        #Saturation
+        transport_pkm_aviation = model_transport_pkm_saturacion(year, transport_pkm_aviation, transport_saturation_aviation)
+        
+        # calculate demand in Tcal
+        transport_demand_aviation_kerosene = transport_pkm_aviation * transport_frac_aviation_kerosene * intensity_aviation_kerosene / (10 ** 3)
+        transport_demand_aviation_hydrogen = transport_pkm_aviation * transport_frac_aviation_hydrogen * intensity_aviation_hydrogen / (10 ** 3)
 
-    #pkm = f(GDP)
-    transport_pkm_aviation = model_transport_pkm_aviation(year, gdp)
-    #TEMP
-    #transport_pkm_aviation_0 = transport_pkm_aviation.copy()
-    #Saturation
-    transport_pkm_aviation = model_transport_pkm_saturacion(year, transport_pkm_aviation, transport_saturation_aviation)
+        # calculate emission
+        transport_emission_aviation = transport_demand_aviation_kerosene * fact * emission_fact_kerosene_aviation / (10 ** 9)
+    else:
+    
+        #
+        #
+        #   CONDITIONAL STATEMENT FROM J SYME ADDED TO ALLOW MODEL RUN ON 1/30
+        #   --- THIS IS THE MODEL FROM 1/30 ---
+        #   NOTE, COSTS MAY BE INCORRECT
+        #
 
-    # calculate demand in Tcal
-    transport_demand_aviation_kerosene = transport_pkm_aviation * transport_frac_aviation_kerosene * intensity_aviation_kerosene / (10 ** 3)
-    transport_demand_aviation_hydrogen = transport_pkm_aviation * transport_frac_aviation_hydrogen * intensity_aviation_hydrogen / (10 ** 3)
+                # pkm= f(GDP), pending
+        transport_pkm_aviation = model_transport_pkm_aviation(year, gdp)
+        
+        intensity_aviation_hydrogen = np.array(df_in["transport_intensity_aviation_hydrogen"])
+        transport_frac_aviation_hydrogen = np.array(df_in["transport_frac_aviation_hydrogen"])
+        transport_frac_aviation_kerosene = np.array(df_in["transport_frac_aviation_kerosene"])
+        emission_fact_kerosene_aviation = np.array(df_in["transport_emission_fact_kerosene_aviation"])
+        transport_saturation_aviation = np.array(df_in["transport_saturation_aviation"])
+        transport_demand_aviation_hydrogen = transport_pkm_aviation * transport_frac_aviation_hydrogen * intensity_aviation_hydrogen / (10 ** 3)
+        
+        intensity_aviation_kerosene = np.array(df_in["transport_intensity_aviation_kerosene"])
+        emission_fact_kerosene_aviation = np.array(df_in["transport_emission_fact_kerosene_aviation"])
+        transport_saturation_aviation = np.array(df_in["transport_saturation_aviation"])
 
-    # calculate emission
-    transport_emission_aviation = transport_demand_aviation_kerosene * fact * emission_fact_kerosene_aviation / (10 ** 9)
+        # calculate demand in Tcal
+        transport_demand_aviation_kerosene = transport_pkm_aviation * intensity_aviation_kerosene / (10 ** 3)
+
+        transport_demand_aviation_kerosene = model_transport_pkm_saturacion(year, transport_demand_aviation_kerosene,transport_saturation_aviation)
+
+        # calculate emission
+        transport_emission_aviation = transport_demand_aviation_kerosene * fact * emission_fact_kerosene_aviation / (10 ** 9)
 
 
     #############################################################################
@@ -504,7 +532,7 @@ def sm_transport(df_in, dict_sector_abv, odel_transport_pkm_aviation = None):
     transport_OPEX_aviation_diesel = transport_demand_aviation_kerosene * transport_fuel_price_kerosene_aviation / (10 ** 6)
     transport_OPEX_aviation_hydrogen = transport_demand_aviation_hydrogen * transport_fuel_price_hydrogen / (10 ** 6)
     transport_OPEX_aviation = transport_OPEX_aviation_diesel + transport_OPEX_aviation_hydrogen
-
+    
     # Capacity
 
     transport_capacity_aviation_kerosene = model_capacity(year, transport_pkm_aviation * transport_frac_aviation_kerosene)
@@ -596,12 +624,6 @@ def sm_transport(df_in, dict_sector_abv, odel_transport_pkm_aviation = None):
         (dict_sector_abv["transport"] + "-OPEX-MMUSD"): vec_total_OPEX,
         (dict_sector_abv["transport"] + "-CAPEX-MMUSD"): vec_total_CAPEX,
     })
-
-    ##TEMP
-    #dict_out["transport_demand_aviation_kerosene"] = transport_demand_aviation_kerosene
-    #dict_out["transport_demand_aviation_hydrogen"] = transport_demand_aviation_hydrogen
-    #dict_out["transport_pkm_aviation"] = transport_pkm_aviation
-    #dict_out["transport_pkm_aviation_0"] = transport_pkm_aviation_0
         
     # return
     return dict_out  # dict_emission,dict_electric_demand
