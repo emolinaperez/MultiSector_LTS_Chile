@@ -755,50 +755,70 @@ else:
 
     dict_unc_delta = {}
     
-    for ts_id in all_vals_add_sec["time_series_id"]:
-        df_ed_baseline = parameter_table_additional_sectors[(parameter_table_additional_sectors["strategy_id"] == strat_baseline) & (parameter_table_additional_sectors["time_series_id"] == ts_id)].copy()
-        df_ed_base = df_ed_baseline[extraction_fields_ld].copy()
-        df_ed_add_sec = dict_submat_lhs["add_sec"]
-        
-        #initialize array (in order of ext fields)
-        array_ed_add_sec = np.array(df_ed_add_sec[fields_ordered_parameters])
-        #order output array
-        df_max_min = pd.merge(pd.DataFrame(fields_ordered_parameters, columns = ["variable_name_lower"]), df_ed_baseline[["variable_name_lower", "min_2050", "max_2050"]], how = "left", left_on = ["variable_name_lower"], right_on = ["variable_name_lower"])
-        #generate transformed values of uncertainty
-        array_ed_add_sec_trans = array_ed_add_sec * np.array(df_max_min["max_2050"]) + (1 - array_ed_add_sec) * np.array(df_max_min["min_2050"])
-        #add in future 0 (0 change = 100%)
-        array_ed_add_sec_trans = np.concatenate([np.ones((1, array_ed_add_sec_trans.shape[1])), array_ed_add_sec_trans])
-        #get 2050 values for each parameter
-        df_po = pd.DataFrame(fields_ordered_parameters, columns = ["variable_name_lower"])
-        df_merge_in = parameter_table_additional_sectors[(parameter_table_additional_sectors["strategy_id"] == strat_baseline) & (parameter_table_additional_sectors["time_series_id"] == ts_id)]
-        df_po = pd.merge(df_po, df_merge_in[["variable_name_lower"] + [str(x) for x in param_years_add_sec]], how = "left", on = ["variable_name_lower"])
-        vec_pvals_2050 = np.array(df_po["2050"])
+    #set lever delta parameters
+    if len(df_ld_shaped) > 0:
+        ld_params = list(set(df_ld_shaped.columns) - set([x for x in df_ld_shaped.columns if (x[-3:] == "_id") or (x == "year")]))
+        ld_params = [x.replace("ld_", "") for x in ld_params]
+        ld_params.sort()
+    else:
+        ld_params = []
 
+    for ts_id in all_vals_add_sec["time_series_id"]:
+        
         #set data frame of baseline percentage changes
         df_unc_delta = []
+        
+        for st_id in all_vals_add_sec["strategy_id"]:
+            
+            #assign baseline strategy to ld params
+            df_ed_baseline = parameter_table_additional_sectors[(parameter_table_additional_sectors["time_series_id"] == ts_id)].copy()
+            #(parameter_table_additional_sectors["strategy_id"] == strat_baseline) &
+            df_ed_baseline = df_ed_baseline[((df_ed_baseline["strategy_id"] == strat_baseline) & (df_ed_baseline["variable_name_lower"].isin(ld_params))) | ((df_ed_baseline["strategy_id"] == st_id) & (~df_ed_baseline["variable_name_lower"].isin(ld_params)))]
+            #update strategy id to be uniform
+            df_ed_baseline["strategy_id"] = np.array([st_id for x in range(len(df_ed_baseline))])
+            #
+            df_merge_in = df_ed_baseline#.copy()
+            
+            df_ed_base = df_ed_baseline[extraction_fields_ld].copy()
+            df_ed_add_sec = dict_submat_lhs["add_sec"]
 
-        #build outcome matrix
-        for i in range(len(param_years_add_sec)):
-            y = param_years_add_sec[i]
-            #build array of change from specified 2050 value
-            array_tmp = (array_ed_add_sec_trans - 1)*vec_ramp_unc[i]
-            #multiple everything by the delta from specified trajectory implied by the future
-            array_tmp = array_tmp*vec_pvals_2050
-            #remove the "ramp" component for constant params
-            array_tmp[:, indices_fop_all_constant_params] = ((array_ed_add_sec_trans[:, indices_fop_all_constant_params] - 1).copy())*np.array(df_po[str(y)])[indices_fop_all_constant_params]
-            #convert to data frame
-            df_tmp = pd.DataFrame(array_tmp, columns = fields_ordered_parameters)
-            #add year
-            df_tmp["year"] = [int(y) for x in range(len(df_tmp))]
-            df_tmp["future_id"] = [0] + list(df_ed_add_sec["future_id"])
-            #organize
-            df_tmp = df_tmp[["future_id", "year"] + fields_ordered_parameters]
-            #update
-            df_unc_delta = df_unc_delta + [df_tmp]
+            #initialize array (in order of ext fields)
+            array_ed_add_sec = np.array(df_ed_add_sec[fields_ordered_parameters])
+            #order output array
+            df_max_min = pd.merge(pd.DataFrame(fields_ordered_parameters, columns = ["variable_name_lower"]), df_ed_baseline[["variable_name_lower", "min_2050", "max_2050"]], how = "left", left_on = ["variable_name_lower"], right_on = ["variable_name_lower"])
+            #generate transformed values of uncertainty
+            array_ed_add_sec_trans = array_ed_add_sec * np.array(df_max_min["max_2050"]) + (1 - array_ed_add_sec) * np.array(df_max_min["min_2050"])
+            #add in future 0 (0 change = 100%)
+            array_ed_add_sec_trans = np.concatenate([np.ones((1, array_ed_add_sec_trans.shape[1])), array_ed_add_sec_trans])
+            #get 2050 values for each parameter
+            df_po = pd.DataFrame(fields_ordered_parameters, columns = ["variable_name_lower"])
+            #df_merge_in = parameter_table_additional_sectors[(parameter_table_additional_sectors["strategy_id"] == strat_baseline) & (parameter_table_additional_sectors["time_series_id"] == ts_id)]
+            df_po = pd.merge(df_po, df_merge_in[["variable_name_lower"] + [str(x) for x in param_years_add_sec]], how = "left", on = ["variable_name_lower"])
+            vec_pvals_2050 = np.array(df_po["2050"])
+
+            #build outcome matrix
+            for i in range(len(param_years_add_sec)):
+                y = param_years_add_sec[i]
+                #build array of change from specified 2050 value
+                array_tmp = (array_ed_add_sec_trans - 1)*vec_ramp_unc[i]
+                #multiple everything by the delta from specified trajectory implied by the future
+                array_tmp = array_tmp*vec_pvals_2050
+                #remove the "ramp" component for constant params
+                array_tmp[:, indices_fop_all_constant_params] = ((array_ed_add_sec_trans[:, indices_fop_all_constant_params] - 1).copy())*np.array(df_po[str(y)])[indices_fop_all_constant_params]
+                #convert to data frame
+                df_tmp = pd.DataFrame(array_tmp, columns = fields_ordered_parameters)
+                #add year
+                df_tmp["year"] = [int(y) for x in range(len(df_tmp))]
+                df_tmp["future_id"] = [0] + list(df_ed_add_sec["future_id"])
+                df_tmp["strategy_id"] = [st_id for x in range(len(df_tmp))]
+                #organize
+                df_tmp = df_tmp[["strategy_id", "future_id", "year"] + fields_ordered_parameters]
+                #update
+                df_unc_delta = df_unc_delta + [df_tmp]
 
         #build master
         df_unc_delta = pd.concat(df_unc_delta)
-        df_unc_delta = df_unc_delta.sort_values(by = ["future_id", "year"])
+        df_unc_delta = df_unc_delta.sort_values(by = ["strategy_id", "future_id", "year"])
 
         #update dictionary
         dict_unc_delta.update({ts_id: df_unc_delta})
@@ -826,107 +846,109 @@ else:
     df_out = []
     #loop over time series
     for ts_id in all_vals_add_sec["time_series_id"]:
-        #get baseline for each time series
-        df_ed_baseline = parameter_table_additional_sectors[(parameter_table_additional_sectors["strategy_id"] == strat_baseline) & (parameter_table_additional_sectors["time_series_id"] == ts_id)].copy()
-        df_ed_base = df_ed_baseline[extraction_fields_ld].copy()
-        #set column headers
-        fields_df_ed = list(df_ed_base["variable_name_lower"])
-        df_ed_base = df_ed_base.transpose().loc[[str(x) for x in param_years_add_sec],:]
-        df_ed_base = df_ed_base.rename(columns = dict([[list(df_ed_base.columns)[x], fields_df_ed[x]] for x in range(len(fields_df_ed))]))
-        df_ed_base["year"] = [int(x) for x in df_ed_base.index]
-        
-        #loop over design ids
-        for did in all_vals_add_sec["design_id"]:
-            #get applicable data
-            dict_data = df_attribute_design_id[df_attribute_design_id["design_id"] == did].to_dict()
-            #get key for to_dict
-            key = list(dict_data["vary_lever_deltas"].keys())[0]
-            #experimental design merge table
-            df_ed_merge = df_attribute_master_id[(df_attribute_master_id["time_series_id"] == ts_id) & (df_attribute_master_id["design_id"] == did)]
-            list_ed_merge = []
-            cols = [x for x in df_ed_merge.columns] + ["year"]
-            for y in param_years_add_sec:
-                df_tmp = df_ed_merge.copy()
-                df_tmp["year"] = [int(y) for x in range(len(df_tmp))]
-                df_tmp = df_tmp[cols]
-                list_ed_merge = list_ed_merge + [df_tmp]
-            #convert
-            df_ed_merge = pd.concat(list_ed_merge)
-            #add in
-            df_ed_merge = pd.merge(df_ed_merge, df_ed_base, how = "outer", left_on = ["year"], right_on = ["year"])
-            #renaming dictionary
-            dict_rnm = dict([x, "unc_delta_" + x] for x in fields_ordered_parameters)
-            #breakout fields
-            fields_unc_delta = [dict_rnm[x] for x in fields_ordered_parameters]
-                
-            #check if percentages need to be accounted for
-            if dict_data["vary_uncertainties"][key] == 1:
-                #get the total
-                df_tmp = dict_unc_delta[ts_id].copy()
-                #rename to columns
-                df_tmp = df_tmp.rename(columns = dict_rnm)
-                df_ed_merge = pd.merge(df_ed_merge, df_tmp, how = "left", left_on = ["future_id", "year"], right_on = ["future_id", "year"])
-                #id fields to breakout on
-                fields_id = [x for x in df_ed_merge.columns if (x not in fields_unc_delta) and (x not in fields_ordered_parameters)]
-                #seprate out
-                df_ed_merge_ids = df_ed_merge[fields_id]
-                
-                #lcheckr = list(df_ed_merge.columns)
-                #checkr = [x for x in lcheckr if (lcheckr.count(x) > 1)]
-                #sr.print_list_output(list(checkr), "checkr")
-                #print("Length df_ed_merge cols: " + str(len(df_ed_merge.columns)))
-                #print("Length df_ed_merge unique cols: " + str(len(set(df_ed_merge.columns))))
+        for st_id in all_vals_add_sec["strategy_id"]:
+            #assign baseline strategy to ld params and current strategy to others
+            df_ed_baseline = parameter_table_additional_sectors[(parameter_table_additional_sectors["time_series_id"] == ts_id)].copy()
+            df_ed_baseline = df_ed_baseline[((df_ed_baseline["strategy_id"] == strat_baseline) & (df_ed_baseline["variable_name_lower"].isin(ld_params))) | ((df_ed_baseline["strategy_id"] == st_id) & (~df_ed_baseline["variable_name_lower"].isin(ld_params)))]
+            df_ed_base = df_ed_baseline[extraction_fields_ld].copy()
+            #set column headers
+            fields_df_ed = list(df_ed_base["variable_name_lower"])
+            df_ed_base = df_ed_base.transpose().loc[[str(x) for x in param_years_add_sec],:]
+            df_ed_base = df_ed_base.rename(columns = dict([[list(df_ed_base.columns)[x], fields_df_ed[x]] for x in range(len(fields_df_ed))]))
+            df_ed_base["year"] = [int(x) for x in df_ed_base.index]
+            
+            #loop over design ids
+            for did in all_vals_add_sec["design_id"]:
+                #get applicable data
+                dict_data = df_attribute_design_id[df_attribute_design_id["design_id"] == did].to_dict()
+                #get key for to_dict
+                key = list(dict_data["vary_lever_deltas"].keys())[0]
+                #experimental design merge table
+                df_ed_merge = df_attribute_master_id[(df_attribute_master_id["time_series_id"] == ts_id) & (df_attribute_master_id["strategy_id"] == st_id) & (df_attribute_master_id["design_id"] == did)]
+                list_ed_merge = []
+                cols = [x for x in df_ed_merge.columns] + ["year"]
+                for y in param_years_add_sec:
+                    df_tmp = df_ed_merge.copy()
+                    df_tmp["year"] = [int(y) for x in range(len(df_tmp))]
+                    df_tmp = df_tmp[cols]
+                    list_ed_merge = list_ed_merge + [df_tmp]
+                #convert
+                df_ed_merge = pd.concat(list_ed_merge)
+                #add in
+                df_ed_merge = pd.merge(df_ed_merge, df_ed_base, how = "outer", left_on = ["year"], right_on = ["year"])
+                #renaming dictionary
+                dict_rnm = dict([x, "unc_delta_" + x] for x in fields_ordered_parameters)
+                #breakout fields
+                fields_unc_delta = [dict_rnm[x] for x in fields_ordered_parameters]
+                    
+                #check if percentages need to be accounted for
+                if dict_data["vary_uncertainties"][key] == 1:
+                    #get the total
+                    df_tmp = dict_unc_delta[ts_id].copy()
+                    #rename to columns
+                    df_tmp = df_tmp.rename(columns = dict_rnm)
+                    df_ed_merge = pd.merge(df_ed_merge, df_tmp, how = "left", on = ["future_id", "strategy_id", "year"])
+                    #id fields to breakout on
+                    fields_id = [x for x in df_ed_merge.columns if (x not in fields_unc_delta) and (x not in fields_ordered_parameters)]
+                    #seprate out
+                    df_ed_merge_ids = df_ed_merge[fields_id]
+                    
+                    #lcheckr = list(df_ed_merge.columns)
+                    #checkr = [x for x in lcheckr if (lcheckr.count(x) > 1)]
+                    #sr.print_list_output(list(checkr), "checkr")
+                    #print("Length df_ed_merge cols: " + str(len(df_ed_merge.columns)))
+                    #print("Length df_ed_merge unique cols: " + str(len(set(df_ed_merge.columns))))
 
-                #convert to sum of two arrays—has headers fields_ordered_parameters
-                array_design = np.array(df_ed_merge[fields_ordered_parameters]) + np.array(df_ed_merge[fields_unc_delta])
-            else:
-                #id fields to breakout on
-                fields_id = [x for x in df_ed_merge.columns if (x not in fields_ordered_parameters)]
-                #seprate out
-                df_ed_merge_ids = df_ed_merge[fields_id]
-                #reduce the design
-                array_design = np.array(df_ed_merge[fields_ordered_parameters])
-            #update
-            df_ed_merge = pd.concat([df_ed_merge_ids, pd.DataFrame(array_design, columns = fields_ordered_parameters)], axis = 1, sort = False)
-            
-            #check if lever delta needs to be brought in
-            #if dict_data["vary_lever_deltas"][key] == 1:
-            
-            # ADD IN LEVER DELTAS
-            
-            if len(df_ld_shaped) > 0:
-                #fields to merge on
-                fields_merge_ld = list(set(df_ed_merge.columns) & set(df_ld_shaped.columns))
-            else:
-                fields_merge_ld = []
+                    #convert to sum of two arrays—has headers fields_ordered_parameters
+                    array_design = np.array(df_ed_merge[fields_ordered_parameters]) + np.array(df_ed_merge[fields_unc_delta])
+                else:
+                    #id fields to breakout on
+                    fields_id = [x for x in df_ed_merge.columns if (x not in fields_ordered_parameters)]
+                    #seprate out
+                    df_ed_merge_ids = df_ed_merge[fields_id]
+                    #reduce the design
+                    array_design = np.array(df_ed_merge[fields_ordered_parameters])
+                #update
+                df_ed_merge = pd.concat([df_ed_merge_ids, pd.DataFrame(array_design, columns = fields_ordered_parameters)], axis = 1, sort = False)
                 
-            if len(fields_merge_ld) > 0:
-                #merge in lever deltas
-                df_ed_merge = pd.merge(df_ed_merge, df_ld_shaped, how = "left", left_on = fields_merge_ld, right_on = fields_merge_ld)
-            #split out
-            df_ed_merge_ids = df_ed_merge[fields_id + fields_nonldparams_data]
-            #add in lever deltas
-            array_design = np.array(df_ed_merge[fields_ldparams_data]) + np.array(np.array(df_ed_merge[fields_ld_data].fillna(0)))
-            #concatenate
-            df_ed_merge = pd.concat([df_ed_merge_ids, pd.DataFrame(array_design, columns = fields_ldparams_data)], axis = 1, sort = False)
-            
-            #reduce
-            df_ed_merge = df_ed_merge[df_ed_merge["strategy_id"].isin(all_vals_add_sec["strategy_id"])]
-            #sort
-            df_ed_merge = df_ed_merge.sort_values(by = ["master_id", "year"])
-            #clear index
-            df_ed_merge = df_ed_merge.reset_index(drop = True)
-            #order
-            df_ed_merge = df_ed_merge[fields_id + fields_ordered_parameters]
+                #check if lever delta needs to be brought in
+                #if dict_data["vary_lever_deltas"][key] == 1:
+                
+                # ADD IN LEVER DELTAS
+                
+                if len(df_ld_shaped) > 0:
+                    #fields to merge on
+                    fields_merge_ld = list(set(df_ed_merge.columns) & set(df_ld_shaped.columns))
+                else:
+                    fields_merge_ld = []
+                    
+                if len(fields_merge_ld) > 0:
+                    #merge in lever deltas
+                    df_ed_merge = pd.merge(df_ed_merge, df_ld_shaped, how = "left", left_on = fields_merge_ld, right_on = fields_merge_ld)
+                #split out
+                df_ed_merge_ids = df_ed_merge[fields_id + fields_nonldparams_data]
+                #add in lever deltas
+                array_design = np.array(df_ed_merge[fields_ldparams_data]) + np.array(np.array(df_ed_merge[fields_ld_data].fillna(0)))
+                #concatenate
+                df_ed_merge = pd.concat([df_ed_merge_ids, pd.DataFrame(array_design, columns = fields_ldparams_data)], axis = 1, sort = False)
+                
+                #reduce
+                df_ed_merge = df_ed_merge[df_ed_merge["strategy_id"].isin(all_vals_add_sec["strategy_id"])]
+                #sort
+                df_ed_merge = df_ed_merge.sort_values(by = ["master_id", "year"])
+                #clear index
+                df_ed_merge = df_ed_merge.reset_index(drop = True)
+                #order
+                df_ed_merge = df_ed_merge[fields_id + fields_ordered_parameters]
 
-            if len(df_out) == 0:
-                #add to output list
-                df_out = df_out + [df_ed_merge]
-            else:
-                df_out = df_out + [df_ed_merge[df_out[0].columns]]
-            
-            print("Data frame for time_series_id: " + str(ts_id) + ", design_id: " + str(did) + " complete.")
-            print("")
+                if len(df_out) == 0:
+                    #add to output list
+                    df_out = df_out + [df_ed_merge]
+                else:
+                    df_out = df_out + [df_ed_merge[df_out[0].columns]]
+                
+                print("Data frame for time_series_id: " + str(ts_id) + ", strategy_id: " + str(st_id) + ", design_id: " + str(did) + " complete.")
+                print("")
     #build output dataframe
     df_out = pd.concat(df_out, axis = 0)
     #set ordering
@@ -1242,7 +1264,7 @@ if export_ed_files_q:
         ])
         
         #temp overwrite
-        df_master_exp = df_attribute_master_id[(df_attribute_master_id["design_id"] == 0)]
+        df_master_exp = df_attribute_master_id[df_attribute_master_id["design_id"].isin([0])]
         #set gams vals
         df_master_exp_gams = df_master_exp.copy()#[df_master_exp["strategy_id"] == 0].copy()
         #export
