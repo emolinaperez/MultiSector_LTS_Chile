@@ -619,6 +619,10 @@ dict_map_params_to_params_gams = build_dict(df_map_param_to_pg[["parameter", "pa
 # CREATE OUTPUT DIRECTORY
 if not os.path.exists(dir_out):
     os.makedirs(dir_out, exist_ok = True)
+    
+# CREATE EXPERIMENTAL DESIGN DIRECTORY
+if not os.path.exists(dir_ed):
+    os.makedirs(dir_ed, exist_ok = True)
 
 # INITIALIZE FAILED CASES CSV
 if not os.path.exists(fp_csv_failed_runs):
