@@ -47,7 +47,10 @@ print("Check: n_lhs = " + str(n_lhs))
 ###   GET THE PARAMETER TABLE
 
 #read in uncertainty table for additional sectors
-parameter_table_additional_sectors = pd.read_csv(sr.fp_csv_parameter_ranges)
+if not sr.excursion_q:
+    parameter_table_additional_sectors = pd.read_csv(sr.fp_csv_parameter_ranges)
+else:
+    parameter_table_additional_sectors = pd.read_csv(sr.fp_csv_parameter_ranges_for_excursion)
 #reduce
 parameter_table_additional_sectors = parameter_table_additional_sectors[parameter_table_additional_sectors["type"].isin(["incertidumbre", "accion"])]
 #add field
@@ -421,7 +424,200 @@ if sr.tornado_q:
     
     df_future_out.to_csv(sr.fp_csv_attribute_future, index = None, encoding = "UTF-8")
 
+
+elif sr.excursion_q:
+    
+    ts_id_fixed = 0
+    print("Building excursion design...\n")
+    #print("#"*30 + "\n###\n###   USING time_series_id '" + str(ts_id_fixed) + "' as reference for strategy in excursion\n###\n" + "#"*30 + "\n\n")
+    ######################################################
+    ###                                                ###
+    ###    BUILD EXCURSION PLOT EXPERIMENTAL DESIGN    ###
+    ###                                                ###
+    ######################################################
+    
+    all_strats = set(parameter_table_additional_sectors["strategy_id"])
+    all_strats_comp = all_strats - set({0})
+
+
+    # function that transforms the shape of PTAS data frames
+    def transform_ptas(df_in, fields_index):
+        df_in = df_in[fields_index + ["parameter"] + [x for x in df_in.columns if x.isnumeric()]]
+        #indices to loop over
+        df_inds = df_in[fields_index].drop_duplicates()
+        
+        df_out = []
+        
+        for i in range(len(df_inds)):
+            dict_subset = {}
+            df_cur = df_in.copy()
+            #assign subset
+            for field in fields_index:
+                dict_subset.update({field: int(df_inds[field].iloc[i])})
+                #reduce the dataframe
+                df_cur = df_cur[df_cur[field] == dict_subset[field]]
+            params = list(df_cur["parameter"])
+            df_cur = df_cur[[x for x in df_cur.columns if x not in (fields_index + ["parameter"])]]
+            df_cur = df_cur.transpose()
+            nms = list(df_cur.columns)
+            nms = [x for x in nms if (x != "year")]
+            dict_rnm = dict([[nms[i], params[i]] for i in range(len(df_cur.columns))])
+            df_cur = df_cur.rename(columns = dict_rnm).reset_index().rename(columns = {"index": "year"})
+            df_cur["year"] = np.array(df_cur["year"]).astype(int)
+            nms = list(df_cur.columns)
+            for field in fields_index:
+                #reduce the dataframe
+                df_cur[field] = [int(dict_subset[field]) for i in range(len(df_cur))]
+            df_cur = df_cur[fields_index + nms]
+            df_out.append(df_cur)
+        
+        df_out = pd.concat(df_out, axis = 0).reset_index(drop = True).sort_values(by = (fields_index + ["year"]))
+        
+        return df_out
+
+
+    #initialize dataframe of parameters for strat 0
+    df_ptas_0 = parameter_table_additional_sectors[parameter_table_additional_sectors["strategy_id"] == 0][[x for x in parameter_table_additional_sectors.columns if x != "strategy_id"]].copy()
+    df_ptas_0 = df_ptas_0[[x for x in df_ptas_0.columns if (x != "strategy_id")]]
+    df_ptas_0_transformed = transform_ptas(df_ptas_0, ["time_series_id"])
+
+    fields_ptas_ext = ["parameter", "time_series_id"] + [x for x in df_ptas_0.columns if x.isnumeric()]
+    #fields for the comparison (ignore range changes for this excercise)
+    fields_merge = ["sector", "time_series_id", "parameter"]
+    fields_data = ["normalize_group", "trajgroup_no_vary_q", "parameter_constant_q"] + [str(x) for x in range(2015, 2051)]
+
+    #initialize
+    df_out = []
+    df_fut = []
+
+    for strat in list(all_strats_comp):
+        
+        print("Building excursion data for strategy " + str(strat) + "...\n")
+
+        #get the table associated with the current table
+        df_ptas_cur = parameter_table_additional_sectors[parameter_table_additional_sectors["strategy_id"] == strat][[x for x in parameter_table_additional_sectors.columns if x != "strategy_id"]].copy()
+        df_ptas_cur = df_ptas_cur[[x for x in df_ptas_cur.columns if (x != "strategy_id")]]
+        df_ptas_cur_transformed = transform_ptas(df_ptas_cur, ["time_series_id"])
+        #HERE, RELY ONLY ON THE BASE ASSUMPTIONS
+        #df_ptas_cur_transformed = df_ptas_cur_transformed[df_ptas_cur_transformed["time_series_id"] == ts_id_fixed][[x for x in df_ptas_cur_transformed.columns if (x != "time_series_id")]]
+        
+        #bigger table to draw from
+        df_ptas_main_transformed = pd.merge(df_ptas_0_transformed, df_ptas_cur_transformed, how = "inner", on = ["time_series_id", "year"], suffixes = ("", "-strat"))
+        df_ptas_main_transformed["strategy_id"] = [strat for i in range(len(df_ptas_main_transformed))]
+        
+        ##  DETERMINE PARAMETERS THAT NEED TO BE INCLUDED IN THE EXCURSION RUN
+
+        dict_compare = sr.compare_params(df_ptas_0, df_ptas_cur, fields_merge, fields_data)
+
+
+        #get groups of parameters that will vary
+        params_vary_tg = [x.split("-")[0] for x in list(dict_compare["params_diff"]) if "trajgroup" in x]
+        params_vary_tg = set(params_vary_tg)
+
+        #get trajmax/traj
+        params_vary_tm = [x.replace("trajmix_", "").replace("trajmin_", "").replace("trajmax_", "") for x in list(dict_compare["params_diff"]) if ("trajgroup" not in x) and (("trajmax" in x) or ("trajmin" in x) or ("trajmix" in x))]
+        params_vary_tm = set(params_vary_tm)
+
+        #get rest of parameters
+        params_vary_else = dict_compare["params_diff"] - set([x for x in list(dict_compare["params_diff"]) if ("trajgroup" in x) or ("trajmin" in x) or ("trajmax" in x) or ("trajmix" in x) ])
+
+        #set of parameters to vary
+        params_vary_excursion_0 = list(params_vary_tg | params_vary_tm | params_vary_else)
+        params_vary_excursion_0.sort()
+
+        #final dictionary of futures
+        params_vary_excursion = set({})
+        dict_futs_to_params = {}
+        dict_fut_names = {}
+        i = 1
+        for p in list(params_vary_excursion_0):
+            if p in list(parameter_table_additional_sectors["parameter"]):
+                dict_futs_to_params.update({i: set({p})})
+            else:
+                dict_futs_to_params.update({i: set([x for x in list(set(parameter_table_additional_sectors["parameter"])) if p in x])})
+            dict_fut_names.update({i: p})
+            i += 1
+
+        #initialie data frame out
+        df_ed_cur = [df_ptas_0_transformed.copy()]
+        df_ed_cur[0]["future_id"] = [0 for i in range(len(df_ed_cur[0]))]
+        df_ed_cur[0]["strategy_id"] = [strat for i in range(len(df_ed_cur[0]))]
+
+        #initialize future id table
+        df_fut.append([strat, 0, "no parameter variation from " + str(sr.dict_strat_id_to_strat[0])])
+        
+        for f in dict_futs_to_params.keys():
+            #update future attrbute
+            df_fut.append([5, f, dict_fut_names[f]])
+            #initialize dataframe component
+            df_f = df_ptas_main_transformed.copy()
+
+            #get params to pull
+            params_overwrite = list(dict_futs_to_params[f])
+
+            for po in params_overwrite:
+                df_f[po] = np.array(df_f[po + "-strat"])
+            #add future id
+            df_f["future_id"] = [f for i in range(len(df_f))]
+            df_f = df_f[df_ed_cur[0].columns]
+            df_ed_cur.append(df_f)
+        df_ed_cur = pd.concat(df_ed_cur, axis = 0)
+        
+        if len(df_out) == 0:
+            df_out.append(df_ed_cur)
+        else:
+            df_out.append(df_ed_cur[df_out[0].columns])
+
+    df_out = pd.concat(df_out, axis = 0).reset_index(drop = True).sort_values(by = ["time_series_id", "strategy_id", "future_id", "year"])
+    df_out["design_id"] = [0 for i in range(len(df_out))]
+
+    fields_sort_mast = ["design_id", "time_series_id", "strategy_id", "future_id"]
+    df_attribute_master_id = df_out[fields_sort_mast].drop_duplicates().sort_values(by = fields_sort_mast).reset_index(drop = True)
+    df_attribute_master_id["master_id"] = np.array(range(len(df_attribute_master_id)))
+
+    #add a run id because I'm an idiot
+    df_attribute_run_id = df_attribute_master_id[["strategy_id", "future_id"]].drop_duplicates()
+    df_attribute_run_id["run_id"] = list(range(0, len(df_attribute_run_id)))
+    #merge
+    df_attribute_master_id = pd.merge(df_attribute_master_id, df_attribute_run_id, how = "left", on = ["strategy_id", "future_id"]).sort_values(by = ["master_id"]).reset_index(drop = True)
+   
+    fields_scen = [x for x in df_out.columns if (x[-3:] == "_id") and (x != "master_id")]
+    fields_scen.sort()
+    fields_scen = ["master_id", "run_id"] + fields_scen + ["year"]
+    fields_dat = [x for x in df_out.columns if x not in fields_scen]
+
+    #merge in master id
+    df_out = pd.merge(df_out, df_attribute_master_id, how = "left", on = fields_sort_mast)
+    df_out = df_out[fields_scen + fields_dat]
+
+    #build future attribute
+    df_fut = pd.DataFrame(df_fut, columns = ["strategy_id", "future_id", "parameter"])
+    #TEMPORARY: THIS IS SETUP TO ONLY WORK WITH ONE STRATEGY
+    df_fut = df_fut[[x for x in df_fut.columns if x != "strategy_id"]]
+
+
+    ########################################
+    #    EXPORT FILES FOR EXCURSION RUN    #
+    ########################################
+     
+    ##  EXPORT MASTER ID ATTRIBUTE TABLES
+    
+    print("Exporting master_id attribute to " + sr.fp_csv_attribute_master)
+    #export
+    df_attribute_master_id.to_csv(sr.fp_csv_attribute_master, index = None, encoding = "UTF-8")
+    #export for gams
+    df_mast_gams = df_attribute_master_id[["master_id"]].copy().rename(columns = {"master_id": "Escenarios"})
+    df_mast_gams.to_csv(sr.fp_csv_gams_data_set_escenarios, index = None, encoding = "UTF-8")
+    del df_mast_gams
+
+    
+    ##  EXPRT FUTURE ATTRIBUTE
+    
+    df_fut.to_csv(sr.fp_csv_attribute_future, index = None, encoding = "UTF-8")
+    
+    
 else:
+
     #############################
     #    GENERATE LHS MATRIX    #
     #############################
@@ -998,6 +1194,8 @@ for tg in trajgroups:
     fields_mix = [x for x in fields_tg if ("trajmix" in x)]
     #check if the lhs trial should vary (crude, needs to be improved)
     no_vary_q = ((substr_tg + "-lhs") in list(parameter_table_additional_sectors[parameter_table_additional_sectors["trajgroup_no_vary_q"] == 1]["variable_name_lower"]))
+    #check if the excursion queryis turned on
+    no_vary_q = (no_vary_q or sr.excursion_q)
     
     if no_vary_q:
         #notify
@@ -1220,6 +1418,19 @@ df_ed_hyd.to_csv(sr.fp_csv_gams_data_hidrologias_escenarios, index = False, enco
 
 
 
+##############################################
+###                                        ###
+###    EXPORT INFORMATION ON TRAJGROUPS    ###
+###                                        ###
+##############################################
+
+#df_trajgroup_index = [[x.split("-")[0].replace("trajgroup_", ""), x.split("-")[1].replace("trajmix_", "").replace("trajmax_", "").replace("trajmin_", "")] for x in list(parameter_table_additional_sectors["parameter"].unique()) if "trajgroup_" in x]
+#df_trajgroup_index = pd.DataFrame(df_trajgroup_index, columns = ["trajgroup", "parameter"])
+#df_trajgroup_index = df_trajgroup_index[df_trajgroup_index["parameter"] != "lhs"].drop_duplicates().sort_values(by = ["trajgroup", "parameter"]).reset_index(drop = True)
+df_trajgroup_index = sr.get_trajgroup_index(parameter_table_additional_sectors)
+df_trajgroup_index.to_csv(sr.fp_csv_index_trajgroups, index = None, encoding = "UTF-8")
+
+
 
 
 ###################################
@@ -1230,7 +1441,7 @@ df_ed_hyd.to_csv(sr.fp_csv_gams_data_hidrologias_escenarios, index = False, enco
 
 
 print("Building experimental design difference file...")
-if not sr.tornado_q:
+if not (sr.tornado_q or sr.excursion_q):
     #build difference file
     exp_design_diff = sr.do_df_diff(df_out, df_attribute_master_id, [], "year")
     #update run id to integer
@@ -1246,13 +1457,38 @@ if export_ed_files_q:
     #export experimental design and associated files
     df_out.to_csv(sr.fp_csv_experimental_design_msec, index = None)
     df_out_singles.to_csv(sr.fp_csv_experimental_design_msec_single_vals, index = None)
-    if not sr.tornado_q:
+    if not (sr.tornado_q or sr.excursion_q):
         exp_design_diff.to_csv(sr.fp_csv_experimental_design_msec_diff, index = None)
     #reduce and write to table for parameter values of interest
     #ed = df_out[(df_out["time_series_id"] == 0) & (df_out["year"].isin([min(sr.output_model_years), max(sr.output_model_years)])) & (df_out["future_id"] == 0) & (df_out["design_id"] == 0)]
     #ed = ed.transpose().reset_index(drop = False).rename(columns = {"index": "parameter"})
 
-    if not sr.tornado_q:
+    if sr.tornado_q:
+    
+         ##  (FOR TORNADO DESIGN) EXPORT EXPERIMENTAL DESIGN AND MASTERS TO RIUN
+        
+        df_master_exp = df_attribute_master_id[(df_attribute_master_id["time_series_id"] == 0)]#pd.concat([
+            #design 0
+            #df_attribute_master_id[(df_attribute_master_id["strategy_id"] != 0)]
+        #])
+        
+        
+        #export masters to run
+        df_master_exp[["master_id"]].to_csv(sr.fp_csv_experimental_design_msec_masters_to_run, index = None, encoding = "UTF-8")
+        #reorder gams
+        df_master_exp_gams = df_master_exp.sort_values(by = ["future_id", "time_series_id"]).reset_index(drop = True)
+        df_master_exp_gams[["master_id"]].to_csv(sr.fp_csv_experimental_design_msec_masters_to_run_gams, index = None, encoding = "UTF-8")
+    
+    elif sr.excursion_q:
+        df_master_exp = df_attribute_master_id#[(df_attribute_master_id["time_series_id"] == 0)]#pd.concat([
+        
+        #export masters to run
+        df_master_exp[["master_id"]].to_csv(sr.fp_csv_experimental_design_msec_masters_to_run, index = None, encoding = "UTF-8")
+        #reorder gams
+        df_master_exp_gams = df_master_exp.sort_values(by = ["future_id", "time_series_id"]).reset_index(drop = True)
+        df_master_exp_gams[["master_id"]].to_csv(sr.fp_csv_experimental_design_msec_masters_to_run_gams, index = None, encoding = "UTF-8")
+        
+    else:
         
         ##  (FOR STANDARD DESIGN) DEFAULT SET TO RUN
         
@@ -1273,21 +1509,8 @@ if export_ed_files_q:
         #reorder gams
         df_master_exp_gams = df_master_exp_gams.sort_values(by = ["future_id", "time_series_id"]).reset_index(drop = True)
         df_master_exp_gams[["master_id"]].to_csv(sr.fp_csv_experimental_design_msec_masters_to_run_gams, index = None, encoding = "UTF-8")
-    
-    else:
-        ##  (FOR TORNADO DESIGN) EXPORT EXPERIMENTAL DESIGN AND MASTERS TO RIUN
-        
-        df_master_exp = df_attribute_master_id[(df_attribute_master_id["strategy_id"] != 0)]#pd.concat([
-            #design 0
-            #df_attribute_master_id[(df_attribute_master_id["strategy_id"] != 0)]
-        #])
-        
-        
-        #export masters to run
-        df_master_exp[["master_id"]].to_csv(sr.fp_csv_experimental_design_msec_masters_to_run, index = None, encoding = "UTF-8")
-        #reorder gams
-        df_master_exp_gams = df_master_exp.sort_values(by = ["future_id", "time_series_id"]).reset_index(drop = True)
-        df_master_exp_gams[["master_id"]].to_csv(sr.fp_csv_experimental_design_msec_masters_to_run_gams, index = None, encoding = "UTF-8")
+
+
         
 
 

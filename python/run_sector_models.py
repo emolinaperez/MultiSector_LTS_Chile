@@ -584,16 +584,18 @@ exp_design[exp_design["year"].isin(sr.output_model_years)][fields_ext].to_csv(fp
 fp_ed_diff_out = os.path.join(dir_tmp_export, os.path.basename(sr.fp_csv_experimental_design_msec_diff))
 #notify
 print("Reading, reducing, and exporting experimental design differences to " + fp_ed_diff_out + "...")
-#pull in difference design
-exp_design_diff = pd.read_csv(sr.fp_csv_experimental_design_msec_diff)
-#get columns to keep
-fields_ext = dict_fields_keep_export["diff"]
-#ensure availability
-fields_ext = [x for x in fields_ext if x in exp_design_diff.columns]
-#reduce
-exp_design_diff = exp_design_diff[exp_design_diff["year"].isin(sr.output_model_years)][fields_ext]
-#write to output
-exp_design_diff.to_csv(fp_ed_diff_out, index = None, encoding = "UTF-8")
+
+if os.path.exists(sr.fp_csv_experimental_design_msec_diff):
+    #pull in difference design
+    exp_design_diff = pd.read_csv(sr.fp_csv_experimental_design_msec_diff)
+    #get columns to keep
+    fields_ext = dict_fields_keep_export["diff"]
+    #ensure availability
+    fields_ext = [x for x in fields_ext if x in exp_design_diff.columns]
+    #reduce
+    exp_design_diff = exp_design_diff[exp_design_diff["year"].isin(sr.output_model_years)][fields_ext]
+    #write to output
+    exp_design_diff.to_csv(fp_ed_diff_out, index = None, encoding = "UTF-8")
 
 
 #files to copy in
@@ -602,6 +604,7 @@ list_files_copy = [
 	sr.fp_csv_attribute_strategy,
 	sr.fp_csv_attribute_time_series,
 	sr.fp_csv_experimental_design_msec_single_vals,
+    sr.fp_csv_index_trajgroups,
 	sr.fp_csv_lhs_table_levers,
 	sr.fp_csv_lhs_table_multi_sector,
 	sr.fp_csv_output_multi_sector,
@@ -622,12 +625,15 @@ if sr.integrate_analytica_q:
 	
 #loop
 for fp in list_files_copy:
-	#new file path out
-	fp_out = os.path.join(dir_tmp_export, os.path.basename(fp))
-	#print
-	print("Copying " + fp + " to " + fp_out + "...")
-	#copy over
-	shutil.copy(fp, fp_out)
+    if os.path.exists(fp):
+        #new file path out
+        fp_out = os.path.join(dir_tmp_export, os.path.basename(fp))
+        #print
+        print("Copying " + fp + " to " + fp_out + "...")
+        #copy over
+        shutil.copy(fp, fp_out)
+    else:
+        print("File '" + fp + "' not found. Copying will not proceed for this file.")
 #new package
 fp_package_compressed = os.path.join(sr.dir_out, dir_package + ".tar.gz")
 #build tar

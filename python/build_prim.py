@@ -13,7 +13,7 @@ import setup_runs as sr
 #restore from archive?
 restore_from_archive_q = True
 #set the name
-archive_name = "Chile_sector_package_2021_02_13_design_id-1"
+archive_name = "Chile_sector_package_2021_02_20_full_package"
 
 if restore_from_archive_q:
     print("\n\n" + "#"*30 + "\n###\n###    NOTE: BUILDING PRIM FROM ARCHIVE '" + archive_name + "'...\n###\n" + "#"*30 + "\n\n")
@@ -37,21 +37,31 @@ for k in dict_fp_results.keys():
     
     df_tmp = df_tmp.rename(columns = {"Agno": "year", "agno": "year"})
     dict_results.update({k: df_tmp.copy()})
-    
+
+#default to ignore parameters (sometimes "full" packages don't have an integrated parameter sheet set)
+use_params_q = False
 #experimental design
 if restore_from_archive_q:
     df_ed = sr.get_archive_run(sr.fp_csv_experimental_design_msec, archive_name)
-    df_params = sr.get_archive_run(sr.fp_csv_parameter_ranges, archive_name)
+    
+    if os.path.exists(sr.get_archive_data_path(sr.fp_csv_parameter_ranges, archive_name)):
+        df_params = sr.get_archive_run(sr.fp_csv_parameter_ranges, archive_name)
+        use_params_q = True
 else:
     df_ed = pd.read_csv(sr.fp_csv_experimental_design_msec)
-    df_params = pd.read_csv(sr.fp_csv_parameter_ranges)
+    if os.path.exists(sr.fp_csv_parameter_ranges):
+        df_params = pd.read_csv(sr.fp_csv_parameter_ranges)
+        use_params_q = True
 
 
 
 ##  CHECK FOR TRAJGROUPS THAT NEED TO BE DROPPED
 
-fields_drop = list(df_params[df_params["trajgroup_no_vary_q"] == 1]["parameter"].unique())
-fields_drop = list(set([x for x in fields_drop if ("trajgroup_" in x) and ("-lhs" in x)]))
+if use_params_q:
+    fields_drop = list(df_params[df_params["trajgroup_no_vary_q"] == 1]["parameter"].unique())
+    fields_drop = list(set([x for x in fields_drop if ("trajgroup_" in x) and ("-lhs" in x)]))
+else:
+    fields_drop = []
 sr.print_list_output(fields_drop, "fields_drop")
 #drop resulting values
 df_ed = df_ed[[x for x in df_ed.columns if x not in fields_drop]]
@@ -61,7 +71,7 @@ df_ed = df_ed[[x for x in df_ed.columns if x not in fields_drop]]
 #get maximum year
 year_max = max(df_ed["year"])
 #initialize prim data frame
-fields_ed_id = ["master_id", "strategy_id", "time_series_id"]
+fields_ed_id = ["master_id", "design_id", "strategy_id", "time_series_id"]
 fields_ed_dat = [x for x in df_ed.columns if (x not in fields_ed_id) and ("_id" not in x) and (x != "year")]
 
 #update dictionary
@@ -69,7 +79,7 @@ for field in fields_ed_id:
     if field != "master_id":
         dict_field_type.update({field: "filter"})
 #initialize
-df_prim = df_ed[(df_ed["year"] == year_max) & (df_ed["design_id"] == 0)][fields_ed_id + fields_ed_dat]
+df_prim = df_ed[(df_ed["year"] == year_max) & (df_ed["design_id"].isin([1, 3]))][fields_ed_id + fields_ed_dat]
 #drop fields that don't vary
 fields_keep = []
 for field in fields_ed_dat:

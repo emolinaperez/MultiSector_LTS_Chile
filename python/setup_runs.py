@@ -309,6 +309,16 @@ def read_ini(fp_ini):
 	return dict_init
 			
 
+# FUNCTION FOR GETTING ARCHIVE DATA PATH
+
+def get_archive_data_path(fp_in, archive_run):
+    #set the archive directory
+    dir_arch = os.path.join(dir_archive_runs, archive_run)
+    fp_read = os.path.join(dir_arch, os.path.basename(fp_in))
+
+    return fp_read
+    
+    
 # FUNCTION FOR READING ARCHIVE DATA
 
 def get_archive_run(fp_in, archive_run):
@@ -335,6 +345,129 @@ def get_archive_run(fp_in, archive_run):
 def print_list_output(list_in, header):
 	print("\n"*3 + "#"*30 + "\n" + header + ":\n" + (("\t%s\n")*len(list_in))%tuple(list_in) + "#"*30 + "\n"*3)
 
+
+# FUNCTION FOR COMPARING CHANGES IN PARAMETER FILES
+
+def compare_params(df_old, df_new, fields_merge, fields_data):
+    
+    dict_out = {}
+    
+    #get fields
+    fields_dat_old = [x for x in fields_data if x in df_old.columns]
+    fields_dat_new = [x for x in fields_data if x in df_new.columns]
+    fields_dat_red = list(set(fields_dat_new) & set(fields_dat_old))
+    fields_dat_red = [x for x in fields_data if x in fields_dat_red]
+
+    #find fields that were dropped, if they exist
+    fields_dat_compl_old = list(set(fields_data) - set(fields_dat_old))
+    fields_dat_compl_new = list(set(fields_data) - set(fields_dat_new))
+    
+    if len(fields_dat_compl_old) > 0:
+        #notify what fields were dropped
+        fields_dat_compl_old.sort()
+        print_list_output(fields_dat_compl_old, "Dropping data fields from df_old")
+        #add to output dictionary
+        dict_out.update({"fields_dat_compl_old": fields_dat_compl_old})
+        
+    if len(fields_dat_compl_new) > 0:
+        #notify what fields were dropped
+        fields_dat_compl_new.sort()
+        print_list_output(fields_dat_compl_new, "Dropping data fields from df_new")
+        #add to output dictionary
+        dict_out.update({"fields_dat_compl_new": fields_dat_compl_new})
+    
+    #get intersection and order
+    fm = list(set(df_old.columns) & set(df_new.columns) & set(fields_merge))
+    fm = [x for x in fields_merge if x in fm]
+    #notify of fields that are merged on
+    print_list_output(fm, "Merging on")
+    
+    #build dictionaries to rename
+    dict_rnm_new = dict([[x, "newp_" + x] for x in fields_dat_new])
+    dict_rnm_old = dict([[x, "oldp_" + x] for x in fields_dat_old])
+    dict_out.update({"dict_rnm_new": dict_rnm_new, "dict_rnm_old": dict_rnm_old})
+    #rename the data frames
+    df_new = df_new[fm + fields_dat_new].rename(columns = dict_rnm_new)
+    df_old = df_old[fm + fields_dat_old].rename(columns = dict_rnm_old)
+    
+    #merge
+    df_comp = pd.merge(df_old, df_new, how = "inner", on = fm).sort_values(by = fm).reset_index(drop = True).fillna(0)
+    dict_out.update({"df_comp": df_comp})
+
+    #find parameters that were dropped, if they exist
+    parameters_dat_compl_old = list(set(df_comp["parameter"]) - set(df_old["parameter"]))
+    parameters_dat_compl_new = list(set(df_comp["parameter"]) - set(df_new["parameter"]))
+
+    #notify
+    if len(parameters_dat_compl_old) > 0:
+        #notify what fields were dropped
+        parameters_dat_compl_old.sort()
+        print_list_output(parameters_dat_compl_old, "The following parameters from df_old were not kept")
+        #add to output dictionary
+        dict_out.update({"parameters_dat_compl_old": parameters_dat_compl_old})
+
+    if len(parameters_dat_compl_new) > 0:
+        #notify what fields were dropped
+        parameters_dat_compl_new.sort()
+        print_list_output(parameters_dat_compl_new, "The following parameters from df_new were not kept")
+        #add to output dictionary
+        dict_out.update({"parameters_dat_compl_new": parameters_dat_compl_new})
+
+    #compare fields
+    array_new = np.array(df_comp[[("newp_" + x) for x in fields_dat_red]])
+    array_old = np.array(df_comp[[("oldp_" + x) for x in fields_dat_red]])
+    array_diff = abs(array_new - array_old)
+
+    params_diff = set({})
+    #find differences
+    for i in range(len(array_diff)):
+        w = np.where(array_diff[i] > 0.0001)[0]
+        if len(w) > 0:
+            #get parameter
+            param = df_comp["parameter"].iloc[i]
+            #add to output set
+            params_diff = params_diff | set({param})
+
+    dict_out.update({"params_diff": params_diff})
+    
+    return dict_out
+
+
+# FUNCTION FOR GETTING TRAJGROUPS BY PARAMETER
+
+def get_trajgroup_index(df_params_in):
+    df_trajgroup_index = [[x.split("-")[0].replace("trajgroup_", ""), x.split("-")[1].replace("trajmix_", "").replace("trajmax_", "").replace("trajmin_", "")] for x in list(df_params_in["parameter"].unique()) if "trajgroup_" in x]
+    df_trajgroup_index = pd.DataFrame(df_trajgroup_index, columns = ["trajgroup", "parameter"])
+    df_trajgroup_index = df_trajgroup_index[df_trajgroup_index["parameter"] != "lhs"].drop_duplicates().sort_values(by = ["trajgroup", "parameter"]).reset_index(drop = True)
+    
+    return df_trajgroup_index
+
+
+# FUNCTION FOR GETTING TRAJMIXES BY PARAMETER
+
+def get_trajmix_params(df_params_in):
+    trajmix_params = [x.replace("trajmix_", "").replace("trajmax_", "").replace("trajmin_", "") for x in list(df_params_in["parameter"].unique()) if ("trajgroup" not in x) and (("trajmax" in x) or ("trajmin" in x) or ("trajmix" in x))]
+    
+    return set(trajmix_params)
+
+
+# FUNCTION TO SPLIT OUT TRAJGROUP NAMES
+
+def clean_trajgroup_names(string):
+    spl = string.split("-")
+    #get the group string
+    group = int(spl[0].split("_")[1])
+    
+    #get what type
+    for tc in ["trajmix", "trajmax", "trajmin"]:
+        #get the trajectory component
+        if (tc + "_") == spl[1][0:8]:
+            traj_comp = tc
+    
+    #get final parameter
+    param = spl[1].replace((traj_comp + "_"), "")
+    
+    return {"group": group, "component": traj_comp, "param": param}
 
 #############################
 #    SET FULL FILE PATHS    #
@@ -390,6 +523,7 @@ fp_csv_experimental_design_transportation = os.path.join(dir_ed, "experimental_d
 fp_csv_failed_runs = os.path.join(dir_out, "failed_runs.csv")
 fp_csv_failed_instances = os.path.join(dir_out, "failed_instances.csv")
 fp_csv_fields_keep_experimental_design_multi_sector = os.path.join(dir_ref, "fields_keep-experimental_design_multi_sector.csv")
+fp_csv_index_trajgroups = os.path.join(dir_out, "trajgroup_index.csv")
 fp_csv_output_field_types = os.path.join(dir_ref, "output_field_types.csv")
 fp_csv_lhs_table_multi_sector = os.path.join(dir_ed, "lhs_samples_multi_sector.csv")
 fp_csv_lhs_table_levers = os.path.join(dir_ed, "lhs_samples_levers.csv")
@@ -401,6 +535,7 @@ fp_csv_output_multi_sector_analytica = os.path.join(dir_out, "output_multi_secto
 fp_csv_output_multi_sector_pmr = os.path.join(dir_out, "output_multi_sector_pmr.csv")
 fp_csv_parameter_ranges = os.path.join(dir_ref, "parameter_ranges.csv")
 fp_csv_parameter_ranges_for_analytica_base = os.path.join(dir_ref, "parameter_ranges_for_analytica_base.csv")
+fp_csv_parameter_ranges_for_excursion = os.path.join(dir_ref, "parameter_ranges_excursion_futures.csv")
 fp_csv_prim_field_attribute = os.path.join(dir_out, "prim-attribute_field.csv")
 fp_csv_prim_input_data = os.path.join(dir_out, "prim-input_data.csv")
 fp_csv_ranges_for_decarb_drivers = os.path.join(dir_out, "ranges_for_decarb_drivers.csv")
@@ -455,7 +590,8 @@ if (str(dict_init["read_lhs_tables_q"]).lower() == "true"):
 
 #run tornado design?
 tornado_q = (str(dict_init["experimental_mode"]).lower() == "tornado")
-
+#run excursion design?
+excursion_q = (str(dict_init["experimental_mode"]).lower() == "excursion")
 
 
 ##############################
