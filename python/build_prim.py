@@ -13,7 +13,7 @@ import setup_runs as sr
 #restore from archive?
 restore_from_archive_q = True
 #set the name
-archive_name = "Chile_sector_package_2021_02_20_full_package"
+archive_name = "Chile_sector_package_2021_03_11_futures-1000_full"#"Chile_sector_package_2021_02_20_full_package"
 
 if restore_from_archive_q:
     print("\n\n" + "#"*30 + "\n###\n###    NOTE: BUILDING PRIM FROM ARCHIVE '" + archive_name + "'...\n###\n" + "#"*30 + "\n\n")
@@ -138,7 +138,7 @@ print("\nExporting prim files...\n")
 
 fp_out_attribute = sr.fp_csv_prim_field_attribute
 fp_out_data = sr.fp_csv_prim_input_data
-#export directly to arhive?
+#export directly to archive?
 if restore_from_archive_q:
     fp_out_attribute = os.path.join(sr.dir_archive_runs, archive_name, os.path.basename(fp_out_attribute))
     fp_out_data = os.path.join(sr.dir_archive_runs, archive_name, os.path.basename(fp_out_data))

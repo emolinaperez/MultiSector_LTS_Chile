@@ -1,6 +1,5 @@
 design_id,vary_lever_deltas,vary_uncertainties,linear_transform_ld_m,linear_transform_ld_b,min_lever_deltas,max_lever_deltas,Experimental Design,include
-0,0,1,1,0,1,1,Vary Xs only (design 0),1
-1,1,1,1,0.5,0.5,1,Vary Xs and xLs (design 1),1
-2,1,1,1,0.5,0.5,1.5,Vary Xs and xLs; full range max xL,0
-3,1,0,1,0.5,0.5,1,Vary xLs only; truncate max xL,0
-4,1,0,1,0.5,0.5,1.5,Vary xLs only; full range max xL,0
+0,0,1,1,0,1,1,Vary Xs (design 0),1
+1,1,1,1,0.5,0.5,1,Vary Xs and xLs (design 1),0
+2,1,1,1,0.5,0.5,1.5,Vary Xs; fixed V1 (design 2),0
+3,1,0,1,0.5,0.5,1,Vary Xs and xLs; fixed V1 (design 3),0

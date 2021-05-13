@@ -568,6 +568,7 @@ elif sr.excursion_q:
         else:
             df_out.append(df_ed_cur[df_out[0].columns])
 
+
     df_out = pd.concat(df_out, axis = 0).reset_index(drop = True).sort_values(by = ["time_series_id", "strategy_id", "future_id", "year"])
     df_out["design_id"] = [0 for i in range(len(df_out))]
 
@@ -580,6 +581,9 @@ elif sr.excursion_q:
     df_attribute_run_id["run_id"] = list(range(0, len(df_attribute_run_id)))
     #merge
     df_attribute_master_id = pd.merge(df_attribute_master_id, df_attribute_run_id, how = "left", on = ["strategy_id", "future_id"]).sort_values(by = ["master_id"]).reset_index(drop = True)
+    #order
+    df_attribute_master_id = df_attribute_master_id[fields_ord_dfm]
+    
    
     fields_scen = [x for x in df_out.columns if (x[-3:] == "_id") and (x != "master_id")]
     fields_scen.sort()
@@ -1141,20 +1145,26 @@ else:
                     #add to output list
                     df_out = df_out + [df_ed_merge]
                 else:
+                    
                     df_out = df_out + [df_ed_merge[df_out[0].columns]]
                 
                 print("Data frame for time_series_id: " + str(ts_id) + ", strategy_id: " + str(st_id) + ", design_id: " + str(did) + " complete.")
                 print("")
+
+    #drop experimental design entries that weren't filled
+    df_out = [x for x in df_out if (len(x) > 0)]
     #build output dataframe
     df_out = pd.concat(df_out, axis = 0)
+    #clean ids
+    for field in [x for x in df_out.columns if (x[-3:] == "_id")]:
+        df_out[field] = np.array(df_out[field]).astype(int)
+
     #set ordering
     fields_id = [x for x in df_out.columns if ("_id" == x[-3:])]
     fields_dat = [x for x in df_out.columns if (x not in (fields_id + ["year"]))]
     df_out = df_out[fields_id + ["year"] + fields_dat]
     #
-
-
-
+    
 
 
 ##############################################################
@@ -1197,6 +1207,10 @@ for tg in trajgroups:
     #check if the excursion queryis turned on
     no_vary_q = (no_vary_q or sr.excursion_q)
     
+    #if running a tornado, check for futures that should be set to the baseline
+    if sr.tornado_q:
+        futs_baseline = set(df_future_out[~df_future_out["parameter"].isin([substr_tg + "-lhs"])]["future_id"])
+        futs_baseline = futs_baseline | set({0})
     if no_vary_q:
         #notify
         print("trajgroup " + str(tg) + " is set to NOT vary.\n")
@@ -1207,7 +1221,11 @@ for tg in trajgroups:
         #get the max range on the mixing vec
         max_range = np.nan_to_num(1/vec_2050_mix)
         vec_lhs_trans = vec_lhs*max_range
-        w = np.where(np.array(df_out["future_id"] == 0))
+        
+        if sr.tornado_q:
+            w = np.where(np.array(df_out["future_id"].isin(futs_baseline)))
+        else:
+            w = np.where(np.array(df_out["future_id"] == 0))
         vec_lhs_trans[w] = 1
         #convert to one if traj groups aren't varying
         if no_vary_q:
@@ -1360,6 +1378,7 @@ print("Growth rate complete.\n")
 
 
 
+
 ###############################
 ###                         ###
 ###    EXPORT GAMS FILES    ###
@@ -1424,11 +1443,38 @@ df_ed_hyd.to_csv(sr.fp_csv_gams_data_hidrologias_escenarios, index = False, enco
 ###                                        ###
 ##############################################
 
-#df_trajgroup_index = [[x.split("-")[0].replace("trajgroup_", ""), x.split("-")[1].replace("trajmix_", "").replace("trajmax_", "").replace("trajmin_", "")] for x in list(parameter_table_additional_sectors["parameter"].unique()) if "trajgroup_" in x]
-#df_trajgroup_index = pd.DataFrame(df_trajgroup_index, columns = ["trajgroup", "parameter"])
-#df_trajgroup_index = df_trajgroup_index[df_trajgroup_index["parameter"] != "lhs"].drop_duplicates().sort_values(by = ["trajgroup", "parameter"]).reset_index(drop = True)
 df_trajgroup_index = sr.get_trajgroup_index(parameter_table_additional_sectors)
 df_trajgroup_index.to_csv(sr.fp_csv_index_trajgroups, index = None, encoding = "UTF-8")
+
+
+
+
+
+########################################################
+###                                                  ###
+###    EXPORT DATA FRAME OF PMR_STRATEGY FOR GAMS    ###
+###                                                  ###
+########################################################
+
+
+#set the string field
+param_pmr_strategy = "pmr_strategy"
+
+if param_pmr_strategy in df_out.columns:
+    df_pmr_strats = df_out[df_out["year"] == 2050][["master_id", param_pmr_strategy]].copy()
+    #ensure integers
+    for col in df_pmr_strats.columns:
+        df_pmr_strats[col] = np.array(df_pmr_strats[col]).astype(int)
+elif "pmr_strategy" in df_out_singles.columns:
+    val = int(df_out_singles[param_pmr_strategy].iloc[0])
+    df_pmr_strats = df_out[df_out["year"] == 2050][["master_id"]].copy()
+    df_pmr_strats[param_pmr_strategy] = [val for x in range(len(df_pmr_strats))]
+    #ensure integers
+    for col in df_pmr_strats.columns:
+        df_pmr_strats[col] = np.array(df_pmr_strats[col]).astype(int)
+    
+else:
+    df_pmr_strats = df_out[df_out["year"] == 2050][["master_id"]]
 
 
 
@@ -1454,11 +1500,20 @@ if export_ed_files_q:
     print("")
     #note/export
     print("Exporting additional sectors experimental design to " + sr.fp_csv_experimental_design_msec)
+    
     #export experimental design and associated files
-    df_out.to_csv(sr.fp_csv_experimental_design_msec, index = None)
-    df_out_singles.to_csv(sr.fp_csv_experimental_design_msec_single_vals, index = None)
+    df_out.to_csv(sr.fp_csv_experimental_design_msec, index = None, encoding = "UTF-8")
+    df_out_singles.to_csv(sr.fp_csv_experimental_design_msec_single_vals, index = None, encoding = "UTF-8")
+    
+    if param_pmr_strategy in df_pmr_strats.columns:
+        #rename
+        df_pmr_strats = df_pmr_strats.rename(columns = {param_pmr_strategy: "strategy_id"})
+        df_pmr_strats.to_csv(sr.fp_csv_experimental_design_pmr_strategies_by_master, index = None, encoding = "UTF-8")
+    else:
+        print("\n"*3 + "#"*30 + ("\n###\n###    NOTE: %s NOT FOUND IN df_pmr_strats; THE FILE WAS NOT EXPORTED, AND PMR MAY NOT RUN CORRECTLY\n###\n" + "#"*30 + "\n"*3)%(param_pmr_strategy))
+    
     if not (sr.tornado_q or sr.excursion_q):
-        exp_design_diff.to_csv(sr.fp_csv_experimental_design_msec_diff, index = None)
+        exp_design_diff.to_csv(sr.fp_csv_experimental_design_msec_diff, index = None, encoding = "UTF-8")
     #reduce and write to table for parameter values of interest
     #ed = df_out[(df_out["time_series_id"] == 0) & (df_out["year"].isin([min(sr.output_model_years), max(sr.output_model_years)])) & (df_out["future_id"] == 0) & (df_out["design_id"] == 0)]
     #ed = ed.transpose().reset_index(drop = False).rename(columns = {"index": "parameter"})
@@ -1467,7 +1522,7 @@ if export_ed_files_q:
     
          ##  (FOR TORNADO DESIGN) EXPORT EXPERIMENTAL DESIGN AND MASTERS TO RIUN
         
-        df_master_exp = df_attribute_master_id[(df_attribute_master_id["time_series_id"] == 0)]#pd.concat([
+        df_master_exp = df_attribute_master_id[(df_attribute_master_id["time_series_id"] == 0) & (df_attribute_master_id["strategy_id"] == 0)]#pd.concat([
             #design 0
             #df_attribute_master_id[(df_attribute_master_id["strategy_id"] != 0)]
         #])
@@ -1494,20 +1549,23 @@ if export_ed_files_q:
         
         df_master_exp = pd.concat([
             #design 0
-            df_attribute_master_id[(df_attribute_master_id["design_id"] == 0) & (df_attribute_master_id["strategy_id"] > 0)],
+            df_attribute_master_id[(df_attribute_master_id["design_id"] == 0)],
             #design 1
-            df_attribute_master_id[(df_attribute_master_id["design_id"] == 1) & (df_attribute_master_id["strategy_id"] > 0)]
+            df_attribute_master_id[(df_attribute_master_id["design_id"] == 1)]
         ])
         
         #temp overwrite
-        df_master_exp = df_attribute_master_id[df_attribute_master_id["design_id"].isin([0])]
+        df_master_exp = df_attribute_master_id[
+            df_attribute_master_id["design_id"].isin([0]) & df_attribute_master_id["time_series_id"].isin([0]) & (df_attribute_master_id["strategy_id"] > 0)
+        ]
+
         #set gams vals
         df_master_exp_gams = df_master_exp.copy()#[df_master_exp["strategy_id"] == 0].copy()
         #export
         df_master_exp[["master_id"]].to_csv(sr.fp_csv_experimental_design_msec_masters_to_run, index = None, encoding = "UTF-8")
         
         #reorder gams
-        df_master_exp_gams = df_master_exp_gams.sort_values(by = ["future_id", "time_series_id"]).reset_index(drop = True)
+        df_master_exp_gams = df_master_exp_gams.sort_values(by = ["future_id", "time_series_id", "strategy_id"]).reset_index(drop = True)
         df_master_exp_gams[["master_id"]].to_csv(sr.fp_csv_experimental_design_msec_masters_to_run_gams, index = None, encoding = "UTF-8")
 
 

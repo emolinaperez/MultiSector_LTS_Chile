@@ -15,6 +15,8 @@ dir_cur = os.path.dirname(os.path.realpath(__file__))
 dir_model = os.path.dirname(dir_cur)
 #reference files
 dir_ref = os.path.join(dir_model, "ref")
+#gams files to pass on each loop
+dir_ref_gams_input_data = os.path.join(dir_ref, "gams_data_input_by_strat")
 
 
 #archive
@@ -348,7 +350,7 @@ def print_list_output(list_in, header):
 
 # FUNCTION FOR COMPARING CHANGES IN PARAMETER FILES
 
-def compare_params(df_old, df_new, fields_merge, fields_data):
+def compare_params(df_old, df_new, fields_merge, fields_data, param_field = "parameter"):
     
     dict_out = {}
     
@@ -395,8 +397,8 @@ def compare_params(df_old, df_new, fields_merge, fields_data):
     dict_out.update({"df_comp": df_comp})
 
     #find parameters that were dropped, if they exist
-    parameters_dat_compl_old = list(set(df_comp["parameter"]) - set(df_old["parameter"]))
-    parameters_dat_compl_new = list(set(df_comp["parameter"]) - set(df_new["parameter"]))
+    parameters_dat_compl_old = list(set(df_comp[param_field]) - set(df_old[param_field]))
+    parameters_dat_compl_new = list(set(df_comp[param_field]) - set(df_new[param_field]))
 
     #notify
     if len(parameters_dat_compl_old) > 0:
@@ -424,7 +426,7 @@ def compare_params(df_old, df_new, fields_merge, fields_data):
         w = np.where(array_diff[i] > 0.0001)[0]
         if len(w) > 0:
             #get parameter
-            param = df_comp["parameter"].iloc[i]
+            param = df_comp[param_field].iloc[i]
             #add to output set
             params_diff = params_diff | set({param})
 
@@ -520,6 +522,7 @@ fp_csv_experimental_design_msec_masters_to_run_gams = os.path.join(dir_ed, "expe
 fp_csv_experimental_design_msec_single_vals = os.path.join(dir_ed, "experimental_design_multi_sector_single_vals.csv")
 fp_csv_experimental_design_cloud = os.path.join(dir_ed, "experimental_design_cloud.csv")
 fp_csv_experimental_design_transportation = os.path.join(dir_ed, "experimental_design_transportation.csv")
+fp_csv_experimental_design_pmr_strategies_by_master = os.path.join(dir_ed, "experimental_design_pmr_strategies_by_master.csv")
 fp_csv_failed_runs = os.path.join(dir_out, "failed_runs.csv")
 fp_csv_failed_instances = os.path.join(dir_out, "failed_instances.csv")
 fp_csv_fields_keep_experimental_design_multi_sector = os.path.join(dir_ref, "fields_keep-experimental_design_multi_sector.csv")

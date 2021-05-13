@@ -1,6 +1,8 @@
 parameter,sector,x_xl_designation,display
+manejo_holistico_de_gando,Analytica_agriculture,xl,Manejo Holistico De Gando
 medida_biodigestores,Analytica_agriculture,xl,Medida Biodigestores
 medida_cambio_dieta_bovina,Analytica_agriculture,xl,Medida Cambio Dieta Bovina
+medida_cambio_dieta_nacional,Analytica_agriculture,xl,Medida Cambio Dieta Nacional
 medida_captura_c_suelos,Analytica_agriculture,xl,Medida Captura C Suelos
 medida_uso_eficiente_fertilizante,Analytica_agriculture,xl,Medida Uso Eficiente Fertilizante
 precio_bovino,Analytica_agriculture,xl,Precio Bovino
@@ -20,11 +22,16 @@ incertidumbre_perdida_de_bosque_nativo,Analytica_forestry,x,Incertidumbre Perdid
 incertidumbre_rendimiento_bn,Analytica_forestry,x,Incertidumbre Rendimiento Bn
 incertidumbre_rendimiento_plantacion,Analytica_forestry,x,Incertidumbre Rendimiento Plantacion
 incertidumbre_var_demanda_legna,Analytica_forestry,x,Incertidumbre Var Demanda Legna
+medida_algas_pardas,Analytica_forestry,xl,Medida Algas Pardas
+medida_aumento_parques_reservas,Analytica_forestry,xl,Medida Aumento Parques Reservas
+medida_forestacion_aumentada,Analytica_forestry,xl,Medida Forestacion Aumentada
 medida_forestacion_bn,Analytica_forestry,xl,Medida Forestacion Bn
 medida_forestacion_plantaciones,Analytica_forestry,xl,Medida Forestacion Plantaciones
 medida_incendio_bosque_nativo,Analytica_forestry,xl,Medida Incendio Bosque Nativo
 medida_incendio_plantaciones_forestales,Analytica_forestry,xl,Medida Incendio Plantaciones Forestales
+medida_manejo_aumentada,Analytica_forestry,xl,Medida Manejo Aumentada
 medida_plan_de_manejo,Analytica_forestry,xl,Medida Plan De Manejo
+medida_pmr_menos_papel,Analytica_forestry,xl,Medida Pmr Menos Papel
 medida_sustitucion_degradacion,Analytica_forestry,xl,Medida Sustitucion Degradacion
 trajmix_incertidumbre_megaincendio,Analytica_forestry,x,Incertidumbre Megaincendio
 hfcmma,Analytica_ippu,x,Hfcmma
@@ -37,6 +44,7 @@ tf_industrial,Analytica_ippu,x,Tf Industrial
 cumplimiento_metas,Analytica_waste,x,Cumplimiento Metas
 ef_captura,Analytica_waste,xl,Ef Captura
 elast_res_ind_pib,Analytica_waste,x,Elast Res Ind Pib
+fp_compost,Analytica_waste,xl,Composting
 inv_antorcha,Analytica_waste,xl,Inv Antorcha
 inv_ptas,Analytica_waste,xl,Inv Ptas
 ptas_antofa,Analytica_waste,x,Ptas Antofa
@@ -130,6 +138,7 @@ commercial_other_natural_gas,commercial,xl,Commercial Other Natural Gas
 commercial_other_pliqgas,commercial,xl,Commercial Other Pliqgas
 commercial_relation_usefull_energy,commercial,x,Commercial Relation Usefull Energy
 hydrology_exceedance_probability,electricity_generation,x,Hydrology Exceedance Probability
+pmr_strategy,electricity_generation,xl,NDC+ Electricity Sector Actions
 trajmix_fuel_price_coal,electricity_generation,x,Fuel Price Coal
 trajmix_fuel_price_diesel,electricity_generation,x,Fuel Price Diesel
 trajmix_fuel_price_fuel_oil,electricity_generation,x,Fuel Price Fuel Oil
@@ -304,7 +313,6 @@ iron_motor_hydrogen,industry_and_mining,xl,Iron Motor Hydrogen
 iron_motor_pliqgas,industry_and_mining,xl,Iron Motor Pliqgas
 iron_other_electric,industry_and_mining,x,Iron Other Electric
 iron_plant_factor_sst,industry_and_mining,x,Iron Plant Factor Sst
-iron_production,industry_and_mining,x,Iron Production
 iron_share_heat,industry_and_mining,x,Iron Share Heat
 iron_share_motor,industry_and_mining,x,Iron Share Motor
 iron_share_other,industry_and_mining,x,Iron Share Other
@@ -447,7 +455,6 @@ pulp_motor_hydrogen,industry_and_mining,xl,Pulp Motor Hydrogen
 pulp_motor_pliqgas,industry_and_mining,xl,Pulp Motor Pliqgas
 pulp_other_electric,industry_and_mining,x,Pulp Other Electric
 pulp_plant_factor_sst,industry_and_mining,x,Pulp Plant Factor Sst
-pulp_production,industry_and_mining,x,Pulp Production
 pulp_share_heat,industry_and_mining,x,Pulp Share Heat
 pulp_share_motor,industry_and_mining,x,Pulp Share Motor
 pulp_share_other,industry_and_mining,x,Pulp Share Other
@@ -488,13 +495,9 @@ steel_emission_fact_diesel,industry_and_mining,x,Steel Emission Fact Diesel
 steel_emission_fact_fueloil,industry_and_mining,x,Steel Emission Fact Fueloil
 steel_emission_fact_natural_gas,industry_and_mining,x,Steel Emission Fact Natural Gas
 steel_emission_fact_pliqgas,industry_and_mining,x,Steel Emission Fact Pliqgas
-steel_heat_biomass,industry_and_mining,xl,Steel Heat Biomass
-steel_heat_coal,industry_and_mining,xl,Steel Heat Coal
-steel_heat_coke,industry_and_mining,xl,Steel Heat Coke
 steel_heat_diesel,industry_and_mining,xl,Steel Heat Diesel
 steel_heat_electric,industry_and_mining,xl,Steel Heat Electric
 steel_heat_fuel_oil,industry_and_mining,xl,Steel Heat Fuel Oil
-steel_heat_hydrogen,industry_and_mining,xl,Steel Heat Hydrogen
 steel_heat_natural_gas,industry_and_mining,xl,Steel Heat Natural Gas
 steel_heat_pliqgas,industry_and_mining,xl,Steel Heat Pliqgas
 steel_heat_solar,industry_and_mining,xl,Steel Heat Solar
@@ -524,9 +527,10 @@ sugar_frac_solar,industry_and_mining,xl,Sugar Frac Solar
 sugar_frac_thermal_solar,industry_and_mining,xl,Sugar Frac Thermal Solar
 sugar_intensity,industry_and_mining,x,Sugar Intensity
 sugar_production,industry_and_mining,x,Sugar Production
-trajgroup_1-lhs,industry_and_mining,xl,% Towards Optimistic - Copper Heat Energy
-trajgroup_2-lhs,industry_and_mining,xl,% Towards Optimistic - Open Pit Mine Energy
-trajgroup_3-lhs,industry_and_mining,xl,% Towards Optimistic - Other Industries Heat Energy
+trajgroup_1-lhs,industry_and_mining,xl,Copper Heat Energy - % Towards Optimistic
+trajgroup_2-lhs,industry_and_mining,xl,Open Pit Mine Energy - % Towards Optimistic
+trajgroup_3-lhs,industry_and_mining,xl,Other Industries Heat Energy - % Towards Optimistic
+trajgroup_8-lhs,industry_and_mining,xl,Steel Heat Energy - % Towards Optimistic
 trajmix_copper_production,industry_and_mining,x,Copper Production
 trajmix_iron_production,industry_and_mining,x,Iron Production
 trajmix_pulp_production,industry_and_mining,x,Pulp Production
@@ -650,13 +654,26 @@ residential_investment_cost_heating_natural_gas,residential,x,Residential Invest
 residential_investment_cost_heating_pliqgas,residential,x,Residential Investment Cost Heating Pliqgas
 residential_investment_cost_heating_solar,residential,x,Residential Investment Cost Heating Solar
 residential_investment_cost_pv_solar,residential,x,Residential Investment Cost Pv Solar
+residential_investment_cost_retrofit_apartment,residential,x,Residential Investment Cost Retrofit Apartment
+residential_investment_cost_retrofit_house,residential,x,Residential Investment Cost Retrofit House
 residential_occ_rate,residential,x,Residential Occ Rate
+residential_retrofit_apartment,residential,xl,Residential Retrofit Apartment
+residential_retrofit_energy_reduction_apartment,residential,x,Residential Retrofit Energy Reduction Apartment
+residential_retrofit_energy_reduction_house,residential,x,Residential Retrofit Energy Reduction House
 residential_share_household_apartment,residential,x,Residential Share Household Apartment
 residential_share_household_house,residential,x,Residential Share Household House
-trajgroup_4-lhs,residential,xl,% Towards Optimistic - Residential Apartment ACS Energy
-trajgroup_5-lhs,residential,xl,% Towards Optimistic - Residential House ACS Energy
-trajgroup_6-lhs,transport,xl,% Towards Optimistic - Private Transportation Electrification
-trajgroup_7-lhs,transport,xl,% Towards Optimistic - Hydrogen Adoption in Trucks
+trajgroup_4-lhs,residential,xl,Residential Apartment ACS Energy - % Towards Optimistic
+trajgroup_5-lhs,residential,xl,Residential House ACS Energy - % Towards Optimistic
+trajmix_residential_retrofit_house,residential,x,Residential Retrofit House
+trajgroup_6-lhs,transport,xl,Private Transportation Electrification - % Towards Optimistic
+trajgroup_7-lhs,transport,xl,Hydrogen Adoption in Trucks - % Towards Optimistic
+trajgroup_9-lhs,transport,xl,Hydrogen Adoption in Aviation - % Towards Optimistic
+transport_activity_bus,transport,x,Transport Activity Bus
+transport_activity_private,transport,x,Transport Activity Private
+transport_activity_taxi,transport,x,Transport Activity Taxi
+transport_activity_truck,transport,x,Transport Activity Truck
+transport_aviation_investment_cost_hydrogen,transport,x,Transport Aviation Investment Cost Hydrogen
+transport_aviation_investment_cost_kerosene,transport,x,Transport Aviation Investment Cost Kerosene
 transport_bus_investment_cost_diesel,transport,x,Transport Bus Investment Cost Diesel
 transport_bus_investment_cost_electric,transport,x,Transport Bus Investment Cost Electric
 transport_bus_veh_km,transport,x,Transport Bus Veh Km
@@ -673,6 +690,8 @@ transport_fuel_price_diesel,transport,x,Transport Fuel Price Diesel
 transport_fuel_price_electric,transport,x,Transport Fuel Price Electric
 transport_fuel_price_gasoline,transport,x,Transport Fuel Price Gasoline
 transport_fuel_price_hydrogen,transport,x,Transport Fuel Price Hydrogen
+transport_fuel_price_kerosene_aviation,transport,x,Transport Fuel Price Kerosene Aviation
+transport_intensity_aviation_hydrogen,transport,x,Transport Intensity Aviation Hydrogen
 transport_intensity_aviation_kerosene,transport,x,Transport Intensity Aviation Kerosene
 transport_intensity_bus_diesel,transport,x,Transport Intensity Bus Diesel
 transport_intensity_bus_electric,transport,x,Transport Intensity Bus Electric
@@ -689,6 +708,10 @@ transport_intensity_train_electric,transport,x,Transport Intensity Train Electri
 transport_intensity_train_freight_diesel,transport,x,Transport Intensity Train Freight Diesel
 transport_intensity_truck_diesel,transport,x,Transport Intensity Truck Diesel
 transport_intensity_truck_hydrogen,transport,x,Transport Intensity Truck Hydrogen
+transport_investment_cost_modal_split_private_to_bus,transport,x,Transport Investment Cost Modal Split Private To Bus
+transport_investment_cost_modal_split_private_to_cycling,transport,x,Transport Investment Cost Modal Split Private To Cycling
+transport_investment_cost_modal_split_private_to_telework,transport,x,Transport Investment Cost Modal Split Private To Telework
+transport_investment_cost_modal_split_private_to_train,transport,x,Transport Investment Cost Modal Split Private To Train
 transport_load_average_freight_train,transport,x,Transport Load Average Freight Train
 transport_load_average_truck,transport,x,Transport Load Average Truck
 transport_maritime_frac_diesel,transport,x,Transport Maritime Frac Diesel

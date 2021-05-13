@@ -604,13 +604,20 @@ list_files_copy = [
 	sr.fp_csv_attribute_strategy,
 	sr.fp_csv_attribute_time_series,
 	sr.fp_csv_experimental_design_msec_single_vals,
+    sr.fp_csv_experimental_design_pmr_strategies_by_master,
     sr.fp_csv_index_trajgroups,
 	sr.fp_csv_lhs_table_levers,
 	sr.fp_csv_lhs_table_multi_sector,
 	sr.fp_csv_output_multi_sector,
 	sr.fp_csv_output_multi_sector_base_year,
 	sr.fp_csv_output_multi_sector_diff,
-	sr.fp_csv_parameter_ranges
+	sr.fp_csv_parameter_ranges,
+    #tag back gams data
+    sr.fp_csv_gams_data_demanda_electrica_escenarios,
+    sr.fp_csv_gams_data_set_escenarios,
+    sr.fp_csv_gams_data_costo_inversion_procesos_escenarios,
+    sr.fp_csv_gams_data_precio_energeticos_escenarios,
+    sr.fp_csv_gams_data_hidrologias_escenarios
 ]
 #add in the future for tornado runs
 if sr.tornado_q:

@@ -1,3 +1,7 @@
 strategy_id,strategy,estrategia,strategy_name,include
 0,NDC,NDC,national defined contribution,1
 1,NDC+,NDC+,national defined contribution + ,1
+2,NDC+ Alternative 1,NDC+ Alternative 1,national defined contribution +  without medida_forestacion_aumentada; medida_manejo_aumentada; pmr_strategy; trajgroup_9.,1
+3,NDC+ Alternative 2,NDC+ Alternative 2,national defined contribution +  without medida_forestacion_aumentada; medida_manejo_aumentada; trajgroup_9.,1
+4,NDC+ Alternative 3,NDC+ Alternative 3,national defined contribution +  without medida_forestacion_aumentada; trajgroup_9.,1
+5,NDC+ Alternative 4,NDC+ Alternative 4,national defined contribution +  without trajgroup_9.,1

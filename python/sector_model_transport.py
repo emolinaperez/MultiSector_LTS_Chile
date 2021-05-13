@@ -430,7 +430,7 @@ def sm_transport(df_in, dict_sector_abv, odel_transport_pkm_aviation = None):
     pkm_modal_change_private_to_cycling = veh_km_private_to_cycling
     pkm_modal_change_private_to_teleworking = veh_km_private_to_teleworking
 
-    delta_pkm_modal_change_private_to_bus= model_delta_capacity (year, pkm_modal_change_private_to_bus)
+    delta_pkm_modal_change_private_to_bus= model_delta_capacity(year, pkm_modal_change_private_to_bus)
     delta_pkm_modal_change_private_to_train = model_delta_capacity(year, pkm_modal_change_private_to_train)
     delta_pkm_modal_change_private_to_cycling = model_delta_capacity(year, pkm_modal_change_private_to_cycling)
     delta_pkm_modal_change_private_to_teleworking = model_delta_capacity(year, pkm_modal_change_private_to_teleworking)
